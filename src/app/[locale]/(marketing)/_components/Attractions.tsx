@@ -63,9 +63,9 @@ export function Attractions() {
                 >
                   <Card className="relative h-72 w-72 cursor-pointer">
                     <CardContent className="size-full">
-                      <Image
-                        fill
-                        src={backendUrl + blog.card_image.slice(1, undefined)} //removing the first "/" because it is in the backendUrl
+                      <img
+  
+                        src={process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image} //removing the first "/" because it is in the backendUrl
                         alt={blog.place_name}
                         className="h-48 w-80 rounded-2xl"
                       />
