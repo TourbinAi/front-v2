@@ -1,0 +1,281 @@
+{
+  "Error": {
+    "description": "<p>متاسفانه با یک خطا مواجه شدیم.</p><p>می‌توانید تلاش کنید تا <retry>صفحه را مجدداً بارگذاری کنید</retry> که در حال بازدید بودید.</p>",
+    "title": "مشکلی پیش آمده است!"
+  },
+  "localeLayout": {
+    "title": "توربین"
+  },
+  "footer": {
+    "links": {
+      "about": "درباره توربین",
+      "article": "مجله گردشگری",
+      "pathFinder": "مسیریاب توربین",
+      "travelMaker": "سفرساز توربین",
+      "attractions": "جاذبه‌های گردشگری",
+      "souvenirsAndFood": "غذاها و سوغات",
+      "celebrationsAndEvents": "جشن‌ها و رویداد‌ها",
+      "tours": "تورهای گردشگری"
+    },
+    "goUp": "رفتن به بالای صفحه",
+    "stayInTouch": "ارتباط با ما"
+  },
+  "header": {
+    "menu": {
+      "pathFinder": "مسیریاب",
+      "travelMaker": "سفرساز",
+      "news": "اخبار و مقالات",
+      "aboutUs": "درباره‌ما"
+    },
+    "modeSwitcher": {
+      "light": "روشن",
+      "dark": "تاریک",
+      "system": "سیستم"
+    },
+    "localeSwitcher": {
+      "en": "انگلیسی",
+      "fa": "فارسی"
+    },
+    "login/register": "ورود/ثبت‌نام"
+  },
+  "landingPage": {
+    "hero": {
+      "header": {
+        "top": "پلتفرم جامع طبیعت گردی و سفر های کوتاه مدت",
+        "bottom": "بر پایه هوش مصنوعی"
+      }
+    },
+    "primaryFeatures": {
+      "features": "امکانات پلتفرم",
+      "souvenirsAndFood": "سوغات و غذا",
+      "tourismPlaces": "مکان‌های گردشگری",
+      "celebrationsAndEvents": "جشن‌ها و رویدادها",
+      "travelMaker": "سفر ساز",
+      "routeFinder": "مسیر یاب"
+    },
+    "featureDetails": {
+      "about": {
+        "title": "درباره توربین",
+        "description": "توربین یک پلتفرم جامع برای طبیعت‌گردی و سفرهای کوتاه مدت بر پایه هوش مصنوعی است. به کمک هوش مصنوعی توربین شما میتوانید با توجه به شرایط و علایق شخصی. بهترین گزینه‌های برنامه سفر را با جزایات کامل دریافت کنید.",
+        "readMore": "ادامه"
+      },
+      "routeFinder": {
+        "title": "مسیریاب",
+        "description": "یافتن بهترین مسیر سفر و تخمین زمان سفر با توربین",
+        "form": {
+          "origin": {
+            "title": "مبدا",
+            "placeholder": "نام شهر مبدا را وارد کنید."
+          },
+          "destination": {
+            "title": "مقصد",
+            "placeholder": "نام مقصد شهر را وارد کنید",
+            "button": "افزودن مقصد"
+          },
+          "submit": "جستجوی مسیر"
+        }
+      },
+      "travelMaker": {
+        "title": "سفر ساز",
+        "description": "پیشنهاد بهترین برنامه سفر با توجه به شرایط و خصوصیات شما",
+        "form": {
+          "origin": {
+            "title": "مبدا",
+            "placeholder": "شهر مبدا را انتخاب کنید."
+          },
+          "distance": {
+            "title": "فاصله",
+            "placeholder": "یک بازه را انتخاب کنید."
+          },
+          "passengers": {
+            "title": "مسافران",
+            "placeholder": "تعداد مسافران را انتخاب کنید."
+          },
+          "duration": {
+            "title": "مدت زمان",
+            "placeholder": "مدت زمان سفر را انتخاب کنید."
+          },
+          "vehicle": {
+            "title": "وسیله نقلیه",
+            "placeholder": "وسیله نقلیه را انتخاب کنید.",
+            "options": {
+              "car": "ماشین",
+              "train": "قطار",
+              "plane": "هواپیما"
+            }
+          },
+          "style": {
+            "title": "سبک",
+            "placeholder": "سبک سفر را انتخاب کنید."
+          },
+          "direction": {
+            "title": "جهت",
+            "placeholder": "جهت سفر را انتخاب کنید.",
+            "options": {
+              "north": "شمال",
+              "south": "جنوب",
+              "east": "شرق",
+              "west": "غرب"
+            }
+          },
+          "submit": "پیشنهاد دهید"
+        }
+      },
+      "souvenirsAndFood": {
+        "title": "سوغات و غذا",
+        "description": "سوغات، نوشیدنی‌ها و غذاهای محلی شهرها و اقوام مختلف ایران با دستور پخت آنها",
+        "form": {
+          "food": {
+            "title": "غذا",
+            "placeholder": "نام غذا یا نوشیدنی را وارد کنید."
+          },
+          "city": {
+            "title": "شهر",
+            "placeholder": "نام شهر یا قومیت را وارد کنید."
+          },
+          "submit": "جستجو",
+          "goTo": "صفحه سوغات و غذا"
+        }
+      },
+      "celebrationsAndEvents": {
+        "title": "جشن‌ها و رویدادها",
+        "description": "آیین‌ها، جشن‌ها و رویدادهای قومی، تاریخی و ملی به تفکیک شهر و استان.",
+        "form": {
+          "occasion": {
+            "title": "مناسبت",
+            "placeholder": "مناسبت یا رویداد را وارد کنید."
+          },
+          "submit": "جستجو",
+          "goTo": "صفحه جشن‌ها و رویدادها"
+        }
+      }
+    },
+    "tourismPlaces": {
+      "title": "مکان‌های گردشگری",
+      "goTo": "صفحه مکان‌های گردشگری"
+    }
+  },
+  "notFoundPage": {
+    "title": "یافت نشد 404",
+    "destination": "مسیر اشتباهی رو اومدی!"
+  },
+
+  "travelMaker": {
+    "form": {
+      "validateError": {
+        "origin": "مبدا را وارد کنید",
+        "distance": "مقصد را وارد کنید",
+        "place": "مکان مورد نظر را وارد کنید",
+        "duration": "مدت زمان سفر را وارد کنید",
+        "date": "تاریخ حرکت را وارد کنید",
+        "route": "مسیر را وارد کنید",
+        "routeState": "حالت مسیر را وارد کنید"
+      },
+      "origin": { "title": "مبدا سفر", "placeholder": "مبدا سفر" },
+      "date": { "title": "تاریخ" },
+      "distance": {
+        "title": "مدت زمان رانندگی",
+        "placeholder": "انتخاب مدت زمان",
+        "select": {
+          "3h": "تا سه ساعت از مبدا دور شویم",
+          "5h": "تا پنج ساعت از مبدا دور شویم",
+          "7h": "تا هفت ساعت از مبدا دور شویم"
+        }
+      },
+      "place": {
+        "placeholder": "نوع جاذبه مورد علاقه",
+        "selectAll": "همه موارد",
+        "search": "جستوجو",
+        "select": {
+          "title-nature-placeHolder": "طبیعت",
+          "shadowAndGreen": "سایه و سرسبزی",
+          "sunnyAndSea": "آفتاب و دریا",
+          "MountainAndDesert": "کوه و کویر",
+          "Entertainment": "تفریح و هیجان",
+          "HistoryAndCulture": "تاریخ و فرهنگ"
+        }
+      },
+      "duration": {
+        "title": "مدت زمان سفر",
+        "placeholder": "انتخاب مدت زمان",
+        "select": {
+          "1d": "1 روز",
+          "2d": "2 روز",
+          "3d": "3 روز"
+        }
+      },
+      "travelStartDate": { "title": "تاریخ شروع حرکت" },
+      "route": {
+        "title": "پیاده‌روی",
+        "placeholder": "پیاده‌روی را مشخص کنید",
+        "select": {
+          "easy": "ملایم و هموار",
+          "hard": "چالشی و سخت",
+          "none": "بدون پیاده روی"
+        }
+      },
+      "destination-state": {
+        "title": "نوع سفر",
+        "placeholder": "نوع سفر",
+        "select": {
+          "oneWay": "تک مقصده",
+          "multiple": "چند مقصده"
+        }
+      },
+      "vehicle": {
+        "title": "وسیله نقلیه",
+        "placeholder": "وسیله نقلیه را انتخاب کنید",
+        "select": {
+          "car": "ماشین معمولی",
+          "bicycle": "دوچرخه",
+          "bus": "ون یا اتوبوس",
+          "off-road": "ماشین افرود",
+          "Car-offroad": "ماشین معمولی - ماشین افرود",
+          "offroad-bicycle": "ماشین افرود - دوچرخه",
+          "car-bicycle": "ماشین معمولی - دوچرخه",
+          "nissan-car": "نیسان - ماشین معمولی"
+        }
+      },
+      "travel-direction": {
+        "title": "جهت حرکت سفر",
+        "placeholder": "جهت را انتخاب کنید",
+        "select": {
+          "north": "به سمت شمال",
+          "south": "به سمت جنوب",
+          "west": "به سمت غرب",
+          "east": "به سمت شرق"
+        }
+      },
+      "oldPerson": {
+        "title": "همسفر سالمند/ خردسال",
+        "placeholder": "تعداد"
+      },
+      "accommodation": {
+        "title": "نوع اقامت",
+        "placeholder": "نوع اقامت را انتخاب کنید",
+        "accommodationSelect": {
+          "camp": "کمپ",
+          "hotel": "هتل",
+          "visit": "بازدید"
+        }
+      },
+
+      "Button": "تایید",
+      "popover-button": "اختیاری",
+      "form-header": {
+        "title": " سفرساز توربین",
+        "text": "با پاسخ به سوالات زیر به توربین کمک می کنید تا با کمک هوش مصنوعی توربین، مانند یک تور لیدر با تجربه و آگاه، یک برنامه سفر عالی و تجربه ای ناب و به یاد ماندنی را برای شما ایجاد کند."
+      }
+    },
+    "card": {
+      "seeMore": "مشاهده بیشتر سفر"
+    },
+    "package": { "mapOpen": "باز کردن نقشه", "mapClose": "بستن نقشه" }
+  },
+  "PathFinder": {
+    "Origin": { "title": "مبدا", "placeHolder": "مبدا را وارد کنید" },
+    "destination": { "title": "مقصد", "placeHolder": "مقصد را وارد کنید" },
+    "submit": "تایید",
+    "addDestination": "اضافه کردن مقصد"
+  }
+}
