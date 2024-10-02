@@ -69,7 +69,7 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
               {item.blogs.map((blog: any, blogIndex: number) => (
                 <CarouselItem
                   key={blogIndex}
-                  className="flex flex-shrink-0 basiزززs-80 flex-col items-center rounded-2xl"
+                  className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl"
                 >
                   <div className="relative">
                     <img
