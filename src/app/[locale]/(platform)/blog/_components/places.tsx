@@ -2,7 +2,7 @@ function Place() {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 p-4">
         {/* First column */}
-        <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105">
+        <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out">
           <img
             src="/assets/blog/cloud ocean.jpg"
             alt="Island with beautiful nature"
@@ -19,7 +19,7 @@ function Place() {
         {/* Second column */}
         <div className="space-y-5">
           {/* First row in second column */}
-          <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105">
+          <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out">
             <img
               src="/assets/blog/Iran's Nature.jpg"
               alt="Weather in the Azores"
@@ -34,7 +34,7 @@ function Place() {
           </div>
   
           {/* Second row in second column */}
-          <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105  ">
+          <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out ">
             <img
               src="/assets/blog/vabenn.jpg"
               alt="Hiking in the mountains"

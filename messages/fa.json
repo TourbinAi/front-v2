@@ -277,5 +277,11 @@
     "destination": { "title": "مقصد", "placeHolder": "مقصد را وارد کنید" },
     "submit": "تایید",
     "addDestination": "اضافه کردن مقصد"
+  },
+  "blogCategory":{
+    "title":"دسته بندی ها",
+    "place":"مکان های گردشگر",
+    "food":"غذا و سوغات",
+    "event":" جشنواره ها"
   }
 }

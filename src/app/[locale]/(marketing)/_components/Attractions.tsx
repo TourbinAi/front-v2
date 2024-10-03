@@ -61,13 +61,14 @@ export function Attractions() {
                   key={blogIndex}
                   className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl border-none bg-none transition-transform hover:scale-105"
                 >
-                  <Card className="relative h-72 w-72 cursor-pointer">
-                    <CardContent className="size-full">
+                  <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
+                    <CardContent className="relative h-full w-full">
                       <img
-  
-                        src={process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image} //removing the first "/" because it is in the backendUrl
+                        src={
+                          process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
+                        } //removing the first "/" because it is in the backendUrl
                         alt={blog.place_name}
-                        className="h-48 w-80 rounded-2xl"
+                        className=" absolute inset-0 h-full w-full object-cover"
                       />
                       <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
                         {blog.place_name || "NAME PLACE"}

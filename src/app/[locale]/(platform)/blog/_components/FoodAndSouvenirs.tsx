@@ -5,9 +5,9 @@ function Foodsouvenirs() {
   
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Post 1 */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out">
             <img
-              className="w-full h-48 object-cover "
+              className="w-full h-48 object-cover cursor-pointer transition-all duration-300 ease-in-out "
               src="/assets/blog/cloud ocean.jpg"
               alt="طبیعت"
             />
@@ -36,7 +36,7 @@ function Foodsouvenirs() {
           </div>
   
           {/* Post 2 */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out">
             <img
               className="w-full h-48 object-cover"
               src="/assets/blog/Iran's Nature.jpg"
@@ -66,7 +66,7 @@ function Foodsouvenirs() {
           </div>
   
           {/* Post 3 */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out">
             <img
               className="w-full h-48 object-cover"
               src="/assets/blog/vabenn.jpg"

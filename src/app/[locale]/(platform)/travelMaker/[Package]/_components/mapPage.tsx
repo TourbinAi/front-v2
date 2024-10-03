@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/Drawer";
 import { useTranslations } from "next-intl";
 import { PackagesPlaceRes } from "@/types/api";
+import { ScrollArea } from "@/components/ui/scroll";
 
 export default function MapPageComp() {
   const route = useParams();
@@ -33,29 +34,33 @@ export default function MapPageComp() {
           <Map packageId={packageId} setPlan={setTravelPlan} />
         </div>
       </div>
-
-      <div className="overflow-y-auto lg:hidden">
-        <div className="-mr-5 ml-0 w-full md:w-1/3">
-          <SideBarMap packageId={packageId} ResData={ResponseData} />
-        </div>
-        <div className="flex items-center justify-center">
-          <Drawer>
-            <div className="mt-10">
-              <DrawerTrigger asChild>
-                <Button>{t("mapOpen")}</Button>
-              </DrawerTrigger>
-            </div>
-            <DrawerContent>
-              <DrawerClose asChild className="absolute top-10 z-30 mr-4 w-max">
-                <Button variant="outline">{t("mapClose")}</Button>
-              </DrawerClose>
-              <div className="relative z-10">
-                <Map packageId={packageId} setPlan={setTravelPlan} />
+      <ScrollArea className="h-[99%]">
+        <div className="lg:hidden">
+          <div className="-mr-5 ml-0 w-full md:w-1/3">
+            <SideBarMap packageId={packageId} ResData={ResponseData} />
+          </div>
+          <div className="flex items-center justify-center">
+            <Drawer>
+              <div className="mt-10">
+                <DrawerTrigger asChild>
+                  <Button>{t("mapOpen")}</Button>
+                </DrawerTrigger>
               </div>
-            </DrawerContent>
-          </Drawer>
+              <DrawerContent>
+                <DrawerClose
+                  asChild
+                  className="absolute top-10 z-30 mr-4 w-max"
+                >
+                  <Button variant="outline">{t("mapClose")}</Button>
+                </DrawerClose>
+                <div className="relative z-10">
+                  <Map packageId={packageId} setPlan={setTravelPlan} />
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </div>
-      </div>
+      </ScrollArea>
     </>
   );
 }

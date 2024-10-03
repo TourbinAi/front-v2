@@ -5,7 +5,6 @@ import Place from "./_components/places";
 import Foodsouvenirs from "./_components/FoodAndSouvenirs";
 import NewPost from "./_components/news";
 import { unstable_setRequestLocale } from "next-intl/server";
-import Footer from "../../_components/Footer";
 const HomePage = ({ params }: { params: { locale: string } }) => {
   unstable_setRequestLocale(params.locale);
 
@@ -14,10 +13,13 @@ const HomePage = ({ params }: { params: { locale: string } }) => {
       <Header />
       <hr />
       <Firstsection />
-      <Place />
-      <Foodsouvenirs />
+      <div id="place">
+        <Place />
+      </div>
+      <div id="Foodsouvenirs">
+        <Foodsouvenirs />
+      </div>
       <NewPost />
-      <Footer />
     </div>
   );
 };

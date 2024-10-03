@@ -152,11 +152,10 @@ export default function RouteCard({
 
   return (
     <Card className="relative h-[400px] w-full max-w-7xl overflow-hidden">
-      <Image
+      <img
         className="absolute inset-0 bg-cover bg-center transition-all duration-500 ease-in-out"
         alt={selectedCity.name}
-        fill
-        src={`${backendUrl}${selectedCity.image_url.slice(1, undefined)}`}
+        src={backendUrl + selectedCity.image_url.slice(1, undefined)}
       />
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">

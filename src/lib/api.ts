@@ -13,7 +13,7 @@ const api = axios.create({
     accept: "application/json",
     "Content-Type": "application/json",
   },
-  baseURL: backendUrl,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   timeout: 300000,
 });
 

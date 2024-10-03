@@ -283,5 +283,11 @@
     },
     "submit": "submit",
     "addDestination": "Add Destination"
+  },
+  "blogCategory": {
+    "title": "Categoryes",
+    "place": "Places",
+    "food": "Food and Souvenirs",
+    "event": "Events"
   }
 }
