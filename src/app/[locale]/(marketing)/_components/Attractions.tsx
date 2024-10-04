@@ -63,12 +63,13 @@ export function Attractions() {
                 >
                   <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
                     <CardContent className="relative h-full w-full">
-                      <img
+                      <Image
+                        fill
                         src={
                           process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
                         } //removing the first "/" because it is in the backendUrl
                         alt={blog.place_name}
-                        className=" absolute inset-0 h-full w-full object-cover"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                       <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
                         {blog.place_name || "NAME PLACE"}

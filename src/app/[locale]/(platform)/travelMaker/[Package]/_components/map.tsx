@@ -9,6 +9,8 @@ import StarRating from "@/components/ui/starRating";
 
 import { backendUrl } from "@/constants/config";
 import { PackagesPlaceRes } from "@/types/api";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Dynamic import for MapContainer with SSR disabled
 const MapWithNoSSR = dynamic(
@@ -196,14 +198,22 @@ function Map({ packageId, setPlan }: MapProps) {
                 }
               >
                 <PopupWithNoSSR>
-                  <div className="flex flex-col items-center justify-center">
-                    <img
-                      src={backendUrl + position.imagePlace.slice(1, undefined)}
-                      alt=""
-                    />
-                    <h1>{position.namePlace}</h1>
-                    <StarRating rating={position.rateStar} />
-                  </div>
+                  <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
+                    <CardContent className="relative h-full w-full">
+                      <Image
+                        fill
+                        src={
+                          backendUrl + position.imagePlace.slice(1, undefined)
+                        }
+                        alt="image"
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                      <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
+                        {position.namePlace}
+                      </span>
+                      <StarRating rating={position.rateStar} />
+                    </CardContent>
+                  </Card>
                 </PopupWithNoSSR>
               </MarkerWithNoSSR>
             ))}

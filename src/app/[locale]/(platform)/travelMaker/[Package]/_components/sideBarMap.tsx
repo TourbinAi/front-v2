@@ -1,8 +1,11 @@
 "use client";
+import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll";
 import { Skeleton } from "@/components/ui/skeleton";
+import StarRating from "@/components/ui/starRating";
 import { backendUrl } from "@/constants/config";
 import { PackagesPlaceRes } from "@/types/api";
+import Image from "next/image";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -49,7 +52,7 @@ function SideBarMap({ packageId, ResData }: MapProps) {
   }, [typedDescription]);
 
   return (
-    <div className="mr-5 flex h-full flex-col flex-wrap bg-white mt-5 rounded-lg pl-4 pr-4 pt-3">
+    <div className="mr-5 mt-5 flex flex-col flex-wrap rounded-lg border border-red-400 bg-white pl-4 pr-4 pt-3">
       {isLoading ? (
         <>
           <div className="flex h-48 justify-center">
@@ -63,30 +66,33 @@ function SideBarMap({ packageId, ResData }: MapProps) {
         </>
       ) : (
         <div className="flex flex-col">
-          <ScrollArea
-            ref={descriptionRef}
-            className="mt-6 h-1/2 overflow-y-auto"
-            style={{ maxHeight: "150px", direction: "rtl" }}
-          >
-            <div>
-              <p className="text-sm">
-                {typedDescription || "No description available"}
-              </p>
-            </div>
-          </ScrollArea>
+          <Card>
+            <CardContent className="size-full">
+              <ScrollArea ref={descriptionRef} className="mt-6 h-72 text-right">
+                <p className="text-sm">
+                  {typedDescription || "No description available"}
+                </p>
+              </ScrollArea>
+            </CardContent>
+          </Card>
           <div className="mb-7 mt-10 flex h-min flex-col flex-wrap items-center justify-center gap-4 lg:flex-row">
             {imgURL?.map((url, index) => (
-              <div
+              <Card
                 key={index}
-                className="flex w-4/5 flex-col items-center rounded-lg bg-white shadow-lg lg:w-2/5"
+                className="relative h-72 w-72 cursor-pointer overflow-hidden"
               >
-                <img
-                  src={backendUrl + url.first_image.slice(1, undefined)}
-                  className="h-full w-full rounded-t-xl"
-                  alt="location image"
-                />
-                <p className="text-center text-sm font-semibold">{url.name}</p>
-              </div>
+                <CardContent className="relative h-full w-full">
+                  <Image
+                    fill
+                    src={backendUrl + url.first_image.slice(1, undefined)}
+                    alt="image"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
+                    {url.name}
+                  </span>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

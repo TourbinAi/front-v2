@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import { DefaultValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import SheetLayout from "./sheetLayout";
-import TravelForm from "./side-bar";
 import RouteCard from "./card";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
@@ -30,6 +29,15 @@ import { TravelMakerList } from "@/lib/api";
 import moment from "jalali-moment"; // Import the library
 import { Skeleton } from "@/components/ui/skeleton";
 import CustomCard from "./customeCard";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 // Inside your TravelMakerForm component:
 const persianDate = moment().format("jYYYY-jM-jD"); // Get the current Persian date
@@ -157,7 +165,6 @@ export default function TravelMaker() {
 
       const result = SidebarSchema.safeParse(safeQuery);
       if (result.success) {
-      
         // Reset form with the new default values
         form.reset(result.data);
 
@@ -185,6 +192,7 @@ export default function TravelMaker() {
     <SheetLayout
       open={open}
       setOpen={setOpen}
+      button={typeof list !== "undefined"}
       sideBarComponent={
         <div className="h-full overflow-x-hidden p-5">
           <div className="flex h-full flex-wrap justify-center">
@@ -374,21 +382,70 @@ export default function TravelMaker() {
       ) : (
         <>
           {list ? (
-            <div className="flex w-full flex-col gap-4">
-              {list.map((item) => (
-                <RouteCard
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  description={item.description}
-                  latitude={item.latitude}
-                  longitude={item.longitude}
-                  cities={item.places}
-                />
-              ))}
-            </div>
+            <>
+              {list.length === 0 ? (
+                <Card>
+                  <CardHeader className="flex w-full flex-col items-center justify-center">
+                    <CardTitle className="flex gap-2 pb-2">
+                      <span>{t("form.noResults")}</span>
+                      <span className="-translate-y-1 text-2xl">{"):"}</span>
+                    </CardTitle>
+                    <CardDescription className="text-center">
+                      {t("form.tryAnother")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex size-full flex-col items-center justify-center">
+                    <Button
+                      className="flex lg:hidden"
+                      variant="outline"
+                      onClick={() => setOpen(true)}
+                    >
+                      <ChevronRight />
+                      {t("form.form-header.fillForm")}
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="flex w-full flex-col gap-4">
+                  {list.map((item) => (
+                    <RouteCard
+                      key={item.id}
+                      id={item.id}
+                      name={item.description}
+                      description={item.description}
+                      latitude={item.latitude}
+                      longitude={item.longitude}
+                      cities={item.places}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
           ) : (
-            <div>there is no package</div>
+            <>
+              <div className="hodden size-full items-center justify-center lg:flex">
+                <Card>
+                  <CardHeader className="flex w-full flex-col items-center justify-center">
+                    <CardTitle className="pb-2">
+                      {t("form.form-header.title")}
+                    </CardTitle>
+                    <CardDescription className="text-center">
+                      {t("form.form-header.text")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex size-full flex-col items-center justify-center">
+                    <Button
+                      className="flex lg:hidden"
+                      variant="outline"
+                      onClick={() => setOpen(true)}
+                    >
+                      <ChevronRight />
+                      {t("form.form-header.fillForm")}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </>
           )}
         </>
       )}

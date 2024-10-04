@@ -6,10 +6,24 @@ import BeachImage from "public/assets/images/beachSunSet.png";
 import Logo from "public/assets/images/logo.png";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
-import { SyntheticEvent } from "react";
 
 export function Hero() {
   const t = useTranslations("landingPage");
+
+  const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    console.log("clicked: ", event);
+    event.preventDefault();
+    const href = event.currentTarget.getAttribute("href");
+    const targetId = href?.replace("#", "");
+    const targetElement = document.getElementById(targetId || "");
+
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div
       id="hero"
@@ -20,7 +34,7 @@ export function Hero() {
         <Image
           src={BeachImage}
           alt="Main Background"
-          className="h-[80vh] w-full object-cover"
+          className="h-[100vh] w-full object-cover lg:h-[80vh]"
         />
       </div>
       sm:basis-80
@@ -31,23 +45,12 @@ export function Hero() {
           <br />
           {t("hero.header.bottom")}
         </h1>
-        <ul
-          onClick={(event: SyntheticEvent) => {
-            event.preventDefault();
-            const target = event.target as HTMLAnchorElement;
-            const id = target.getAttribute("href");
-            const element = document.getElementById(String(id));
-            element?.scrollIntoView({
-              behavior: "smooth",
-            });
-          }}
-          className="flex w-full flex-nowrap items-stretch justify-center gap-x-2 gap-y-4 px-2 sm:flex-wrap sm:gap-x-10 sm:px-10 md:gap-x-32"
-        >
+        <ul className="flex w-full flex-nowrap items-stretch justify-center gap-x-2 gap-y-4 px-2 sm:flex-wrap sm:gap-x-10 sm:px-10 md:gap-x-32">
           {primaryFeatures.map((feature) => (
-            <li>
+            <li key={feature.name}>
               <a
-                key={feature.name}
                 href={feature.href}
+                onClick={handleSmoothScroll}
                 className="group flex flex-col flex-nowrap items-center justify-center gap-8 sm:flex-wrap"
               >
                 <Card className="block aspect-square border border-primary sm:hidden">

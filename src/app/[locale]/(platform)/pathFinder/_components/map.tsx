@@ -134,7 +134,6 @@ function MapPathFinder({
 
         let waypointReq = waypointParams.slice(0, -3);
 
-
         try {
           const response = await axios.get(
             `https://api.neshan.org/v4/direction?type=${info.type}&origin=${originLoc?.y},${originLoc?.x}&destination=${desDynamic.location.y},${desDynamic.location.x}&waypoints=${waypointReq}&avoidTrafficZone=${info.traffic}&avoidodEvenZone=${info.odEven}&alternative=${info.alternative}&bearing=`,
@@ -174,7 +173,7 @@ function MapPathFinder({
   let customIcon = null;
   if (L) {
     customIcon = new L.Icon({
-      iconUrl: "/assets/icons/markermap.png",
+      iconUrl: "/assets/icons/markerMap.png",
       iconSize: [15, 30],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],

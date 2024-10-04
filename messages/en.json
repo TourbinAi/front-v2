@@ -265,9 +265,12 @@
 
       "Button": "Submit",
       "popover-button": "optional",
+      "noResults": "No result found",
+      "tryAnother": "Try another combination",
       "form-header": {
         "title": " travel maker",
-        "text": "By answering the following questions, you will help the tourbin to create an excellent travel plan and a pure and memorable experience for you with the help of Turbine artificial intelligence, like an experienced and knowledgeable tour leader."
+        "text": "By answering the following questions, you will help the tourbin to create an excellent travel plan and a pure and memorable experience for you with the help of Turbine artificial intelligence, like an experienced and knowledgeable tour leader.",
+        "fillForm": "Fill the form"
       }
     },
     "card": {

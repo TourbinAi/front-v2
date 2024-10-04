@@ -17,6 +17,7 @@ type SheetLayoutProps = {
   sideBarComponent: React.ReactNode;
   open?: boolean;
   setOpen?: Dispatch<SetStateAction<boolean>>;
+  button?: boolean;
 };
 
 const SheetLayout: React.FC<SheetLayoutProps> = ({
@@ -24,13 +25,14 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
   sideBarComponent,
   open,
   setOpen,
+  button = true,
 }) => {
   const t = useTranslations("travelMaker.form.form-header");
   const locale = useLocale();
   const dir = locale === "fa" ? "rtl" : "ltr";
   return (
     <div className="h-full overflow-auto">
-      <div className="relative flex items-stretch gap-5 p-5">
+      <div className="relative flex size-full items-stretch gap-5 p-5">
         <div
           className={cn(
             "absolutes inset-y-0 z-50 hidden h-full flex-col items-center justify-start lg:flex",
@@ -47,21 +49,15 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             <CardContent>{sideBarComponent}</CardContent>
           </Card>
         </div>
-        <div
-          className={cn(
-            "h-full grow",
-            dir === "rtl" ? "border-r-2" : "border-l-2"
-          )}
-        >
-          {children}
-        </div>
+        <div className={"size-full h-full grow"}>{children}</div>
       </div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger
           asChild
           className={cn(
-            "absolute bottom-4 block lg:hidden",
-            dir === "rtl" ? "right-4" : "left-4"
+            "absolute bottom-4",
+            dir === "rtl" ? "right-4" : "left-4",
+            button ? "block lg:hidden" : "hidden"
           )}
         >
           <Button variant="outline" className="h-14 w-14 rounded-full">

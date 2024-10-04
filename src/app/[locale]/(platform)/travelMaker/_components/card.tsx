@@ -8,7 +8,6 @@ import Image, { StaticImageData } from "next/image";
 import { cn } from "@/lib/utils";
 import * as d3 from "d3";
 
-import { backendUrl } from "@/constants/config";
 import { ChevronLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -34,13 +33,16 @@ export default function RouteCard({
   longitude,
   latitude,
 }: RouteCardProps) {
+  // if (!cities) {
+  //   return null;
+  // }
+  console.log("citieeeees: ", cities);
   const router = useRouter();
   const [wetherReport, setWetherReport] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<City>(cities[0]);
   const [images, setImages] = useState<{ [key: string]: StaticImageData }>({});
   const [loading, setLoading] = useState(true);
   const svgRef = useRef<SVGSVGElement | null>(null);
-
   const t = useTranslations("travelMaker.card");
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function RouteCard({
       try {
         await Promise.all(
           cities.map(async (city) => {
-            const imageUrl = `${backendUrl}${city.image_url.slice(1, undefined)}`;
+            const imageUrl = `https://${process.env.NEXT_PUBLIC_BACKEND_URL}${city.image_url}`;
             const response = await fetch(imageUrl);
             if (!response.ok) {
               throw new Error(`Failed to fetch image for city: ${city.name}`);
@@ -127,14 +129,18 @@ export default function RouteCard({
         .attr("transform", `translate(${width / 2}, ${yScale(i)})`)
         .attr("cursor", "pointer");
 
-      g.append("circle")
+      const circle = g
+        .append("circle")
         .attr(
           "r",
           city.name === selectedCity.name ? nodeRadius * 1.2 : nodeRadius
         )
-        .attr("fill", "#FBBF24")
-        .attr("stroke", city.name === selectedCity.name ? "white" : "none")
         .attr("stroke-width", 2);
+
+      // Apply Tailwind primary color if selected, otherwise white
+      circle
+        .classed("fill-primary", city.name === selectedCity.name)
+        .classed("fill-white", city.name !== selectedCity.name);
 
       g.append("title").text(city.name);
 
@@ -151,11 +157,12 @@ export default function RouteCard({
   };
 
   return (
-    <Card className="relative h-[400px] w-full max-w-7xl overflow-hidden">
-      <img
-        className="absolute inset-0 bg-cover bg-center transition-all duration-500 ease-in-out"
+    <Card className="sm1:border-red-500 relative h-[250px] w-full max-w-7xl overflow-hidden border-4">
+      <Image
+        fill
+        src={process.env.NEXT_PUBLIC_BACKEND_URL + selectedCity.image_url}
         alt={selectedCity.name}
-        src={backendUrl + selectedCity.image_url.slice(1, undefined)}
+        className="absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full"
       />
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
@@ -166,16 +173,20 @@ export default function RouteCard({
             height="200"
             className="overflow-visible"
           />
-          <div className="relative flex size-full flex-col items-center justify-center gap-4">
-            <h2 className="mb-5 text-4xl font-bold">{name}</h2>
-            <Button
-              onClick={handleViewDetails}
-              className="bg-white px-8 py-3 text-xl text-black hover:bg-gray-200"
-            >
-              {t("seeMore")} <ChevronLeft className="ml-2 h-6 w-6" />
-            </Button>
-            <div className="absolute bottom-0 left-0 flex flex-col items-center justify-center">
-              <span>{wetherReport}</span>
+          <div className="flex w-full items-center justify-between lg:w-1/2">
+            <div className="relative flex size-full flex-col items-center justify-center gap-4">
+              <h2 className="text-gl mb-5 text-wrap text-center align-middle font-bold lg:text-xl">
+                {name}
+              </h2>
+              <Button
+                onClick={handleViewDetails}
+                className="bg-white px-2 py-3 text-sm text-black hover:bg-gray-200 lg:text-xl"
+              >
+                {t("seeMore")} <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <div className="absolute bottom-0 left-0 flex flex-col items-center justify-center">
+                <span>{wetherReport}</span>
+              </div>
             </div>
           </div>
         </div>

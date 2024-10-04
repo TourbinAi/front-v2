@@ -26,8 +26,8 @@ export default function MapPageComp() {
 
   return (
     <>
-      <div className="hidden h-screen flex-col md:flex-row lg:flex">
-        <div className="w-full md:w-1/3">
+      <div className="hidden h-full flex-col md:flex-row lg:flex">
+        <div className="w-full overflow-auto md:w-1/3">
           <SideBarMap packageId={packageId} ResData={ResponseData} />
         </div>
         <div className="ml-0 mr-0 w-full md:ml-6 md:mr-4 md:w-3/4">
