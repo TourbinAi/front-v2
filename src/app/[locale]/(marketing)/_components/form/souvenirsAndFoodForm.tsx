@@ -12,10 +12,12 @@ import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "@/i18n/navigation";
 
 export const SouvenirsAndFoodForm = () => {
   const t = useTranslations("landingPage.featureDetails.souvenirsAndFood");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof souvenirsAndFood>>({
     resolver: zodResolver(souvenirsAndFood),
@@ -27,7 +29,7 @@ export const SouvenirsAndFoodForm = () => {
 
   const onSubmit = async (values: z.infer<typeof souvenirsAndFood>) => {
     setIsLoading(true);
-
+    router.push("/blog/Souvenirs/?blogtype=2&blogid=3");
     try {
       console.log("values: ", values);
     } catch (error) {

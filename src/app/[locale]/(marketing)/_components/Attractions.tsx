@@ -55,14 +55,23 @@ export function Attractions() {
             {loading ? (
               <CarouselContent className="mx-10 my-5 gap-1">
                 {[0, 1, 2, 3, 4].map((ind) => (
-                  <Skeleton key={ind} className="h-72 w-72" />
+                  <CarouselItem
+                    key={ind}
+                    className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl border-none bg-none transition-transform hover:scale-105"
+                  >
+                    <Skeleton className="h-72 w-72 bg-gray-400" />
+                  </CarouselItem>
                 ))}
               </CarouselContent>
             ) : (
               <CarouselContent className="mx-10 my-5 flex gap-1">
                 {responseData.map((blog, blogIndex) => (
                   <CarouselItem
-                    onClick={() => router.push(`/blog/${blog.id}`)}
+                    onClick={() =>
+                      router.push(
+                        `/blog/${blog.title}/?blogtype=1&blogid=${blog.id}`
+                      )
+                    }
                     key={blogIndex}
                     className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl border-none bg-none transition-transform hover:scale-105"
                   >
