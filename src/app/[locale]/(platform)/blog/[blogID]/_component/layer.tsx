@@ -34,7 +34,7 @@ const App: React.FC = () => {
     <div className="flex flex-row overflow-y-scroll">
       <div className="h-screen w-3/4">
         {responseData ? (
-          <Editor data={responseData?.data.content} />
+          <Editor data={responseData?.data.content} image={responseData?.data.card_image} />
         ) : (
           <div>Loading...</div> // نمایش یک حالت لودینگ یا پیام
         )}
