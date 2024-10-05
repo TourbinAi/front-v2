@@ -33,13 +33,11 @@ export default function RouteCard({
   longitude,
   latitude,
 }: RouteCardProps) {
-  // if (!cities) {
-  //   return null;
-  // }
-  console.log("citieeeees: ", cities);
   const router = useRouter();
   const [wetherReport, setWetherReport] = useState<string>("");
-  const [selectedCity, setSelectedCity] = useState<City>(cities[0]);
+  const [selectedCity, setSelectedCity] = useState<City>(
+    cities[cities.length - 1]
+  );
   const [images, setImages] = useState<{ [key: string]: StaticImageData }>({});
   const [loading, setLoading] = useState(true);
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -157,7 +155,7 @@ export default function RouteCard({
   };
 
   return (
-    <Card className="sm1:border-red-500 relative h-[250px] w-full max-w-7xl overflow-hidden border-4">
+    <Card className="relative h-[250px] w-full max-w-7xl overflow-hidden">
       <Image
         fill
         src={process.env.NEXT_PUBLIC_BACKEND_URL + selectedCity.image_url}
@@ -166,6 +164,9 @@ export default function RouteCard({
       />
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
+        <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black bg-opacity-60 px-4 py-2 backdrop-blur-sm">
+          {selectedCity.name}
+        </span>
         <div className="flex size-full items-center justify-between">
           <svg
             ref={svgRef}
@@ -174,8 +175,8 @@ export default function RouteCard({
             className="overflow-visible"
           />
           <div className="flex w-full items-center justify-between lg:w-1/2">
-            <div className="relative flex size-full flex-col items-center justify-center gap-4">
-              <h2 className="text-gl mb-5 text-wrap text-center align-middle font-bold lg:text-xl">
+            <div className="relative flex size-full flex-col items-center justify-center gap-2">
+              <h2 className="text-gl text-wrap text-center align-middle font-bold lg:text-xl">
                 {name}
               </h2>
               <Button

@@ -40,12 +40,12 @@ export function Hero() {
       sm:basis-80
       <div className="mt-32 flex w-full flex-col items-center justify-center gap-16 pb-4">
         <Image src={Logo} alt="Centered Image" className="w-1/2 md:w-[20%]" />
-        <h1 className="text:gl flex items-center justify-center text-center font-bold text-blue-900 sm:text-xl md:text-2xl lg:text-3xl">
+        <h1 className="text-gl flex items-center justify-center text-center font-bold text-blue-900 sm:text-xl md:text-2xl lg:text-3xl">
           {t("hero.header.top")}
           <br />
           {t("hero.header.bottom")}
         </h1>
-        <ul className="flex w-full flex-nowrap items-stretch justify-center gap-x-2 gap-y-4 px-2 sm:flex-wrap sm:gap-x-10 sm:px-10 md:gap-x-32">
+        <ul className="flex w-full flex-wrap items-stretch justify-center gap-x-1 gap-y-4 px-2 sm:hidden sm:flex-wrap sm:gap-x-10 sm:px-10 md:gap-x-32">
           {primaryFeatures.map((feature) => (
             <li key={feature.name}>
               <a
@@ -53,7 +53,7 @@ export function Hero() {
                 onClick={handleSmoothScroll}
                 className="group flex flex-col flex-nowrap items-center justify-center gap-8 sm:flex-wrap"
               >
-                <Card className="block aspect-square border border-primary sm:hidden">
+                <Card className="flex aspect-square h-28 w-28 flex-col items-center justify-center gap-2 border border-primary">
                   <CardContent className="flex size-full flex-col items-center justify-center gap-2 p-3">
                     <Image
                       className="transition-all group-hover:scale-110"
@@ -62,9 +62,24 @@ export function Hero() {
                       width={50}
                       height={50}
                     />
+                    <span className="text-nowrap text-xs font-semibold text-secondary">
+                      {t(`primaryFeatures.${feature.name}`)}
+                    </span>
                   </CardContent>
                 </Card>
-                <div className="hidden sm:block">
+              </a>
+            </li>
+          ))}
+        </ul>
+        <ul className="hidden w-full flex-wrap items-stretch justify-center gap-x-1 gap-y-4 px-2 sm:flex sm:flex-wrap sm:gap-x-10 sm:px-10 md:gap-x-32">
+          {primaryFeatures.map((feature) => (
+            <li key={feature.name}>
+              <a
+                href={feature.href}
+                onClick={handleSmoothScroll}
+                className="group flex flex-col flex-nowrap items-center justify-center gap-8 sm:flex-wrap"
+              >
+                <div className="flex flex-col items-center justify-center gap-4">
                   <Image
                     className="transition-all group-hover:scale-110"
                     alt={feature.name}

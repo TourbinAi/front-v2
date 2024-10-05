@@ -145,6 +145,24 @@
             "title": "مناسبت",
             "placeholder": "مناسبت یا رویداد را وارد کنید."
           },
+          "month": {
+            "title": "ماه",
+            "placeholder": "یک ماه را انتخاب کنید",
+            "options": {
+              "farvardin": "فروردین",
+              "ordibehesht": "اردیبهشت",
+              "khordad": "خرداد",
+              "tir": "تیر",
+              "mordad": "مرداد",
+              "shahrivar": "شهریور",
+              "mehr": "مهر",
+              "aban": "آبان",
+              "azar": "آذر",
+              "day": "دی",
+              "bahman": "بهمن",
+              "esfand": "اسفند"
+            }
+          },
           "submit": "جستجو",
           "goTo": "صفحه جشن‌ها و رویدادها"
         }
