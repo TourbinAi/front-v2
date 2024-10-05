@@ -14,8 +14,6 @@ import { useTranslations } from "next-intl";
 import { AttractionsLandingRes } from "@/types/api";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-
-import { backendUrl } from "@/constants/config";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 
