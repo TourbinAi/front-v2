@@ -1,11 +1,16 @@
+"use client"
 import Category from "./_cpmponent/category";
 import WeatherComponent from "./_cpmponent/weather";
 
-function SideBarBlog() {
+interface Props {
+  nameCity: string;
+}
+
+function SideBarBlog({ nameCity }: Props) {
   return (
     <div>
-    <WeatherComponent /> 
-    <Category />
+      <WeatherComponent city={nameCity} /> 
+      <Category />
     </div>
   );
 }

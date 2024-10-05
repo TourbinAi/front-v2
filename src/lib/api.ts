@@ -6,7 +6,6 @@ import type {
   AttractionsCarouselRes,
   AttractionsLandingRes,
 } from "@/types/api";
-import { backendUrl } from "@/constants/config";
 
 const api = axios.create({
   headers: {
@@ -42,4 +41,10 @@ export function AttractionsLanding(
   blog_count: number
 ): Promise<AxiosResponse<AttractionsLandingRes, any>> {
   return api.post("/blog/landing-page-blogs/", { blog_count: blog_count });
+}
+export function BlogUniqAPI(
+  blog_type?: number,
+  blog_id?: number
+):Promise<AxiosResponse<any>>{
+  return api.post("/blog/blog-reviews/", { blog_type:blog_type , blog_id:blog_id });
 }

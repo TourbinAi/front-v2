@@ -95,7 +95,7 @@ function TravelForm({
       const respond = await TravelMakerList(requestObject);
       setList(respond.data);
 
-      console.log("respond: ", respond);
+      // console.log("respond: ", respond);
     } catch (error) {
       console.error("Form submission failed:", error);
     } finally {

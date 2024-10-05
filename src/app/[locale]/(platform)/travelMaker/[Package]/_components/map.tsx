@@ -6,8 +6,6 @@ import axios from "axios";
 import polyline from "@mapbox/polyline";
 import { postData } from "@/lib/api";
 import StarRating from "@/components/ui/starRating";
-
-import { backendUrl } from "@/constants/config";
 import { PackagesPlaceRes } from "@/types/api";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
@@ -203,7 +201,7 @@ function Map({ packageId, setPlan }: MapProps) {
                       <Image
                         fill
                         src={
-                          backendUrl + position.imagePlace.slice(1, undefined)
+                          process.env.NEXT_PUBLIC_BACKEND_URL + position.imagePlace
                         }
                         alt="image"
                         className="absolute inset-0 h-full w-full object-cover"

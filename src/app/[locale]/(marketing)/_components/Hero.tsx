@@ -11,7 +11,7 @@ export function Hero() {
   const t = useTranslations("landingPage");
 
   const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    console.log("clicked: ", event);
+    // console.log("clicked: ", event);
     event.preventDefault();
     const href = event.currentTarget.getAttribute("href");
     const targetId = href?.replace("#", "");

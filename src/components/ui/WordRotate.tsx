@@ -30,7 +30,7 @@ export default function WordRotate({
     setMount(true);
   }, []);
 
-  console.log("words: ", )
+  // console.log("words: ", )
 
   useEffect(() => {
     const interval = setInterval(() => {

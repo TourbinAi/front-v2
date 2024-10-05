@@ -31,9 +31,9 @@ export const SouvenirsAndFoodForm = () => {
     setIsLoading(true);
     router.push("/blog/Souvenirs/?blogtype=2&blogid=3");
     try {
-      console.log("values: ", values);
+      setIsLoading(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     setIsLoading(false);
@@ -65,10 +65,10 @@ export const SouvenirsAndFoodForm = () => {
         />
 
         <SubmitButton isLoading={isLoading}>{t("form.submit")}</SubmitButton>
-        <Button className="w-full" variant="outline" href="/blog">
-          {t("form.goTo")}
-        </Button>
       </form>
+      <Button className="w-full" variant="outline" href="/blog">
+        {t("form.goTo")}
+      </Button>
     </Form>
   );
 };

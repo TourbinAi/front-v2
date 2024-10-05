@@ -55,7 +55,9 @@ export const CelebrationsAndEventForm = () => {
     setIsLoading(true);
     router.push("/blog/event/?blogtype=3&blogid=3");
     try {
-      console.log("values: ", values);
+      setIsLoading(true);
+      router.push("blog/event/?blogtype=3&blogid=3");
+      // console.log("values: ", values);
     } catch (error) {
       console.log(error);
     }
@@ -104,10 +106,10 @@ export const CelebrationsAndEventForm = () => {
         <SubmitButton className="mb-1 w-full" isLoading={isLoading}>
           {t("form.submit")}
         </SubmitButton>
-        <Button className="w-full" variant="outline" href="/blog">
-          {t("form.goTo")}
-        </Button>
       </form>
+      <Button className="w-full" variant="outline" href="/blog">
+        {t("form.goTo")}
+      </Button>
     </Form>
   );
 };

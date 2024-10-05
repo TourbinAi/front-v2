@@ -17,6 +17,35 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
   const [regionID, setId] = useState([
     { region: "مازندران", id: 1 },
     { region: "گیلان", id: 2 },
+    { region: "البرز", id: 3 },
+    { region: "تهران", id: 4 },
+    { region: "همدان", id: 5 },
+    { region: "قزوین", id: 6 },
+    { region: "اصفهان", id: 7 },
+    { region: "سمنان", id: 8 },
+    { region: "آذربایجان شرقی", id: 9 },
+    { region: "آذربایجان غربی", id: 10 },
+    { region: "اردبیل", id: 11 },
+    { region: "بوشهر", id: 12 },
+    { region: "ایلام", id: 13 },
+    { region: "چهارمحال و بختیاری", id: 14 },
+    { region: "خراسان رضوی", id: 15 },
+    { region: "خراسان جنوبی", id: 16 },
+    { region: "خراسان شمالی", id: 17 },
+    { region: "خوزستان", id: 18 },
+    { region: "زنجان", id: 19 },
+    { region: "سیستان و بلوچستان", id: 20 },
+    { region: "فارس", id: 21 },
+    { region: "قم", id: 22 },
+    { region: "کردستان", id: 23 },
+    { region: "کهگیلویه و بویراحمد", id: 24 },
+    { region: "کرمان", id: 25 },
+    { region: "گلستان", id: 26 },
+    { region: "لرستان", id: 27 },
+    { region: "مرکزی", id: 28 },
+    { region: "یزد", id: 29 },
+    { region: "هرمزگان", id: 30 },
+    { region: "کرمانشاه", id: 31 },
   ]);
   const [filterRegionState, setFilter] = useState<any>(null);
 
@@ -69,23 +98,23 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
           >
             <CarouselContent className="flex gap-1">
               {item.blogs.map((blog: any, blogIndex: number) => {
-                console.log(
-                  "urllll: ",
-                  process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
-                );
+                // console.log(
+                //   "urllll: ",
+                //   process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
+                // );
                 return (
                   <CarouselItem
                     key={blogIndex}
                     className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl"
                   >
-                    <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
+                    <Card className="relative h-52 w-72 cursor-pointer overflow-hidden">
                       <CardContent className="relative h-full w-full">
                         <Image
                           fill
                           src={
                             process.env.NEXT_PUBLIC_BACKEND_URL +
                             blog.card_image
-                          } //removing the first "/" because it is in the backendUrl
+                          }
                           alt={blog.place_name}
                           className="absolute inset-0 h-full w-full object-cover"
                         />

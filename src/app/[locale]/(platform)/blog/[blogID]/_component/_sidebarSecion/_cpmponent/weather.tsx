@@ -8,8 +8,11 @@ interface WeatherState {
   loading: boolean;
 }
 
-const WeatherComponent: React.FC = () => {
-  const [userCity, setUserCity] = useState<string>("فیلبند");
+interface WeatherProps {
+  city: string;
+}
+
+const WeatherComponent: React.FC<WeatherProps> = ({ city }) => {
   const [weatherState, setWeatherState] = useState<WeatherState>({
     data: null,
     error: null,
@@ -17,15 +20,16 @@ const WeatherComponent: React.FC = () => {
   });
   const [descriptionWeather, setDescriptionWeather] = useState<string>("");
   const [gif, setGif] = useState<string>("");
+
   useEffect(() => {
     const fetchData = async () => {
       setWeatherState({ data: null, error: null, loading: true });
 
       try {
-        const data = await fetchWeather(userCity);
+        const data = await fetchWeather(city);
         setWeatherState({ data, error: null, loading: false });
 
-        console.log(data);
+        // console.log(data);
 
         if (data.description.includes("clouds")) {
           setGif("/assets/weatherGIF/output-onlinegiftools.gif");
@@ -51,8 +55,11 @@ const WeatherComponent: React.FC = () => {
         });
       }
     };
-    fetchData();
-  }, [userCity]);
+    if (city) {
+      fetchData();
+      // console.log(city);
+    }
+  }, [city]);
 
   return (
     <div className="ml-4 mt-6 rounded-lg bg-orange-100 px-4">
@@ -65,7 +72,7 @@ const WeatherComponent: React.FC = () => {
         <div className="flex flex-row items-center">
           <div>
             <div>
-              <span>{userCity} </span>
+              <span>{city} </span>
               {/* <span>{weatherState.data.country}</span> */}
             </div>
             <div>
