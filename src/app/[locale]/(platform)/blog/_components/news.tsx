@@ -1,60 +1,86 @@
 import React from "react";
-
+import Link from "next/link";
 function NewPost() {
-    return (
-        <section className="w-11/12 mx-auto rtl mt-7">
-            <h2 className="text-right text-2xl mb-6 font-bold">جدیدترین ها</h2>
-            <div className="space-y-8">
-                {/* Post 1 */}
-                <div className="flex border-b pb-5 gap-4">
-                    <img src="/assets/blog/header.jpg" alt="" className="w-36 h-36 object-cover rounded-md" />
-                    <div className="flex-1">
-                        <h3 className="text-lg font-semibold mb-2">Subscribe to the Medium Newsletter: Get motivated, stay informed, learn something new</h3>
-                        <p className="text-sm text-gray-600 mb-3">Discover great Medium stories with our new newsletter</p>
-                        <div className="flex items-center gap-3">
-                            <img src="/assets/blog/testi2.jpg" alt="Author" className="w-10 h-10 rounded-full" />
-                            <div className="text-xs">
-                                <p>Harris Sockel</p>
-                                <p className="text-gray-500">Sep 11 · 5 min read</p>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <section className="rtl mx-auto mt-7 w-11/12">
+      <h2 className="mb-6 text-right text-2xl font-bold">جشن ها و رویدادها</h2>
+      <div className="space-y-8">
+        {/* Post 1 */}
+        <Link href={"filband/?blogtype=3&blogid=1"}>
+          <div className="flex gap-4 border-b pb-5 duration-300 ease-in-out hover:scale-105">
+            <img
+              src="/assets/blog/koorosh.jpg"
+              alt=""
+              className="h-36 w-36 rounded-md object-cover"
+            />
+            <div className="flex-1">
+              <h3 className="mb-2 text-lg font-semibold">
+                جشن شهریورگان؛ زادروز کوروش کبیر و روز پدر در ایران باستان
+              </h3>
+              <p className="mb-3 text-sm text-gray-600">
+                جشن شهریورگان، از جمله جشن‌های دوازده‌گانه سال و یکی از جشن‌های
+                آتش در ایران باستان است.
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="text-xs">
+                  <p className="text-gray-500">3 مرداد . 6 دقیقه خواندن</p>
                 </div>
-
-                {/* Post 2 */}
-                <div className="flex border-b pb-5 gap-4">
-                    <img src="/assets/blog/sinava.jpg" alt="Medium Day" className="w-36 h-36 object-cover rounded-md" />
-                    <div className="flex-1">
-                        <h3 className="text-lg font-semibold mb-2">Plan Your Medium Day Lineup 2024</h3>
-                        <p className="text-sm text-gray-600 mb-3">Medium Day is this Saturday, August 17!</p>
-                        <div className="flex items-center gap-3">
-                            <img src="/assets/blog/testi2.jpg" alt="Author" className="w-10 h-10 rounded-full" />
-                            <div className="text-xs">
-                                <p>Brittany Jezouit</p>
-                                <p className="text-gray-500">Aug 12 · 7 min read</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Post 3 */}
-                <div className="flex border-b pb-5 gap-4">
-                    <img src="/assets/blog/ocean.jpg" alt="Medium July Roundup" className="w-36 h-36 object-cover rounded-md" />
-                    <div className="flex-1">
-                        <h3 className="text-lg font-semibold mb-2">It happened on Medium: July 2024 roundup</h3>
-                        <p className="text-sm text-gray-600 mb-3">A big announcement, most-shared stories, and commentary on current events</p>
-                        <div className="flex items-center gap-3">
-                            <img src="/assets/blog/testi3.jpg" alt="Author" className="w-10 h-10 rounded-full" />
-                            <div className="text-xs">
-                                <p>Medium Staff</p>
-                                <p className="text-gray-500">Aug 7 · 6 min read</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-        </section>
-    );
+          </div>
+        </Link>
+        {/* Post 2 */}
+        <Link href={"filband/?blogtype=3&blogid=2"}>
+          <div className="flex gap-4 border-b pb-5 duration-300 ease-in-out hover:scale-105">
+            <img
+              src="/assets/blog/mazn yalda.jpg"
+              alt="Medium Day"
+              className="h-36 w-36 rounded-md object-cover"
+            />
+            <div className="flex-1">
+              <h3 className="mb-2 text-lg font-semibold">
+                آداب و رسوم مازندران در شب یلدا
+              </h3>
+              <p className="mb-3 text-sm text-gray-600">
+                مازندرانی‌ها شب یلدا را با عنوان «چله شو» یا «چله شی» یاد
+                می‌کنند و به مناسبت این شب، سفره یا میزی می‌چینند که در گویش
+                محلی «میزد» نامیده می‌شود.
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="text-xs">
+                  <p className="text-gray-500">23 شهریور . 12 دقیقه خواندن</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+        {/* Post 3 */}
+        <Link href={"filband/?blogtype=3&blogid=3"}>
+          <div className="flex gap-4 border-b pb-5 duration-300 ease-in-out hover:scale-105">
+            <img
+              src="/assets/blog/mordegan.jpg"
+              alt="Medium July Roundup"
+              className="h-36 w-36 rounded-md object-cover"
+            />
+            <div className="flex-1">
+              <h3 className="mb-2 text-lg font-semibold">
+                آیین سنتی ۲۶ عیدماه طبری (جشن مردگان)
+              </h3>
+              <p className="mb-3 text-sm text-gray-600">
+                عید مردگان یا «عید ماه» مراسم قدیمی و تاریخی استان مازندران است
+                که چنانچه از نامش بر می‌آید، به درگذشتگان اختصاص دارد.
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="text-xs">
+                  <p className="text-gray-500">7 اسفند . 6 دقیقه خواندن</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </div>
+    </section>
+  );
 }
 
 export default NewPost;

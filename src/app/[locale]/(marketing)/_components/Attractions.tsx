@@ -14,8 +14,6 @@ import { useTranslations } from "next-intl";
 import { AttractionsLandingRes } from "@/types/api";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-
-import { backendUrl } from "@/constants/config";
 import { useRouter } from "next/navigation";
 
 export function Attractions() {
@@ -67,7 +65,7 @@ export function Attractions() {
                         fill
                         src={
                           process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
-                        } //removing the first "/" because it is in the backendUrl
+                        } 
                         alt={blog.place_name}
                         className="absolute inset-0 h-full w-full object-cover"
                       />

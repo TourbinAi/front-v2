@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import polyline from "@mapbox/polyline";
 import dynamic from "next/dynamic";
+import { Clock, MapPin } from "lucide-react";
+
 const MapWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
   {
@@ -90,6 +92,7 @@ function MapPathFinder({
   const [centerX, setX] = useState(52.956453660199);
   const [centerY, setY] = useState(32.68558325422626);
   const [center, setCenter] = useState<LatLngExpression>([centerY, centerX]); //open map
+  const [textRoute, setText] = useState<any[]>([]);
   useEffect(() => {
     if (origin && destination.length > 0) {
       setLocOrigin(origin.location);
@@ -116,7 +119,9 @@ function MapPathFinder({
               headers: { "api-key": process.env.NEXT_PUBLIC_NESHAN_KEY },
             }
           );
+          // console.log(response.data.routes[0].legs);
           const data = response.data.routes[0];
+          setText(data.legs);
           const decodedPolyline = decodeLegsPolyLines(data.legs);
           setRoute(decodedPolyline);
           //console.log(decodedPolyline);
@@ -141,8 +146,9 @@ function MapPathFinder({
               headers: { "api-key": process.env.NEXT_PUBLIC_NESHAN_KEY },
             }
           );
-          // console.log(response);
+          // console.log(response.data.routes[0].legs);
           const data = response.data.routes[0];
+          setText(data.legs);
           const decodedPolyline = decodeLegsPolyLines(data.legs);
           setRoute(decodedPolyline);
         } catch (error) {
@@ -186,6 +192,8 @@ function MapPathFinder({
   }
   // console.log(destinationLoc);
   // console.log("ENNNNVVVV: ", process.env.NEXT_PUBLIC_NESHAN_KEY);
+  // console.log(textRoute);
+
   return (
     <>
       <div>
@@ -223,6 +231,31 @@ function MapPathFinder({
               </MarkerWithNoSSR>
             ))}
         </MapWithNoSSR>
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-1">
+        {textRoute?.map((text, idx) => {
+          return (
+            text.distance.text && (
+              <div key={idx} className="rounded bg-white p-2 shadow-md">
+                <p className="flex items-center text-lg font-semibold text-gray-800">
+                  <span className="inline-flex items-center text-nowrap">
+                    مقصد {idx + 1}:
+                  </span>
+                  <span className="inline-flex items-center text-nowrap">
+                    <Clock className="mr-2 h-5 w-5 text-blue-500" />
+                    {/* آیکون زمان */}
+                    {text.duration.text}
+                  </span>
+                  <span className="inline-flex items-center text-nowrap">
+                    <MapPin className="mr-2 h-5 w-5 text-green-500" />
+                    {/* آیکون مسافت */}
+                    {text.distance.text}
+                  </span>
+                </p>
+              </div>
+            )
+          );
+        })}
       </div>
     </>
   );

@@ -1,56 +1,63 @@
+"use client";
+// import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+// import Link from "next/link";
 function Place() {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 p-4">
-        {/* First column */}
-        <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out">
+  return (
+    <div className="grid grid-cols-1 gap-5 p-4 sm:grid-cols-2">
+      {/* First column */}
+
+      <div className="cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
+        <Link href={"/blog/filband/?blogtype=1&blogid=29"}>
           <img
             src="/assets/blog/cloud ocean.jpg"
             alt="Island with beautiful nature"
-            className="w-full object-cover"
+            className="h-[740px] w-full object-cover"
           />
           <div className="p-4">
-            <h4 className="text-xl  font-bold mb-2">
-              <a href="#">فیلبند مازندران کجاست: بالاتر از ابرها بایستید</a>
+            <h4 className="mb-2 text-xl font-bold">
+              فیلبند مازندران کجاست: بالاتر از ابرها بایستید
             </h4>
             <p className="text-sm text-gray-500">جنگل . آبشار . کوهنوردی</p>
           </div>
-        </div>
-  
-        {/* Second column */}
-        <div className="space-y-5">
-          {/* First row in second column */}
-          <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out">
-            <img
-              src="/assets/blog/Iran's Nature.jpg"
-              alt="Weather in the Azores"
-              className="w-full h-80  object-cover"
-            />
-            <div className="p-4">
-              <h4 className="text-xl font-bold mb-2">
-                بهشتی به اسم روستای سینوا چالوس
-              </h4>
-              <p className="text-sm text-gray-500">جنگل . آبشار . دریاچه</p>
-            </div>
+        </Link>
+      </div>
+
+      {/* Second column */}
+      <div className="space-y-5">
+        {/* First row in second column */}
+        <div className="cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
+          <img
+            src="/assets/blog/Iran's Nature.jpg"
+            alt="Weather in the Azores"
+            className="h-80 w-full object-cover"
+          />
+          <div className="p-4">
+            <h4 className="mb-2 text-xl font-bold">
+              بهشتی به اسم روستای سینوا چالوس
+            </h4>
+            <p className="text-sm text-gray-500">جنگل . آبشار . دریاچه</p>
           </div>
-  
-          {/* Second row in second column */}
-          <div className="rounded-lg overflow-hidden shadow-lg hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out ">
+        </div>
+
+        {/* Second row in second column */}
+        <div className="cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
+          <Link href={"/blog/filband/?blogtype=1&blogid=28"}>
             <img
-              src="/assets/blog/vabenn.jpg"
+              src="/assets/blog/lafor.jpg"
               alt="Hiking in the mountains"
-              className="w-full h-80 object-cover"
+              className="h-80 w-full object-cover"
             />
+
             <div className="p-4">
-              <h4 className="text-xl font-bold mb-2">
-                وربن مردابی زیبا در دل سینوا
-              </h4>
+              <h4 className="mb-2 text-xl font-bold">دهستان لفور </h4>
               <p className="text-sm text-gray-500">قایق سواری . جنگل</p>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
-    );
-  }
-  
-  export default Place;
-  
+    </div>
+  );
+}
+
+export default Place;
