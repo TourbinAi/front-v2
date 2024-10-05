@@ -72,11 +72,6 @@ const MobileMenu = () => {
                       </Accordion>
                     ))}
                   </div>
-                  <div className="mt-8 flex flex-col gap-4">
-                    <Button href="/register" variant="outline">
-                      {t("login/register")}
-                    </Button>
-                  </div>
                 </PopoverPanel>
               </>
             )}

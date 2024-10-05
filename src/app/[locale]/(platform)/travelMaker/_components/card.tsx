@@ -33,10 +33,6 @@ export default function RouteCard({
   longitude,
   latitude,
 }: RouteCardProps) {
-  // if (!cities) {
-  //   return null;
-  // }
-  console.log("citieeeees: ", cities);
   const router = useRouter();
   const [wetherReport, setWetherReport] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<City>(cities[0]);
@@ -50,7 +46,6 @@ export default function RouteCard({
       const obj = await fetch(
         `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`
       );
-      // console.log("weather:", obj);
     };
     fetchWeather();
   }, []);
@@ -122,7 +117,7 @@ export default function RouteCard({
       .attr("stroke-width", 2)
       .attr("stroke-dasharray", "5,5");
 
-    // Draw nodes
+    // Draw nodes and city names
     cities.forEach((city, i) => {
       const g = svg
         .append("g")
@@ -144,7 +139,15 @@ export default function RouteCard({
 
       g.append("title").text(city.name);
 
-      g.on("click", () => handleCityClick(city.name));
+      // Add city name to the left of the node
+      g.append("text")
+        .attr("x", -(nodeRadius + 10)) // Position the text to the left of the node
+        .attr("y", 5)
+        .attr("fill", city.name === selectedCity.name ? "yellow" : "white") // Highlight the selected city
+        .attr("font-size", "12px")
+        .attr("text-anchor", "end") // Align text to the right
+        .text(city.name)
+        .on("click", () => handleCityClick(city.name));
     });
   }, [cities, selectedCity.name]);
 

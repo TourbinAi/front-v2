@@ -44,13 +44,15 @@ function Section({
         dir == "ltr" ? "lg:flex-row" : "lg:flex-row-reverse"
       )}
     >
-      <div className="relative hidden w-1/2 overflow-hidden lg:block">
-        <Image
-          alt="compass"
-          src={outlinedImage}
-          fill
-          className="h-auto w-full object-contain"
-        />
+      <div className="relative hidden w-1/2 items-center justify-center overflow-hidden border border-green-700 lg:flex">
+        <div className="m-32 size-full border border-red-400">
+          <Image
+            alt="compass"
+            src={outlinedImage}
+            fill
+            className="h-auto w-full"
+          />
+        </div>
       </div>
       <div className="lg:hidden">
         <Image
@@ -76,7 +78,7 @@ export function FeatureDetails() {
   const t = useTranslations("landingPage.featureDetails");
 
   return (
-    <div className="flex w-full flex-col justify-stretch gap-8">
+    <div className="flex w-full flex-col justify-stretch">
       <Section dir="ltr" name="about" image={tent} outlinedImage={outlinedTent}>
         <Button>{t("about.readMore")}</Button>
       </Section>
