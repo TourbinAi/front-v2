@@ -126,7 +126,7 @@ function MapPathFinder({
           setRoute(decodedPolyline);
           //console.log(decodedPolyline);
         } catch (err) {
-          console.log("Error fetching route:", err);
+          // console.log("Error fetching route:", err);
         }
       } else {
         // console.log(destinationLoc.at(-1));

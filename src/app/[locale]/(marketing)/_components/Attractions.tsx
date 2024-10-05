@@ -32,7 +32,7 @@ export function Attractions() {
         // console.log("response: ", response);
         setData(response.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       } finally {
         setLoading(false);
       }

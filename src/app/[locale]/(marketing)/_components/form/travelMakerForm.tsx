@@ -51,7 +51,7 @@ export const TravelMakerForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
-    console.log("yes");
+    // console.log("yes");
     const queryParams = new URLSearchParams(values as any).toString();
     router.push(`/travelMaker?${queryParams}`);
   };

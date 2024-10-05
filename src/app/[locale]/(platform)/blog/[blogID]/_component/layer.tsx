@@ -18,8 +18,8 @@ const App: React.FC = () => {
       const blogidparam = (searchParams.get("blogid") || "").replace(/\/$/, "");
       const numberBlogId = Number(blogidparam);
       const numberBlogType = Number(blogtypeparam);
-      console.log(blogidparam);
-      console.log(blogtypeparam);
+      // console.log(blogidparam);
+      // console.log(blogtypeparam);
 
       const response = await BlogUniqAPI(numberBlogType, numberBlogId);
       setData(response);
@@ -27,8 +27,8 @@ const App: React.FC = () => {
     fetchData();
   }, [searchParams]);
   useEffect(() => {
-    console.log(responseData);
-    console.log(responseData?.data.name_of_city);
+    // console.log(responseData);
+    // console.log(responseData?.data.name_of_city);
   }, [responseData]);
   return (
     <div className="flex flex-row overflow-y-scroll">

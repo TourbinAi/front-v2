@@ -52,10 +52,10 @@ export const CelebrationsAndEventForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof celebrationsAndEvents>) => {
-    setIsLoading(true);
-    router.push("");
     try {
-      console.log("values: ", values);
+      setIsLoading(true);
+      router.push("blog/event/?blogtype=3&blogid=3");
+      // console.log("values: ", values);
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +92,7 @@ export const CelebrationsAndEventForm = () => {
                     value={month}
                     className="w-full text-right"
                   >
-                    <div className="flex w-full cursor-pointer flex-row items-center gap-2 border border-red-400 ltr:flex-row-reverse">
+                    <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
                       <p>{t(`form.month.options.${month}`)}</p>
                     </div>
                   </SelectItem>
@@ -104,10 +104,10 @@ export const CelebrationsAndEventForm = () => {
         <SubmitButton className="mb-1 w-full" isLoading={isLoading}>
           {t("form.submit")}
         </SubmitButton>
-        <Button className="w-full" variant="outline" href="/blog">
-          {t("form.goTo")}
-        </Button>
       </form>
+      <Button className="w-full" variant="outline" href="/blog">
+        {t("form.goTo")}
+      </Button>
     </Form>
   );
 };

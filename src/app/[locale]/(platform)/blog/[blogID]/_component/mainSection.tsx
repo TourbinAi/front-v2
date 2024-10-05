@@ -13,7 +13,7 @@ const Editor: React.FC<EditorProps> = ({ data }) => {
   const editorInstance = useRef<EditorJS | null>(null);
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
 
     if (!editorInstance.current) {
       editorInstance.current = new EditorJS({
@@ -21,7 +21,7 @@ const Editor: React.FC<EditorProps> = ({ data }) => {
         readOnly: true,
         data: data,
         onReady: () => {
-          console.log("Editor.js is ready!");
+          // console.log("Editor.js is ready!");
         },
         tools: {
           List: List,

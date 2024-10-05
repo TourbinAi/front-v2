@@ -176,7 +176,7 @@ export const PathFinderForm: React.FC<FormProps> = ({
     setLoadOrigin(false);
     if (type === "origin") {
       setOriginValue("");
-      console.log(item);
+      // console.log(item);
       setDataOrigin(item);
       setNeshanDataOrigin([]);
       form.setValue("origin", item.title);

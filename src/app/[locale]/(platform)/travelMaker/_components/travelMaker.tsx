@@ -181,7 +181,7 @@ export default function TravelMaker() {
   }, []);
 
   const updateQuery = () => {
-    console.log("updating query...");
+    // console.log("updating query...");
     const queryParams = new URLSearchParams(form.getValues() as any).toString();
     router.push(`/travelMaker?${queryParams}`);
   };

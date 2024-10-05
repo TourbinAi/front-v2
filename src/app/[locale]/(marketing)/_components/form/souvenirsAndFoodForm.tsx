@@ -12,10 +12,12 @@ import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export const SouvenirsAndFoodForm = () => {
   const t = useTranslations("landingPage.featureDetails.souvenirsAndFood");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof souvenirsAndFood>>({
     resolver: zodResolver(souvenirsAndFood),
@@ -29,9 +31,10 @@ export const SouvenirsAndFoodForm = () => {
     setIsLoading(true);
 
     try {
-      console.log("values: ", values);
+      router.push("blog/event/?blogtype=2&blogid=1");
+      setIsLoading(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     setIsLoading(false);
@@ -63,10 +66,10 @@ export const SouvenirsAndFoodForm = () => {
         />
 
         <SubmitButton isLoading={isLoading}>{t("form.submit")}</SubmitButton>
-        <Button className="w-full" variant="outline" href="/blog">
-          {t("form.goTo")}
-        </Button>
       </form>
+      <Button className="w-full" variant="outline" href="/blog">
+        {t("form.goTo")}
+      </Button>
     </Form>
   );
 };

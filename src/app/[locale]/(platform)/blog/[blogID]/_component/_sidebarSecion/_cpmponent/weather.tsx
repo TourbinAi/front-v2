@@ -29,7 +29,7 @@ const WeatherComponent: React.FC<WeatherProps> = ({ city }) => {
         const data = await fetchWeather(city);
         setWeatherState({ data, error: null, loading: false });
 
-        console.log(data);
+        // console.log(data);
 
         if (data.description.includes("clouds")) {
           setGif("/assets/weatherGIF/output-onlinegiftools.gif");
@@ -57,7 +57,7 @@ const WeatherComponent: React.FC<WeatherProps> = ({ city }) => {
     };
     if (city) {
       fetchData();
-      console.log(city);
+      // console.log(city);
     }
   }, [city]);
 

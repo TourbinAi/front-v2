@@ -44,11 +44,11 @@ export const PathFinderForm = () => {
       setIsLoading(true);
       const serializedDataOrigin = encodeURIComponent(JSON.stringify(DataOrigin));
       const serializedDataDes = encodeURIComponent(JSON.stringify(DataDestination[0]));
-      console.log(DataDestination[0]);
+      // console.log(DataDestination[0]);
       router.push(`/pathFinder?origin=${serializedDataOrigin}&des=${serializedDataDes}`)
       ;}
 catch(err){
-  console.log(err);
+  // console.log(err);
 }
   };
   const changeHandler = async (
@@ -134,7 +134,7 @@ catch(err){
     setLoadOrigin(false);
     if (type === "origin") {
       setOriginValue("");
-      console.log(item);
+      // console.log(item);
       setDataOrigin(item);
       setNeshanDataOrigin([]);
       form.setValue("origin", item.title);
