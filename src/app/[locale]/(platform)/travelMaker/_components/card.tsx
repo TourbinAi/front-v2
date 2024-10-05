@@ -35,7 +35,9 @@ export default function RouteCard({
 }: RouteCardProps) {
   const router = useRouter();
   const [wetherReport, setWetherReport] = useState<string>("");
-  const [selectedCity, setSelectedCity] = useState<City>(cities[0]);
+  const [selectedCity, setSelectedCity] = useState<City>(
+    cities[cities.length - 1]
+  );
   const [images, setImages] = useState<{ [key: string]: StaticImageData }>({});
   const [loading, setLoading] = useState(true);
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -46,6 +48,7 @@ export default function RouteCard({
       const obj = await fetch(
         `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`
       );
+      // console.log("weather:", obj);
     };
     fetchWeather();
   }, []);
@@ -117,7 +120,7 @@ export default function RouteCard({
       .attr("stroke-width", 2)
       .attr("stroke-dasharray", "5,5");
 
-    // Draw nodes and city names
+    // Draw nodes
     cities.forEach((city, i) => {
       const g = svg
         .append("g")
@@ -139,15 +142,7 @@ export default function RouteCard({
 
       g.append("title").text(city.name);
 
-      // Add city name to the left of the node
-      g.append("text")
-        .attr("x", -(nodeRadius + 10)) // Position the text to the left of the node
-        .attr("y", 5)
-        .attr("fill", city.name === selectedCity.name ? "yellow" : "white") // Highlight the selected city
-        .attr("font-size", "12px")
-        .attr("text-anchor", "end") // Align text to the right
-        .text(city.name)
-        .on("click", () => handleCityClick(city.name));
+      g.on("click", () => handleCityClick(city.name));
     });
   }, [cities, selectedCity.name]);
 
@@ -160,7 +155,7 @@ export default function RouteCard({
   };
 
   return (
-    <Card className="sm1:border-red-500 relative h-[250px] w-full max-w-7xl overflow-hidden border-4">
+    <Card className="relative h-[250px] w-full max-w-7xl overflow-hidden">
       <Image
         fill
         src={process.env.NEXT_PUBLIC_BACKEND_URL + selectedCity.image_url}
@@ -169,6 +164,9 @@ export default function RouteCard({
       />
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
+        <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black bg-opacity-60 px-4 py-2 backdrop-blur-sm">
+          {selectedCity.name}
+        </span>
         <div className="flex size-full items-center justify-between">
           <svg
             ref={svgRef}
@@ -177,8 +175,8 @@ export default function RouteCard({
             className="overflow-visible"
           />
           <div className="flex w-full items-center justify-between lg:w-1/2">
-            <div className="relative flex size-full flex-col items-center justify-center gap-4">
-              <h2 className="text-gl mb-5 text-wrap text-center align-middle font-bold lg:text-xl">
+            <div className="relative flex size-full flex-col items-center justify-center gap-2">
+              <h2 className="text-gl text-wrap text-center align-middle font-bold lg:text-xl">
                 {name}
               </h2>
               <Button

@@ -52,7 +52,7 @@ function SideBarMap({ packageId, ResData }: MapProps) {
   }, [typedDescription]);
 
   return (
-    <div className="mr-5 mt-5 flex flex-col flex-wrap rounded-lg border border-red-400 bg-white pl-4 pr-4 pt-3">
+    <div className="mr-5 mt-5 flex flex-col flex-wrap rounded-lg bg-white pl-4 pr-4 pt-3">
       {isLoading ? (
         <>
           <div className="flex h-48 justify-center">

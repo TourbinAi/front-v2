@@ -79,7 +79,7 @@ export function Hero() {
                 onClick={handleSmoothScroll}
                 className="group flex flex-col flex-nowrap items-center justify-center gap-8 sm:flex-wrap"
               >
-                <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex flex-col items-center justify-center gap-4">
                   <Image
                     className="transition-all group-hover:scale-110"
                     alt={feature.name}
