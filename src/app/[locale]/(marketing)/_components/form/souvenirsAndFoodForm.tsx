@@ -12,7 +12,7 @@ import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 export const SouvenirsAndFoodForm = () => {
   const t = useTranslations("landingPage.featureDetails.souvenirsAndFood");
@@ -29,9 +29,8 @@ export const SouvenirsAndFoodForm = () => {
 
   const onSubmit = async (values: z.infer<typeof souvenirsAndFood>) => {
     setIsLoading(true);
-
+    router.push("/blog/Souvenirs/?blogtype=2&blogid=3");
     try {
-      router.push("blog/event/?blogtype=2&blogid=1");
       setIsLoading(true);
     } catch (error) {
       // console.log(error);

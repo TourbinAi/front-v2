@@ -52,6 +52,8 @@ export const CelebrationsAndEventForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof celebrationsAndEvents>) => {
+    setIsLoading(true);
+    router.push("/blog/event/?blogtype=3&blogid=3");
     try {
       setIsLoading(true);
       router.push("blog/event/?blogtype=3&blogid=3");
@@ -90,7 +92,7 @@ export const CelebrationsAndEventForm = () => {
                   <SelectItem
                     key={i}
                     value={month}
-                    className="w-full text-right"
+                    className="flex w-full items-center justify-end text-right"
                   >
                     <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
                       <p>{t(`form.month.options.${month}`)}</p>
