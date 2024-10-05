@@ -145,6 +145,24 @@
             "title": "Occasion",
             "placeholder": "Enter occasion or event."
           },
+          "month": {
+            "title": "Month",
+            "placeholder": "Select a month",
+            "options": {
+              "farvardin": "Farvardin",
+              "ordibehesht": "Ordibehesht",
+              "khordad": "Khordad",
+              "tir": "Tir",
+              "mordad": "Mordad",
+              "shahrivar": "Shahrivar",
+              "mehr": "Mehr",
+              "aban": "Aban",
+              "azar": "Azar",
+              "day": "Day",
+              "bahman": "Bahman",
+              "esfand": "Esfand"
+            }
+          },
           "submit": "Search",
           "goTo": "Celebrations and events page"
         }

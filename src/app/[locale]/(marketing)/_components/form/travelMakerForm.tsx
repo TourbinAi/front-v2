@@ -59,7 +59,7 @@ export const TravelMakerForm = () => {
   return (
     <div className="flex h-full w-full flex-wrap justify-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
           <CustomFormField
             fieldType={FormFieldType.SELECT}
             control={form.control}
@@ -75,14 +75,6 @@ export const TravelMakerForm = () => {
               </SelectItem>
             ))}
           </CustomFormField>
-          {/* 
-          <CustomFormField
-            fieldType={FormFieldType.DATE_PICKER}
-            control={form.control}
-            name="date"
-            label={t("form.date.title")}
-          /> */}
-
           <CustomFormField
             fieldType={FormFieldType.SELECT}
             control={form.control}

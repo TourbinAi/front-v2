@@ -192,7 +192,7 @@ export default function TravelMaker() {
     <SheetLayout
       open={open}
       setOpen={setOpen}
-      button={typeof list !== "undefined"}
+      button={typeof list === "undefined" ? false : list.length !== 0}
       sideBarComponent={
         <div className="h-full overflow-x-hidden p-5">
           <div className="flex h-full flex-wrap justify-center">
@@ -384,27 +384,29 @@ export default function TravelMaker() {
           {list ? (
             <>
               {list.length === 0 ? (
-                <Card>
-                  <CardHeader className="flex w-full flex-col items-center justify-center">
-                    <CardTitle className="flex gap-2 pb-2">
-                      <span>{t("form.noResults")}</span>
-                      <span className="-translate-y-1 text-2xl">{"):"}</span>
-                    </CardTitle>
-                    <CardDescription className="text-center">
-                      {t("form.tryAnother")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex size-full flex-col items-center justify-center">
-                    <Button
-                      className="flex lg:hidden"
-                      variant="outline"
-                      onClick={() => setOpen(true)}
-                    >
-                      <ChevronRight />
-                      {t("form.form-header.fillForm")}
-                    </Button>
-                  </CardContent>
-                </Card>
+                <div className="flex size-full items-center justify-center">
+                  <Card className="max-w-96">
+                    <CardHeader className="flex w-full flex-col items-center justify-center">
+                      <CardTitle className="flex gap-2 pb-2">
+                        <span>{t("form.noResults")}</span>
+                        <span className="-translate-y-1 text-2xl">{"):"}</span>
+                      </CardTitle>
+                      <CardDescription className="text-center">
+                        {t("form.tryAnother")}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex size-full flex-col items-center justify-center">
+                      <Button
+                        className="flex lg:hidden"
+                        variant="outline"
+                        onClick={() => setOpen(true)}
+                      >
+                        <ChevronRight />
+                        {t("form.form-header.fillForm")}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
               ) : (
                 <div className="flex w-full flex-col gap-4">
                   {list.map((item) => (
@@ -415,7 +417,7 @@ export default function TravelMaker() {
                       description={item.description}
                       latitude={item.latitude}
                       longitude={item.longitude}
-                      cities={item.places}
+                      cities={[...item.places].reverse()}
                     />
                   ))}
                 </div>
@@ -423,8 +425,8 @@ export default function TravelMaker() {
             </>
           ) : (
             <>
-              <div className="hodden size-full items-center justify-center lg:flex">
-                <Card>
+              <div className="flex size-full items-center justify-center">
+                <Card className="max-w-96">
                   <CardHeader className="flex w-full flex-col items-center justify-center">
                     <CardTitle className="pb-2">
                       {t("form.form-header.title")}
