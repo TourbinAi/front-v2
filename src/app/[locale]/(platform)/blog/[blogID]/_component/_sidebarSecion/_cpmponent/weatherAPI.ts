@@ -1,29 +1,42 @@
+import axios from "axios";
 
 export interface WeatherData {
   city: string;
   country: string;
   temperature: number;
   description: string;
+  icon: string;
 }
 
-const API_KEY = "198458e60fc9015aca9e770c9a83643b";
+const API_KEY = "KP9Z75KK97H8FNCBVKADQV7HW"; // Visual Crossing API Key
 
 export const fetchWeather = async (city: string): Promise<WeatherData> => {
-  const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
-  );
-  const result = await res.json();
+  const location=city.split("-")
+  try {
+    const res = await axios.get(
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location[0]}`,
+      {
+        params: {
+          unitGroup: "metric",
+          key: API_KEY,
+          contentType: "json",
+        },
+      }
+    );
 
-  if (!res.ok) {
+    const result = res.data;
+    console.log(result);
+
+    const weatherData: WeatherData = {
+      city: result.resolvedAddress,
+      country: result.address, // داده‌ی کشور به‌طور مستقیم موجود نیست
+      temperature: result.currentConditions.temp,
+      description: result.currentConditions.conditions.toLowerCase(),
+      icon: result.currentConditions.icon,
+    };
+
+    return weatherData;
+  } catch (error) {
     throw new Error("Location not found");
   }
-
-  const weatherData: WeatherData = {
-    city: result.name,
-    country: result.sys.country,
-    temperature: Math.floor(result.main.temp - 273.15),
-    description: result.weather[0].description,
-  };
-
-  return weatherData;
 };

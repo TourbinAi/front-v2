@@ -5,6 +5,7 @@ import Header from "@editorjs/header";
 import dynamic from "next/dynamic";
 import List from "@editorjs/list";
 import Image from "next/image";
+
 interface EditorProps {
   data: OutputData; // JSON type for EditorJS
   image: string;
@@ -28,7 +29,7 @@ const Editor: React.FC<EditorProps> = ({ data, image }) => {
           List: List,
           header: {
             class: Header as unknown as ToolConstructable,
-            inlineToolbar: true,
+            inlineToolbar: ["bold", "italic", "link"],
           },
           list: {
             class: List as unknown as ToolConstructable,
