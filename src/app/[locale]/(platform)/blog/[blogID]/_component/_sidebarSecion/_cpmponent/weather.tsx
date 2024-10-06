@@ -11,7 +11,6 @@ interface WeatherState {
 interface WeatherProps {
   city: string;
 }
-
 const WeatherComponent: React.FC<WeatherProps> = ({ city }) => {
   const [weatherState, setWeatherState] = useState<WeatherState>({
     data: null,
@@ -20,6 +19,7 @@ const WeatherComponent: React.FC<WeatherProps> = ({ city }) => {
   });
   const [descriptionWeather, setDescriptionWeather] = useState<string>("");
   const [gif, setGif] = useState<string>("");
+  const [CityPlace, setCity] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,23 +27,25 @@ const WeatherComponent: React.FC<WeatherProps> = ({ city }) => {
 
       try {
         const data = await fetchWeather(city);
+        console.log(data);
+
         setWeatherState({ data, error: null, loading: false });
 
         // console.log(data);
 
-        if (data.description.includes("clouds")) {
+        if (data.icon.includes("cloudy")) {
           setGif("/assets/weatherGIF/output-onlinegiftools.gif");
           setDescriptionWeather("ابری");
-        } else if (data.description.includes("rain")) {
+        } else if (data.icon.includes("rain")) {
           setGif("/assets/weatherGIF/output-onlinegiftools (1).gif");
           setDescriptionWeather("بارونی");
-        } else if (data.description.includes("clear")) {
+        } else if (data.icon.includes("clear")) {
           setGif("/assets/weatherGIF/icegif-843.gif");
           setDescriptionWeather("آسمان صاف");
-        } else if (data.description.includes("haze")) {
+        } else if (data.icon.includes("haze")) {
           setGif("/assets/weatherGIF/haze.gif");
           setDescriptionWeather("مه آلود");
-        } else if (data.description.includes("sand")) {
+        } else if (data.icon.includes("sand")) {
           setGif("/assets/weatherGIF/sandmain.gif");
           setDescriptionWeather("غبار الود");
         }
@@ -57,22 +59,25 @@ const WeatherComponent: React.FC<WeatherProps> = ({ city }) => {
     };
     if (city) {
       fetchData();
+      const nameCity = city.split("-");
+      setCity(nameCity[1]);
+
       // console.log(city);
     }
   }, [city]);
 
   return (
     <div className="ml-4 mt-6 rounded-lg bg-orange-100 px-4">
-      {weatherState.loading && <p>Loading...</p>}
+      {weatherState.loading && <p>در حال ارتباط...</p>}
       {weatherState.error && (
-        <p style={{ color: "red" }}>{weatherState.error}</p>
+        <p style={{ color: "red" }}>آب و هوای موردنظر در دسترس نیست</p>
       )}
 
       {weatherState.data && (
         <div className="flex flex-row items-center">
           <div>
             <div>
-              <span>{city} </span>
+              <span>{CityPlace} </span>
               {/* <span>{weatherState.data.country}</span> */}
             </div>
             <div>

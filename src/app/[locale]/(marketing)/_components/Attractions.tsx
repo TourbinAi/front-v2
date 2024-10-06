@@ -16,6 +16,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export function Attractions() {
   const [responseData, setData] = useState<AttractionsLandingRes>([]);
@@ -65,30 +66,29 @@ export function Attractions() {
               <CarouselContent className="mx-10 my-5 flex gap-1">
                 {responseData.map((blog, blogIndex) => (
                   <CarouselItem
-                    onClick={() =>
-                      router.push(
-                        `/blog/${blog.title}/?blogtype=1&blogid=${blog.id}`
-                      )
-                    }
                     key={blogIndex}
                     className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl border-none bg-none transition-transform hover:scale-105"
                   >
-                    <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
-                      <CardContent className="relative h-full w-full">
-                        <Image
-                          fill
-                          src={
-                            process.env.NEXT_PUBLIC_BACKEND_URL +
-                            blog.card_image
-                          } //removing the first "/" because it is in the backendUrl
-                          alt={blog.place_name}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
-                        <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
-                          {blog.place_name || "NAME PLACE"}
-                        </span>
-                      </CardContent>
-                    </Card>
+                    <Link
+                      href={`blog/${blog.title}/?blogtype=1&blogid=${blog.id}`}
+                    >
+                      <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
+                        <CardContent className="relative h-full w-full">
+                          <Image
+                            fill
+                            src={
+                              process.env.NEXT_PUBLIC_BACKEND_URL +
+                              blog.card_image
+                            } //removing the first "/" because it is in the backendUrl
+                            alt={blog.place_name}
+                            className="absolute inset-0 h-full w-full object-cover"
+                          />
+                          <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
+                            {blog.place_name || "NAME PLACE"}
+                          </span>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   </CarouselItem>
                 ))}
               </CarouselContent>
