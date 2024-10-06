@@ -25,8 +25,6 @@ export const fetchWeather = async (city: string): Promise<WeatherData> => {
     );
 
     const result = res.data;
-    console.log(result);
-
     const weatherData: WeatherData = {
       city: result.resolvedAddress,
       country: result.address, // داده‌ی کشور به‌طور مستقیم موجود نیست
