@@ -41,7 +41,10 @@ export function Attractions() {
   }, []);
   return (
     <>
-      <div className="my-10 flex flex-col items-center justify-center space-y-6">
+      <div
+        id="tourismPlaces"
+        className="my-10 flex flex-col items-center justify-center space-y-6"
+      >
         <div className="w-full">
           <h1 className="mb-2 mt-3 rounded-md p-5 text-xl font-semibold">
             {t("title")}

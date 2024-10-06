@@ -80,7 +80,7 @@ export const primaryFeatures: PrimaryFeatureProps[] = [
   {
     icon: iconFood,
     name: "souvenirsAndFood",
-    href: "souveniersAndFood",
+    href: "souvenirsAndFood",
   },
 ];
 
