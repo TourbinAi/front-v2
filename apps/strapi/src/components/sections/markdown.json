@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_sections_markdowns",
+  "info": {
+    "displayName": "markdown"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "blocks"
+    }
+  }
+}
