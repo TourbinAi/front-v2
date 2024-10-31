@@ -1,19 +1,23 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
+import path from "path"
+
+import * as React from "react"
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import { env } from "@/env.mjs"
+
+import { AttractionsAPI } from "@/lib/api"
+import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { AttractionsAPI } from "@/lib/api";
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
+} from "@/components/ui/carousel"
 
 export function CarouselSpacing({ destination }: { destination: any[] }) {
-  const [destinationInfo, setInfo] = useState<any[]>([]);
-  const [responseData, setData] = useState<any[]>([]);
+  const [destinationInfo, setInfo] = useState<any[]>([])
+  const [responseData, setData] = useState<any[]>([])
   const [regionID, setId] = useState([
     { region: "مازندران", id: 1 },
     { region: "گیلان", id: 2 },
@@ -46,39 +50,39 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
     { region: "یزد", id: 29 },
     { region: "هرمزگان", id: 30 },
     { region: "کرمانشاه", id: 31 },
-  ]);
-  const [filterRegionState, setFilter] = useState<any>(null);
+  ])
+  const [filterRegionState, setFilter] = useState<any>(null)
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!destination || destination.length === 0) return;
+      if (!destination || destination.length === 0) return
 
-      setInfo(destination);
+      setInfo(destination)
       // console.log(destination.at(-1));
 
       const filterRegion = regionID.find((regionItem) =>
         destination?.at(-1)?.region?.includes(regionItem.region)
-      );
-      if (!filterRegion) return;
-      setFilter(filterRegion);
+      )
+      if (!filterRegion) return
+      setFilter(filterRegion)
       // console.log(filterRegion);
 
       try {
-        const response = await AttractionsAPI(filterRegion.id);
+        const response = await AttractionsAPI(filterRegion.id)
         // console.log(response);
-        setData(response.data);
+        setData(response.data)
       } catch (err) {
         // console.log(err);
       }
-    };
+    }
 
-    fetchData();
-  }, [destination]);
+    fetchData()
+  }, [destination])
 
-  const filteredData = responseData.filter((item: any) => item.tag_id);
+  const filteredData = responseData.filter((item: any) => item.tag_id)
 
   if (!filteredData.length) {
-    return null;
+    return null
   }
 
   return (
@@ -98,10 +102,6 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
           >
             <CarouselContent className="flex gap-1">
               {item.blogs.map((blog: any, blogIndex: number) => {
-                // console.log(
-                //   "urllll: ",
-                //   process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
-                // );
                 return (
                   <CarouselItem
                     key={blogIndex}
@@ -111,10 +111,10 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
                       <CardContent className="relative size-full">
                         <Image
                           fill
-                          src={
-                            process.env.NEXT_PUBLIC_BACKEND_URL +
+                          src={path.join(
+                            env.NEXT_PUBLIC_BACKEND_URL,
                             blog.card_image
-                          }
+                          )}
                           alt={blog.place_name}
                           className="absolute inset-0 size-full object-cover"
                         />
@@ -124,7 +124,7 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
                       </CardContent>
                     </Card>
                   </CarouselItem>
-                );
+                )
               })}
             </CarouselContent>
             <CarouselPrevious className="absolute left-1" />
@@ -133,5 +133,5 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
         </div>
       ))}
     </div>
-  );
+  )
 }

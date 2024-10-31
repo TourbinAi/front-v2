@@ -1,23 +1,24 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-import { Form } from "@/components/ui/form";
-import { souvenirsAndFood } from "@/lib/validation/landing";
-
-import CustomFormField, { FormFieldType } from "@/components/forms/CustomeFormField";
-import SubmitButton from "@/components/forms/SubmitButton";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "@/lib/navigation";
+import { useRouter } from "@/lib/navigation"
+import { souvenirsAndFood } from "@/lib/validation/landing"
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/forms/CustomeFormField"
+import SubmitButton from "@/components/forms/SubmitButton"
+import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
 
 export const SouvenirsAndFoodForm = () => {
-  const t = useTranslations("landingPage.featureDetails.souvenirsAndFood");
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const t = useTranslations("landingPage.featureDetails.souvenirsAndFood")
+  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof souvenirsAndFood>>({
     resolver: zodResolver(souvenirsAndFood),
@@ -25,19 +26,19 @@ export const SouvenirsAndFoodForm = () => {
       food: "",
       city: "",
     },
-  });
+  })
 
   const onSubmit = async () => {
-    setIsLoading(true);
-    router.push("/blog/Souvenirs/?blogtype=2&blogid=3");
+    setIsLoading(true)
+    router.push("/blog/Souvenirs/?blogtype=2&blogid=3")
     try {
-      setIsLoading(true);
+      setIsLoading(true)
     } catch (error) {
-      console.log(error);
+      console.error(error)
     }
 
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   return (
     <Form {...form}>
@@ -70,5 +71,5 @@ export const SouvenirsAndFoodForm = () => {
         {t("form.goTo")}
       </Button>
     </Form>
-  );
-};
+  )
+}

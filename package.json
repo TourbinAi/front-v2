@@ -33,6 +33,7 @@
     "preinstall": "npx only-allow yarn",
     "postinstall": "yarn patch-package",
     "lint": "turbo lint",
+    "lint:fix": "eslint . --fix && prettier --write .",
     "prepare": "husky",
     "start:strapi": "turbo run start --filter=@repo/strapi",
     "start:ui": "turbo run start --filter=@repo/ui"

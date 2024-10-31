@@ -1,9 +1,10 @@
-import { cn } from "@/lib/styles";
-import { ClassValue } from "clsx";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import React from "react";
-import logo from "public/assets/images/logo.png";
+import React from "react"
+import Image from "next/image"
+import { ClassValue } from "clsx"
+import { useTranslations } from "next-intl"
+import logo from "public/assets/images/logo.png"
+
+import { cn } from "@/lib/styles"
 
 /**
  * Logo component.
@@ -19,7 +20,6 @@ import logo from "public/assets/images/logo.png";
  * @see Logomark
  */
 
-
 interface SVGProps extends React.SVGProps<SVGSVGElement> {}
 
 export function Logomark(props: SVGProps) {
@@ -31,15 +31,15 @@ export function Logomark(props: SVGProps) {
         d="M20 40C8.954 40 0 31.046 0 20S8.954 0 20 0s20 8.954 20 20-8.954 20-20 20ZM4 20c0 7.264 5.163 13.321 12.02 14.704C17.642 35.03 19 33.657 19 32V8c0-1.657-1.357-3.031-2.98-2.704C9.162 6.68 4 12.736 4 20Z"
       />
     </svg>
-  );
+  )
 }
 
 interface LogoProps {
-  className: ClassValue;
+  className: ClassValue
 }
 
 export function Logo({ className }: LogoProps) {
-  const t = useTranslations("localeLayout");
+  const t = useTranslations("localeLayout")
   return (
     <div
       className={cn(
@@ -49,5 +49,5 @@ export function Logo({ className }: LogoProps) {
     >
       <Image alt="logo" width={70} height={70} src={logo} />
     </div>
-  );
+  )
 }

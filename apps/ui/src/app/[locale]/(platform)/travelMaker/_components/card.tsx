@@ -1,99 +1,101 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "@/lib/navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Image, { StaticImageData } from "next/image";
-import * as d3 from "d3";
+import path from "path"
 
-import { ChevronLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
-import path from "path";
-import { env } from "@/env.mjs";
+import { useEffect, useRef, useState } from "react"
+import Image, { StaticImageData } from "next/image"
+import { env } from "@/env.mjs"
+import * as d3 from "d3"
+import { ChevronLeft } from "lucide-react"
+import { useTranslations } from "next-intl"
+
+import { useRouter } from "@/lib/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 type City = {
-  id: number;
-  name: string;
-  image_url: string;
-};
+  id: number
+  name: string
+  image_url: string
+}
 
 type RouteCardProps = {
-  latitude: string;
-  longitude: string;
-  id: number;
-  name: string;
-  description: string;
-  cities: City[];
-};
+  latitude: string
+  longitude: string
+  id: number
+  name: string
+  description: string
+  cities: City[]
+}
 
-export default function RouteCard({
-  id,
-  name,
-  cities,
-}: RouteCardProps) {
-  const router = useRouter();
+export default function RouteCard({ id, name, cities }: RouteCardProps) {
+  const router = useRouter()
   const [selectedCity, setSelectedCity] = useState<City>(
-    (cities.length > 0 && cities) ? cities[cities.length - 1] as City : { id: 0, name: "", image_url: "" } as City
-  );
-  const [images, setImages] = useState<{ [key: string]: StaticImageData }>({});
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const t = useTranslations("travelMaker.card");
+    cities.length > 0 && cities
+      ? (cities[cities.length - 1] as City)
+      : ({ id: 0, name: "", image_url: "" } as City)
+  )
+  const [images, setImages] = useState<{ [key: string]: StaticImageData }>({})
+  const svgRef = useRef<SVGSVGElement | null>(null)
+  const t = useTranslations("travelMaker.card")
 
   useEffect(() => {
     const preloadImages = async () => {
-      const newImages: { [key: string]: StaticImageData } = {};
+      const newImages: { [key: string]: StaticImageData } = {}
       try {
         await Promise.all(
           cities.map(async (city) => {
-            const imageUrl = path.join(env.NEXT_PUBLIC_BACKEND_URL, city.image_url);
-            const response = await fetch(imageUrl);
+            const imageUrl = path.join(
+              env.NEXT_PUBLIC_BACKEND_URL,
+              city.image_url
+            )
+            const response = await fetch(imageUrl)
             if (!response.ok) {
-              throw new Error(`Failed to fetch image for city: ${city.name}`);
+              throw new Error(`Failed to fetch image for city: ${city.name}`)
             }
 
-            const blob = await response.blob();
-            const objectUrl = URL.createObjectURL(blob);
+            const blob = await response.blob()
+            const objectUrl = URL.createObjectURL(blob)
             newImages[city.name] = {
               src: objectUrl,
               height: 300,
               width: 500,
               blurDataURL: objectUrl,
-            };
+            }
           })
-        );
+        )
       } catch (error) {
-        console.error("Error preloading images:", error);
+        console.error("Error preloading images:", error)
       } finally {
-        setImages(newImages);
+        setImages(newImages)
       }
-    };
+    }
 
-    preloadImages();
+    preloadImages()
 
     return () => {
       Object.values(images).forEach((image) => {
         if (image.src) {
-          URL.revokeObjectURL(image.src);
+          URL.revokeObjectURL(image.src)
         }
-      });
-    };
-  }, [cities, images]);
+      })
+    }
+  }, [cities, images])
 
   useEffect(() => {
-    if (!svgRef.current) return;
+    if (!svgRef.current) return
 
-    const svg = d3.select(svgRef.current);
-    const width = 100;
-    const height = 200;
-    const nodeRadius = 10;
+    const svg = d3.select(svgRef.current)
+    const width = 100
+    const height = 200
+    const nodeRadius = 10
 
-    svg.selectAll("*").remove();
+    svg.selectAll("*").remove()
 
     const yScale = d3
       .scaleLinear()
       .domain([0, cities.length - 1])
-      .range([height - nodeRadius, nodeRadius]);
+      .range([height - nodeRadius, nodeRadius])
 
     // Draw the dashed line
     svg
@@ -104,14 +106,14 @@ export default function RouteCard({
       .attr("y2", yScale(cities.length - 1))
       .attr("stroke", "white")
       .attr("stroke-width", 2)
-      .attr("stroke-dasharray", "5,5");
+      .attr("stroke-dasharray", "5,5")
 
     // Draw nodes
     cities.forEach((city, i) => {
       const g = svg
         .append("g")
         .attr("transform", `translate(${width / 2}, ${yScale(i)})`)
-        .attr("cursor", "pointer");
+        .attr("cursor", "pointer")
 
       const circle = g
         .append("circle")
@@ -119,34 +121,34 @@ export default function RouteCard({
           "r",
           city.name === selectedCity.name ? nodeRadius * 1.2 : nodeRadius
         )
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 2)
 
       // Apply Tailwind primary color if selected, otherwise white
       circle
         .classed("fill-primary", city.name === selectedCity.name)
-        .classed("fill-white", city.name !== selectedCity.name);
+        .classed("fill-white", city.name !== selectedCity.name)
 
-      g.append("title").text(city.name);
+      g.append("title").text(city.name)
 
-      g.on("click", () => setSelectedCity(city));
-    });
-  }, [cities, selectedCity.name]);
+      g.on("click", () => setSelectedCity(city))
+    })
+  }, [cities, selectedCity.name])
 
   const handleViewDetails = () => {
-    router.push(`/travelMaker/${id}/map`);
-  };
+    router.push(`/travelMaker/${id}/map`)
+  }
 
   return (
     <Card className="relative h-[250px] w-full max-w-7xl overflow-hidden">
       <Image
         fill
-        src={process.env.NEXT_PUBLIC_BACKEND_URL + selectedCity.image_url}
+        src={path.join(env.NEXT_PUBLIC_BACKEND_URL, selectedCity.image_url)}
         alt={selectedCity.name}
         className="absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full"
       />
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
-        <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black bg-opacity-60 px-4 py-2">
+        <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black/60 px-4 py-2">
           {selectedCity.name}
         </span>
         <div className="flex size-full items-center justify-between">
@@ -167,13 +169,10 @@ export default function RouteCard({
               >
                 {t("seeMore")} <ChevronLeft className="size-6" />
               </Button>
-              {/* <div className="absolute bottom-0 left-0 flex flex-col items-center justify-center">
-                <span>{wetherReport}</span>
-              </div> */}
             </div>
           </div>
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

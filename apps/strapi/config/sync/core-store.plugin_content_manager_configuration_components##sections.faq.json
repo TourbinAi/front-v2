@@ -77,12 +77,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "title",
-        "accordions",
-        "subTitle"
-      ],
+      "list": ["id", "title", "accordions", "subTitle"],
       "edit": [
         [
           {

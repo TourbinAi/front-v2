@@ -1,20 +1,20 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { useTranslations } from "next-intl";
-
-import { navbarMenuItems } from "@/constants";
+import { navbarMenuItems } from "@/constants"
 import {
   Popover,
   PopoverBackdrop,
   PopoverButton,
   PopoverPanel,
-} from "@headlessui/react";
-import { Link } from "@/lib/navigation";
-import { Accordion } from "@/components/ui/accordion";
+} from "@headlessui/react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Menu, X } from "lucide-react"
+import { useTranslations } from "next-intl"
+
+import { Link } from "@/lib/navigation"
+import { Accordion } from "@/components/ui/accordion"
 
 interface MobileNavLinkProps
   extends React.ComponentPropsWithoutRef<typeof Link> {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 function MobileNavLink({ children, ...props }: MobileNavLinkProps) {
@@ -22,11 +22,11 @@ function MobileNavLink({ children, ...props }: MobileNavLinkProps) {
     <Link className="block text-base leading-7 tracking-tight" {...props}>
       {children}
     </Link>
-  );
+  )
 }
 
 const MobileMenu = () => {
-  const t = useTranslations("header");
+  const t = useTranslations("header")
   return (
     <Popover className="lg:hidden">
       {({ open }) => (
@@ -60,7 +60,7 @@ const MobileMenu = () => {
                     y: -32,
                     transition: { duration: 0.2 },
                   }}
-                  className="bg-card absolute inset-x-0 top-0 z-0 w-full origin-top rounded-b-2xl px-6 pb-6 pt-32 shadow-2xl shadow-gray-900/20"
+                  className="absolute inset-x-0 top-0 z-0 w-full origin-top rounded-b-2xl bg-card px-6 pb-6 pt-32 shadow-2xl shadow-gray-900/20"
                 >
                   <div className="w-full space-y-4">
                     {navbarMenuItems.map((menuItem) => (
@@ -78,7 +78,7 @@ const MobileMenu = () => {
         </>
       )}
     </Popover>
-  );
-};
+  )
+}
 
-export default MobileMenu;
+export default MobileMenu

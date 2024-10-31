@@ -1,17 +1,20 @@
-import * as React from "react";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import * as React from "react"
+
+import "react-modern-calendar-datepicker/lib/DatePicker.css"
+
 import {
   DayValue,
   Calendar as ModernCalendar,
-} from "react-modern-calendar-datepicker";
-import { cn } from "@/lib/styles";
+} from "react-modern-calendar-datepicker"
+
+import { cn } from "@/lib/styles"
 
 interface CalendarProps {
-  value: DayValue | null;
-  onChange: (value: DayValue | null) => void;
-  className?: string;
-  shouldHighlightWeekends?: boolean;
-  locale?: string;
+  value: DayValue | null
+  onChange: (value: DayValue | null) => void
+  className?: string
+  shouldHighlightWeekends?: boolean
+  locale?: string
 }
 
 function Calendar({
@@ -26,7 +29,7 @@ function Calendar({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     day: new Date().getDate(),
-  };
+  }
 
   return (
     <div className={cn("w-full p-3", className)}>
@@ -37,9 +40,9 @@ function Calendar({
         locale={locale}
       />
     </div>
-  );
+  )
 }
 
-Calendar.displayName = "Calendar";
+Calendar.displayName = "Calendar"
 
-export { Calendar };
+export { Calendar }

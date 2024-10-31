@@ -1,10 +1,11 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Link } from "@/lib/navigation";
-import { ChevronUp } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { SVGProps } from "react";
+import { SVGProps } from "react"
+import { ChevronUp } from "lucide-react"
+import { useTranslations } from "next-intl"
+
+import { Link } from "@/lib/navigation"
+import { Button } from "@/components/ui/button"
 
 const navigation = {
   main: [
@@ -48,10 +49,10 @@ const navigation = {
       ),
     },
   ],
-} as const;
+} as const
 
 export default function Footer() {
-  const t = useTranslations("footer");
+  const t = useTranslations("footer")
   return (
     <footer className="bg-white">
       <div className="relative mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
@@ -97,7 +98,7 @@ export default function Footer() {
               window.scroll({
                 top: 0,
                 behavior: "smooth",
-              });
+              })
             }}
           >
             <ChevronUp />
@@ -105,5 +106,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

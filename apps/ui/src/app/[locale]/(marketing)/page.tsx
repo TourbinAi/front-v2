@@ -1,8 +1,8 @@
-import { Hero } from "./_components/Hero";
-import React from "react";
-import { FeatureDetails } from "./_components/FeatureDetails";
-import { Attractions } from "./_components/Attractions";
+import React from "react"
 
+import { Attractions } from "./_components/Attractions"
+import { FeatureDetails } from "./_components/FeatureDetails"
+import { Hero } from "./_components/Hero"
 
 export default function Home() {
   return (
@@ -11,5 +11,5 @@ export default function Home() {
       <FeatureDetails />
       <Attractions />
     </main>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-import { redirect } from "@/lib/navigation";
+import { redirect } from "@/lib/navigation"
 
 const PackagePage = () => {
   // redirect("map");
 
-  return null;
-};
+  return null
+}
 
-export default PackagePage;
+export default PackagePage

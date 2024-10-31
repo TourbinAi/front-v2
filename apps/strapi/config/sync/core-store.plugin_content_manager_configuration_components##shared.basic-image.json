@@ -91,12 +91,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "alt",
-        "width",
-        "media"
-      ],
+      "list": ["id", "alt", "width", "media"],
       "edit": [
         [
           {

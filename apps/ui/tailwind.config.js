@@ -7,7 +7,7 @@ module.exports = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
     "src/app/**/*.{ts,tsx}",
-    "src/components/**/*.{ts,tsx}"
+    "src/components/**/*.{ts,tsx}",
   ],
   theme: {
     container: {
@@ -96,7 +96,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/class-order'), require("tailwindcss-animate"), require("tailwindcss-rtl")],
+  plugins: [require("tailwindcss-animate"), require("tailwindcss-rtl")],
   safelist: [
     {
       pattern: /grid-cols-([1-8])/,

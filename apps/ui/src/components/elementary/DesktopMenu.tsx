@@ -1,15 +1,16 @@
-import * as React from "react";
+import * as React from "react"
+import { navbarMenuItems } from "@/constants"
+import { useTranslations } from "next-intl"
+
+import { Link } from "@/lib/navigation"
+import { cn } from "@/lib/styles"
 import {
-  NavigationMenuItem,
   NavigationMenu,
-  NavigationMenuList,
+  NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigationMenu";
-import { navbarMenuItems } from "@/constants";
-import { cn } from "@/lib/styles";
-import { useTranslations } from "next-intl";
-import { Link } from "@/lib/navigation";
+} from "@/components/ui/navigationMenu"
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
@@ -21,25 +22,25 @@ const ListItem = React.forwardRef<
         <Link
           ref={ref}
           className={cn(
-            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 text-left leading-none no-underline outline-none transition-colors rtl:text-right",
+            "block select-none space-y-1 rounded-md p-3 text-left leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground rtl:text-right",
             className
           )}
           href={href || "/"}
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
         </Link>
       </NavigationMenuLink>
     </li>
-  );
-});
-ListItem.displayName = "ListItem";
+  )
+})
+ListItem.displayName = "ListItem"
 
 const DesktopMenu = () => {
-  const t = useTranslations("header");
+  const t = useTranslations("header")
   return (
     <NavigationMenu>
       <NavigationMenuList className="justify-start">
@@ -55,7 +56,7 @@ const DesktopMenu = () => {
         ))}
       </NavigationMenuList>
     </NavigationMenu>
-  );
-};
+  )
+}
 
-export default DesktopMenu;
+export default DesktopMenu

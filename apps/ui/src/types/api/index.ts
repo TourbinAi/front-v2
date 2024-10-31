@@ -1,3 +1,3 @@
-export * from "./strapi";
-export * from "./api";
-export * from "./neshan";
+export * from "./strapi"
+export * from "./api"
+export * from "./neshan"

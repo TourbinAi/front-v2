@@ -1,9 +1,7 @@
-import MapForm from "./_components/mapFormContainer";
+import MapForm from "./_components/mapFormContainer"
 
 function PathFinder() {
-  return (
-    <MapForm />
-  );
+  return <MapForm />
 }
 
-export default PathFinder;
+export default PathFinder

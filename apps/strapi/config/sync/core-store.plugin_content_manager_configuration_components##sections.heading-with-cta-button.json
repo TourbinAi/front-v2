@@ -77,12 +77,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "title",
-        "subText",
-        "cta"
-      ],
+      "list": ["id", "title", "subText", "cta"],
       "edit": [
         [
           {

@@ -1,23 +1,24 @@
-"use client";
+"use client"
 
-import MapPathFinder from "./map";
-import { PathFinderForm } from "./form";
-import { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { PanelRightOpen } from "lucide-react";
-import { CarouselSpacing } from "./Tourist attractions";
-import { Suspense } from "react";
+import { Suspense, useState } from "react"
+import { PanelRightOpen } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+
+import { PathFinderForm } from "./form"
+import MapPathFinder from "./map"
+import { CarouselSpacing } from "./Tourist attractions"
 
 function MapForm() {
-  const [dataOriginForm, setDataOriginForm] = useState<any>(null);
-  const [dataDestinationForm, setDataDestinationForm] = useState<any>(null);
-  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false); // State to control sheet visibility
+  const [dataOriginForm, setDataOriginForm] = useState<any>(null)
+  const [dataDestinationForm, setDataDestinationForm] = useState<any>(null)
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false) // State to control sheet visibility
 
   const handleSubmitForm = (dataOrigin: any, dataDestination: any) => {
-    setDataOriginForm(dataOrigin);
-    setDataDestinationForm(dataDestination);
-  };
+    setDataOriginForm(dataOrigin)
+    setDataDestinationForm(dataDestination)
+  }
 
   return (
     <div className="flex h-screen flex-col items-center justify-start overflow-y-auto">
@@ -68,7 +69,7 @@ function MapForm() {
         <CarouselSpacing destination={dataDestinationForm} />
       </div>
     </div>
-  );
+  )
 }
 
-export default MapForm;
+export default MapForm

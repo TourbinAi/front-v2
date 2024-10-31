@@ -1,7 +1,7 @@
-import { Header } from "./_components/Header";
+import { Header } from "./_components/Header"
 
 interface PlatformLayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const PlatformLayout: React.FC<PlatformLayoutProps> = ({ children }) => {
@@ -10,7 +10,7 @@ const PlatformLayout: React.FC<PlatformLayoutProps> = ({ children }) => {
       <Header />
       <div className="size-full overflow-hidden">{children}</div>
     </div>
-  );
-};
+  )
+}
 
-export default PlatformLayout;
+export default PlatformLayout

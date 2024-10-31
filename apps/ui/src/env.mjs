@@ -24,7 +24,8 @@ export const env = createEnv({
     NEXT_PUBLIC_NESHAN_KEY: z.string().url(),
     NEXT_OUTPUT: z.string().optional(),
     NEXT_IMAGES_UNOPTIMIZED: optionalZodBoolean.default(false),
-    NODE_ENV: z.string().optional(),
+    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    NEXT_RUNTIME: z.enum(["nodejs", "edge"]).default("nodejs"),
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),
     SENTRY_PROJECT: z.string().optional(),
@@ -47,6 +48,7 @@ export const env = createEnv({
    * You'll get type errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
+    NEXT_RUNTIME: process.env.NEXT_RUNTIME,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXT_PUBLIC_NESHAN_KEY: process.env.NEXT_PUBLIC_NESHAN_KEY,

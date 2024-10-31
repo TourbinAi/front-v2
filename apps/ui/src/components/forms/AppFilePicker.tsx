@@ -39,8 +39,6 @@ interface Props {
  * @see AppFilePicker
  */
 
-
-
 // TODO: refactor this to react-hook-form field with Zod validation
 // eg.: https://claritydev.net/blog/react-hook-form-multipart-form-data-file-uploads
 

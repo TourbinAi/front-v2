@@ -1,8 +1,9 @@
-import React from "react";
-import { cn } from "@/lib/styles";
+import React from "react"
+
+import { cn } from "@/lib/styles"
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  className?: string;
+  className?: string
 }
 
 const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
@@ -16,10 +17,10 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
         ref={ref}
         {...props}
       />
-    );
+    )
   }
-);
+)
 
-Container.displayName = "Container";
+Container.displayName = "Container"
 
-export { Container };
+export { Container }

@@ -19,8 +19,6 @@ import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
  * @returns {JSX.Element} The AdornmentSuccess component.
  */
 
-
-
 export const AdornmentSuccess = () => {
   removeThisWhenYouNeedMe("AdornmentSuccess")
 

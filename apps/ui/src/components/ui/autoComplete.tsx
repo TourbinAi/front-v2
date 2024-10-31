@@ -1,40 +1,43 @@
-"use client";
-import { cn } from "@/lib/styles";
-import { Command as CommandPrimitive } from "cmdk";
-import { Check } from "lucide-react";
-import { useMemo, useState } from "react";
+"use client"
+
+import { useMemo, useState } from "react"
+import { Command as CommandPrimitive } from "cmdk"
+import { Check } from "lucide-react"
+
+import { cn } from "@/lib/styles"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
-} from "./command";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverAnchor, PopoverContent } from "./popover";
-import { Skeleton } from "./skeleton";
-import { Label } from "@/components/ui/label";
+} from "./command"
+import { Popover, PopoverAnchor, PopoverContent } from "./popover"
+import { Skeleton } from "./skeleton"
 
 type Props<T extends string> = {
-  selectedValue: T;
-  onSelectedValueChange: (value: T) => void;
-  searchValue: string;
-  onSearchValueChange: (value: string) => void;
+  selectedValue: T
+  onSelectedValueChange: (value: T) => void
+  searchValue: string
+  onSearchValueChange: (value: string) => void
   items: {
-    address: string;
-    category: string;
-    location: { x: number; y: number };
-    region: string;
-    title: string;
-    type: string;
-  }[];
-  isLoading?: boolean;
-  emptyMessage?: string;
-  placeholder?: string;
-  onChangeHandler?: (value: any) => void;
-  itemClickHandler?: (Value: any) => void;
-  lable?: string;
-};
+    address: string
+    category: string
+    location: { x: number; y: number }
+    region: string
+    title: string
+    type: string
+  }[]
+  isLoading?: boolean
+  emptyMessage?: string
+  placeholder?: string
+  onChangeHandler?: (value: any) => void
+  itemClickHandler?: (Value: any) => void
+  lable?: string
+}
 
 export function AutoComplete<T extends string>({
   selectedValue,
@@ -49,34 +52,34 @@ export function AutoComplete<T extends string>({
   itemClickHandler,
   lable,
 }: Props<T>) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const labels = useMemo(() => {
-    if (!items) return {};
+    if (!items) return {}
     return items.reduce(
       (acc, item) => {
-        acc[item.title] = item.title;
-        return acc;
+        acc[item.title] = item.title
+        return acc
       },
       {} as Record<string, string>
-    );
-  }, [items]);
+    )
+  }, [items])
 
   const reset = () => {
-    onSelectedValueChange("" as T);
-    onSearchValueChange("");
-  };
+    onSelectedValueChange("" as T)
+    onSearchValueChange("")
+  }
 
-  const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {};
+  const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {}
 
   const onSelectItem = (inputValue: string) => {
     if (inputValue === selectedValue) {
-      reset();
+      reset()
     } else {
-      onSelectedValueChange(inputValue as T);
-      onSearchValueChange(labels[inputValue] ?? "");
+      onSelectedValueChange(inputValue as T)
+      onSearchValueChange(labels[inputValue] ?? "")
     }
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <div className="flex items-center gap-2">
@@ -97,7 +100,7 @@ export function AutoComplete<T extends string>({
                 placeholder={placeholder}
                 onChange={(e) => {
                   if (onChangeHandler) {
-                    onChangeHandler(e.target.value);
+                    onChangeHandler(e.target.value)
                   }
                 }}
               />
@@ -112,7 +115,7 @@ export function AutoComplete<T extends string>({
                 e.target instanceof Element &&
                 e.target.hasAttribute("cmdk-input")
               ) {
-                e.preventDefault();
+                e.preventDefault()
               }
             }}
             className="w-[--radix-popover-trigger-width] p-0"
@@ -134,13 +137,13 @@ export function AutoComplete<T extends string>({
                       onMouseDown={(e) => e.preventDefault()}
                       onSelect={() => {
                         if (itemClickHandler) {
-                          itemClickHandler(option);
+                          itemClickHandler(option)
                         }
-                        onSelectItem(option.title);
+                        onSelectItem(option.title)
                       }}
                       onClick={() => {
                         if (itemClickHandler) {
-                          itemClickHandler(option);
+                          itemClickHandler(option)
                         }
                       }}
                     >
@@ -165,5 +168,5 @@ export function AutoComplete<T extends string>({
         </Command>
       </Popover>
     </div>
-  );
+  )
 }

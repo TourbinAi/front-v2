@@ -1,13 +1,13 @@
-import Image from "next/image";
+import { MouseEventHandler } from "react"
+import Image from "next/image"
 
-import { Button } from "@/components/ui/button";
-import { MouseEventHandler } from "react";
+import { Button } from "@/components/ui/button"
 
 interface ButtonProps {
-  isLoading?: boolean;
-  className?: string;
-  children: React.ReactNode;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  isLoading?: boolean
+  className?: string
+  children: React.ReactNode
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 const SubmitButton = ({
@@ -37,7 +37,7 @@ const SubmitButton = ({
         children
       )}
     </Button>
-  );
-};
+  )
+}
 
-export default SubmitButton;
+export default SubmitButton

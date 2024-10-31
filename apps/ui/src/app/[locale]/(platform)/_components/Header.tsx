@@ -1,11 +1,12 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { Container } from "@/components/elementary/Container";
-import { Logo } from "@/components/elementary/Logo";
-import LocaleSwitcher from "@/components/elementary/LocaleSwitcher";
-import DesktopMenu from "@/components/elementary/DesktopMenu";
-import MobileMenu from "@/components/elementary/MobileMenu";
+import Link from "next/link"
+
+import { Container } from "@/components/elementary/Container"
+import DesktopMenu from "@/components/elementary/DesktopMenu"
+import LocaleSwitcher from "@/components/elementary/LocaleSwitcher"
+import { Logo } from "@/components/elementary/Logo"
+import MobileMenu from "@/components/elementary/MobileMenu"
 
 export function Header() {
   return (
@@ -29,5 +30,5 @@ export function Header() {
         </Container>
       </nav>
     </header>
-  );
+  )
 }

@@ -1,16 +1,20 @@
-"use client";
+"use client"
 
-import dynamic from "next/dynamic";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import axios from "axios";
-import polyline from "@mapbox/polyline";
-import { postData } from "@/lib/api";
-import StarRating from "@/components/ui/starRating";
-import { PackagesPlaceRes } from "@/types/api";
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
+import path from "path"
+
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import Image from "next/image"
+import { env } from "@/env.mjs"
+import polyline from "@mapbox/polyline"
 import * as Sentry from "@sentry/nextjs"
-import { env } from "@/env.mjs";
+import axios from "axios"
+
+import { PackagesPlaceRes } from "@/types/api"
+
+import { postData } from "@/lib/api"
+import { Card, CardContent } from "@/components/ui/card"
+import StarRating from "@/components/ui/starRating"
 
 // Dynamic import for MapContainer with SSR disabled
 const MapWithNoSSR = dynamic(
@@ -19,77 +23,76 @@ const MapWithNoSSR = dynamic(
     ssr: false,
     loading: () => <p>Loading map...</p>,
   }
-);
+)
 
 const TileLayerWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.TileLayer),
   {
     ssr: false,
   }
-);
+)
 
 const MarkerWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Marker),
   {
     ssr: false,
   }
-);
+)
 
 const PolylineWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Polyline),
   {
     ssr: false,
   }
-);
+)
 
 const PopupWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Popup),
   {
     ssr: false,
   }
-);
+)
 
-let L: any = null;
+let L: any = null
 if (typeof window !== "undefined") {
-  L = require("leaflet");
-  require("leaflet/dist/leaflet.css");
+  L = require("leaflet")
+  require("leaflet/dist/leaflet.css")
 }
 
 interface Info {
-  type: string;
-  originLat: number;
-  originLong: number;
-  destinationLat: number;
-  destinationLong: number;
-  traffic: boolean;
-  oddeven: boolean;
-  alternative: boolean;
-  bearing: number;
+  type: string
+  originLat: number
+  originLong: number
+  destinationLat: number
+  destinationLong: number
+  traffic: boolean
+  oddeven: boolean
+  alternative: boolean
+  bearing: number
 }
 
 interface Waypoint {
-  latitude: number;
-  longitude: number;
+  latitude: number
+  longitude: number
 }
 
 interface Leg {
-  steps: Array<{ polyline: string }>;
+  steps: Array<{ polyline: string }>
 }
 
 interface FullData {
-  legs: Leg[];
+  legs: Leg[]
 }
 
 interface MapProps {
-  packageId: number;
-  setPlan: Dispatch<SetStateAction<PackagesPlaceRes | undefined>>;
+  packageId: number
+  setPlan: Dispatch<SetStateAction<PackagesPlaceRes | undefined>>
 }
 
 function Map({ packageId, setPlan }: MapProps) {
-  const [neshanReq, setReqNeshan] = useState("");
-  const [route, setRoute] = useState<any[]>([]);
-  const [fulldata, setData] = useState<FullData>({ legs: [] });
-  const [waypoint, setWaypoint] = useState<any[]>([]);
+  const [route, setRoute] = useState<any[]>([])
+  const [fulldata, setData] = useState<FullData>({ legs: [] })
+  const [waypoint, setWaypoint] = useState<any[]>([])
   const [info, setinfo] = useState<Info>({
     type: "car",
     originLat: 35.69524140795555, // Tehran
@@ -100,68 +103,68 @@ function Map({ packageId, setPlan }: MapProps) {
     oddeven: false,
     alternative: false,
     bearing: 170,
-  });
+  })
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await postData(packageId);
+        const responseData = await postData(packageId)
         // console.log(responseData);
-        setPlan(responseData.data);
+        setPlan(responseData.data)
         const waypointInfo = responseData.data.places.map((place) => ({
           longitude: place.latitude,
           latitude: place.longitude,
           namePlace: place.name,
           imagePlace: place.first_image,
           rateStar: place.rating,
-        }));
+        }))
 
-        setWaypoint(waypointInfo);
+        setWaypoint(waypointInfo)
       } catch (error) {
         Sentry.captureException(error)
-        console.error(error);
+        console.error(error)
       }
-    };
-    fetchData();
-  }, [packageId, setPlan ]);
+    }
+    fetchData()
+  }, [packageId, setPlan])
 
   useEffect(() => {
     async function apiReq() {
       let waypointparams = waypoint
         .map((p) => `${p.longitude},${p.latitude}%7C`)
-        .join("");
-      let waypointreq = waypointparams.slice(0, -3); // Remove last "%7C"
-  
+        .join("")
+      let waypointreq = waypointparams.slice(0, -3) // Remove last "%7C"
+
       try {
         const response = await axios.get(
           `https://api.neshan.org/v4/direction?type=${info.type}&origin=${info.originLat},${info.originLong}&destination=${info.originLat},${info.originLong}&waypoints=${waypointreq}&avoidTrafficZone=${info.traffic}&avoidOddEvenZone=${info.oddeven}&alternative=${info.alternative}&bearing=${info.bearing}`,
           {
             headers: { "api-key": env.NEXT_PUBLIC_NESHAN_KEY },
           }
-        );
-        const data = response.data.routes[0];
-        setData(data);
-        const decodedPolyline = decodeLegsPolylines(data.legs);
-        setRoute(decodedPolyline);
+        )
+        const data = response.data.routes[0]
+        setData(data)
+        const decodedPolyline = decodeLegsPolylines(data.legs)
+        setRoute(decodedPolyline)
       } catch (error) {
-        console.error("Error fetching directions:", error);
+        console.error("Error fetching directions:", error)
       }
     }
-  
+
     if (waypoint.length > 0) {
-      apiReq();
+      apiReq()
     }
-  }, [waypoint, info]);
+  }, [waypoint, info])
 
   const decodeLegsPolylines = (legs: Leg[]) => {
     return legs.flatMap((leg) =>
       leg.steps.flatMap((step) => polyline.decode(step.polyline))
-    );
-  };
+    )
+  }
 
-  const center: [number, number] = [info.originLat, info.originLong];
+  const center: [number, number] = [info.originLat, info.originLong]
 
-  let customIcon = null;
+  let customIcon = null
   if (L) {
     customIcon = new L.Icon({
       iconUrl: "/assets/icons/markerMap.png",
@@ -171,9 +174,9 @@ function Map({ packageId, setPlan }: MapProps) {
       shadowUrl:
         "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
       shadowSize: [41, 41],
-    });
+    })
 
-    L.Marker.prototype.options.icon = customIcon;
+    L.Marker.prototype.options.icon = customIcon
   }
 
   return (
@@ -203,9 +206,10 @@ function Map({ packageId, setPlan }: MapProps) {
                     <CardContent className="relative size-full">
                       <Image
                         fill
-                        src={
-                          process.env.NEXT_PUBLIC_BACKEND_URL + position.imagePlace
-                        }
+                        src={path.join(
+                          env.NEXT_PUBLIC_BACKEND_URL,
+                          position.imagePlace
+                        )}
                         alt="image"
                         className="absolute inset-0 size-full object-cover"
                       />
@@ -228,7 +232,7 @@ function Map({ packageId, setPlan }: MapProps) {
         )}
       </MapWithNoSSR>
     </div>
-  );
+  )
 }
 
-export default Map;
+export default Map

@@ -1,7 +1,7 @@
-import React from 'react'
-import { MDXRemote } from 'next-mdx-remote'
-import { serialize } from 'next-mdx-remote/serialize'
+import React from "react"
 import { Attribute } from "@repo/strapi"
+import { MDXRemote } from "next-mdx-remote"
+import { serialize } from "next-mdx-remote/serialize"
 
 interface BlogMarkdownProps {
   component: Attribute.GetDynamicZoneValue<
@@ -9,7 +9,7 @@ interface BlogMarkdownProps {
   >[number]
 }
 
-export function BlogMarkdown({ component }:BlogMarkdownProps) {
+export function BlogMarkdown({ component }: BlogMarkdownProps) {
   const [mdxSource, setMdxSource] = React.useState<any>(null)
 
   React.useEffect(() => {

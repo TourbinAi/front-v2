@@ -42,7 +42,6 @@ import { AppFormLabel } from "./AppFormLabel"
  * @property {React.InputHTMLAttributes<HTMLInputElement>} nativeProps - The native props for the form field.
  */
 
-
 type Props = {
   readonly name: string
   readonly label?: React.ReactNode

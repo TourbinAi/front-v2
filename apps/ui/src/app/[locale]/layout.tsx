@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 
 import { LayoutProps } from "@/types/next"
 
-import { fontSans  } from "@/lib/fonts"
+import { fontSans } from "@/lib/fonts"
 import { setupLibraries } from "@/lib/general-helpers"
 import { locales } from "@/lib/i18n"
 import { cn } from "@/lib/styles"
@@ -21,20 +21,22 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   }
 
   return (
-    <html lang={params.locale} className={`${fontSans.variable} font-sans`}
-    dir={params.locale === "fa" ? "rtl" : "ltr"} suppressHydrationWarning>
+    <html
+      lang={params.locale}
+      className={`${fontSans.variable} font-sans`}
+      dir={params.locale === "fa" ? "rtl" : "ltr"}
+      suppressHydrationWarning
+    >
       <head />
       <body
         className={cn(
-          "bg-background min-h-screen font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
         <ServerProviders params={params}>
           <ClientProviders>
-            <div className="h-full">
-              {children}
-            </div>
+            <div className="h-full">{children}</div>
             <TailwindIndicator />
             <Toaster />
           </ClientProviders>

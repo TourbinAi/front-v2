@@ -1,27 +1,28 @@
-"use client";
+"use client"
 
-import { primaryFeatures } from "@/constants";
-import Image from "next/image";
-import BeachImage from "public/assets/images/beachSunSet.png";
-import Logo from "public/assets/images/logo.png";
-import { useTranslations } from "next-intl";
-import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image"
+import { primaryFeatures } from "@/constants"
+import { useTranslations } from "next-intl"
+import BeachImage from "public/assets/images/beachSunSet.png"
+import Logo from "public/assets/images/logo.png"
+
+import { Card, CardContent } from "@/components/ui/card"
 
 export function Hero() {
-  const t = useTranslations("landingPage");
+  const t = useTranslations("landingPage")
 
   const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    const href = event.currentTarget.getAttribute("href");
-    const targetId = href?.replace("#", "");
-    const targetElement = document.getElementById(targetId || "");
+    event.preventDefault()
+    const href = event.currentTarget.getAttribute("href")
+    const targetId = href?.replace("#", "")
+    const targetElement = document.getElementById(targetId || "")
 
     if (targetElement) {
       targetElement.scrollIntoView({
         behavior: "smooth",
-      });
+      })
     }
-  };
+  }
 
   return (
     <div
@@ -52,7 +53,7 @@ export function Hero() {
                 onClick={handleSmoothScroll}
                 className="group flex flex-col flex-nowrap items-center justify-center gap-8 sm:flex-wrap"
               >
-                <Card className="border-primary flex aspect-square size-28 flex-col items-center justify-center gap-2 border">
+                <Card className="flex aspect-square size-28 flex-col items-center justify-center gap-2 border border-primary">
                   <CardContent className="flex size-full flex-col items-center justify-center gap-2 p-3">
                     <Image
                       className="transition-all group-hover:scale-110"
@@ -61,7 +62,7 @@ export function Hero() {
                       width={50}
                       height={50}
                     />
-                    <span className="text-secondary text-nowrap text-xs font-semibold">
+                    <span className="text-nowrap text-xs font-semibold text-secondary">
                       {t(`primaryFeatures.${feature.name}`)}
                     </span>
                   </CardContent>
@@ -86,7 +87,7 @@ export function Hero() {
                     width={100}
                     height={100}
                   />
-                  <span className="text-secondary text-nowrap font-semibold">
+                  <span className="text-nowrap font-semibold text-secondary">
                     {t(`primaryFeatures.${feature.name}`)}
                   </span>
                 </div>
@@ -96,5 +97,5 @@ export function Hero() {
         </ul>
       </div>
     </div>
-  );
+  )
 }

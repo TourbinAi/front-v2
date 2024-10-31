@@ -2,12 +2,12 @@ import { env } from "@/env.mjs"
 
 /**
  * TailwindIndicator Component
- * 
+ *
  * This component displays the current Tailwind CSS breakpoint in the bottom-left corner of the screen.
  * It's useful for development purposes to visually check which breakpoint is active.
- * 
+ *
  * The component is only rendered in non-production environments.
- * 
+ *
  * Breakpoints displayed:
  * - xs: < 640px (default)
  * - sm: 640px - 767px

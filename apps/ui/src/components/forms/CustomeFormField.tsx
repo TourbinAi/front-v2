@@ -1,43 +1,44 @@
-import * as z from "zod";
-import { E164Number } from "libphonenumber-js/core";
-import Image from "next/image";
+import React from "react"
+import Image from "next/image"
+import { DayValue } from "@hassanmojab/react-modern-calendar-datepicker"
+import { E164Number } from "libphonenumber-js/core"
+import { icons } from "lucide-react"
+import { useLocale } from "next-intl"
 import {
   Control,
   ControllerRenderProps,
   FieldPath,
   FieldValues,
-} from "react-hook-form";
-import PhoneInput from "react-phone-number-input";
-import { useLocale } from "next-intl";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "react-hook-form"
+import PhoneInput from "react-phone-number-input"
+import * as z from "zod"
+
+import { cn } from "@/lib/styles"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/form"
+import { Icon } from "@/components/ui/icon"
+import { Input } from "@/components/ui/input"
+import { MultiSelect } from "@/components/ui/multiSelect"
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/popover";
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Icon } from "@/components/ui/icon";
-import { cn } from "@/lib/styles";
-import { icons } from "lucide-react";
-import { MultiSelect } from "@/components/ui/multiSelect";
-import React from "react";
-import { DayValue } from "@hassanmojab/react-modern-calendar-datepicker";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 
 export enum FormFieldType {
   NUMBER = "number",
@@ -51,31 +52,31 @@ export enum FormFieldType {
   SKELETON = "skeleton",
 }
 
-type Option = Record<"value" | "label", string>;
+type Option = Record<"value" | "label", string>
 interface CustomProps<
   TSchema extends z.ZodTypeAny,
   TFieldValues extends FieldValues = z.infer<TSchema>,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > {
-  control: Control<TFieldValues>;
-  name: TName; // Update this line
-  label?: string;
-  placeholder?: string;
-  iconLucid?: keyof typeof icons;
-  iconSrc?: string;
-  iconAlt?: string;
-  disabled?: boolean;
-  dateFormat?: string;
-  showTimeSelect?: boolean;
-  children?: React.ReactNode;
-  options?: Option[];
-  searchText?: string;
-  selectAllText?: string;
+  control: Control<TFieldValues>
+  name: TName // Update this line
+  label?: string
+  placeholder?: string
+  iconLucid?: keyof typeof icons
+  iconSrc?: string
+  iconAlt?: string
+  disabled?: boolean
+  dateFormat?: string
+  showTimeSelect?: boolean
+  children?: React.ReactNode
+  options?: Option[]
+  searchText?: string
+  selectAllText?: string
   renderSkeleton?: (
     field: ControllerRenderProps<TFieldValues, TName>
-  ) => React.ReactElement;
-  fieldType: FormFieldType;
-  onChange?: (value: any) => void;
+  ) => React.ReactElement
+  fieldType: FormFieldType
+  onChange?: (value: any) => void
 }
 
 interface RenderInputProps<
@@ -83,8 +84,8 @@ interface RenderInputProps<
   TFieldValues extends FieldValues = z.infer<TSchema>,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > {
-  field: ControllerRenderProps<TFieldValues, TName>;
-  props: CustomProps<TSchema, TFieldValues, TName>;
+  field: ControllerRenderProps<TFieldValues, TName>
+  props: CustomProps<TSchema, TFieldValues, TName>
 }
 
 function RenderInput<
@@ -92,7 +93,7 @@ function RenderInput<
   TFieldValues extends FieldValues = z.infer<TSchema>,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ field, props }: RenderInputProps<TSchema, TFieldValues, TName>) {
-  const local = useLocale();
+  const local = useLocale()
 
   switch (props.fieldType) {
     case FormFieldType.INPUT:
@@ -125,15 +126,15 @@ function RenderInput<
               placeholder={props.placeholder}
               className="shad-input border-0"
               onChange={(e) => {
-                field.onChange(e.target.value);
+                field.onChange(e.target.value)
                 if (props.onChange) {
-                  props.onChange(e.target.value);
+                  props.onChange(e.target.value)
                 }
               }}
             />
           </FormControl>
         </div>
-      );
+      )
     case FormFieldType.MULTISELECT:
       return (
         <FormControl>
@@ -143,14 +144,14 @@ function RenderInput<
               ?.map((prop) => prop.value)
               .filter((option) => field.value.includes(option))}
             onValueChange={(newSelected) => {
-              field.onChange(newSelected);
+              field.onChange(newSelected)
             }}
             placeholder={props.placeholder}
             searchText={props.searchText}
             selectAllText={props.selectAllText}
           />
         </FormControl>
-      );
+      )
     case FormFieldType.TEXTAREA:
       return (
         <FormControl>
@@ -161,7 +162,7 @@ function RenderInput<
             disabled={props.disabled}
           />
         </FormControl>
-      );
+      )
     case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
@@ -175,7 +176,7 @@ function RenderInput<
             className="input-phone"
           />
         </FormControl>
-      );
+      )
     case FormFieldType.CHECKBOX:
       return (
         <FormControl>
@@ -190,7 +191,7 @@ function RenderInput<
             </label>
           </div>
         </FormControl>
-      );
+      )
     case FormFieldType.DATE_PICKER:
       return (
         <div className="border-dark-500 bg-dark-400 flex w-full cursor-pointer flex-row items-center gap-2 rounded-md border ltr:flex-row-reverse">
@@ -201,7 +202,7 @@ function RenderInput<
                   variant="outline"
                   className={cn(
                     "",
-                    !field.value && "text-muted-foreground w-full align-middle"
+                    !field.value && "w-full align-middle text-muted-foreground"
                   )}
                 >
                   {field.value ? (
@@ -217,10 +218,10 @@ function RenderInput<
                 value={field.value || null}
                 onChange={(date: DayValue | null) => {
                   if (date && date.year && date.month && date.day) {
-                    field.onChange(date);
-                    if (props.onChange) props.onChange(date);
+                    field.onChange(date)
+                    if (props.onChange) props.onChange(date)
                   } else {
-                    field.onChange(null);
+                    field.onChange(null)
                   }
                 }}
                 shouldHighlightWeekends
@@ -229,7 +230,7 @@ function RenderInput<
             </PopoverContent>
           </Popover>
         </div>
-      );
+      )
 
     case FormFieldType.SELECT:
       return (
@@ -251,12 +252,12 @@ function RenderInput<
             </SelectContent>
           </Select>
         </FormControl>
-      );
+      )
 
     case FormFieldType.SKELETON:
-      return props.renderSkeleton ? props.renderSkeleton(field) : null;
+      return props.renderSkeleton ? props.renderSkeleton(field) : null
     default:
-      return null;
+      return null
   }
 }
 
@@ -265,7 +266,7 @@ function CustomFormField<
   TFieldValues extends FieldValues = z.infer<TSchema>,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >(props: CustomProps<TSchema, TFieldValues, TName>) {
-  const { control, name, label } = props;
+  const { control, name, label } = props
 
   return (
     <div className="mb-5">
@@ -288,7 +289,7 @@ function CustomFormField<
         )}
       />
     </div>
-  );
+  )
 }
 
-export default CustomFormField;
+export default CustomFormField

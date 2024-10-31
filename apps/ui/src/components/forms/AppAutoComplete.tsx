@@ -4,13 +4,13 @@ import React from "react"
 import { useFormContext } from "react-hook-form"
 
 import { cn } from "@/lib/styles"
+import { AutoComplete } from "@/components/ui/autoComplete"
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { AutoComplete } from "@/components/ui/autoComplete"
 
 import { AppFormDescription } from "./AppFormDescription"
 import { AppFormLabel } from "./AppFormLabel"
@@ -56,8 +56,6 @@ type Props<T extends string> = {
  * @property {string} [placeholder] - The placeholder text for the form field.
  * @property {React.InputHTMLAttributes<HTMLInputElement>} nativeProps - The native props for the form field.
  */
-
-
 
 export function AppAutoComplete<T extends string>({
   name,

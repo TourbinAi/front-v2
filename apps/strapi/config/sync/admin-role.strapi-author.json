@@ -10,9 +10,7 @@
       "properties": {
         "fields": []
       },
-      "conditions": [
-        "admin::is-creator"
-      ]
+      "conditions": ["admin::is-creator"]
     },
     {
       "action": "plugin::content-manager.explorer.read",
@@ -21,9 +19,7 @@
       "properties": {
         "fields": []
       },
-      "conditions": [
-        "admin::is-creator"
-      ]
+      "conditions": ["admin::is-creator"]
     },
     {
       "action": "plugin::content-manager.explorer.update",
@@ -32,9 +28,7 @@
       "properties": {
         "fields": []
       },
-      "conditions": [
-        "admin::is-creator"
-      ]
+      "conditions": ["admin::is-creator"]
     },
     {
       "action": "plugin::upload.assets.copy-link",
@@ -62,9 +56,7 @@
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ]
+      "conditions": ["admin::is-creator"]
     },
     {
       "action": "plugin::upload.configure-view",
@@ -78,9 +70,7 @@
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ]
+      "conditions": ["admin::is-creator"]
     }
   ]
 }

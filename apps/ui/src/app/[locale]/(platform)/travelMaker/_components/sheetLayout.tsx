@@ -1,24 +1,25 @@
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import React, { Dispatch, SetStateAction } from "react";
-import { PanelRightClose, PanelRightOpen } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { cn } from "@/lib/styles";
+import React, { Dispatch, SetStateAction } from "react"
+import { PanelRightClose, PanelRightOpen } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
+
+import { cn } from "@/lib/styles"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 type SheetLayoutProps = {
-  children: React.ReactNode;
-  sideBarComponent: React.ReactNode;
-  open?: boolean;
-  setOpen?: Dispatch<SetStateAction<boolean>>;
-  button?: boolean;
-};
+  children: React.ReactNode
+  sideBarComponent: React.ReactNode
+  open?: boolean
+  setOpen?: Dispatch<SetStateAction<boolean>>
+  button?: boolean
+}
 
 const SheetLayout: React.FC<SheetLayoutProps> = ({
   children,
@@ -27,9 +28,9 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
   setOpen,
   button = true,
 }) => {
-  const t = useTranslations("travelMaker.form.form-header");
-  const locale = useLocale();
-  const dir = locale === "fa" ? "rtl" : "ltr";
+  const t = useTranslations("travelMaker.form.form-header")
+  const locale = useLocale()
+  const dir = locale === "fa" ? "rtl" : "ltr"
   return (
     <div className="h-full overflow-auto">
       <div className="relative flex size-full items-stretch gap-5 p-5">
@@ -69,7 +70,7 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
         </SheetContent>
       </Sheet>
     </div>
-  );
-};
+  )
+}
 
-export default SheetLayout;
+export default SheetLayout

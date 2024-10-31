@@ -1,53 +1,57 @@
-"use client";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scrollArea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { PackagesPlaceRes } from "@/types/api";
-import Image from "next/image";
-import Link from "next/link";
+"use client"
 
-import { useState, useEffect, useRef } from "react";
+import path from "path"
+
+import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+
+import { PackagesPlaceRes } from "@/types/api"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scrollArea"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface MapProps {
-  packageId: number;
-  ResData: PackagesPlaceRes | undefined;
+  packageId: number
+  ResData: PackagesPlaceRes | undefined
 }
 
 function SideBarMap({ ResData }: MapProps) {
-  const [isLoading, setLoading] = useState(true);
-  const [description, setDescription] = useState("");
-  const [typedDescription, setTypedDescription] = useState("");
-  const [imgURL, setURL] = useState<any[]>([]);
-  const descriptionRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setLoading] = useState(true)
+  const [description, setDescription] = useState("")
+  const [typedDescription, setTypedDescription] = useState("")
+  const [imgURL, setURL] = useState<any[]>([])
+  const descriptionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // console.log("Travelplan received:", ResData);
     if (ResData) {
-      const desc = ResData.travel_plan;
-      setDescription(desc);
+      const desc = ResData.travel_plan
+      setDescription(desc)
       const urlImages = ResData.places.map((place: any) => {
-        return place;
-      });
+        return place
+      })
       // console.log(urlImages);
-      setURL(urlImages);
-      setLoading(false);
+      setURL(urlImages)
+      setLoading(false)
     }
-  }, [ResData]);
+  }, [ResData])
 
   useEffect(() => {
-    const charsArray = description.split("");
+    const charsArray = description.split("")
     charsArray.forEach((char, index) => {
       setTimeout(() => {
-        setTypedDescription((prev) => prev + char);
-      }, 20 * index);
-    });
-  }, [description]);
+        setTypedDescription((prev) => prev + char)
+      }, 20 * index)
+    })
+  }, [description])
 
   useEffect(() => {
     if (descriptionRef.current) {
-      descriptionRef.current.scrollTop = descriptionRef.current.scrollHeight;
+      descriptionRef.current.scrollTop = descriptionRef.current.scrollHeight
     }
-  }, [typedDescription]);
+  }, [typedDescription])
 
   return (
     <div className="mr-5 mt-5 flex flex-col flex-wrap rounded-lg border bg-white px-4 pt-3">
@@ -85,9 +89,10 @@ function SideBarMap({ ResData }: MapProps) {
                   >
                     <Image
                       fill
-                      src={
-                        process.env.NEXT_PUBLIC_BACKEND_URL + url.first_image
-                      }
+                      src={path.join(
+                        env.NEXT_PUBLIC_BACKEND_URL,
+                        url.first_image
+                      )}
                       alt="image"
                       className="absolute inset-0 size-full object-cover"
                     />
@@ -102,7 +107,7 @@ function SideBarMap({ ResData }: MapProps) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default SideBarMap;
+export default SideBarMap

@@ -149,11 +149,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "gridCols",
-        "logoImage"
-      ],
+      "list": ["id", "gridCols", "logoImage"],
       "edit": [
         [
           {

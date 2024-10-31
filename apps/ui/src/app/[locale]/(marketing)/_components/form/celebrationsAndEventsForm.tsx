@@ -1,18 +1,25 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-import { Form } from "@/components/ui/form";
-import { celebrationsAndEvents } from "@/lib/validation/landing";
+import { celebrationsAndEvents } from "@/lib/validation/landing"
+import { Form } from "@/components/ui/form"
 
-import "react-phone-number-input/style.css";
-import CustomFormField, { FormFieldType } from "@/components/forms/CustomeFormField";
-import SubmitButton from "@/components/forms/SubmitButton";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import "react-phone-number-input/style.css"
+
+import { useRouter } from "next/navigation"
+import * as Sentry from "@sentry/nextjs"
+import { useTranslations } from "next-intl"
+
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/forms/CustomeFormField"
+import SubmitButton from "@/components/forms/SubmitButton"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -20,10 +27,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { useRouter } from "next/navigation";
-import * as Sentry from "@sentry/nextjs"
+} from "@/components/ui/select"
 
 const months = [
   "farvardin",
@@ -38,33 +42,33 @@ const months = [
   "day",
   "bahman",
   "esfand",
-] as const;
+] as const
 
 export const CelebrationsAndEventForm = () => {
-  const t = useTranslations("landingPage.featureDetails.celebrationsAndEvents");
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const t = useTranslations("landingPage.featureDetails.celebrationsAndEvents")
+  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof celebrationsAndEvents>>({
     resolver: zodResolver(celebrationsAndEvents),
     defaultValues: {
       occasion: "",
     },
-  });
+  })
 
   const onSubmit = async () => {
-    setIsLoading(true);
-    router.push("/blog/event/?blogtype=3&blogid=3");
+    setIsLoading(true)
+    router.push("/blog/event/?blogtype=3&blogid=3")
     try {
-      setIsLoading(true);
-      router.push("blog/event/?blogtype=3&blogid=3");
+      setIsLoading(true)
+      router.push("blog/event/?blogtype=3&blogid=3")
     } catch (error) {
       Sentry.captureException(error)
-      console.error(error);
+      console.error(error)
     }
 
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   return (
     <Form {...form}>
@@ -112,5 +116,5 @@ export const CelebrationsAndEventForm = () => {
         {t("form.goTo")}
       </Button>
     </Form>
-  );
-};
+  )
+}

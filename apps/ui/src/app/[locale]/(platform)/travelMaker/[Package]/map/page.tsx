@@ -1,8 +1,7 @@
-import MapPageComp from "../_components/mapPage";
+import MapPageComp from "../_components/mapPage"
 
 const MapPage = () => {
+  return <MapPageComp />
+}
 
-  return <MapPageComp />;
-};
-
-export default MapPage;
+export default MapPage

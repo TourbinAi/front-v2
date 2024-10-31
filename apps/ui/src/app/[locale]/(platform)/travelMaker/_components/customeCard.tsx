@@ -1,24 +1,25 @@
-"use client";
+"use client"
 
-import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Star, ChevronLeft } from "lucide-react";
-import * as d3 from "d3";
+import { useEffect, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
+import * as d3 from "d3"
+import { ChevronLeft, Star } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 type Stop = {
-  name: string;
-  type: "start" | "end" | "middle";
-  image: string;
-};
+  name: string
+  type: "start" | "end" | "middle"
+  image: string
+}
 
 type RouteCardProps = {
-  id: string;
-  title: string;
-  rating: number;
-  stops: Stop[];
-};
+  id: string
+  title: string
+  rating: number
+  stops: Stop[]
+}
 
 export default function Component({
   id = "route123",
@@ -45,34 +46,34 @@ export default function Component({
     },
   ],
 }: RouteCardProps) {
-  const router = useRouter();
-  const [selectedStop, setSelectedStop] = useState<string>(stops[0]?.name || "");
-  const svgRef = useRef<SVGSVGElement | null>(null);
+  const router = useRouter()
+  const [selectedStop, setSelectedStop] = useState<string>(stops[0]?.name || "")
+  const svgRef = useRef<SVGSVGElement | null>(null)
 
   const handleViewDetails = () => {
-    router.push(`/route/${id}`);
-  };
+    router.push(`/route/${id}`)
+  }
 
   const handleStopClick = (stopName: string) => {
-    setSelectedStop(stopName);
-  };
+    setSelectedStop(stopName)
+  }
 
-  const selectedStopData = stops.find((stop) => stop.name === selectedStop);
+  const selectedStopData = stops.find((stop) => stop.name === selectedStop)
 
   useEffect(() => {
-    if (!svgRef.current) return;
+    if (!svgRef.current) return
 
-    const svg = d3.select(svgRef.current);
-    const width = 100;
-    const height = 200;
-    const nodeRadius = 10;
+    const svg = d3.select(svgRef.current)
+    const width = 100
+    const height = 200
+    const nodeRadius = 10
 
-    svg.selectAll("*").remove();
+    svg.selectAll("*").remove()
 
     const yScale = d3
       .scaleLinear()
       .domain([0, stops.length - 1])
-      .range([height - nodeRadius, nodeRadius]);
+      .range([height - nodeRadius, nodeRadius])
 
     // Draw the dashed line
     svg
@@ -83,14 +84,14 @@ export default function Component({
       .attr("y2", yScale(stops.length - 1))
       .attr("stroke", "white")
       .attr("stroke-width", 2)
-      .attr("stroke-dasharray", "5,5");
+      .attr("stroke-dasharray", "5,5")
 
     // Draw nodes
     stops.forEach((stop, i) => {
       const g = svg
         .append("g")
         .attr("transform", `translate(${width / 2}, ${yScale(i)})`)
-        .attr("cursor", "pointer");
+        .attr("cursor", "pointer")
 
       g.append("circle")
         .attr("r", stop.name === selectedStop ? nodeRadius * 1.2 : nodeRadius)
@@ -99,13 +100,13 @@ export default function Component({
           stop.type === "start" || stop.type === "end" ? "#FBBF24" : "#FFFFFF"
         )
         .attr("stroke", stop.name === selectedStop ? "white" : "none")
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 2)
 
-      g.append("title").text(stop.name);
+      g.append("title").text(stop.name)
 
-      g.on("click", () => handleStopClick(stop.name));
-    });
-  }, [stops, selectedStop]);
+      g.on("click", () => handleStopClick(stop.name))
+    })
+  }, [stops, selectedStop])
 
   return (
     <Card className="relative aspect-[21/9] w-full max-w-7xl overflow-hidden">
@@ -145,5 +146,5 @@ export default function Component({
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

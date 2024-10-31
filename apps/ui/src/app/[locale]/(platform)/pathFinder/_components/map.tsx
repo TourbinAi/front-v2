@@ -1,13 +1,16 @@
-"use client";
-import { LatLngExpression } from "leaflet";
-import "leaflet/dist/leaflet.css";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import polyline from "@mapbox/polyline";
-import dynamic from "next/dynamic";
-import { Clock, MapPin } from "lucide-react";
-import { env } from "@/env.mjs";
+"use client"
+
+import { LatLngExpression } from "leaflet"
+
+import "leaflet/dist/leaflet.css"
+
+import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import { env } from "@/env.mjs"
+import polyline from "@mapbox/polyline"
 import * as Sentry from "@sentry/nextjs"
+import axios from "axios"
+import { Clock, MapPin } from "lucide-react"
 
 const MapWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
@@ -15,66 +18,66 @@ const MapWithNoSSR = dynamic(
     ssr: false,
     loading: () => <p>Loading map...</p>,
   }
-);
+)
 
 const TileLayerWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.TileLayer),
   {
     ssr: false,
   }
-);
+)
 
 const MarkerWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Marker),
   {
     ssr: false,
   }
-);
+)
 
 const PolylineWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Polyline),
   {
     ssr: false,
   }
-);
+)
 
 const PopupWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Popup),
   {
     ssr: false,
   }
-);
+)
 
-let L: any = null;
+let L: any = null
 if (typeof window !== "undefined") {
-  L = require("leaflet");
-  require("leaflet/dist/leaflet.css");
+  L = require("leaflet")
+  require("leaflet/dist/leaflet.css")
 }
 interface Info {
-  type: string;
-  originLat: number;
-  originLong: number;
-  destinationLat: number;
-  destinationLong: number;
-  traffic: boolean;
-  odEven: boolean;
-  alternative: boolean;
-  bearing: number;
+  type: string
+  originLat: number
+  originLong: number
+  destinationLat: number
+  destinationLong: number
+  traffic: boolean
+  odEven: boolean
+  alternative: boolean
+  bearing: number
 }
 interface Leg {
-  steps: Array<{ polyline: string }>;
+  steps: Array<{ polyline: string }>
 }
 
 interface fullData {
-  legs: Leg[];
+  legs: Leg[]
 }
 
 function MapPathFinder({
   origin,
   destination,
 }: {
-  origin: any;
-  destination: any[];
+  origin: any
+  destination: any[]
 }) {
   const [info, setInfo] = useState<Info>({
     type: "car",
@@ -86,29 +89,28 @@ function MapPathFinder({
     odEven: false,
     alternative: false,
     bearing: 170,
-  });
+  })
 
-  const [originLoc, setLocOrigin] = useState<{ x: number; y: number }>();
-  const [destinationLoc, setLocDestination] = useState<any[]>([]);
-  const [route, setRoute] = useState<LatLngExpression[]>([]);
-  const [centerX, setX] = useState(52.956453660199);
-  const [centerY, setY] = useState(32.68558325422626);
-  const [center, setCenter] = useState<LatLngExpression>([centerY, centerX]); //open map
-  const [textRoute, setText] = useState<any[]>([]);
+  const [originLoc, setLocOrigin] = useState<{ x: number; y: number }>()
+  const [destinationLoc, setLocDestination] = useState<any[]>([])
+  const [route, setRoute] = useState<LatLngExpression[]>([])
+  const [centerX, setX] = useState(52.956453660199)
+  const [centerY, setY] = useState(32.68558325422626)
+  const [center, setCenter] = useState<LatLngExpression>([centerY, centerX]) //open map
+  const [textRoute, setText] = useState<any[]>([])
   useEffect(() => {
     if (origin && destination.length > 0) {
-      setLocOrigin(origin.location);
-      setLocDestination(destination);
-      let y = (origin.location.y + destination[0].location.y) / 2;
-      let x = (origin.location.x + destination[0].location.x) / 2;
-      setX(x);
-      setY(y);
+      setLocOrigin(origin.location)
+      setLocDestination(destination)
+      let y = (origin.location.y + destination[0].location.y) / 2
+      let x = (origin.location.x + destination[0].location.x) / 2
+      setX(x)
+      setY(y)
     }
-  }, [origin, destination]);
+  }, [origin, destination])
 
   useEffect(() => {
     const apiReq = async () => {
-
       if (originLoc && destinationLoc.length === 1) {
         try {
           const response = await axios.get(
@@ -116,24 +118,24 @@ function MapPathFinder({
             {
               headers: { "api-key": env.NEXT_PUBLIC_NESHAN_KEY },
             }
-          );
-          const data = response.data.routes[0];
-          setText(data.legs);
-          const decodedPolyline = decodeLegsPolyLines(data.legs);
-          setRoute(decodedPolyline);
+          )
+          const data = response.data.routes[0]
+          setText(data.legs)
+          const decodedPolyline = decodeLegsPolyLines(data.legs)
+          setRoute(decodedPolyline)
         } catch (error) {
           Sentry.captureException(error)
         }
       } else {
         // console.log(destinationLoc.at(-1));
-        const desDynamic = destination.at(-1);
+        const desDynamic = destination.at(-1)
         let waypointParams = destinationLoc
           .map((data) => {
-            return `${data.location.y},${data.location.x}%7C`;
+            return `${data.location.y},${data.location.x}%7C`
           })
-          .join("");
+          .join("")
 
-        let waypointReq = waypointParams.slice(0, -3);
+        let waypointReq = waypointParams.slice(0, -3)
 
         try {
           const response = await axios.get(
@@ -141,38 +143,38 @@ function MapPathFinder({
             {
               headers: { "api-key": env.NEXT_PUBLIC_NESHAN_KEY },
             }
-          );
+          )
           // console.log(response.data.routes[0].legs);
-          const data = response.data.routes[0];
-          setText(data.legs);
-          const decodedPolyline = decodeLegsPolyLines(data.legs);
-          setRoute(decodedPolyline);
+          const data = response.data.routes[0]
+          setText(data.legs)
+          const decodedPolyline = decodeLegsPolyLines(data.legs)
+          setRoute(decodedPolyline)
         } catch (error) {
           Sentry.captureException(error)
         }
       }
-    };
+    }
 
     if (originLoc && destinationLoc.length > 0) {
-      apiReq();
+      apiReq()
     }
-  }, [originLoc, destinationLoc]);
+  }, [originLoc, destinationLoc])
 
   useEffect(() => {
     if (route.length > 0) {
       // console.log("Route updated:", route);
     }
-  }, [route]);
+  }, [route])
 
   const decodeLegsPolyLines = (legs: Leg[]): LatLngExpression[] => {
     return legs.flatMap((leg) =>
       leg.steps.flatMap(
         (step) => polyline.decode(step.polyline) as LatLngExpression[]
       )
-    );
-  };
+    )
+  }
 
-  let customIcon = null;
+  let customIcon = null
   if (L) {
     customIcon = new L.Icon({
       iconUrl: "/assets/icons/markerMap.png",
@@ -182,13 +184,10 @@ function MapPathFinder({
       shadowUrl:
         "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
       shadowSize: [41, 41],
-    });
+    })
 
-    L.Marker.prototype.options.icon = customIcon;
+    L.Marker.prototype.options.icon = customIcon
   }
-  // console.log(destinationLoc);
-  // console.log("ENNNNVVVV: ", process.env.NEXT_PUBLIC_NESHAN_KEY);
-  // console.log(textRoute);
 
   return (
     <>
@@ -250,11 +249,11 @@ function MapPathFinder({
                 </p>
               </div>
             )
-          );
+          )
         })}
       </div>
     </>
-  );
+  )
 }
 
-export default MapPathFinder;
+export default MapPathFinder

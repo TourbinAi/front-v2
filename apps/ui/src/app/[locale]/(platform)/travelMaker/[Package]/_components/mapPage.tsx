@@ -1,25 +1,29 @@
-"use client";
+"use client"
+
 // app/[locale]/travel-maker/map/page.tsx
-import { useParams } from "next/navigation";
-import Map from "./map";
-import SideBarMap from "./sideBarMap";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react"
+import { useParams } from "next/navigation"
+import { useTranslations } from "next-intl"
+
+import { PackagesPlaceRes } from "@/types/api"
+
+import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { useTranslations } from "next-intl";
-import { PackagesPlaceRes } from "@/types/api";
-import { ScrollArea } from "@/components/ui/scrollArea";
+} from "@/components/ui/drawer"
+import { ScrollArea } from "@/components/ui/scrollArea"
+
+import Map from "./map"
+import SideBarMap from "./sideBarMap"
 
 export default function MapPageComp() {
-  const route = useParams();
-  const packageId = Number(route.Package);
-  const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>();
-  const t = useTranslations("travelMaker.package");
+  const route = useParams()
+  const packageId = Number(route.Package)
+  const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>()
+  const t = useTranslations("travelMaker.package")
   // useEffect(() => {
   //   // console.log(ResponseData);
   // }, [ResponseData]);
@@ -62,5 +66,5 @@ export default function MapPageComp() {
         </div>
       </ScrollArea>
     </>
-  );
+  )
 }

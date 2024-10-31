@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const TravelMakerSelectValues = {
   duration: ["1d", "2d", "3d"],
@@ -24,7 +24,7 @@ export const TravelMakerSelectValues = {
   ],
   direction: ["north", "south", "west", "east"],
   accommodation: ["camp", "hotel", "visit"],
-} as const;
+} as const
 
 export const SidebarSchema = z.object({
   origin: z.string({ required_error: " required" }).min(2, ""),
@@ -50,4 +50,4 @@ export const SidebarSchema = z.object({
     month: z.number(),
     day: z.number(),
   }),
-});
+})

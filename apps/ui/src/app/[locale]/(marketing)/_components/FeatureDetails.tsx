@@ -1,31 +1,31 @@
-import { useTranslations } from "next-intl";
-import Image, { StaticImageData } from "next/image";
-import { PathFinderForm } from "./form/pathFinderForm";
-import { TravelMakerForm } from "./form/travelMakerForm";
-import { SouvenirsAndFoodForm } from "./form/souvenirsAndFoodForm";
-import { CelebrationsAndEventForm } from "./form/celebrationsAndEventsForm";
-import { FeatureDetailsType } from "@/constants";
-import { cn } from "@/lib/styles";
+import Image, { StaticImageData } from "next/image"
+import { FeatureDetailsType } from "@/constants"
+import { useTranslations } from "next-intl"
+import outlinedCompass from "public/assets/images/compass_outlined.png"
+import compass from "public/assets/images/compass.webp"
+import outlinedMagnifier from "public/assets/images/magnifier_outlined.png"
+import magnifier from "public/assets/images/magnifier.webp"
+import outlinedMarket from "public/assets/images/market_outlined.png"
+import market from "public/assets/images/market.webp"
+import tent from "public/assets/images/planeTent.webp"
+import outlinedRitual from "public/assets/images/ritual_outlined.png"
+import ritual from "public/assets/images/ritual.webp"
+import outlinedTent from "public/assets/images/tent_outlined.png"
 
-import tent from "public/assets/images/planeTent.webp";
-import compass from "public/assets/images/compass.webp";
-import magnifier from "public/assets/images/magnifier.webp";
-import market from "public/assets/images/market.webp";
-import ritual from "public/assets/images/ritual.webp";
+import { cn } from "@/lib/styles"
+import { Button } from "@/components/ui/button"
 
-import outlinedTent from "public/assets/images/tent_outlined.png";
-import outlinedCompass from "public/assets/images/compass_outlined.png";
-import outlinedMagnifier from "public/assets/images/magnifier_outlined.png";
-import outlinedMarket from "public/assets/images/market_outlined.png";
-import outlinedRitual from "public/assets/images/ritual_outlined.png";
-import { Button } from "@/components/ui/button";
+import { CelebrationsAndEventForm } from "./form/celebrationsAndEventsForm"
+import { PathFinderForm } from "./form/pathFinderForm"
+import { SouvenirsAndFoodForm } from "./form/souvenirsAndFoodForm"
+import { TravelMakerForm } from "./form/travelMakerForm"
 
 interface SectionProps {
-  dir: "ltr" | "rtl";
-  name: FeatureDetailsType | "about";
-  children: React.ReactNode;
-  image: StaticImageData | string;
-  outlinedImage: StaticImageData | string;
+  dir: "ltr" | "rtl"
+  name: FeatureDetailsType | "about"
+  children: React.ReactNode
+  image: StaticImageData | string
+  outlinedImage: StaticImageData | string
 }
 
 function Section({
@@ -35,7 +35,7 @@ function Section({
   image,
   outlinedImage,
 }: SectionProps) {
-  const t = useTranslations(`landingPage.featureDetails.${name}`);
+  const t = useTranslations(`landingPage.featureDetails.${name}`)
   return (
     <div
       id={name}
@@ -73,11 +73,11 @@ function Section({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export function FeatureDetails() {
-  const t = useTranslations("landingPage.featureDetails");
+  const t = useTranslations("landingPage.featureDetails")
 
   return (
     <div className="flex w-full flex-col justify-stretch">
@@ -117,5 +117,5 @@ export function FeatureDetails() {
         <CelebrationsAndEventForm />
       </Section>
     </div>
-  );
+  )
 }

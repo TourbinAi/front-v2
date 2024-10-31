@@ -46,9 +46,7 @@ export function ClientProviders({
       enableSystem
       forcedTheme="light"
     >
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </ThemeProvider>
   )
 }

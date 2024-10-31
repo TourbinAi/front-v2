@@ -8,9 +8,7 @@
       "actionParameters": {},
       "subject": "api::configuration.configuration",
       "properties": {
-        "fields": [
-          "darkMode"
-        ]
+        "fields": ["darkMode"]
       },
       "conditions": []
     },
@@ -26,9 +24,7 @@
       "actionParameters": {},
       "subject": "api::configuration.configuration",
       "properties": {
-        "fields": [
-          "darkMode"
-        ]
+        "fields": ["darkMode"]
       },
       "conditions": []
     },
@@ -37,9 +33,7 @@
       "actionParameters": {},
       "subject": "api::configuration.configuration",
       "properties": {
-        "fields": [
-          "darkMode"
-        ]
+        "fields": ["darkMode"]
       },
       "conditions": []
     },
@@ -69,9 +63,7 @@
           "logoImage.link.newTab",
           "logoImage.link.label"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -80,9 +72,7 @@
       "actionParameters": {},
       "subject": "api::footer.footer",
       "properties": {
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -112,9 +102,7 @@
           "logoImage.link.newTab",
           "logoImage.link.label"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -144,9 +132,7 @@
           "logoImage.link.newTab",
           "logoImage.link.label"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -168,9 +154,7 @@
           "logoImage.link.newTab",
           "logoImage.link.label"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -179,9 +163,7 @@
       "actionParameters": {},
       "subject": "api::navbar.navbar",
       "properties": {
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -203,9 +185,7 @@
           "logoImage.link.newTab",
           "logoImage.link.label"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -227,9 +207,7 @@
           "logoImage.link.newTab",
           "logoImage.link.label"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -254,9 +232,7 @@
           "seo.canonicalURL",
           "content"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -265,9 +241,7 @@
       "actionParameters": {},
       "subject": "api::page.page",
       "properties": {
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -276,9 +250,7 @@
       "actionParameters": {},
       "subject": "api::page.page",
       "properties": {
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -303,9 +275,7 @@
           "seo.canonicalURL",
           "content"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
@@ -330,9 +300,7 @@
           "seo.canonicalURL",
           "content"
         ],
-        "locales": [
-          "en"
-        ]
+        "locales": ["en"]
       },
       "conditions": []
     },
