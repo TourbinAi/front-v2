@@ -25,6 +25,22 @@ interface Props {
   readonly required?: boolean
 }
 
+/**
+ * AppFilePicker component documentation.
+ *
+ * This module exports the AppFilePicker component, which is a form input field
+ * that provides a file picking feature. It uses the `useRef` and `useState` hooks
+ * from `react` and the `useTranslations` hook from `next-intl`.
+ *
+ * The component accepts several props, including `selectedFile`, `setSelectedFile`,
+ * `tabIndex`, `validTypes`, `containerClassName`, `fieldClassName`, `label`, and `required`.
+ *
+ * @see Props
+ * @see AppFilePicker
+ */
+
+
+
 // TODO: refactor this to react-hook-form field with Zod validation
 // eg.: https://claritydev.net/blog/react-hook-form-multipart-form-data-file-uploads
 

@@ -21,6 +21,7 @@ export const env = createEnv({
   server: {
     NEXTAUTH_SECRET: z.string(),
     NEXTAUTH_URL: z.string().url(),
+    NEXT_PUBLIC_NESHAN_KEY: z.string().url(),
     NEXT_OUTPUT: z.string().optional(),
     NEXT_IMAGES_UNOPTIMIZED: optionalZodBoolean.default(false),
     NODE_ENV: z.string().optional(),
@@ -34,6 +35,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_APP_PUBLIC_URL: z.string().url(),
+    NEXT_PUBLIC_BACKEND_URL: z.string().url(),
     NEXT_PUBLIC_STRAPI_URL: z.string().url(),
     NEXT_PUBLIC_PREVENT_UNUSED_FUNCTIONS_ERROR_LOGS: optionalZodBoolean,
     NEXT_PUBLIC_NODE_ENV: z.string().optional(),
@@ -47,11 +49,13 @@ export const env = createEnv({
   runtimeEnv: {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXT_PUBLIC_NESHAN_KEY: process.env.NEXT_PUBLIC_NESHAN_KEY,
     NEXT_OUTPUT: process.env.NEXT_OUTPUT,
     NEXT_IMAGES_UNOPTIMIZED: process.env.NEXT_IMAGES_UNOPTIMIZED,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_APP_PUBLIC_URL: process.env.NEXT_PUBLIC_APP_PUBLIC_URL,
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
     NEXT_PUBLIC_STRAPI_URL: process.env.NEXT_PUBLIC_STRAPI_URL,
     NEXT_PUBLIC_PREVENT_UNUSED_FUNCTIONS_ERROR_LOGS:
       process.env.NEXT_PUBLIC_PREVENT_UNUSED_FUNCTIONS_ERROR_LOGS,

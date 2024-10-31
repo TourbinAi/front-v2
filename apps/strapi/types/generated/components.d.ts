@@ -25,6 +25,17 @@ export interface SectionsAnimatedLogoRow extends Schema.Component {
   }
 }
 
+export interface SectionsBlogMarkdown extends Schema.Component {
+  collectionName: "components_sections_blog_markdowns"
+  info: {
+    displayName: "blogMarkdown"
+    icon: "write"
+  }
+  attributes: {
+    Markdown: Attribute.RichText
+  }
+}
+
 export interface SectionsCarousel extends Schema.Component {
   collectionName: "components_sections_carousels"
   info: {
@@ -337,6 +348,7 @@ declare module "@strapi/types" {
     export interface Components {
       "layout.navbar": LayoutNavbar
       "sections.animated-logo-row": SectionsAnimatedLogoRow
+      "sections.blog-markdown": SectionsBlogMarkdown
       "sections.carousel": SectionsCarousel
       "sections.contact-form": SectionsContactForm
       "sections.faq": SectionsFaq

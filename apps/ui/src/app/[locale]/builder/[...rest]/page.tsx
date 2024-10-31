@@ -1,14 +1,10 @@
 import { notFound } from "next/navigation"
-import { Attribute } from "@repo/strapi"
 
 import { PageProps } from "@/types/next"
 
 import { getMetadataFromStrapi } from "@/lib/next-helpers"
 import Strapi from "@/lib/strapi"
-import { ErrorBoundary } from "@/components/elementary/ErrorBoundary"
 import { ComponentsRenderer } from "@/components/page-builder/ComponentsRenderer"
-import { PageBuilderFooter } from "@/components/page-builder/single-types/Footer"
-import { PageBuilderNavbar } from "@/components/page-builder/single-types/Navbar"
 
 async function fetchData(pageUrl: string, locale: string) {
   try {
@@ -42,14 +38,6 @@ export default async function StrapiPage({ params }: Props) {
     notFound()
   }
 
-  const pageSpecificNavbar = page.content.find(
-    (x) => x.__component === "layout.navbar"
-  ) as
-    | Attribute.GetDynamicZoneValue<
-        Attribute.DynamicZone<["layout.navbar"]>
-      >[number]
-    | undefined
-
   const pageComponents = page.content.filter((x) => {
     return (
       x.__component !== "layout.navbar" &&
@@ -59,18 +47,7 @@ export default async function StrapiPage({ params }: Props) {
 
   return (
     <main className="w-full overflow-x-hidden">
-      <ErrorBoundary hideFallback>
-        <PageBuilderNavbar
-          locale={params.locale}
-          pageSpecificNavbar={pageSpecificNavbar}
-        />
-      </ErrorBoundary>
-
       <ComponentsRenderer pageComponents={pageComponents} />
-
-      <ErrorBoundary hideFallback>
-        <PageBuilderFooter locale={params.locale} />
-      </ErrorBoundary>
     </main>
   )
 }

@@ -555,7 +555,7 @@ export interface ApiPagePage extends Schema.CollectionType {
         "sections.animated-logo-row",
         "sections.newsletter",
         "sections.contact-form",
-        "sections.markdown"
+        "sections.blog-markdown"
       ]
     > &
       Attribute.SetPluginOptions<{

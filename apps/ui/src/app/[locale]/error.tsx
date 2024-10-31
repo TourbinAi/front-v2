@@ -1,50 +1,40 @@
-"use client"
+"use client";
 
-// Error boundaries must be Client Components - https://nextjs.org/docs/app/building-your-application/routing/error-handling#using-error-boundaries
-import { useEffect } from "react"
-import * as Sentry from "@sentry/nextjs"
-import { useTranslations } from "next-intl"
+import * as Sentry from "@sentry/nextjs";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 
-import { isDevelopment } from "@/lib/general-helpers"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
-interface Props {
-  readonly error: Error
-  readonly reset: () => void
-}
+type Props = {
+  error: Error;
+  reset(): void;
+};
 
 export default function Error({ error, reset }: Props) {
-  const t = useTranslations("errors.global")
+  const t = useTranslations("Error");
 
   useEffect(() => {
-    Sentry.captureException(error)
-  }, [error])
-
-  const handleTryAgain = () => {
-    // Attempt to recover by trying to re-render the segment
-    reset()
-  }
-
-  const isDev = isDevelopment()
+    Sentry.captureException(error);
+    console.error(error);
+  }, [error]);
 
   return (
-    <div className="w-full overflow-x-hidden">
-      <h1 className="text-xl font-semibold tracking-tight">
-        {t("somethingWentWrong")}
-      </h1>
-      <p className="mt-1 text-sm text-gray-600">
-        {t("invalidContent")}
-        {isDev ? `: ${error.message}` : null}
-      </p>
-      {isDev && (
-        <p className="mt-2 w-full overflow-x-auto bg-gray-100 p-3 text-xs">
-          <pre>{error.stack?.split("\n").slice(0, 7).join("\n")}</pre>
-        </p>
-      )}
-
-      <Button type="button" size="sm" onClick={handleTryAgain} className="mt-2">
-        {t("tryAgain")}
-      </Button>
-    </div>
-  )
+    <main className="flex size-full flex-col items-center justify-center gap-2">
+      <h1 className="text-3xl font-semibold">{t("title")}</h1>
+      {t.rich("description", {
+        p: (chunks) => <p className="mt-4 text-2xl">{chunks}</p>,
+        retry: (chunks) => (
+          <Button
+            variant="link"
+            className="px-0 text-2xl"
+            onClick={reset}
+            type="button"
+          >
+            {chunks}
+          </Button>
+        ),
+      })}
+    </main>
+  );
 }

@@ -51,7 +51,7 @@
         "sections.animated-logo-row",
         "sections.newsletter",
         "sections.contact-form",
-        "sections.markdown"
+        "sections.blog-markdown"
       ],
       "pluginOptions": {
         "i18n": {

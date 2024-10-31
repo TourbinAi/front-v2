@@ -16,6 +16,34 @@ import {
 import { AppFormDescription } from "./AppFormDescription"
 import { AppFormLabel } from "./AppFormLabel"
 
+/**
+ * AppCheckbox component documentation.
+ *
+ * This module exports the AppCheckbox component, which is a form input field
+ * that provides a checkbox feature. It uses the `Checkbox` component from
+ * `@/components/ui/checkbox` and the `useFormContext` hook from `react-hook-form`.
+ *
+ * The component accepts several props, including `name`, `label`, `containerClassName`,
+ * `fieldClassName`, and `description`.
+ *
+ * @see Props
+ * @see AppCheckbox
+ */
+
+/**
+ * Props for the AppCheckbox component.
+ *
+ * @typedef {Object} Props
+ * @property {string} name - The name of the form field.
+ * @property {React.ReactNode} [label] - The label for the form field.
+ * @property {string} [containerClassName] - The class name for the container element.
+ * @property {string} [fieldClassName] - The class name for the field element.
+ * @property {React.ReactNode} [description] - The description for the form field.
+ * @property {React.InputHTMLAttributes<HTMLInputElement>} nativeProps - The native props for the form field.
+ */
+
+
+
 type Props = {
   readonly name: string
   readonly label?: React.ReactNode

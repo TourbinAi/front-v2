@@ -16,6 +16,33 @@ import { Input } from "@/components/ui/input"
 import { AppFormDescription } from "./AppFormDescription"
 import { AppFormLabel } from "./AppFormLabel"
 
+/**
+ * AppField component documentation.
+ *
+ * This module exports the AppField component, which is a form input field.
+ * It uses the `useFormContext` hook from `react-hook-form`.
+ *
+ * The component accepts several props, including `name`, `label`, `endAdornment`,
+ * `containerClassName`, `fieldClassName`, and `description`.
+ *
+ * @see Props
+ * @see AppField
+ */
+
+/**
+ * Props for the AppField component.
+ *
+ * @typedef {Object} Props
+ * @property {string} name - The name of the form field.
+ * @property {React.ReactNode} [label] - The label for the form field.
+ * @property {React.ReactNode} [endAdornment] - The end adornment for the form field.
+ * @property {string} [containerClassName] - The class name for the container element.
+ * @property {string} [fieldClassName] - The class name for the field element.
+ * @property {React.ReactNode} [description] - The description for the form field.
+ * @property {React.InputHTMLAttributes<HTMLInputElement>} nativeProps - The native props for the form field.
+ */
+
+
 type Props = {
   readonly name: string
   readonly label?: React.ReactNode

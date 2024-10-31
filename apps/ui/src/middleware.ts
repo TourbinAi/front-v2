@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server"
-import { withAuth } from "next-auth/middleware"
 import createMiddleware from "next-intl/middleware"
 
 import { env } from "./env.mjs"
@@ -23,21 +22,6 @@ const publicPages = [
   "/builder/.*", // use regex to match all builder pages
   "/docs",
 ]
-
-const authMiddleware = withAuth(
-  // Note that this callback is only invoked if
-  // the `authorized` callback has returned `true`
-  // and not for pages listed in `pages`.
-  (req) => intlMiddleware(req),
-  {
-    callbacks: {
-      authorized: ({ token }) => token != null,
-    },
-    pages: {
-      signIn: "/auth/signin",
-    },
-  }
-)
 
 export default function middleware(req: NextRequest) {
   // Handle HTTPS redirection in production in Heroku servers
@@ -64,8 +48,6 @@ export default function middleware(req: NextRequest) {
   if (isPublicPage) {
     return intlMiddleware(req)
   }
-
-  return (authMiddleware as any)(req)
 }
 
 export const config = {

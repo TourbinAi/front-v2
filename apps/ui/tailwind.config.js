@@ -1,5 +1,3 @@
-const { fontFamily } = require("tailwindcss/defaultTheme")
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -8,6 +6,8 @@ module.exports = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "src/app/**/*.{ts,tsx}",
+    "src/components/**/*.{ts,tsx}"
   ],
   theme: {
     container: {
@@ -18,6 +18,7 @@ module.exports = {
       },
     },
     extend: {
+      textAlign: ["responsive", "rtl"],
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -26,6 +27,7 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          muted: "hsl(var(--primary-muted))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -63,6 +65,14 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        ripple: {
+          "0%, 100%": {
+            transform: "translate(-50%, -50%) scale(1)",
+          },
+          "50%": {
+            transform: "translate(-50%, -50%) scale(0.9)",
+          },
+        },
         "accordion-down": {
           from: { height: 0 },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -73,6 +83,7 @@ module.exports = {
         },
       },
       animation: {
+        ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
@@ -80,11 +91,12 @@ module.exports = {
         height: "height",
       },
       fontFamily: {
-        sans: ["var(--font-roboto)", ...fontFamily.sans],
+        sans: ["var(--font-ir-sans)"],
+        mono: ["var(--font-rubik)"],
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require('@tailwindcss/class-order'), require("tailwindcss-animate"), require("tailwindcss-rtl")],
   safelist: [
     {
       pattern: /grid-cols-([1-8])/,

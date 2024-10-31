@@ -1,13 +1,23 @@
 import withPlaiceholder from "@plaiceholder/next"
 import { withSentryConfig } from "@sentry/nextjs"
+import createMDX from '@next/mdx'
+import remarkGfm from 'remark-gfm'
 import plugin from "next-intl/plugin"
 
 import { env } from "./src/env.mjs"
 
 const withNextIntl = plugin("./src/lib/i18n.ts")
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   output: env.NEXT_OUTPUT,
   reactStrictMode: true,
   experimental: {},
@@ -45,7 +55,7 @@ const nextConfig = {
 }
 
 const withConfig = (() => {
-  let config = withNextIntl(withPlaiceholder(nextConfig))
+  let config = withMDX(withNextIntl(withPlaiceholder(nextConfig)))
 
   if (env.SENTRY_AUTH_TOKEN && env.SENTRY_ORG && env.SENTRY_PROJECT) {
     config = withSentryConfig(config, {

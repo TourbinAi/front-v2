@@ -4,15 +4,14 @@ import { notFound } from "next/navigation"
 
 import { LayoutProps } from "@/types/next"
 
-import { fontRoboto } from "@/lib/fonts"
+import { fontSans  } from "@/lib/fonts"
 import { setupLibraries } from "@/lib/general-helpers"
 import { locales } from "@/lib/i18n"
 import { cn } from "@/lib/styles"
-import { Navbar } from "@/components/elementary/navbar/Navbar"
 import { TailwindIndicator } from "@/components/elementary/TailwindIndicator"
 import { ClientProviders } from "@/components/providers/ClientProviders"
 import { ServerProviders } from "@/components/providers/ServerProviders"
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/sonner"
 
 setupLibraries()
 
@@ -22,23 +21,19 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   }
 
   return (
-    <html lang={params.locale} suppressHydrationWarning>
+    <html lang={params.locale} className={`${fontSans.variable} font-sans`}
+    dir={params.locale === "fa" ? "rtl" : "ltr"} suppressHydrationWarning>
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontRoboto.variable
+          "bg-background min-h-screen font-sans antialiased",
+          fontSans.variable
         )}
       >
         <ServerProviders params={params}>
           <ClientProviders>
-            <div className="relative flex min-h-screen flex-col">
-              <Navbar locale={params.locale} />
-              <div className="flex-1">
-                <div className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-                  {children}
-                </div>
-              </div>
+            <div className="h-full">
+              {children}
             </div>
             <TailwindIndicator />
             <Toaster />

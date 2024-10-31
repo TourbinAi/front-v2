@@ -2,10 +2,10 @@
 
 import React, { useTransition } from "react"
 import { useSearchParams } from "next/navigation"
+import { ClassValue } from "clsx";
 
 import { AppLocale } from "@/types/general"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { locales } from "@/lib/i18n"
 import { usePathname, useRouter } from "@/lib/navigation"
 import {
@@ -15,18 +15,35 @@ import {
   SelectSeparator,
   SelectTrigger,
 } from "@/components/ui/select"
+import { cn } from "@/lib/styles";
+import { Languages } from "lucide-react";
+import { useLocale } from "next-intl";
+
+/**
+ * LocaleSwitcher component.
+ *
+ * This component renders a dropdown menu for switching between different locales.
+ * It uses the `Select` component from `@/components/ui/select` and the `useTransition`
+ * hook from React to prevent the locale switch from blocking the UI thread.
+ *
+ * The component accepts a `locale` prop, which is the current locale.
+ *
+ * @see LocaleSwitcherProps
+ * @see Select
+ */
+
 
 const localeTranslation = {
   en: "English",
   fa: "فارسی",
 }
 
-const LocaleSwitcher = ({ locale }: { locale: AppLocale }) => {
-  removeThisWhenYouNeedMe("LocaleSwitcher")
+const LocaleSwitcher = ({ className }: { className: ClassValue }) => {
 
   // prevent the locale switch from blocking the UI thread
   const [, startTransition] = useTransition()
 
+  const locale = useLocale();
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -45,8 +62,9 @@ const LocaleSwitcher = ({ locale }: { locale: AppLocale }) => {
 
   return (
     <Select value={locale} onValueChange={handleLocaleChange}>
-      <SelectTrigger className="w-32 font-bold uppercase">
-        {locale}
+      <SelectTrigger className={cn(className, "w-32 font-bold uppercase")}>
+        <Languages size={17} />
+        {locale === "en" ? "en" : "فا"}
       </SelectTrigger>
       <SelectContent>
         {locales.map((locale, index) => (
