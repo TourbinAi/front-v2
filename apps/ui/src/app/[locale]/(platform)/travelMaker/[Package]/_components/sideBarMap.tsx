@@ -5,6 +5,7 @@ import path from "path"
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { env } from "@/env.mjs"
 
 import { PackagesPlaceRes } from "@/types/api"
 

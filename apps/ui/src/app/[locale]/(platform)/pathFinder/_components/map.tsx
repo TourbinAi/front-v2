@@ -2,7 +2,7 @@
 
 import { LatLngExpression } from "leaflet"
 
-import "leaflet/dist/leaflet.css"
+import "leaflet"
 
 import React, { useEffect, useState } from "react"
 import dynamic from "next/dynamic"

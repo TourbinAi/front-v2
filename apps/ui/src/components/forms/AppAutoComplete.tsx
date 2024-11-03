@@ -70,6 +70,15 @@ export function AppAutoComplete<T extends string>({
 }: Props<T>) {
   const { control } = useFormContext()
 
+  const transformedItems = items.map((item) => ({
+    address: "",
+    category: "",
+    location: { x: 0, y: 0 },
+    region: "",
+    title: item.label, // map label to title
+    type: "",
+  }))
+
   return (
     <FormField
       control={control}
@@ -90,7 +99,7 @@ export function AppAutoComplete<T extends string>({
               onSearchValueChange={(value) => {
                 field.onChange(value)
               }}
-              items={items}
+              items={transformedItems}
               isLoading={isLoading}
               emptyMessage={emptyMessage}
               placeholder={placeholder}

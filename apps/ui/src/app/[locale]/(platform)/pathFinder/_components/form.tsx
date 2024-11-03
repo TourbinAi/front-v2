@@ -222,7 +222,9 @@ export const PathFinderForm: React.FC<FormProps> = ({
         )
       }
       searchValue={
-        type === "origin" ? originSearchValue : destinationSearchValues[index]
+        type === "origin"
+          ? originSearchValue
+          : destinationSearchValues[index] || ""
       }
       onSearchValueChange={(value) => {
         if (type === "origin") {
