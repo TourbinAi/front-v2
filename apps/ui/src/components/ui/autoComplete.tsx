@@ -3,9 +3,9 @@
 import { useMemo, useState } from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { Check } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { cn } from "@/lib/styles"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import {
@@ -15,6 +15,7 @@ import {
   CommandItem,
   CommandList,
 } from "./command"
+import { Input } from "./input"
 import { Popover, PopoverAnchor, PopoverContent } from "./popover"
 import { Skeleton } from "./skeleton"
 
@@ -23,14 +24,16 @@ type Props<T extends string> = {
   onSelectedValueChange: (value: T) => void
   searchValue: string
   onSearchValueChange: (value: string) => void
-  items: {
-    address: string
-    category: string
-    location: { x: number; y: number }
-    region: string
-    title: string
-    type: string
-  }[]
+  items:
+    | {
+        address: string
+        category: string
+        location: { x: number; y: number }
+        region: string
+        title: string
+        type: string
+      }[]
+    | []
   isLoading?: boolean
   emptyMessage?: string
   placeholder?: string
@@ -53,6 +56,7 @@ export function AutoComplete<T extends string>({
   lable,
 }: Props<T>) {
   const [open, setOpen] = useState(false)
+  const t = useTranslations("PathFinder")
   const labels = useMemo(() => {
     if (!items) return {}
     return items.reduce(
