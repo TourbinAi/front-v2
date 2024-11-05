@@ -13,6 +13,8 @@ import { useRouter } from "@/lib/navigation"
 import { neshanSearchAPI } from "@/lib/neshan"
 import { PathFinderSchemaLanding } from "@/lib/validation/pathFinder"
 import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"
+import { AppAutoComplete } from "@/components/forms/AppAutoComplete"
+import { AppForm } from "@/components/forms/AppForm"
 import SubmitButton from "@/components/forms/SubmitButton"
 import { AutoComplete } from "@/components/ui/autoComplete"
 import { Form, FormField } from "@/components/ui/form"
@@ -111,7 +113,7 @@ export const PathFinderForm = () => {
       control={form.control}
       name={type}
       render={({ field }) => (
-        <AutoComplete
+        <AppAutoComplete
           selectedValue={field.value}
           onSelectedValueChange={(value) => {
             field.onChange(value)
@@ -135,16 +137,14 @@ export const PathFinderForm = () => {
   )
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex h-1/2 flex-col flex-wrap text-center">
-          {renderAutoComplete("origin")}
-        </div>
-        <div className="relative mb-6 mt-8">
-          {renderAutoComplete("destination")}
-        </div>
-        <SubmitButton isLoading={isLoading}>{t("submit")}</SubmitButton>
-      </form>
-    </Form>
+    <AppForm form={form} onSubmit={onSubmit}>
+      <div className="flex h-1/2 flex-col flex-wrap text-center">
+        {renderAutoComplete("origin")}
+      </div>
+      <div className="relative mb-6 mt-8">
+        {renderAutoComplete("destination")}
+      </div>
+      <SubmitButton isLoading={isLoading}>{t("submit")}</SubmitButton>
+    </AppForm>
   )
 }

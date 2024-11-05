@@ -15,6 +15,8 @@ import type { NeshanDataItemType } from "@/types/api"
 import { neshanSearchAPI } from "@/lib/neshan"
 import { PathFinderSchema } from "@/lib/validation/pathFinder"
 import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"
+import { AppAutoComplete } from "@/components/forms/AppAutoComplete"
+import { AppForm } from "@/components/forms/AppForm"
 import SubmitButton from "@/components/forms/SubmitButton"
 import { AutoComplete } from "@/components/ui/autoComplete"
 import { Button } from "@/components/ui/button"
@@ -195,7 +197,7 @@ export const PathFinderForm: React.FC<FormProps> = ({
       control={form.control}
       name={type === "origin" ? "origin" : `destinations.${index}`}
       render={({ field }) => (
-        <AutoComplete
+        <AppAutoComplete
           selectedValue={field.value}
           onSelectedValueChange={(value) => {
             field.onChange(value)
@@ -234,35 +236,33 @@ export const PathFinderForm: React.FC<FormProps> = ({
   }, [form.getValues("origin"), form.getValues("destinations")])
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mt-4">
-          {isDataReady ? renderAutoComplete("origin") : "loading sideBar..."}
-          {isDataReady &&
-            form.watch("destinations").map((_, index) => (
-              <div key={index} className="relative mb-5 mt-6 text-nowrap">
-                {renderAutoComplete("destination", index)}
-                {index > 0 && (
-                  <Button
-                    variant="outline"
-                    className="absolute left-0 top-0"
-                    onClick={() => removeDestinationField(index)}
-                  >
-                    <X />
-                  </Button>
-                )}
-              </div>
-            ))}
-          <div className="mb-4 mr-10">
-            {isDataReady && (
-              <Button type="button" onClick={addDestinationField}>
-                {t("addDestination")}
-              </Button>
-            )}
-          </div>
+    <AppForm form={form} onSubmit={onSubmit}>
+      <div className="mt-4">
+        {isDataReady ? renderAutoComplete("origin") : "loading sideBar..."}
+        {isDataReady &&
+          form.watch("destinations").map((_, index) => (
+            <div key={index} className="relative mb-5 mt-6 text-nowrap">
+              {renderAutoComplete("destination", index)}
+              {index > 0 && (
+                <Button
+                  variant="outline"
+                  className="absolute left-0 top-0"
+                  onClick={() => removeDestinationField(index)}
+                >
+                  <X />
+                </Button>
+              )}
+            </div>
+          ))}
+        <div className="mb-4 mr-10">
+          {isDataReady && (
+            <Button type="button" onClick={addDestinationField}>
+              {t("addDestination")}
+            </Button>
+          )}
         </div>
-        <SubmitButton className="w-full lg:hidden">{t("submit")}</SubmitButton>
-      </form>
-    </Form>
+      </div>
+      <SubmitButton className="w-full lg:hidden">{t("submit")}</SubmitButton>
+    </AppForm>
   )
 }

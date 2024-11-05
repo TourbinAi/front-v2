@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { Check } from "lucide-react"
-
+import { Label } from "./label"
 import { cn } from "@/lib/styles"
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
 import {
@@ -73,9 +72,9 @@ export function AutoComplete<T extends string>({
   }
 
   return (
-    <FormItem className="flex items-baseline justify-center space-x-2">
-      {lable && <FormLabel className="flex-shrink-0">{lable}</FormLabel>}
-      <FormControl className="flex-1">
+    <div className="flex items-baseline justify-center space-x-2">
+      {lable && <Label className="flex-shrink-0">{lable}</Label>}
+      <div className="flex-1">
         <Popover open={open} onOpenChange={setOpen}>
           <Command shouldFilter={false}>
             <PopoverAnchor asChild>
@@ -154,8 +153,8 @@ export function AutoComplete<T extends string>({
             </PopoverContent>
           </Command>
         </Popover>
-      </FormControl>
-    </FormItem>
+      </div>
+    </div>
   )
 }
 export default AutoComplete

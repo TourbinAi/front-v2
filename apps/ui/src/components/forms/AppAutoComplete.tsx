@@ -1,30 +1,24 @@
 "use client"
 
 import React from "react"
-import { useFormContext } from "react-hook-form"
 
 import { cn } from "@/lib/styles"
 import { AutoComplete } from "@/components/ui/autoComplete"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form"
-
-import { AppFormDescription } from "./AppFormDescription"
-import { AppFormLabel } from "./AppFormLabel"
+import { FormControl, FormItem, FormMessage } from "@/components/ui/form"
 
 type Props<T extends string> = {
-  readonly name: string
-  readonly label?: React.ReactNode
   readonly containerClassName?: string
-  readonly fieldClassName?: string
-  readonly description?: React.ReactNode
-  readonly items: { value: T; label: string }[]
-  readonly isLoading?: boolean
-  readonly emptyMessage?: string
-  readonly placeholder?: string
+  selectedValue: T
+  onSelectedValueChange: (value: T) => void
+  searchValue: string
+  onSearchValueChange: (value: string) => void
+  items: string[]
+  isLoading?: boolean
+  emptyMessage?: string
+  placeholder?: string
+  onChangeHandler?: (value: any) => void
+  itemClickHandler?: (Value: any) => void
+  lable?: string
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "className">
 
 /**
@@ -58,50 +52,37 @@ type Props<T extends string> = {
  */
 
 export function AppAutoComplete<T extends string>({
-  name,
-  label,
-  containerClassName,
-  description,
+  selectedValue,
+  onSelectedValueChange,
+  searchValue,
+  onSearchValueChange,
   items,
   isLoading,
-  emptyMessage,
-  placeholder,
-  ...nativeProps
+  emptyMessage = "",
+  placeholder = "Search...",
+  onChangeHandler,
+  itemClickHandler,
+  lable,
+  containerClassName,
 }: Props<T>) {
-  const { control } = useFormContext()
-
   return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field, fieldState }) => (
-        <FormItem className={cn(containerClassName)}>
-          <AppFormLabel
-            fieldState={fieldState}
-            label={label}
-            required={nativeProps.required}
-          />
-
-          <FormControl>
-            <AutoComplete
-              selectedValue={field.value}
-              onSelectedValueChange={field.onChange}
-              searchValue={field.value}
-              onSearchValueChange={(value) => {
-                field.onChange(value)
-              }}
-              items={items}
-              isLoading={isLoading}
-              emptyMessage={emptyMessage}
-              placeholder={placeholder}
-            />
-          </FormControl>
-
-          <AppFormDescription description={description} />
-
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+    <FormItem className={cn(containerClassName)}>
+      <FormControl>
+        <AutoComplete
+          selectedValue={selectedValue}
+          onSelectedValueChange={onSelectedValueChange}
+          searchValue={searchValue}
+          onSearchValueChange={onSearchValueChange}
+          items={items}
+          isLoading={isLoading}
+          emptyMessage={emptyMessage}
+          placeholder={placeholder}
+          lable={lable}
+          onChangeHandler={onChangeHandler}
+          itemClickHandler={itemClickHandler}
+        />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
   )
 }
