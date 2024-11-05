@@ -1,12 +1,10 @@
-"use client"
-
 import { useMemo, useState } from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { Check } from "lucide-react"
 
 import { cn } from "@/lib/styles"
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 import {
   Command,
@@ -23,14 +21,7 @@ type Props<T extends string> = {
   onSelectedValueChange: (value: T) => void
   searchValue: string
   onSearchValueChange: (value: string) => void
-  items: {
-    address: string
-    category: string
-    location: { x: number; y: number }
-    region: string
-    title: string
-    type: string
-  }[]
+  items: string[]
   isLoading?: boolean
   emptyMessage?: string
   placeholder?: string
@@ -57,7 +48,7 @@ export function AutoComplete<T extends string>({
     if (!items) return {}
     return items.reduce(
       (acc, item) => {
-        acc[item.title] = item.title
+        acc[item] = item
         return acc
       },
       {} as Record<string, string>
@@ -82,91 +73,89 @@ export function AutoComplete<T extends string>({
   }
 
   return (
-    <div className="flex items-center gap-2">
-      {lable && <Label>{lable}</Label>}
-      <Popover open={open} onOpenChange={setOpen}>
-        <Command shouldFilter={false}>
-          <PopoverAnchor asChild>
-            <CommandPrimitive.Input
+    <FormItem className="flex items-baseline justify-center space-x-2">
+      {lable && <FormLabel className="flex-shrink-0">{lable}</FormLabel>}
+      <FormControl className="flex-1">
+        <Popover open={open} onOpenChange={setOpen}>
+          <Command shouldFilter={false}>
+            <PopoverAnchor asChild>
+              <CommandPrimitive.Input
+                asChild
+                value={searchValue}
+                onValueChange={onSearchValueChange}
+                onKeyDown={(e) => setOpen(e.key !== "Escape")}
+                onMouseDown={() => setOpen((open) => !!searchValue || !open)}
+                onFocus={() => setOpen(true)}
+                onBlur={onInputBlur}
+              >
+                <Input
+                  placeholder={placeholder}
+                  onChange={(e) => {
+                    if (onChangeHandler) {
+                      onChangeHandler(e.target.value)
+                    }
+                  }}
+                />
+              </CommandPrimitive.Input>
+            </PopoverAnchor>
+            {!open && <CommandList aria-hidden="true" className="hidden" />}
+            <PopoverContent
               asChild
-              value={searchValue}
-              onValueChange={onSearchValueChange}
-              onKeyDown={(e) => setOpen(e.key !== "Escape")}
-              onMouseDown={() => setOpen((open) => !!searchValue || !open)}
-              onFocus={() => setOpen(true)}
-              onBlur={onInputBlur}
+              onOpenAutoFocus={(e) => e.preventDefault()}
+              onInteractOutside={(e) => {
+                if (
+                  e.target instanceof Element &&
+                  e.target.hasAttribute("cmdk-input")
+                ) {
+                  e.preventDefault()
+                }
+              }}
+              className="w-[--radix-popover-trigger-width] p-0"
             >
-              <Input
-                placeholder={placeholder}
-                onChange={(e) => {
-                  if (onChangeHandler) {
-                    onChangeHandler(e.target.value)
-                  }
-                }}
-              />
-            </CommandPrimitive.Input>
-          </PopoverAnchor>
-          {!open && <CommandList aria-hidden="true" className="hidden" />}
-          <PopoverContent
-            asChild
-            onOpenAutoFocus={(e) => e.preventDefault()}
-            onInteractOutside={(e) => {
-              if (
-                e.target instanceof Element &&
-                e.target.hasAttribute("cmdk-input")
-              ) {
-                e.preventDefault()
-              }
-            }}
-            className="w-[--radix-popover-trigger-width] p-0"
-          >
-            <CommandList>
-              {isLoading && (
-                <CommandPrimitive.Loading>
-                  <div className="p-1">
-                    <Skeleton className="h-6 w-full" />
-                  </div>
-                </CommandPrimitive.Loading>
-              )}
-              {items?.length > 0 && !isLoading ? (
-                <CommandGroup>
-                  {items.map((option, index) => (
-                    <CommandItem
-                      key={index}
-                      value={option.title}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onSelect={() => {
-                        if (itemClickHandler) {
-                          itemClickHandler(option)
-                        }
-                        onSelectItem(option.title)
-                      }}
-                      onClick={() => {
-                        if (itemClickHandler) {
-                          itemClickHandler(option)
-                        }
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          selectedValue === option.title
-                            ? "opacity-100"
-                            : "opacity-0"
-                        )}
-                      />
-                      {option.title}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              ) : null}
-              {!isLoading ? (
-                <CommandEmpty>{emptyMessage ?? ""}</CommandEmpty>
-              ) : null}
-            </CommandList>
-          </PopoverContent>
-        </Command>
-      </Popover>
-    </div>
+              <CommandList>
+                {isLoading && (
+                  <CommandPrimitive.Loading>
+                    <div className="p-1">
+                      <Skeleton className="h-6 w-full" />
+                    </div>
+                  </CommandPrimitive.Loading>
+                )}
+                {items?.length > 0 && !isLoading ? (
+                  <CommandGroup>
+                    {items.map((option, index) => (
+                      <CommandItem
+                        key={index}
+                        value={option}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onSelect={() => {
+                          if (itemClickHandler) {
+                            itemClickHandler(option)
+                          }
+                          onSelectItem(option)
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedValue === option
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                        {option}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                ) : null}
+                {!isLoading ? (
+                  <CommandEmpty>{emptyMessage ?? ""}</CommandEmpty>
+                ) : null}
+              </CommandList>
+            </PopoverContent>
+          </Command>
+        </Popover>
+      </FormControl>
+    </FormItem>
   )
 }
+export default AutoComplete

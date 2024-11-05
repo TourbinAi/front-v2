@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "@/lib/navigation" 
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as Sentry from "@sentry/nextjs" //error handling
 import { useTranslations } from "next-intl"
@@ -10,12 +9,13 @@ import { z } from "zod"
 
 import type { NeshanDataItemType } from "@/types/api"
 
-import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
-import { neshanSearchAPI } from "@/lib/neshan"; 
+import { useRouter } from "@/lib/navigation"
+import { neshanSearchAPI } from "@/lib/neshan"
 import { PathFinderSchemaLanding } from "@/lib/validation/pathFinder"
-import SubmitButton from "@/components/forms/SubmitButton";
-import { AutoComplete } from "@/components/ui/autoComplete";
-import { Form } from "@/components/ui/form"; 
+import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"
+import SubmitButton from "@/components/forms/SubmitButton"
+import { AutoComplete } from "@/components/ui/autoComplete"
+import { Form, FormField } from "@/components/ui/form"
 
 export const PathFinderForm = () => {
   const t = useTranslations("PathFinder")
@@ -87,55 +87,50 @@ export const PathFinderForm = () => {
   //user search location handler
   const changeHandler = (newValue: string, type: "origin" | "destination") => {
     if (type === "origin") {
-      setNeshanDataOrigin([])
       setLoadOrigin(true)
     } else if (type === "destination") {
-      setNeshanDataDestinations([])
       setLoadDes(true)
     }
 
     debouncedFetchData(newValue, type)
   }
   //user select location handler
-  const handleItemClick = (
-    item: NeshanDataItemType,
-    type: "origin" | "destination"
-  ) => {
+  const handleItemClick = (item: string, type: "origin" | "destination") => {
     if (type === "origin") {
-      setDataOrigin(item)
-      setNeshanDataOrigin([])
-      form.setValue("origin", item.title)
+      setDataOrigin(neshanDataOrigin.find((data) => data.title === item))
+      form.setValue("origin", item)
     } else if (type === "destination") {
-      setDataDestination([item])
-      setNeshanDataDestinations([])
-      form.setValue(`destination`, item.title)
+      let dataObj = neshanDataDestinations?.find((data) => data.title === item)
+      dataObj && setDataDestination([dataObj])
+      form.setValue(`destination`, item)
     }
   }
   //dynamic render autoComplete
   const renderAutoComplete = (type: "origin" | "destination") => (
-    <AutoComplete
-      selectedValue={form.watch(type)}
-      onSelectedValueChange={(value) => form.setValue(type, value)}
-      searchValue={form.getValues(type)}
-      onSearchValueChange={(value) => {
-        form.setValue(type, value)
-      }}
-      items={(type === "origin"
-        ? neshanDataOrigin
-        : neshanDataDestinations
-      )?.map((item) => ({
-        address: item?.address,
-        category: item?.category,
-        location: { x: item?.location.x, y: item?.location.y },
-        region: item?.region,
-        title: item?.title,
-        type: item?.type,
-      }))}
-      isLoading={type === "origin" ? loadingOrigin : loadingDes}
-      placeholder={t(`${type}.placeHolder`)}
-      lable={t(`${type}.title`)}
-      onChangeHandler={(e) => changeHandler(e, type)}
-      itemClickHandler={(item) => handleItemClick(item, type)}
+    <FormField
+      control={form.control}
+      name={type}
+      render={({ field }) => (
+        <AutoComplete
+          selectedValue={field.value}
+          onSelectedValueChange={(value) => {
+            field.onChange(value)
+          }}
+          searchValue={field.value}
+          onSearchValueChange={(value) => {
+            field.onChange(value)
+          }}
+          items={(type === "origin"
+            ? neshanDataOrigin
+            : neshanDataDestinations
+          )?.map((item) => item.title)}
+          isLoading={type === "origin" ? loadingOrigin : loadingDes}
+          placeholder={t(`${type}.placeHolder`)}
+          lable={t(`${type}.title`)}
+          onChangeHandler={(e) => changeHandler(e, type)}
+          itemClickHandler={(item) => handleItemClick(item, type)}
+        />
+      )}
     />
   )
 

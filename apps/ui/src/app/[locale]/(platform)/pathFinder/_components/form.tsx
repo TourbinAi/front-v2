@@ -1,48 +1,51 @@
-"use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Form } from "@/components/ui/form"; 
-import SubmitButton from "@/components/forms/SubmitButton";
-import { useTranslations } from "next-intl";
-import { PathFinderSchema } from "@/lib/validation/pathFinder";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { AutoComplete } from "@/components/ui/autoComplete"; 
-import { useQueryState } from "nuqs";
-import { neshanSearchAPI } from "@/lib/neshan"; 
-import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"; 
-import type { NeshanDataItemType } from "@/types/api";
-import * as Sentry from "@sentry/nextjs";
+"use client"
+
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as Sentry from "@sentry/nextjs"
+import { X } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useQueryState } from "nuqs"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import type { NeshanDataItemType } from "@/types/api"
+
+import { neshanSearchAPI } from "@/lib/neshan"
+import { PathFinderSchema } from "@/lib/validation/pathFinder"
+import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"
+import SubmitButton from "@/components/forms/SubmitButton"
+import { AutoComplete } from "@/components/ui/autoComplete"
+import { Button } from "@/components/ui/button"
+import { Form, FormField } from "@/components/ui/form"
 
 interface FormProps {
-  FormData: (DataOrigin: any, DataDestination: any[]) => void;
-  SheetOpen: (Value: boolean) => void;
+  FormData: (DataOrigin: any, DataDestination: any[]) => void
+  SheetOpen: (Value: boolean) => void
 }
-  
+
 export const PathFinderForm: React.FC<FormProps> = ({
   FormData,
   SheetOpen,
 }) => {
-  const t = useTranslations("PathFinder");
+  const t = useTranslations("PathFinder")
   const [neshanDataOrigin, setNeshanDataOrigin] = useState<
     NeshanDataItemType[]
-  >([]);
+  >([])
   const [neshanDataDestinations, setNeshanDataDestinations] = useState<
     NeshanDataItemType[][]
-  >([[]]);
-  const [DataOrigin, setDataOrigin] = useState<NeshanDataItemType>();
+  >([[]])
+  const [DataOrigin, setDataOrigin] = useState<NeshanDataItemType>()
   const [DataDestination, setDataDestination] = useState<NeshanDataItemType[]>(
     []
-  );
-  const [loadingOrigin, setLoadOrigin] = useState<boolean>(false);
-  const [loadingDes, setLoadDes] = useState<boolean[]>([]);
-  const searchParams = useSearchParams();
-  const [isDataReady, setIsDataReady] = useState(false);
-  const [originQuery, setOriginQuery] = useQueryState("origin");
-  const [destinationQuery, setDestinationQuery] = useQueryState("des");
+  )
+  const [loadingOrigin, setLoadOrigin] = useState<boolean>(false)
+  const [loadingDes, setLoadDes] = useState<boolean[]>([])
+  const searchParams = useSearchParams()
+  const [isDataReady, setIsDataReady] = useState(false)
+  const [originQuery, setOriginQuery] = useQueryState("origin")
+  const [destinationQuery, setDestinationQuery] = useQueryState("des")
 
   const form = useForm<z.infer<typeof PathFinderSchema>>({
     resolver: zodResolver(PathFinderSchema),
@@ -50,41 +53,37 @@ export const PathFinderForm: React.FC<FormProps> = ({
       origin: "",
       destinations: [""],
     },
-  });
+  })
 
   const onSubmit = async (values: z.infer<typeof PathFinderSchema>) => {
-    FormData(DataOrigin, DataDestination);
-    SheetOpen(false);
-  };
+    FormData(DataOrigin, DataDestination)
+    SheetOpen(false)
+  }
   //get data in url and handle states
   useEffect(() => {
     if (originQuery && destinationQuery) {
-      const parsedOrigin = JSON.parse(originQuery.replace(/\/$/, ""));
-      const parsedDestinations = JSON.parse(
-        destinationQuery.replace(/\/$/, "")
-      );
-      setDataOrigin(parsedOrigin);
-      form.setValue("origin", parsedOrigin?.title);
-      setDataDestination(parsedDestinations);
+      const parsedOrigin = JSON.parse(originQuery.replace(/\/$/, ""))
+      const parsedDestinations = JSON.parse(destinationQuery.replace(/\/$/, ""))
+      setDataOrigin(parsedOrigin)
+      form.setValue("origin", parsedOrigin?.title)
+      setDataDestination(parsedDestinations)
       parsedDestinations.forEach((dest: any, index: number) => {
-        form.setValue(`destinations.${index}`, dest.title);
-      });
-      setNeshanDataDestinations(parsedDestinations.map(() => []));
+        form.setValue(`destinations.${index}`, dest.title)
+      })
     }
-  }, [searchParams, form]);
+  }, [searchParams, form])
   //send data for map
   useEffect(() => {
     if (DataDestination && DataOrigin) {
-      FormData(DataOrigin, DataDestination);
+      FormData(DataOrigin, DataDestination)
     }
-  }, [DataOrigin, DataDestination, FormData]);
+  }, [DataOrigin, DataDestination, FormData])
 
   const addDestinationField = () => {
     if (form.watch("destinations").length < 4) {
-      form.setValue("destinations", [...form.getValues("destinations"), ""]);
-      setNeshanDataDestinations((prev) => [...prev, []]);
+      form.setValue("destinations", [...form.getValues("destinations"), ""])
     }
-  };
+  }
   //fetch data
   const fetchData = async (
     newValue: string,
@@ -92,169 +91,147 @@ export const PathFinderForm: React.FC<FormProps> = ({
     index?: number
   ) => {
     try {
-      const response = await neshanSearchAPI(newValue);
-      const data = response.data.items;
+      const response = await neshanSearchAPI(newValue)
+      const data = response.data.items
 
       if (type === "origin") {
-        setNeshanDataOrigin(data.slice(0, 5));
-        setLoadOrigin(false);
+        setNeshanDataOrigin(data.slice(0, 5))
+        setLoadOrigin(false)
       } else if (type === "destination" && index !== undefined && data) {
         setNeshanDataDestinations((prev) => {
-          const updatedData = [...prev];
-          updatedData[index] = data.slice(0, 5);
-          return updatedData;
-        });
+          const updatedData = [...prev]
+          updatedData[index] = data.slice(0, 5)
+          return updatedData
+        })
         setLoadDes((prev) => {
-          const updatedLoading = [...prev];
-          updatedLoading[index] = false;
-          return updatedLoading;
-        });
+          const updatedLoading = [...prev]
+          updatedLoading[index] = false
+          return updatedLoading
+        })
       }
     } catch (error) {
-      Sentry.captureException(error);
+      Sentry.captureException(error)
       if (type === "destination" && index !== undefined) {
         setLoadDes((prev) => {
-          const updatedLoading = [...prev];
-          updatedLoading[index] = false;
-          return updatedLoading;
-        });
+          const updatedLoading = [...prev]
+          updatedLoading[index] = false
+          return updatedLoading
+        })
       }
     }
-  };
-  const debouncedFetchData = useDebouncedCallback(fetchData, 1000); //debounced fetch data
+  }
+  const debouncedFetchData = useDebouncedCallback(fetchData, 1000) //debounced fetch data
   //user input handler
   const changeHandler = async (
     e: string,
     type: "origin" | "destination",
     index?: number
   ) => {
-    const newValue = e;
+    const newValue = e
     if (type === "origin") {
-      setNeshanDataOrigin([]);
-      setLoadOrigin(true);
+      setLoadOrigin(true)
     } else if (type === "destination" && index !== undefined) {
-      setNeshanDataDestinations((prev) => {
-        const updatedData = [...prev];
-        updatedData[index] = [];
-        return updatedData;
-      });
       setLoadDes((prev) => {
-        const updatedLoading = [...prev];
-        updatedLoading[index] = true;
-        return updatedLoading;
-      });
+        const updatedLoading = [...prev]
+        updatedLoading[index] = true
+        return updatedLoading
+      })
     }
-    debouncedFetchData(newValue, type, index);
-  };
+    debouncedFetchData(newValue, type, index)
+  }
   //user select location in neshan response
   const handleItemClick = (
-    item: NeshanDataItemType,
+    item: string,
     type: "origin" | "destination",
     index?: number
   ) => {
-    setLoadOrigin(false);
-
+    setLoadOrigin(false)
     if (type === "origin") {
-      setDataOrigin(item);
-      setNeshanDataOrigin([]);
-      form.setValue("origin", item.title);
-      setOriginQuery(JSON.stringify(item));
-      return;
+      setDataOrigin(neshanDataOrigin.find((data) => data.title === item))
+      form.setValue("origin", item)
+      setOriginQuery(
+        JSON.stringify(neshanDataOrigin.find((data) => data.title === item))
+      )
+      return
     }
 
     if (type === "destination" && index !== undefined) {
-      setNeshanDataDestinations((prev) => {
-        const updatedData = [...prev];
-        updatedData[index] = [];
-        return updatedData;
-      });
-
-      setDataDestination((prev) => {
-        const updatedDestinations = [...prev];
-        updatedDestinations[index] = item;
-        return updatedDestinations;
-      });
+      let dataObj = neshanDataDestinations[index]?.find(
+        (data) => data.title === item
+      )
+      dataObj &&
+        setDataDestination((prev) => {
+          const updatedDestinations = [...prev]
+          updatedDestinations[index] = dataObj
+          return updatedDestinations
+        })
 
       setDestinationQuery((prev) => {
-        const previousData = prev ? JSON.parse(prev.replace(/\/$/, "")) : [];
-        const updatedDestinations = [...previousData];
-        updatedDestinations[index] = item;
-        return JSON.stringify(updatedDestinations);
-      });
+        const previousData = prev ? JSON.parse(prev.replace(/\/$/, "")) : []
+        const updatedDestinations = [...previousData]
+        updatedDestinations[index] = dataObj
+        return JSON.stringify(updatedDestinations)
+      })
 
-      form.setValue(`destinations.${index}`, item.title);
+      form.setValue(`destinations.${index}`, item)
     }
-  };
+  }
   //remove destinations handler
   const removeDestinationField = (index: number) => {
-    const filterByIndex = (arr: any[]) => arr.filter((_, i) => i !== index);
+    const filterByIndex = (arr: any[]) => arr.filter((_, i) => i !== index)
 
-    form.setValue(
-      "destinations",
-      filterByIndex(form.getValues("destinations"))
-    );
-    setNeshanDataDestinations((prev) => filterByIndex(prev));
-    setDataDestination((prev) => filterByIndex(prev));
+    form.setValue("destinations", filterByIndex(form.getValues("destinations")))
+    setNeshanDataDestinations((prev) => filterByIndex(prev))
+    setDataDestination((prev) => filterByIndex(prev))
 
     if (destinationQuery) {
-      const parsedDes = filterByIndex(JSON.parse(destinationQuery));
-      setDestinationQuery(JSON.stringify(parsedDes));
+      const parsedDes = filterByIndex(JSON.parse(destinationQuery))
+      setDestinationQuery(JSON.stringify(parsedDes))
     }
-  };
+  }
   //function dynamic render autoComplete
   const renderAutoComplete = (type: "origin" | "destination", index = 0) => (
-    <AutoComplete
-      selectedValue={form.watch(
-        type === "origin" ? "origin" : `destinations.${index}`
+    <FormField
+      control={form.control}
+      name={type === "origin" ? "origin" : `destinations.${index}`}
+      render={({ field }) => (
+        <AutoComplete
+          selectedValue={field.value}
+          onSelectedValueChange={(value) => {
+            field.onChange(value)
+          }}
+          searchValue={field.value}
+          onSearchValueChange={(value) => {
+            field.onChange(value)
+          }}
+          items={
+            (type === "destination"
+              ? neshanDataDestinations?.[index]
+              : neshanDataOrigin
+            )?.map((item) => item.title) || []
+          }
+          isLoading={type === "origin" ? loadingOrigin : loadingDes[index]}
+          placeholder={t(`${type}.placeHolder`)}
+          lable={
+            type === "origin"
+              ? t("origin.title")
+              : `${t("destination.title")} ${index + 1}`
+          }
+          onChangeHandler={(e) => changeHandler(e, type, index)}
+          itemClickHandler={(item) => handleItemClick(item, type, index)}
+        />
       )}
-      onSelectedValueChange={(value) =>
-        form.setValue(
-          type === "origin" ? "origin" : `destinations.${index}`,
-          value
-        )
-      }
-      searchValue={form.getValues(
-        type === "origin" ? "origin" : `destinations.${index}`
-      )}
-      onSearchValueChange={(value) => {
-        form.setValue(
-          type === "origin" ? "origin" : `destinations.${index}`,
-          value
-        );
-      }}
-      items={
-        (type === "destination"
-          ? neshanDataDestinations?.[index]
-          : neshanDataOrigin
-        )?.map((item) => ({
-          address: item?.address,
-          category: item?.category,
-          location: { x: item?.location?.x, y: item?.location?.y },
-          region: item?.region,
-          title: item?.title,
-          type: item?.type,
-        })) || []
-      }
-      isLoading={type === "origin" ? loadingOrigin : loadingDes[index]}
-      placeholder={t(`${type}.placeHolder`)}
-      lable={
-        type === "origin"
-          ? t("origin.title")
-          : `${t("destination.title")} ${index + 1}`
-      }
-      onChangeHandler={(e) => changeHandler(e, type, index)}
-      itemClickHandler={(item) => handleItemClick(item, type, index)}
     />
-  );
+  )
   //check data for render autoComplete
   useEffect(() => {
     if (
       form.getValues("origin") !== undefined &&
       form.getValues("destinations").length > 0
     ) {
-      setIsDataReady(true);
+      setIsDataReady(true)
     }
-  }, [form.getValues("origin"), form.getValues("destinations")]);
+  }, [form.getValues("origin"), form.getValues("destinations")])
 
   return (
     <Form {...form}>
@@ -287,5 +264,5 @@ export const PathFinderForm: React.FC<FormProps> = ({
         <SubmitButton className="w-full lg:hidden">{t("submit")}</SubmitButton>
       </form>
     </Form>
-  );
-};
+  )
+}
