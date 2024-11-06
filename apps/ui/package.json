@@ -17,6 +17,8 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@currents/cmd": "^1.1.2",
+    "@currents/jest": "^1.0.2",
     "@editorjs/editorjs": "^2.30.6",
     "@editorjs/header": "^2.8.8",
     "@editorjs/list": "^1.10.0",
@@ -56,6 +58,7 @@
     "class-variance-authority": "^0.7.0",
     "cmdk": "^1.0.0",
     "cypress": "^13.15.1",
+    "cypress-cloud": "^1.11.0",
     "d3": "^7.9.0",
     "dayjs": "^1.11.12",
     "embla-carousel-react": "^8.1.7",
