@@ -193,19 +193,8 @@ export const PathFinderForm: React.FC<FormProps> = ({
   }
   //function dynamic render autoComplete
   const renderAutoComplete = (type: "origin" | "destination", index = 0) => (
-    <FormField
-      control={form.control}
-      name={type === "origin" ? "origin" : `destinations.${index}`}
-      render={({ field }) => (
         <AppAutoComplete
-          selectedValue={field.value}
-          onSelectedValueChange={(value) => {
-            field.onChange(value)
-          }}
-          searchValue={field.value}
-          onSearchValueChange={(value) => {
-            field.onChange(value)
-          }}
+        formFieldName={type === "origin" ? "origin" : `destinations.${index}`}
           items={
             (type === "destination"
               ? neshanDataDestinations?.[index]
@@ -222,8 +211,6 @@ export const PathFinderForm: React.FC<FormProps> = ({
           onChangeHandler={(e) => changeHandler(e, type, index)}
           itemClickHandler={(item) => handleItemClick(item, type, index)}
         />
-      )}
-    />
   )
   //check data for render autoComplete
   useEffect(() => {

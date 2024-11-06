@@ -109,30 +109,17 @@ export const PathFinderForm = () => {
   }
   //dynamic render autoComplete
   const renderAutoComplete = (type: "origin" | "destination") => (
-    <FormField
-      control={form.control}
-      name={type}
-      render={({ field }) => (
-        <AppAutoComplete
-          selectedValue={field.value}
-          onSelectedValueChange={(value) => {
-            field.onChange(value)
-          }}
-          searchValue={field.value}
-          onSearchValueChange={(value) => {
-            field.onChange(value)
-          }}
-          items={(type === "origin"
-            ? neshanDataOrigin
-            : neshanDataDestinations
-          )?.map((item) => item.title)}
-          isLoading={type === "origin" ? loadingOrigin : loadingDes}
-          placeholder={t(`${type}.placeHolder`)}
-          lable={t(`${type}.title`)}
-          onChangeHandler={(e) => changeHandler(e, type)}
-          itemClickHandler={(item) => handleItemClick(item, type)}
-        />
-      )}
+    <AppAutoComplete
+      formFieldName={type}
+      items={(type === "origin"
+        ? neshanDataOrigin
+        : neshanDataDestinations
+      )?.map((item) => item.title)}
+      isLoading={type === "origin" ? loadingOrigin : loadingDes}
+      placeholder={t(`${type}.placeHolder`)}
+      lable={t(`${type}.title`)}
+      onChangeHandler={(e) => changeHandler(e, type)}
+      itemClickHandler={(item) => handleItemClick(item, type)}
     />
   )
 

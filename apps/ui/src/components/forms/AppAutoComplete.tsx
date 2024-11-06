@@ -4,14 +4,11 @@ import React from "react"
 
 import { cn } from "@/lib/styles"
 import { AutoComplete } from "@/components/ui/autoComplete"
-import { FormControl, FormItem, FormMessage } from "@/components/ui/form"
+import { FormControl, FormItem, FormMessage ,FormField} from "@/components/ui/form"
+import { useFormContext } from "react-hook-form"
 
 type Props<T extends string> = {
   readonly containerClassName?: string
-  selectedValue: T
-  onSelectedValueChange: (value: T) => void
-  searchValue: string
-  onSearchValueChange: (value: string) => void
   items: string[]
   isLoading?: boolean
   emptyMessage?: string
@@ -19,6 +16,7 @@ type Props<T extends string> = {
   onChangeHandler?: (value: any) => void
   itemClickHandler?: (Value: any) => void
   lable?: string
+  formFieldName:string
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "className">
 
 /**
@@ -52,10 +50,7 @@ type Props<T extends string> = {
  */
 
 export function AppAutoComplete<T extends string>({
-  selectedValue,
-  onSelectedValueChange,
-  searchValue,
-  onSearchValueChange,
+formFieldName,
   items,
   isLoading,
   emptyMessage = "",
@@ -65,14 +60,23 @@ export function AppAutoComplete<T extends string>({
   lable,
   containerClassName,
 }: Props<T>) {
+  const {control}=useFormContext()
   return (
+    <FormField
+    control={control}
+    name={formFieldName} //type === "origin" ? "origin" : `destinations.${index}` 
+    render={({ field }) => (
     <FormItem className={cn(containerClassName)}>
       <FormControl>
         <AutoComplete
-          selectedValue={selectedValue}
-          onSelectedValueChange={onSelectedValueChange}
-          searchValue={searchValue}
-          onSearchValueChange={onSearchValueChange}
+        selectedValue={field.value}
+        onSelectedValueChange={(value) => {
+          field.onChange(value)
+        }}
+        searchValue={field.value}
+        onSearchValueChange={(value) => {
+          field.onChange(value)
+        }}
           items={items}
           isLoading={isLoading}
           emptyMessage={emptyMessage}
@@ -84,5 +88,6 @@ export function AppAutoComplete<T extends string>({
       </FormControl>
       <FormMessage />
     </FormItem>
+    )} />
   )
 }
