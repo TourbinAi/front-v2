@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { useRouter } from "next/navigation"
 import * as d3 from "d3"
 import { ChevronLeft, Star } from "lucide-react"
 
+import { useRouter } from "@/lib/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 

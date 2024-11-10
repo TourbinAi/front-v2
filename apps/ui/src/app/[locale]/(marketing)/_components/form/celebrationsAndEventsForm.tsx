@@ -10,10 +10,10 @@ import { Form } from "@/components/ui/form"
 
 import "react-phone-number-input/style.css"
 
-import { useRouter } from "next/navigation"
 import * as Sentry from "@sentry/nextjs"
 import { useTranslations } from "next-intl"
 
+import { useRouter } from "@/lib/navigation"
 import CustomFormField, {
   FormFieldType,
 } from "@/components/forms/CustomeFormField"
@@ -61,7 +61,7 @@ export const CelebrationsAndEventForm = () => {
     router.push("/blog/event/?blogtype=3&blogid=3")
     try {
       setIsLoading(true)
-      router.push("blog/event/?blogtype=3&blogid=3")
+      router.push("/blog/event/?blogtype=3&blogid=3")
     } catch (error) {
       Sentry.captureException(error)
       console.error(error)

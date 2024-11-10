@@ -1,10 +1,7 @@
 import * as React from "react"
-import Image from "next/image"
-import * as Sentry from "@sentry/nextjs"
 import { useQuery } from "@tanstack/react-query"
 
 import type { NeshanDataItemType } from "@/types/api"
-import { AttractionsCarouselRes } from "@/types/api"
 
 import { AttractionsAPI } from "@/lib/api"
 import { ImageWithFallback } from "@/components/elementary/ImageWithFallback"
@@ -72,19 +69,19 @@ export function CarouselSpacing({
               {item.blogs.map((blog: any, blogIndex: number) => (
                 <CarouselItem
                   key={blogIndex}
-                  className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl"
+                  className="flex shrink-0 basis-80 flex-col items-center rounded-2xl"
                 >
                   <Card className="relative h-52 w-72 cursor-pointer overflow-hidden">
-                    <CardContent className="relative h-full w-full">
+                    <CardContent className="relative size-full">
                       <ImageWithFallback
                         fill
                         src={
                           process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
                         }
                         alt={blog.place_name}
-                        className="absolute inset-0 h-full w-full object-cover"
+                        className="absolute inset-0 size-full object-cover"
                       />
-                      <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
+                      <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black/50 py-2 text-center text-white">
                         {blog.place_name || "NAME PLACE"}
                       </span>
                     </CardContent>

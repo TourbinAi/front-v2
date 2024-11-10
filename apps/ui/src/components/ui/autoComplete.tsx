@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { Check } from "lucide-react"
-import { Label } from "./label"
+
 import { cn } from "@/lib/styles"
 import { Input } from "@/components/ui/input"
 
@@ -12,6 +12,7 @@ import {
   CommandItem,
   CommandList,
 } from "./command"
+import { Label } from "./label"
 import { Popover, PopoverAnchor, PopoverContent } from "./popover"
 import { Skeleton } from "./skeleton"
 
@@ -26,7 +27,7 @@ type Props<T extends string> = {
   placeholder?: string
   onChangeHandler?: (value: any) => void
   itemClickHandler?: (Value: any) => void
-  lable?: string
+  label?: string
 }
 
 export function AutoComplete<T extends string>({
@@ -40,7 +41,7 @@ export function AutoComplete<T extends string>({
   placeholder = "Search...",
   onChangeHandler,
   itemClickHandler,
-  lable,
+  label,
 }: Props<T>) {
   const [open, setOpen] = useState(false)
   const labels = useMemo(() => {
@@ -73,7 +74,7 @@ export function AutoComplete<T extends string>({
 
   return (
     <div className="flex items-baseline justify-center space-x-2">
-      {lable && <Label className="flex-shrink-0">{lable}</Label>}
+      {label && <Label className="shrink-0">{label}</Label>}
       <div className="flex-1">
         <Popover open={open} onOpenChange={setOpen}>
           <Command shouldFilter={false}>

@@ -4,10 +4,11 @@ import path from "path"
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
+import { env } from "@/env.mjs"
 
 import { PackagesPlaceRes } from "@/types/api"
 
+import { Link } from "@/lib/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scrollArea"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -85,7 +86,7 @@ function SideBarMap({ ResData }: MapProps) {
               >
                 <CardContent className="relative size-full">
                   <Link
-                    href={`/fa/blog/filband/?blogtype=${url.field1}&blogid=${url.field2}`}
+                    href={`/blog/filband/?blogtype=${url.field1}&blogid=${url.field2}`}
                   >
                     <Image
                       fill

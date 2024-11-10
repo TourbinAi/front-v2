@@ -22,10 +22,13 @@ import {
   TileLayerWithNoSSR,
 } from "../../_components/leafletNOSSR"
 
+// Interfaces and Types
 interface Leg {
   steps: Array<{ polyline: string }>
 }
 
+// MapPathFinder Component
+// This component renders a map with Leaflet, displaying a route between an origin and one or more destination points.
 function MapPathFinder({
   origin,
   destination,
@@ -41,6 +44,7 @@ function MapPathFinder({
   ])
   const [textRoute, setText] = useState<any[]>([])
 
+  // useEffect - Update origin and destination states on prop change
   useEffect(() => {
     if (origin && destination[0]) {
       setLocOrigin(origin.location)
@@ -51,6 +55,7 @@ function MapPathFinder({
     }
   }, [origin, destination])
 
+  // apiReq - Fetches the route data from the Neshan API using origin and destination coordinates
   const apiReq = useCallback(async () => {
     if (!originLoc || destinationLoc.length === 0) return
     const lastDestination = destinationLoc[destinationLoc.length - 1]
@@ -78,14 +83,15 @@ function MapPathFinder({
         setRoute(decodeLegsPolyLines(data.legs))
       }
     } catch (error) {
-      Sentry.captureException(error)
+      Sentry.captureException(error) // Capture errors with Sentry
     }
   }, [originLoc, destinationLoc])
 
   useEffect(() => {
-    apiReq()
+    apiReq() // Call API when the origin or destination changes
   }, [apiReq])
 
+  // decodeLegsPolyLines - Decodes polyline data from route legs for rendering
   const decodeLegsPolyLines = (legs: Leg[]): LatLngExpression[] => {
     return legs.flatMap((leg) =>
       leg.steps.flatMap(
@@ -94,6 +100,7 @@ function MapPathFinder({
     )
   }
 
+  // Custom Leaflet Marker Icon
   const customIcon = L
     ? new L.Icon({
         iconUrl: "/assets/icons/markerMap.png",
@@ -105,15 +112,16 @@ function MapPathFinder({
         shadowSize: [41, 41],
       })
     : null
-  L.Marker.prototype.options.icon = customIcon
+  L.Marker.prototype.options.icon = customIcon // Set custom marker icon globally
 
   return (
     <>
+      {/* Map Rendering */}
       <div>
         <MapWithNoSSR
           center={center}
           zoom={5}
-          scrollWheelZoom={true}
+          scrollWheelZoom
           className="h-96 w-full border-4 border-white"
         >
           <TileLayerWithNoSSR
@@ -143,6 +151,7 @@ function MapPathFinder({
           ))}
         </MapWithNoSSR>
       </div>
+      {/* Route Details Display */}
       <div className="flex flex-wrap items-center justify-center gap-1">
         {textRoute.map(
           (text, idx) =>
@@ -151,11 +160,11 @@ function MapPathFinder({
                 <p className="flex items-center text-lg font-semibold text-gray-800">
                   مقصد {idx + 1}:
                   <span className="inline-flex items-center">
-                    <Clock className="mr-2 h-5 w-5 text-blue-500" />{" "}
+                    <Clock className="mr-2 size-5 text-blue-500" />{" "}
                     {text.duration.text}
                   </span>
                   <span className="inline-flex items-center">
-                    <MapPin className="mr-2 h-5 w-5 text-green-500" />{" "}
+                    <MapPin className="mr-2 size-5 text-green-500" />{" "}
                     {text.distance.text}
                   </span>
                 </p>

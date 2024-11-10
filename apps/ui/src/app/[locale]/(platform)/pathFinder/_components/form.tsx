@@ -18,9 +18,7 @@ import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"
 import { AppAutoComplete } from "@/components/forms/AppAutoComplete"
 import { AppForm } from "@/components/forms/AppForm"
 import SubmitButton from "@/components/forms/SubmitButton"
-import { AutoComplete } from "@/components/ui/autoComplete"
 import { Button } from "@/components/ui/button"
-import { Form, FormField } from "@/components/ui/form"
 
 interface FormProps {
   FormData: (DataOrigin: any, DataDestination: any[]) => void
@@ -193,24 +191,24 @@ export const PathFinderForm: React.FC<FormProps> = ({
   }
   //function dynamic render autoComplete
   const renderAutoComplete = (type: "origin" | "destination", index = 0) => (
-        <AppAutoComplete
-        formFieldName={type === "origin" ? "origin" : `destinations.${index}`}
-          items={
-            (type === "destination"
-              ? neshanDataDestinations?.[index]
-              : neshanDataOrigin
-            )?.map((item) => item.title) || []
-          }
-          isLoading={type === "origin" ? loadingOrigin : loadingDes[index]}
-          placeholder={t(`${type}.placeHolder`)}
-          lable={
-            type === "origin"
-              ? t("origin.title")
-              : `${t("destination.title")} ${index + 1}`
-          }
-          onChangeHandler={(e) => changeHandler(e, type, index)}
-          itemClickHandler={(item) => handleItemClick(item, type, index)}
-        />
+    <AppAutoComplete
+      formFieldName={type === "origin" ? "origin" : `destinations.${index}`}
+      items={
+        (type === "destination"
+          ? neshanDataDestinations?.[index]
+          : neshanDataOrigin
+        )?.map((item) => item.title) || []
+      }
+      isLoading={type === "origin" ? loadingOrigin : loadingDes[index]}
+      placeholder={t(`${type}.placeHolder`)}
+      label={
+        type === "origin"
+          ? t("origin.title")
+          : `${t("destination.title")} ${index + 1}`
+      }
+      onChangeHandler={(e) => changeHandler(e, type, index)}
+      itemClickHandler={(item) => handleItemClick(item, type, index)}
+    />
   )
   //check data for render autoComplete
   useEffect(() => {
@@ -220,7 +218,7 @@ export const PathFinderForm: React.FC<FormProps> = ({
     ) {
       setIsDataReady(true)
     }
-  }, [form.getValues("origin"), form.getValues("destinations")])
+  }, [form])
 
   return (
     <AppForm form={form} onSubmit={onSubmit}>

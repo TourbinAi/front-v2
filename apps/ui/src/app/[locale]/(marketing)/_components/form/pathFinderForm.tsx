@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as Sentry from "@sentry/nextjs" //error handling
 import { useTranslations } from "next-intl"
@@ -16,8 +16,6 @@ import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"
 import { AppAutoComplete } from "@/components/forms/AppAutoComplete"
 import { AppForm } from "@/components/forms/AppForm"
 import SubmitButton from "@/components/forms/SubmitButton"
-import { AutoComplete } from "@/components/ui/autoComplete"
-import { Form, FormField } from "@/components/ui/form"
 
 export const PathFinderForm = () => {
   const t = useTranslations("PathFinder")
@@ -117,7 +115,7 @@ export const PathFinderForm = () => {
       )?.map((item) => item.title)}
       isLoading={type === "origin" ? loadingOrigin : loadingDes}
       placeholder={t(`${type}.placeHolder`)}
-      lable={t(`${type}.title`)}
+      label={t(`${type}.title`)}
       onChangeHandler={(e) => changeHandler(e, type)}
       itemClickHandler={(item) => handleItemClick(item, type)}
     />

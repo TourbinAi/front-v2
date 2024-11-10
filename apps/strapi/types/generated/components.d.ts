@@ -50,19 +50,6 @@ export interface SectionsCarousel extends Schema.Component {
       Attribute.DefaultTo<false>
   }
 }
-
-export interface SectionsContactForm extends Schema.Component {
-  collectionName: "components_sections_contact_forms"
-  info: {
-    displayName: "ContactForm"
-  }
-  attributes: {
-    title: Attribute.String
-    description: Attribute.Text
-    gdpr: Attribute.Component<"shared.link">
-  }
-}
-
 export interface SectionsFaq extends Schema.Component {
   collectionName: "components_sections_faqs"
   info: {
@@ -174,18 +161,6 @@ export interface SectionsMarkdown extends Schema.Component {
   }
   attributes: {
     content: Attribute.Blocks
-  }
-}
-
-export interface SectionsNewsletter extends Schema.Component {
-  collectionName: "components_sections_newsletters"
-  info: {
-    displayName: "Newsletter"
-  }
-  attributes: {
-    title: Attribute.String
-    description: Attribute.String
-    gdpr: Attribute.Component<"shared.link">
   }
 }
 
@@ -350,7 +325,6 @@ declare module "@strapi/types" {
       "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.blog-markdown": SectionsBlogMarkdown
       "sections.carousel": SectionsCarousel
-      "sections.contact-form": SectionsContactForm
       "sections.faq": SectionsFaq
       "sections.feature-grid": SectionsFeatureGrid
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
@@ -358,7 +332,6 @@ declare module "@strapi/types" {
       "sections.horizontal-images": SectionsHorizontalImages
       "sections.image-with-cta-button": SectionsImageWithCtaButton
       "sections.markdown": SectionsMarkdown
-      "sections.newsletter": SectionsNewsletter
       "shared.accordions": SharedAccordions
       "shared.basic-image": SharedBasicImage
       "shared.feature-grid-item": SharedFeatureGridItem

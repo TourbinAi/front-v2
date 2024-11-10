@@ -553,8 +553,6 @@ export interface ApiPagePage extends Schema.CollectionType {
         "sections.heading-with-cta-button",
         "sections.image-with-cta-button",
         "sections.animated-logo-row",
-        "sections.newsletter",
-        "sections.contact-form",
         "sections.blog-markdown"
       ]
     > &
