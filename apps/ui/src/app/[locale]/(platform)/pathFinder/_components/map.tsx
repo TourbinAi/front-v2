@@ -2,7 +2,7 @@
 
 import { LatLngExpression } from "leaflet"
 
-import "leaflet/dist/leaflet.css"
+import "leaflet"
 
 import React, { useCallback, useEffect, useState } from "react"
 import polyline from "@mapbox/polyline"

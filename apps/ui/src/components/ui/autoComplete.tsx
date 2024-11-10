@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { Check } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { cn } from "@/lib/styles"
 import { Input } from "@/components/ui/input"
@@ -44,6 +45,7 @@ export function AutoComplete<T extends string>({
   label,
 }: Props<T>) {
   const [open, setOpen] = useState(false)
+  const t = useTranslations("PathFinder")
   const labels = useMemo(() => {
     if (!items) return {}
     return items.reduce(

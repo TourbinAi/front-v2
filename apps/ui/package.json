@@ -58,6 +58,7 @@
     "framer-motion": "^11.11.10",
     "jalali-moment": "^3.3.11",
     "jwt-decode": "^4.0.0",
+    "leaflet": "^1.9.4",
     "libphonenumber-js": "^1.11.12",
     "lodash": "^4.17.21",
     "lucide-react": "^0.414.0",
@@ -71,7 +72,7 @@
     "plaiceholder": "^3.0.0",
     "qs": "^6.12.3",
     "react": "^18.3.1",
-    "react-day-picker": "^9.0.2",
+    "react-day-picker": "^8.0.5",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^4.0.13",
@@ -86,7 +87,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-rtl": "^0.9.0",
     "ts-pattern": "^5.2.0",
-    "typescript": "5.5.3",
+    "vaul": "^1.1.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

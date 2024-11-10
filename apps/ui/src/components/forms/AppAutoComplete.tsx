@@ -71,6 +71,15 @@ export function AppAutoComplete<T extends string>({
 }: Props<T>) {
   const { control } = useFormContext()
 
+  const transformedItems = items.map((item) => ({
+    address: "",
+    category: "",
+    location: { x: 0, y: 0 },
+    region: "",
+    title: item,
+    type: "",
+  }))
+
   return (
     <FormField
       control={control}
