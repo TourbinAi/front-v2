@@ -12,61 +12,62 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-import { AppFormDescription } from "./AppFormDescription"
-import { AppFormLabel } from "./AppFormLabel"
-
 type Props<T extends string> = {
-  readonly name: string
-  readonly label?: React.ReactNode
   readonly containerClassName?: string
-  readonly fieldClassName?: string
-  readonly description?: React.ReactNode
-  readonly items: { value: T; label: string }[]
-  readonly isLoading?: boolean
-  readonly emptyMessage?: string
-  readonly placeholder?: string
+  items: string[]
+  isLoading?: boolean
+  emptyMessage?: string
+  placeholder?: string
+  onChangeHandler?: (value: any) => void
+  itemClickHandler?: (value: any) => void
+  label?: string
+  formFieldName: string
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "className">
 
 /**
- * AppAutoComplete component documentation.
+ * `AppAutoComplete` Component
  *
- * This module exports the AppAutoComplete component, which is a form input field
- * that provides an autocomplete feature. It uses the `AutoComplete` component from
- * `@/components/ui/autoComplete` and the `useFormContext` hook from `react-hook-form`.
+ * This component provides an autocomplete input field with integration for form control using
+ * `react-hook-form`. It includes functionalities for loading states, custom messages, and
+ * customizable behavior upon selection and input change.
  *
- * The component accepts several props, including `name`, `label`, `containerClassName`,
- * `fieldClassName`, `description`, `items`, `isLoading`, `emptyMessage`, and `placeholder`.
+ * ### Props
  *
- * @see Props
- * @see AppAutoComplete
- */
-
-/**
- * Props for the AppAutoComplete component.
+ * - `containerClassName` (optional): Custom class name for styling the container element.
+ * - `items` (required): Array of items to display in the autocomplete dropdown.
+ * - `isLoading` (optional): Boolean indicating if autocomplete data is loading.
+ * - `emptyMessage` (optional): Message displayed when no autocomplete items are available.
+ * - `placeholder` (optional): Placeholder text for the input field. Defaults to `"Search..."`.
+ * - `onChangeHandler` (optional): Callback for when the input value changes.
+ * - `itemClickHandler` (optional): Callback for when an autocomplete item is selected.
+ * - `label` (optional): Label text for the autocomplete field.
+ * - `formFieldName` (required): Name of the form field in `react-hook-form` context.
  *
- * @typedef {Object} Props
- * @property {string} name - The name of the form field.
- * @property {React.ReactNode} [label] - The label for the form field.
- * @property {string} [containerClassName] - The class name for the container element.
- * @property {string} [fieldClassName] - The class name for the field element.
- * @property {React.ReactNode} [description] - The description for the form field.
- * @property {{ value: string; label: string }[]} items - The list of autocomplete items.
- * @property {boolean} [isLoading] - Whether the autocomplete is loading.
- * @property {string} [emptyMessage] - The message to display when there are no autocomplete items.
- * @property {string} [placeholder] - The placeholder text for the form field.
- * @property {React.InputHTMLAttributes<HTMLInputElement>} nativeProps - The native props for the form field.
+ * ### Usage Example
+ *
+ * ```jsx
+ * <AppAutoComplete
+ *   formFieldName="searchField"
+ *   items={["Item 1", "Item 2"]}
+ *   placeholder="Type to search..."
+ *   onChangeHandler={(value) => console.log(value)}
+ *   itemClickHandler={(value) => console.log("Item clicked:", value)}
+ * />
+ * ```
+ *
+ * This component depends on the `AutoComplete` component and form controls from `@/components/ui/form`.
  */
 
 export function AppAutoComplete<T extends string>({
-  name,
-  label,
-  containerClassName,
-  description,
+  formFieldName,
   items,
   isLoading,
-  emptyMessage,
-  placeholder,
-  ...nativeProps
+  emptyMessage = "",
+  placeholder = "Search...",
+  onChangeHandler,
+  itemClickHandler,
+  label,
+  containerClassName,
 }: Props<T>) {
   const { control } = useFormContext()
 
@@ -75,39 +76,31 @@ export function AppAutoComplete<T extends string>({
     category: "",
     location: { x: 0, y: 0 },
     region: "",
-    title: item.label, // map label to title
+    title: item,
     type: "",
   }))
 
   return (
     <FormField
       control={control}
-      name={name}
-      render={({ field, fieldState }) => (
+      name={formFieldName}
+      render={({ field }) => (
         <FormItem className={cn(containerClassName)}>
-          <AppFormLabel
-            fieldState={fieldState}
-            label={label}
-            required={nativeProps.required}
-          />
-
           <FormControl>
             <AutoComplete
               selectedValue={field.value}
-              onSelectedValueChange={field.onChange}
+              onSelectedValueChange={(value) => field.onChange(value)}
               searchValue={field.value}
-              onSearchValueChange={(value) => {
-                field.onChange(value)
-              }}
-              items={transformedItems}
+              onSearchValueChange={(value) => field.onChange(value)}
+              items={items}
               isLoading={isLoading}
               emptyMessage={emptyMessage}
               placeholder={placeholder}
+              label={label}
+              onChangeHandler={onChangeHandler}
+              itemClickHandler={itemClickHandler}
             />
           </FormControl>
-
-          <AppFormDescription description={description} />
-
           <FormMessage />
         </FormItem>
       )}

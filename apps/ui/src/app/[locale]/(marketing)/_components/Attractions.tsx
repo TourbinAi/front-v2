@@ -6,7 +6,6 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { env } from "@/env.mjs"
 import { useTranslations } from "next-intl"
 
