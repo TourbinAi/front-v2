@@ -15,7 +15,7 @@ export function useDebouncedCallback<T extends (...args: never[]) => unknown>(
 
   React.useEffect(() => {
     return () => {
-      if (debounceTimerRef.current) {
+      if (debounceTimerRef.current && typeof window !== "undefined") {
         window.clearTimeout(debounceTimerRef.current)
       }
     }
