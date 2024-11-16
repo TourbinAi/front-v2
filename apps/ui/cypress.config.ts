@@ -10,6 +10,7 @@ export default defineConfig({
       const result = await cloudPlugin(on, config)
       return result
     },
+    specPattern: "**/cypress/e2e/path-finder/*.{js,ts}",
   },
 
   component: {

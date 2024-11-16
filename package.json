@@ -45,6 +45,7 @@
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "*",
     "@repo/typescript-config": "*",
+    "@types/cypress": "^1.1.6",
     "commitizen": "4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
