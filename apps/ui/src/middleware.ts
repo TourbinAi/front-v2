@@ -20,8 +20,6 @@ const publicPages = [
   "/blog",
   "/blog/.*",
   "/auth/signin",
-  "/builder",
-  "/builder/.*", // use regex to match all builder pages
   "/docs",
 ]
 
