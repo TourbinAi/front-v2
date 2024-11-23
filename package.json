@@ -35,6 +35,7 @@
     "knip": "knip",
     "lint": "turbo lint",
     "lint:fix": "eslint . --fix && prettier --write .",
+    "lint:knip": "knip --remove",
     "prepare": "husky",
     "start:strapi": "turbo run start --filter=@repo/strapi",
     "start:ui": "turbo run start --filter=@repo/ui"
