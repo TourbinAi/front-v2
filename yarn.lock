@@ -12507,7 +12507,7 @@ knex@2.5.0:
     tarn "^3.0.2"
     tildify "2.0.0"
 
-knip@^5.37.2:
+knip@^5.36.3:
   version "5.37.2"
   resolved "https://registry.yarnpkg.com/knip/-/knip-5.37.2.tgz#e218afae3bf28ec10fa3be419cf6d89fd20fd63b"
   integrity sha512-Rs9HHTgmUacyKxchP4kRwG8idi0tzVHVpSyo4EM9sNGDSrPq20lhKXOWMFmShGCV6CH2352393Ok/qG1NblCMw==
