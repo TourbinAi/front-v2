@@ -215,17 +215,17 @@ function RenderInput<
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
-                value={field.value || null}
-                onChange={(date: DayValue | null) => {
-                  if (date && date.year && date.month && date.day) {
+                selected={field.value || undefined}
+                onSelect={(date) => {
+                  if (date) {
                     field.onChange(date)
                     if (props.onChange) props.onChange(date)
                   } else {
                     field.onChange(null)
                   }
                 }}
-                shouldHighlightWeekends
-                locale="fa"
+                mode="single"
+                {...props}
               />
             </PopoverContent>
           </Popover>

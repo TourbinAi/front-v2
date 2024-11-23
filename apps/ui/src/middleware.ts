@@ -13,13 +13,13 @@ const intlMiddleware = createMiddleware({
 
 const publicPages = [
   "/",
-  "/auth/activate",
-  "/auth/forgot-password",
-  "/auth/reset-password",
-  "/auth/register",
+  "/pathFinder",
+  "/pathFinder/.*",
+  "/travelMaker",
+  "/travelMaker/.*",
+  "/blog",
+  "/blog/.*",
   "/auth/signin",
-  "/builder",
-  "/builder/.*", // use regex to match all builder pages
   "/docs",
 ]
 
