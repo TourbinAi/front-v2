@@ -1,4 +1,4 @@
-import { Header } from "./_components/Header"
+import { Header } from "@/components/elementary/Header"
 
 interface PlatformLayoutProps {
   children: React.ReactNode
