@@ -32,8 +32,10 @@
     "heroku-postbuild": "bash ./scripts/heroku/heroku-postbuild.sh",
     "preinstall": "npx only-allow yarn",
     "postinstall": "yarn patch-package",
+    "knip": "knip",
     "lint": "turbo lint",
     "lint:fix": "eslint . --fix && prettier --write .",
+    "lint:knip": "knip --remove",
     "prepare": "husky",
     "start:strapi": "turbo run start --filter=@repo/strapi",
     "start:ui": "turbo run start --filter=@repo/ui"

@@ -11,8 +11,6 @@ export interface NeshanSearchType {
   count: number
   items: NeshanDataItemType[]
 }
-<<<<<<< HEAD
-=======
 
 export interface NeshanDirectionType {
   routes: Route[]
@@ -50,4 +48,3 @@ export interface Step {
   polyline: string
   start_location: number[]
 }
->>>>>>> 294a6e7 (fix((marketing)/page.tsx): header component was not imported properly)
