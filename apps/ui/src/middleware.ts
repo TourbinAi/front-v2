@@ -25,17 +25,17 @@ const publicPages = [
 
 export default function middleware(req: NextRequest) {
   // Handle HTTPS redirection in production in Heroku servers
-  const xForwardedProtoHeader = req.headers.get("x-forwarded-proto")
-  if (
-    env.NODE_ENV === "production" &&
-    (xForwardedProtoHeader === null ||
-      xForwardedProtoHeader.includes("https") === false)
-  ) {
-    return NextResponse.redirect(
-      `https://${req.headers.get("host")}${req.nextUrl.pathname}`,
-      301
-    )
-  }
+  // const xForwardedProtoHeader = req.headers.get("x-forwarded-proto")
+  // if (
+  //   env.NODE_ENV === "production" &&
+  //   (xForwardedProtoHeader === null ||
+  //     xForwardedProtoHeader.includes("https") === false)
+  // ) {
+  //   return NextResponse.redirect(
+  //     `https://${req.headers.get("host")}${req.nextUrl.pathname}`,
+  //     301
+  //   )
+  // }
 
   const publicPathnameRegex = RegExp(
     `^(/(${locales.join("|")}))?(${publicPages
