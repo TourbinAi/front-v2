@@ -185,7 +185,7 @@ function Map({ packageId, setPlan }: MapProps) {
         center={center}
         zoom={8}
         scrollWheelZoom={false}
-        className="h-screen w-full"
+        className="h-[42vh]  w-full"
       >
         <TileLayerWithNoSSR
           attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
