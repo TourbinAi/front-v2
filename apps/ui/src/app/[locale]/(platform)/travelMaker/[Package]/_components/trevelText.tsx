@@ -6,7 +6,7 @@ export default function TravelText(){
             <div className="bg-red-500 text-white rounded-t-2xl text-center py-1 w-full">
                 <p>torbin travel maker, intllegent travel plane </p>
             </div>
-            <div className="border border-t-0 rounded-b-2xl p-2 h-[42vh] overflow-scroll ">
+            <div className="border border-t-0 rounded-b-2xl p-2 h-[42vh] overflow-y-scroll ">
                 <p className="font-semibold">The wind rustled through the trees, carrying the scent of autumn leaves and distant rain</p>
                 <p className="text-sm">The sound of waves crashing against the shore was constant, a steady rhythm that seemed to echo the heartbeat of the earth itself. The beach stretched far in either direction, a vast expanse of pale sand that shimmered under the sun’s late afternoon glow. The sky, once a deep azure, had begun to soften into shades of pink, orange, and purple, like a watercolor painting slowly bleeding across the horizon. A light breeze stirred the air, bringing with it the scent of saltwater and the faint, almost imperceptible tang of seaweed.
                     At the water’s edge, the tide came in and out, leaving behind footprints that would be swept away in moments, a reminder of how fleeting and transient everything was. There was something deeply humbling about the ocean, something that made all the worries and stresses of everyday life seem distant and unimportant. Standing there, watching the play of light on water, it was hard not to feel small and insignificant in the grand scheme of the world. And yet, there was also a strange comfort in that feeling — a sense of connection to something much older, much larger than oneself.
