@@ -344,31 +344,6 @@ export const MultiSelect = React.forwardRef<
                   )
                 })}
               </CommandGroup>
-              {/* <CommandSeparator />
-              <CommandGroup>
-                <div className="flex items-center justify-between">
-                  {selectedValues.length > 0 && (
-                    <>
-                      <CommandItem
-                        onSelect={handleClear}
-                        className="flex-1 cursor-pointer justify-center"
-                      >
-                        Clear
-                      </CommandItem>
-                      <Separator
-                        orientation="vertical"
-                        className="flex h-full min-h-6"
-                      />
-                    </>
-                  )}
-                  <CommandItem
-                    onSelect={() => setIsPopoverOpen(false)}
-                    className="max-w-full flex-1 cursor-pointer justify-center"
-                  >
-                    Close
-                  </CommandItem>
-                </div>
-              </CommandGroup> */}
             </CommandList>
           </Command>
         </PopoverContent>

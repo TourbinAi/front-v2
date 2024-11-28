@@ -58,7 +58,7 @@ export function AppSelect({
           <SelectComponent
             {...field}
             {...nativeProps}
-            dir={(nativeProps.dir ?? "ltr") as any}
+            dir={(nativeProps.dir ?? "rtl") as any}
             onValueChange={field.onChange}
             defaultValue={field.value}
           >

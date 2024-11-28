@@ -209,6 +209,7 @@
         }
       },
       "travelMaker": {
+        "submissionError": "Form submission failed",
         "title": "Travel Maker",
         "description": "Suggesting the best travel plan according to your conditions and characteristics",
         "form": {
@@ -312,6 +313,7 @@
   },
 
   "travelMaker": {
+    "submissionError": "Form submission failed",
     "form": {
       "validateError": {
         "origin": "origin is required",
