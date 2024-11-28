@@ -180,12 +180,12 @@ function Map({ packageId, setPlan }: MapProps) {
   }
 
   return (
-    <div>
+    <div className="">
       <MapWithNoSSR
         center={center}
         zoom={8}
         scrollWheelZoom={false}
-        className="h-[42vh]  w-full"
+        className="  w-full h-[49vh]"
       >
         <TileLayerWithNoSSR
           attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
