@@ -131,10 +131,8 @@ export default function TravelMaker() {
   )
 
   useEffect(() => {
-    console.log("query", query)
     // Only process query if there are query parameters and it's the first load
     if (!isInitialLoad || Object.keys(query).length === 0) return
-    console.log("passed")
     const parseTags = (tags: string): string[] => (tags ? tags.split(",") : [])
 
     const parseDate = (dateStr: string | undefined): Date | undefined => {
