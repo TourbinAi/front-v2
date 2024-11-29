@@ -27,16 +27,17 @@ export default function MapPageComp() {
 
   return (
     <>
-      <div className="hidden h-full flex-col md:flex-row lg:flex">
-        <div className="w-full overflow-auto md:w-1/3">
+
+      <div className="hidden lg:grid grid-cols-2 h-fit gap-2 justify-items-cenetr">
+        <div>
           <SideBarMap packageId={packageId} ResData={ResponseData} />
         </div>
-        <div className="mx-0 w-full md:ml-6 md:mr-4 md:w-3/4">
+        <div className="">
           <Map packageId={packageId} setPlan={setTravelPlan} />
         </div>
       </div>
       <ScrollArea className="h-[99%]">
-        <div className="lg:hidden">
+        <div className="lg:hidden flex flex-col items-center">
           <div className="-mr-5 ml-0 w-full md:w-1/3">
             <SideBarMap packageId={packageId} ResData={ResponseData} />
           </div>
