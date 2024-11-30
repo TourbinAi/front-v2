@@ -13,7 +13,7 @@ import MobileMenu from "@/components/elementary/MobileMenu"
 export function Header() {
   const pathname = usePathname()
   return (
-    <header className="absolute top-0 z-30 h-64 w-full bg-gradient-to-b from-background to-transparent">
+    <header className="absolute top-0 z-60 h-64 w-full bg-gradient-to-b from-background to-transparent">
       <nav>
         <Container className="relative z-50 flex justify-between py-8">
           <div className="relative z-10 flex items-center gap-16">

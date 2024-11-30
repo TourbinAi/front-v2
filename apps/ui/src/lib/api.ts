@@ -54,8 +54,3 @@ export function BlogUniqAPI(
     blog_id: blog_id,
   })
 }
-export function TripSummery(
-  name?: string
-): Promise<AxiosResponse<any>> {
-  return api.post('/tripsummery')
-}

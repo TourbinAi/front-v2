@@ -7,7 +7,7 @@ import outlinedMagnifier from "public/assets/images/magnifier_outlined.png"
 import magnifier from "public/assets/images/magnifier.webp"
 import outlinedMarket from "public/assets/images/market_outlined.png"
 import market from "public/assets/images/market.webp"
-import tent from "public/assets/images/planeTent.webp"
+import cameraMan1 from "public/assets/images/cameramanONE.png"
 import outlinedRitual from "public/assets/images/ritual_outlined.png"
 import ritual from "public/assets/images/ritual.webp"
 import outlinedTent from "public/assets/images/tent_outlined.png"
@@ -40,12 +40,13 @@ function Section({
     <div
       id={name}
       className={cn(
-        "flex min-h-0 flex-col items-stretch justify-start lg:min-h-[600px] lg:justify-stretch",
+        "flex min-h-0 flex-col items-stretch justify-between lg:min-h-[600px] lg:justify-stretch",
         dir == "ltr" ? "lg:flex-row" : "lg:flex-row-reverse"
       )}
     >
-      <div className="relative hidden w-1/2 items-center justify-start overflow-hidden lg:flex">
+      <div className="relative bg-[#ECEDFD] hidden w-1/2 items-center justify-start overflow-hidden lg:flex mx-10">
         <div className="absolute flex size-full items-center justify-start p-24">
+          {/* the main images */}
           <Image
             alt="compass"
             src={outlinedImage}
@@ -81,7 +82,8 @@ export function FeatureDetails() {
 
   return (
     <div className="flex w-full flex-col justify-stretch">
-      <Section dir="ltr" name="about" image={tent} outlinedImage={outlinedTent}>
+
+      <Section dir="ltr" name="about" image={cameraMan1} outlinedImage={cameraMan1}>
         <Button>{t("about.readMore")}</Button>
       </Section>
       <Section
