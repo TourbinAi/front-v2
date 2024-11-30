@@ -8,6 +8,7 @@ import type {
   TravelMakerListReq,
   TravelMakerListRes,
 } from "@/types/api"
+import { string } from "zod"
 
 const api = axios.create({
   headers: {
@@ -52,4 +53,9 @@ export function BlogUniqAPI(
     blog_type: blog_type,
     blog_id: blog_id,
   })
+}
+export function TripSummery(
+  name?: string
+): Promise<AxiosResponse<any>> {
+  return api.post('/tripsummery')
 }

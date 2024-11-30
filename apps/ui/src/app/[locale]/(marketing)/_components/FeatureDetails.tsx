@@ -93,14 +93,6 @@ export function FeatureDetails() {
         <PathFinderForm />
       </Section>
       <Section
-        dir="ltr"
-        name="travelMaker"
-        image={magnifier}
-        outlinedImage={outlinedMagnifier}
-      >
-        <TravelMakerForm />
-      </Section>
-      <Section
         dir="rtl"
         name="souvenirsAndFood"
         image={market}
