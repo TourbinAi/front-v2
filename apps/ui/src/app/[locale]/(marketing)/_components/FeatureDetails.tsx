@@ -11,7 +11,7 @@ import cameraMan1 from "public/assets/images/cameramanONE.png"
 import outlinedRitual from "public/assets/images/ritual_outlined.png"
 import ritual from "public/assets/images/ritual.webp"
 import outlinedTent from "public/assets/images/tent_outlined.png"
-
+import arrow from "public/assets/images/Polygon 2.png"
 import { cn } from "@/lib/styles"
 import { Button } from "@/components/ui/button"
 
@@ -19,6 +19,7 @@ import { CelebrationsAndEventForm } from "./form/celebrationsAndEventsForm"
 import { PathFinderForm } from "./form/pathFinderForm"
 import { SouvenirsAndFoodForm } from "./form/souvenirsAndFoodForm"
 import { TravelMakerForm } from "./form/travelMakerForm"
+import { Tourbintravelmaker } from "./form/tourbintravelmaker"
 
 interface SectionProps {
   dir: "ltr" | "rtl"
@@ -40,18 +41,18 @@ function Section({
     <div
       id={name}
       className={cn(
-        "flex min-h-0 flex-col items-stretch justify-between lg:min-h-[600px] lg:justify-stretch",
+        "flex min-h-0 flex-col  justify-between lg:min-h-[600px] lg:justify-center ",
         dir == "ltr" ? "lg:flex-row" : "lg:flex-row-reverse"
       )}
     >
-      <div className="relative bg-[#ECEDFD] hidden w-1/2 items-center justify-start overflow-hidden lg:flex mx-10">
-        <div className="absolute flex size-full items-center justify-start p-24">
+      <div className="relative bg-[#ECEDFD] hidden w-[35%] overflow-hidden lg:flex mx-10">
+        <div className="absolute flex size-full items-center justify-start xl:p-20">
           {/* the main images */}
           <Image
             alt="compass"
             src={outlinedImage}
             className={cn(
-              "h-auto w-full",
+              "h-auto w-full object-fill",
               dir === "ltr" ? "right-0" : "left-0"
             )}
           />
@@ -64,8 +65,8 @@ function Section({
           className="aspect-video object-cover"
         />
       </div>
-      <div className="flex grow flex-col items-center justify-center">
-        <div className="w-full max-w-[600px]">
+      <div className="flex grow flex-col items-center w-[50%] justify-center">
+        <div className=" max-w-[600px]">
           <section className="space-y-2 self-stretch p-4">
             <h2 className="text-2xl font-semibold">{t("title")}</h2>
             <p>{t("description")}</p>
@@ -84,7 +85,7 @@ export function FeatureDetails() {
     <div className="flex w-full flex-col justify-stretch">
 
       <Section dir="ltr" name="about" image={cameraMan1} outlinedImage={cameraMan1}>
-        <Button>{t("about.readMore")}</Button>
+        <Tourbintravelmaker/>
       </Section>
       <Section
         dir="rtl"
