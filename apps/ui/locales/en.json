@@ -419,6 +419,7 @@
       "Button": "Submit",
       "popover-button": "optional",
       "noResults": "No result found",
+      "error": "Something went wrong",
       "tryAnother": "Try another combination",
       "form-header": {
         "title": " travel maker",

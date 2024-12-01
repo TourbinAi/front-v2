@@ -274,7 +274,7 @@ function CustomFormField<
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem className="flex flex-row items-baseline gap-2">
+          <FormItem className="flex flex-col gap-2">
             {props.fieldType !== FormFieldType.CHECKBOX && label && (
               <FormLabel className="shad-input-label whitespace-nowrap">
                 {label}
