@@ -24,9 +24,6 @@ export default function MapPageComp() {
   const packageId = Number(route.Package)
   const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>()
   const t = useTranslations("travelMaker.package")
-  // useEffect(() => {
-  //   // console.log(ResponseData);
-  // }, [ResponseData]);
 
   return (
     <>

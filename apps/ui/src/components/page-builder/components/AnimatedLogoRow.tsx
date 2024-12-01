@@ -24,7 +24,7 @@ export function AnimatedLogoRow({
         <h3 className="text-xl font-bold">{component.text}</h3>
 
         <div className="relative w-full">
-          <div className="infinite-scroll-container-horizontal w-full">
+          <div className="w-full overflow-hidden whitespace-nowrap">
             <div
               className={cn(
                 "infinite-scroll-horizontal flex gap-14 overflow-hidden",
