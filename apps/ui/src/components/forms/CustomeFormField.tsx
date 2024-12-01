@@ -99,7 +99,7 @@ function RenderInput<
     case FormFieldType.INPUT:
     case FormFieldType.NUMBER:
       return (
-        <div className="border-dark-500 bg-dark-400flex flex w-full cursor-pointer flex-row items-center gap-2 rounded-md border ltr:flex-row-reverse">
+        <div className="border-[#A4A7F7] bg-dark-400flex flex w-full cursor-pointer flex-row items-center gap-2 rounded-2xl border ltr:flex-row-reverse">
           {props.iconSrc && (
             <Image
               src={props.iconSrc}
@@ -124,7 +124,7 @@ function RenderInput<
               }
               {...field}
               placeholder={props.placeholder}
-              className="shad-input border-0"
+              className="shad-input border-0 text-center !placeholder-[#A4A7F7] !rounded-2xl text-xl"
               onChange={(e) => {
                 field.onChange(e.target.value)
                 if (props.onChange) {
@@ -240,14 +240,14 @@ function RenderInput<
               <SelectTrigger
                 className={
                   local === "fa"
-                    ? "shad-select-trigger flex justify-end text-right"
+                    ? "shad-select-trigger flex justify-end text-right "
                     : "shad-select-trigger flex justify-start text-left"
                 }
               >
                 <SelectValue placeholder={props.placeholder} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent className="shad-select-content">
+            <SelectContent className="shad-select-content ">
               {props.children}
             </SelectContent>
           </Select>
@@ -274,9 +274,9 @@ function CustomFormField<
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem className="flex flex-row items-baseline gap-2">
+          <FormItem className="flex flex-row  rounded-2xl gap-2 ">
             {props.fieldType !== FormFieldType.CHECKBOX && label && (
-              <FormLabel className="shad-input-label whitespace-nowrap">
+              <FormLabel className="shad-input-label whitespace-nowrap ">
                 {label}
               </FormLabel>
             )}

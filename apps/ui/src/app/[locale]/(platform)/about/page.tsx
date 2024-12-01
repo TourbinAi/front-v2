@@ -1,12 +1,8 @@
-
-function About(){
+export default function About(){
     return(
         <>
-        <div>
-            adakhshfa
+        <div  className={`w-96 h-96 `}>
         </div>
         </>
     )
 }
-
-export default About

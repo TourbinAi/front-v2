@@ -42,11 +42,11 @@ export function AppForm<T extends FieldValues = FieldValues>({
     <FormProvider {...form}>
       <form
         onSubmit={handleSubmit(onSubmit, onError)}
-        className={className}
+        className={className }
         id={id}
         noValidate
       >
-        <fieldset disabled={disabled} className="space-y-4">
+        <fieldset disabled={disabled} className="space-y-4 ">
           {children}
         </fieldset>
       </form>

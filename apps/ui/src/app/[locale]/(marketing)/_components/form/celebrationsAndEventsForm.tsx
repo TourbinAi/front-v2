@@ -80,16 +80,16 @@ export const CelebrationsAndEventForm = () => {
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="occasion"
-          label={t("form.occasion.title")}
+          // label={t("form.occasion.title")}
           placeholder={t("form.occasion.placeholder")}
-          iconLucid="MapPinned"
-          iconAlt="origin"
+          // iconLucid="MapPinned"
+          // iconAlt="origin"
         />
         <div className="flex flex-row items-center gap-2">
-          <Label className="m-0 text-nowrap">{t("form.month.title")}</Label>
+          {/* <Label className="m-0 text-nowrap">{t("form.month.title")}</Label> */}
           <Select>
-            <SelectTrigger className="flex items-center justify-center">
-              <SelectValue placeholder={t("form.month.placeholder")} />
+            <SelectTrigger className="flex items-center justify-center rounded-2xl border-[#5C61F1] text-[#5C61F1] opacity-60 text-xl">
+              <SelectValue className="placeholder-opacity-50 " placeholder={t("form.month.placeholder")} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -99,7 +99,7 @@ export const CelebrationsAndEventForm = () => {
                     value={month}
                     className="flex w-full items-center justify-end text-right"
                   >
-                    <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
+                    <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse " >
                       <p>{t(`form.month.options.${month}`)}</p>
                     </div>
                   </SelectItem>
@@ -108,11 +108,11 @@ export const CelebrationsAndEventForm = () => {
             </SelectContent>
           </Select>
         </div>
-        <SubmitButton className="mb-1 w-full" isLoading={isLoading}>
+        <SubmitButton  isLoading={isLoading}>
           {t("form.submit")}
         </SubmitButton>
       </form>
-      <Button className="w-full" variant="outline" href="/blog">
+      <Button className="w-full text-[#5C61F1] mt-2" variant="outline" href="/blog">
         {t("form.goTo")}
       </Button>
     </Form>

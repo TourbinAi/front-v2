@@ -44,30 +44,28 @@ export const SouvenirsAndFoodForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full flex-1 space-y-4"
+        className="w-full flex-1 space-y-4 " 
       >
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="food"
-          label={t("form.food.title")}
+          // label={t("form.food.title")}
           placeholder={t("form.food.placeholder")}
-          iconLucid="CookingPot"
           iconAlt="food"
         />
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="city"
-          label={t("form.city.title")}
+          // label={t("form.city.title")}
           placeholder={t("form.city.placeholder")}
-          iconLucid="Building2"
           iconAlt="city"
         />
 
-        <SubmitButton isLoading={isLoading}>{t("form.submit")}</SubmitButton>
+        <SubmitButton  isLoading={isLoading}>{t("form.submit")}</SubmitButton>
       </form>
-      <Button className="w-full" variant="outline" href="/blog">
+      <Button className="w-full text-[#5C61F1] mt-2" variant="outline" href="/blog">
         {t("form.goTo")}
       </Button>
     </Form>

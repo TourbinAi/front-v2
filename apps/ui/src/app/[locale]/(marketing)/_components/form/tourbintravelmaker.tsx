@@ -16,7 +16,8 @@ import CustomFormField, {
 import SubmitButton from "@/components/forms/SubmitButton"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import arrow from "public/assets/icons/Polygon 2.png"
+import arrowX from "public/assets/icons/Polygon 2.png"
+import arrowY from "public/assets/icons/Polygon 1.png"
 import Image from "next/image"
 
 export const Tourbintravelmaker = () => {
@@ -45,36 +46,14 @@ export const Tourbintravelmaker = () => {
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full flex-1 space-y-4"
-      >
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="food"
-          label={t("form.food.title")}
-          placeholder={t("form.food.placeholder")}
-          iconLucid="CookingPot"
-          iconAlt="food"
-        />
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="city"
-          label={t("form.city.title")}
-          placeholder={t("form.city.placeholder")}
-          iconLucid="Building2"
-          iconAlt="city"
-        />
-
-        <SubmitButton isLoading={isLoading}>{t("form.submit")}<Image src={arrow} alt={''}/></SubmitButton>
-      </form>
-      <Button className="w-full" variant="outline" href="/blog">
-        {t("form.goTo")}
-        
-      </Button>
-    </Form>
+      <div className="flex flex-col gap-2">
+        <SubmitButton className="w-full flex justify-between bg-[#EE4037] text-white" isLoading={isLoading}>{t("form.submit")}
+          <Image src={arrowX} alt={''}/>
+        </SubmitButton>
+        <Button className="w-full flex text-black justify-between text-[#5C61F1]"  href="/blog">
+          {t("form.goTo")}
+          <Image src={arrowY} alt={''}/>
+        </Button>
+      </div>      
   )
 }

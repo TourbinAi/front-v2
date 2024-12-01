@@ -123,13 +123,15 @@ export const PathFinderForm = () => {
 
   return (
     <AppForm form={form} onSubmit={onSubmit}>
-      <div className="flex h-1/2 flex-col flex-wrap text-center">
-        {renderAutoComplete("origin")}
+      <div className="flex h-1/2 flex-col flex-wrap text-center border border-[#5C61F1] rounded-xl p-1 text-[#5C61F1] opacity-60">
+        {/* {renderAutoComplete("origin")} */}
+        نام شهر مبدا را بنویسید
       </div>
-      <div className="relative mb-6 mt-8">
-        {renderAutoComplete("destination")}
+      <div className=" text-center  relative mb-6 mt-8 border border-[#5C61F1] rounded-xl p-1 text-[#5C61F1] opacity-60">
+        {/* {renderAutoComplete("destination")} */}
+        نام شهر مقصد را بنویسید
       </div>
-      <SubmitButton isLoading={isLoading}>{t("submit")}</SubmitButton>
+      <SubmitButton isLoading={isLoading}  >{t("submit")}</SubmitButton>
     </AppForm>
   )
 }
