@@ -7,6 +7,7 @@ import moment from "jalali-moment"
 import { ChevronRight, TriangleAlert } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 import { TravelMakerListReq, TravelMakerListRes } from "@/types/api"
@@ -131,6 +132,7 @@ export default function TravelMaker() {
       } catch (error) {
         console.error("Form submission failed:", error)
         setError(true)
+        toast.error(t("form.error"))
       } finally {
         setLoading(false)
         setOpen(false)
