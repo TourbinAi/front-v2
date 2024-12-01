@@ -11,7 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 type SheetLayoutProps = {
   children: React.ReactNode
@@ -31,9 +37,11 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
   const t = useTranslations("travelMaker.form.form-header")
   const locale = useLocale()
   const dir = locale === "fa" ? "rtl" : "ltr"
+
   return (
     <div className="h-full overflow-auto">
       <div className="relative flex size-full items-stretch gap-5 p-5">
+        {/* Desktop sidebar */}
         <div
           className={cn(
             "absolutes inset-y-0 z-50 hidden h-full flex-col items-center justify-start lg:flex",
@@ -50,8 +58,12 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             <CardContent>{sideBarComponent}</CardContent>
           </Card>
         </div>
+
+        {/* Main content */}
         <div className="size-full h-full grow">{children}</div>
       </div>
+
+      {/* Mobile sheet */}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger
           asChild
@@ -65,7 +77,11 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             {open ? <PanelRightClose /> : <PanelRightOpen />}
           </Button>
         </SheetTrigger>
-        <SheetContent side={dir === "rtl" ? "right" : "left"}>
+        <SheetContent
+          side={dir === "rtl" ? "right" : "left"}
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+        >
           {sideBarComponent}
         </SheetContent>
       </Sheet>
