@@ -47,11 +47,11 @@ export const Tourbintravelmaker = () => {
 
   return (
       <div className="flex flex-col gap-2">
-        <SubmitButton className="w-full flex justify-between bg-[#EE4037] text-white" isLoading={isLoading}>{t("form.submit")}
+        <SubmitButton className="w-full flex justify-between bg-[#EE4037] text-white" isLoading={isLoading}>{t("form.goToAI")}
           <Image src={arrowX} alt={''}/>
         </SubmitButton>
         <Button className="w-full flex text-black justify-between text-[#5C61F1]"  href="/blog">
-          {t("form.goTo")}
+          {t("form.submit")}
           <Image src={arrowY} alt={''}/>
         </Button>
       </div>      

@@ -69,7 +69,7 @@ export function Attractions() {
               {[0, 1, 2, 3, 4].map((ind) => (
                 <CarouselItem
                   key={ind}
-                  className="flex shrink-0 flex-col items-center  transition-transform hover:scale-105 "
+                  className="flex shrink-0 flex-col items-center transition-transform hover:scale-105 "
                 >
                   <Skeleton className=" bg-gray-400" />
                 </CarouselItem>
@@ -80,7 +80,7 @@ export function Attractions() {
               {Object.values(responseData).map((blog, blogIndex) => (
                 <CarouselItem
                   key={blogIndex}
-                  className="flex p-0 shrink-0 md:basis-1/2 lg:basis-1/3 flex-col items-center border-none bg-none transition-transform hover:scale-105"
+                  className="flex p-0 shrink-0 md:basis-1/2 lg:basis-1/6 flex-col items-center border-none bg-none transition-transform hover:scale-105"
                 >
                   <Link
                     href={`blog/${blog.title}/?blogtype=1&blogid=${blog.id}`}
