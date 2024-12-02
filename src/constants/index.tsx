@@ -136,3 +136,6 @@ export const attractions: {
   { name: "سواحل پارسیان، نگین دریای جنوبی", image: rockyBeach, like: 20 },
   { name: "سبزی بی‌پایان در جنگل‌های غرب", image: jungleMountain, like: 47 },
 ];
+
+export const FALLBACK_IMAGE_PATH = "/images/broken-image.png";
+export const PASSWORD_MIN_LENGTH = 6; // this value is in sync with Strapi

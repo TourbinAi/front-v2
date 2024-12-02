@@ -28,7 +28,6 @@ import SubmitButton from "@/components/SubmitButton";
 import { TravelMakerList } from "@/lib/api";
 import moment from "jalali-moment"; // Import the library
 import { Skeleton } from "@/components/ui/skeleton";
-import CustomCard from "./customeCard";
 import {
   Card,
   CardContent,
@@ -37,7 +36,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, TriangleAlert } from "lucide-react";
 
 // Inside your TravelMakerForm component:
 const persianDate = moment().format("jYYYY-jM-jD"); // Get the current Persian date
@@ -66,6 +65,7 @@ export default function TravelMaker() {
   const searchParams = useSearchParams(); // Get search params
   const query = Object.fromEntries(searchParams.entries()); // Convert search params to object
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [list, setList] = useState<TravelMakerListRes>();
   const [mounted, setMounted] = useState(false);
@@ -108,6 +108,7 @@ export default function TravelMaker() {
       const respond = await TravelMakerList(requestObject);
       setList(respond.data);
     } catch (error) {
+      setError(true);
       console.error("Form submission failed:", error);
     } finally {
       setLoading(false);
@@ -373,7 +374,31 @@ export default function TravelMaker() {
         </div>
       }
     >
-      {loading ? (
+      {error ? (
+        <div className="flex size-full items-center justify-center">
+          <Card className="max-w-96">
+            <CardHeader className="flex w-full flex-col items-center justify-center">
+              <CardTitle className="flex pb-2">
+                <TriangleAlert className="size-10 text-destructive" />
+                <span className="">{t("form.error")} </span>
+              </CardTitle>
+              <CardDescription className="text-center">
+                {t("form.tryAnother")}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex size-full flex-col items-center justify-center">
+              <Button
+                className="flex lg:hidden"
+                variant="outline"
+                onClick={() => setOpen(true)}
+              >
+                <ChevronRight />
+                {t("form.form-header.fillForm")}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      ) : loading ? (
         <div className="flx-col flex w-full gap-4">
           <Skeleton className="h-[300px] w-full" />
           <Skeleton className="h-[300px] w-full" />

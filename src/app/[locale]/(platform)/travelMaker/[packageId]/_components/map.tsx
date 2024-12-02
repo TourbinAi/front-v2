@@ -1,14 +1,20 @@
 "use client";
 
+import path from "path";
+
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import axios from "axios";
-import polyline from "@mapbox/polyline";
-import { postData } from "@/lib/api";
-import StarRating from "@/components/ui/starRating";
-import { PackagesPlaceRes } from "@/types/api";
 import Image from "next/image";
+import { env } from "@/env.mjs";
+import polyline from "@mapbox/polyline";
+import * as Sentry from "@sentry/nextjs";
+import axios from "axios";
+
+import { PackagesPlaceRes } from "@/types/api";
+
+import { postData } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
+import StarRating from "@/components/ui/starRating";
 
 // Dynamic import for MapContainer with SSR disabled
 const MapWithNoSSR = dynamic(
@@ -74,7 +80,7 @@ interface Leg {
   steps: Array<{ polyline: string }>;
 }
 
-interface Fulldata {
+interface FullData {
   legs: Leg[];
 }
 
@@ -84,10 +90,9 @@ interface MapProps {
 }
 
 function Map({ packageId, setPlan }: MapProps) {
-  const [neshanReq, setReqNeshan] = useState("");
   const [route, setRoute] = useState<any[]>([]);
-  const [fulldata, setdata] = useState<Fulldata>({ legs: [] });
-  const [waypoint, setwaypoint] = useState<any[]>([]);
+  const [fulldata, setData] = useState<FullData>({ legs: [] });
+  const [waypoint, setWaypoint] = useState<any[]>([]);
   const [info, setinfo] = useState<Info>({
     type: "car",
     originLat: 35.69524140795555, // Tehran
@@ -101,7 +106,7 @@ function Map({ packageId, setPlan }: MapProps) {
   });
 
   useEffect(() => {
-    const fetchdata = async () => {
+    const fetchData = async () => {
       try {
         const responseData = await postData(packageId);
         // console.log(responseData);
@@ -114,41 +119,42 @@ function Map({ packageId, setPlan }: MapProps) {
           rateStar: place.rating,
         }));
 
-        setwaypoint(waypointInfo);
+        setWaypoint(waypointInfo);
       } catch (error) {
-        console.log(error);
+        Sentry.captureException(error);
+        console.error(error);
       }
     };
-    fetchdata();
-  }, [packageId]);
+    fetchData();
+  }, [packageId, setPlan]);
 
   useEffect(() => {
+    async function apiReq() {
+      let waypointparams = waypoint
+        .map((p) => `${p.longitude},${p.latitude}%7C`)
+        .join("");
+      let waypointreq = waypointparams.slice(0, -3); // Remove last "%7C"
+
+      try {
+        const response = await axios.get(
+          `https://api.neshan.org/v4/direction?type=${info.type}&origin=${info.originLat},${info.originLong}&destination=${info.originLat},${info.originLong}&waypoints=${waypointreq}&avoidTrafficZone=${info.traffic}&avoidOddEvenZone=${info.oddeven}&alternative=${info.alternative}&bearing=${info.bearing}`,
+          {
+            headers: { "api-key": env.NEXT_PUBLIC_NESHAN_KEY },
+          }
+        );
+        const data = response.data.routes[0];
+        setData(data);
+        const decodedPolyline = decodeLegsPolylines(data.legs);
+        setRoute(decodedPolyline);
+      } catch (error) {
+        console.error("Error fetching directions:", error);
+      }
+    }
+
     if (waypoint.length > 0) {
-      apireq();
+      apiReq();
     }
-  }, [waypoint]);
-
-  async function apireq() {
-    let waypointparams = waypoint
-      .map((p) => `${p.longitude},${p.latitude}%7C`)
-      .join("");
-    let waypointreq = waypointparams.slice(0, -3); // Remove last "%7C"
-
-    try {
-      const response = await axios.get(
-        `https://api.neshan.org/v4/direction?type=${info.type}&origin=${info.originLat},${info.originLong}&destination=${info.originLat},${info.originLong}&waypoints=${waypointreq}&avoidTrafficZone=${info.traffic}&avoidOddEvenZone=${info.oddeven}&alternative=${info.alternative}&bearing=${info.bearing}`,
-        {
-          headers: { "api-key": process.env.NEXT_PUBLIC_NESHAN_KEY },
-        }
-      );
-      const data = response.data.routes[0];
-      setdata(data);
-      const decodedPolyline = decodeLegsPolylines(data.legs);
-      setRoute(decodedPolyline);
-    } catch (error) {
-      console.error("Error fetching directions:", error);
-    }
-  }
+  }, [waypoint, info]);
 
   const decodeLegsPolylines = (legs: Leg[]) => {
     return legs.flatMap((leg) =>
@@ -174,12 +180,12 @@ function Map({ packageId, setPlan }: MapProps) {
   }
 
   return (
-    <div>
+    <div className="">
       <MapWithNoSSR
         center={center}
         zoom={8}
         scrollWheelZoom={false}
-        className="h-screen w-full"
+        className="h-[49vh] w-full"
       >
         <TileLayerWithNoSSR
           attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -196,17 +202,18 @@ function Map({ packageId, setPlan }: MapProps) {
                 }
               >
                 <PopupWithNoSSR>
-                  <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
-                    <CardContent className="relative h-full w-full">
+                  <Card className="relative size-72 cursor-pointer overflow-hidden">
+                    <CardContent className="relative size-full">
                       <Image
                         fill
-                        src={
-                          process.env.NEXT_PUBLIC_BACKEND_URL + position.imagePlace
-                        }
+                        src={path.join(
+                          env.NEXT_PUBLIC_BACKEND_URL,
+                          position.imagePlace
+                        )}
                         alt="image"
-                        className="absolute inset-0 h-full w-full object-cover"
+                        className="absolute inset-0 size-full object-cover"
                       />
-                      <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
+                      <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black/50 py-2 text-center text-white">
                         {position.namePlace}
                       </span>
                       <StarRating rating={position.rateStar} />

@@ -10,7 +10,22 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "aa44-195-248-240-38.ngrok-free.app",
+        hostname: "0eee-103-75-197-29.ngrok-free.app",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "images.huffingtonpost.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "media.cntraveler.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "get.pxhere.com",
         port: "",
       },
     ],

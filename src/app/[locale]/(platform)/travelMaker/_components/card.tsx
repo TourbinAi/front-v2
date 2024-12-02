@@ -11,10 +11,12 @@ import * as d3 from "d3";
 import { ChevronLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import defaultImage from "public/assets/images/placeholderImages.png";
+
 type City = {
   id: number;
   name: string;
-  image_url: string;
+  image_url: string | null;
 };
 
 type RouteCardProps = {
@@ -59,20 +61,30 @@ export default function RouteCard({
       try {
         await Promise.all(
           cities.map(async (city) => {
-            const imageUrl = `https://${process.env.NEXT_PUBLIC_BACKEND_URL}${city.image_url}`;
-            const response = await fetch(imageUrl);
-            if (!response.ok) {
-              throw new Error(`Failed to fetch image for city: ${city.name}`);
+            if (!city.image_url) {
+              newImages[city.name] = defaultImage;
+              return;
             }
 
-            const blob = await response.blob();
-            const objectUrl = URL.createObjectURL(blob);
-            newImages[city.name] = {
-              src: objectUrl,
-              height: 300,
-              width: 500,
-              blurDataURL: objectUrl,
-            };
+            try {
+              const imageUrl = `https://${process.env.NEXT_PUBLIC_BACKEND_URL}${city.image_url}`;
+              const response = await fetch(imageUrl);
+              if (!response.ok) {
+                throw new Error(`Failed to fetch image for city: ${city.name}`);
+              }
+
+              const blob = await response.blob();
+              const objectUrl = URL.createObjectURL(blob);
+              newImages[city.name] = {
+                src: objectUrl,
+                height: 300,
+                width: 500,
+                blurDataURL: objectUrl,
+              };
+            } catch (error) {
+              console.error(`Error loading image for ${city.name}:`, error);
+              newImages[city.name] = defaultImage;
+            }
           })
         );
       } catch (error) {
@@ -158,7 +170,11 @@ export default function RouteCard({
     <Card className="relative h-[250px] w-full max-w-7xl overflow-hidden">
       <Image
         fill
-        src={process.env.NEXT_PUBLIC_BACKEND_URL + selectedCity.image_url}
+        src={
+          selectedCity.image_url
+            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${selectedCity.image_url}`
+            : defaultImage.src
+        }
         alt={selectedCity.name}
         className="absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full"
       />

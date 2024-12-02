@@ -6,7 +6,7 @@ interface PlatformLayoutProps {
 
 const PlatformLayout: React.FC<PlatformLayoutProps> = ({ children }) => {
   return (
-    <div className="flex size-full flex-col">
+    <div className="flex size-full flex-col overflow-scroll">
       <Header />
       <div className="size-full overflow-hidden">{children}</div>
     </div>

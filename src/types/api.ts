@@ -31,6 +31,7 @@ export interface PackagesPlaceReq {
 export type PackagesPlaceRes = {
   description: string;
   travel_plan: string;
+  summary_of_travel_plan: string;
   places: {
     id: number;
     name: string;
@@ -43,6 +44,7 @@ export type PackagesPlaceRes = {
     field4: string;
     rating: number;
   }[];
+  video_url: string;
 };
 
 export type AttractionsCarouselRes = {

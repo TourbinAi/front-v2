@@ -3,6 +3,79 @@
     "description": "<p>Unfortunately, we encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>",
     "title": "Something went wrong!"
   },
+  "errors": {
+    "global": {
+      "title": "An unknown error occurred",
+      "tryAgain": "Try again",
+      "invalidContent": "This content could not be displayed",
+      "somethingWentWrong": "Something went wrong 🥺"
+    },
+
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you are looking for was not found.",
+      "solution": "Please check if you have entered the correct URL or return to the home page.",
+      "redirect": "Go to home page"
+    },
+
+    "forms": {
+      "errorsInForm": "The form contains errors",
+      "checkFormForErrors": "Please check if any values are missing"
+    },
+
+    "zodValidation": {
+      "invalid_type": "Expected type is {expected}, but received {received}",
+      "invalid_type_received_undefined": "Field is required",
+      "invalid_literal": "Invalid value, expected {expected}",
+
+      "invalid_string": {
+        "regex": "Invalid format"
+      },
+      "too_small": {
+        "string": {
+          "exact": "String must be exactly {minimum} characters",
+          "inclusive": "String must be at least {minimum} characters",
+          "not_inclusive": "String must be more than {minimum} characters"
+        },
+        "number": {
+          "exact": "Value must be exactly {minimum}",
+          "inclusive": "Minimum value is {minimum}",
+          "not_inclusive": "Number must be greater than {minimum}"
+        }
+      },
+      "too_big": {
+        "string": {
+          "exact": "String must be exactly {maximum} characters",
+          "inclusive": "String must be at most {maximum} characters",
+          "not_inclusive": "String must be less than {maximum} characters"
+        },
+        "number": {
+          "exact": "Value must be exactly {maximum}",
+          "inclusive": "Maximum value is {maximum}",
+          "not_inclusive": "Number must be less than {maximum}"
+        }
+      },
+      "custom": {
+        "password": "Passwords do not match",
+        "passwordWithNumber": "String must contain at least 1 number",
+        "phoneNumber": "This field must contain 9 numbers"
+      }
+    },
+
+    "http": {
+      "400": "Something went wrong. Please try again or contact support.",
+      "401": "Session expired. Please sign in again.",
+      "403": "You do not have access to this data",
+      "404": "Requested data not found.",
+      "408": "Request timed out. Please try again.",
+      "413": "You are uploading a file that is too large.",
+      "415": "The file you are uploading is of an unsupported type.",
+      "429": "You have sent too many requests.",
+      "500": "Server is unavailable or something went wrong. Please try again or contact support.",
+      "503": "Server is unavailable. Please try again or contact support"
+    }
+  },
+
   "localeLayout": {
     "title": "Turbine"
   },
@@ -284,6 +357,7 @@
       "Button": "Submit",
       "popover-button": "optional",
       "noResults": "No result found",
+      "error": "Something went wrong",
       "tryAnother": "Try another combination",
       "form-header": {
         "title": " travel maker",
@@ -294,7 +368,12 @@
     "card": {
       "seeMore": "See more"
     },
-    "package": { "mapOpen": "open map", "mapClose": "close map" }
+    "package": {
+      "error": "Something went wrong",
+      "tryAgain": "Try again",
+      "mapOpen": "open map",
+      "mapClose": "close map"
+    }
   },
   "PathFinder": {
     "Origin": { "title": "origin", "placeHolder": "Enter the origin" },

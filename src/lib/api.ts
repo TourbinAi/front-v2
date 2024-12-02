@@ -19,16 +19,12 @@ const api = axios.create({
 export function TravelMakerList(
   props: TravelMakerListReq
 ): Promise<AxiosResponse<TravelMakerListRes, any>> {
-  // console.log(`Base URL: ${api.defaults.baseURL}`);
-
   return api.post("/api/filter-packages/", props);
 }
 
 export function postData(
   packageId: number
 ): Promise<AxiosResponse<PackagesPlaceRes, any>> {
-  // console.log("/api/packages/places/");
-
   return api.post("/api/packages/places/", { package_id: packageId });
 }
 export function AttractionsAPI(
@@ -45,6 +41,9 @@ export function AttractionsLanding(
 export function BlogUniqAPI(
   blog_type?: number,
   blog_id?: number
-):Promise<AxiosResponse<any>>{
-  return api.post("/blog/blog-reviews/", { blog_type:blog_type , blog_id:blog_id });
+): Promise<AxiosResponse<any>> {
+  return api.post("/blog/blog-reviews/", {
+    blog_type: blog_type,
+    blog_id: blog_id,
+  });
 }

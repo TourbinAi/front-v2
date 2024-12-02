@@ -5,10 +5,12 @@ import {
   getTranslations,
   unstable_setRequestLocale,
 } from "next-intl/server";
-import path from "path";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import { locales } from "@/i18n/config";
 import { Toaster } from "@/components/ui/sonner";
+import { ServerProviders } from "@/components/providers/ServerProviders";
+import { ClientProviders } from "@/components/providers/ClientProviders";
 
 const sans = localFont({
   src: [
@@ -94,10 +96,12 @@ export default async function RootLayout({
       dir={locale === "fa" ? "rtl" : "ltr"}
     >
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <div className="h-full">{children}</div>
-          <Toaster />
-        </NextIntlClientProvider>
+        <ServerProviders params={{ locale }}>
+          <ClientProviders>
+            <div className="h-full">{children}</div>
+            <Toaster />
+          </ClientProviders>
+        </ServerProviders>
       </body>
     </html>
   );
