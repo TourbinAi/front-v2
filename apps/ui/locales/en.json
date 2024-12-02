@@ -261,6 +261,14 @@
           "goTo": "Souvenirs and Food page"
         }
       },
+      "tourbinTravelMaker": {
+        "title": "Turbine Travel Maker ",
+        "description": "AI-powered trip planning tailored to your circumstances",
+        "form": {
+          "goTo": "Talking to Turbine AI",
+          "collapseButton": "Using a travel builder by filling out the form "
+        }
+      },
       "celebrationsAndEvents": {
         "title": "Celebrations and events",
         "description": "Rituals, celebrations and ethnic, historical and national events by city and province.",
@@ -290,7 +298,8 @@
           "submit": "Search",
           "goTo": "Celebrations and events page"
         }
-      }
+      },
+      "imageButton": "برای شروع کلیک کنید"
     },
     "tourismPlaces": {
       "title": "Tourism places",

@@ -20,6 +20,8 @@ import CustomFormField, {
 import SubmitButton from "@/components/forms/SubmitButton"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import cameraman3Small from "public/assets/images/cameramanTHREESMALL.png"
+
 import {
   Select,
   SelectContent,
@@ -28,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import Image from "next/image"
 
 const months = [
   "farvardin",
@@ -76,39 +79,62 @@ export const CelebrationsAndEventForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full flex-1 space-y-4"
       >
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="occasion"
-          // label={t("form.occasion.title")}
-          placeholder={t("form.occasion.placeholder")}
-          // iconLucid="MapPinned"
-          // iconAlt="origin"
-        />
-        <div className="flex flex-row items-center gap-2">
-          {/* <Label className="m-0 text-nowrap">{t("form.month.title")}</Label> */}
-          <Select>
-            <SelectTrigger className="flex items-center justify-center rounded-2xl border-[#5C61F1] text-[#5C61F1] opacity-60 text-xl">
-              <SelectValue className="placeholder-opacity-50 " placeholder={t("form.month.placeholder")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {months.map((month, i) => (
-                  <SelectItem
-                    key={i}
-                    value={month}
-                    className="flex w-full items-center justify-end text-right"
-                  >
-                    <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse " >
-                      <p>{t(`form.month.options.${month}`)}</p>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+        <div className="flex  -mb-4 lg:m-0 items-end justify-between ">
+          <div className="w-[55%] lg:w-full ">
+            <div className="flex grow flex-col items-center lg:w-full justify-center w-full">
+              <div className=" max-w-[600px] ">
+                <section className="space-y-2 self-stretch p-4">
+                  <h2 className="text-xl font-semibold">{t("title")}</h2>
+                  <p >{t("description")}</p>
+                </section>
+              </div>
+            </div>
+            <div className="p-2">
+              <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={form.control}
+                name="occasion"
+                // label={t("form.occasion.title")}
+                placeholder={t("form.occasion.placeholder")}
+              // iconLucid="MapPinned"
+              // iconAlt="origin"
+              />
+              <div className="flex flex-row items-center gap-2">
+                {/* <Label className="m-0 text-nowrap">{t("form.month.title")}</Label> */}
+                <Select>
+                  <SelectTrigger className="flex items-center justify-center rounded-2xl border-[#5C61F1] text-[#5C61F1] opacity-60 lg:text-xl">
+                    <SelectValue className="placeholder-opacity-50 " placeholder={t("form.month.placeholder")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {months.map((month, i) => (
+                        <SelectItem
+                          key={i}
+                          value={month}
+                          className="flex w-full items-center justify-end text-right"
+                        >
+                          <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse " >
+                            <p>{t(`form.month.options.${month}`)}</p>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+          <div className=" lg:hidden rounded-xl w-[45%] lg:w-full">
+            <div className="flex items-end justify-end relative  h-full">
+              <Image
+                alt="compass"
+                src={cameraman3Small}
+                className=" h-full object-cover "
+              />
+            </div>
+          </div>
         </div>
-        <SubmitButton  isLoading={isLoading}>
+        <SubmitButton isLoading={isLoading}>
           {t("form.submit")}
         </SubmitButton>
       </form>
@@ -118,3 +144,5 @@ export const CelebrationsAndEventForm = () => {
     </Form>
   )
 }
+
+

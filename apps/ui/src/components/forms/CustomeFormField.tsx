@@ -124,7 +124,7 @@ function RenderInput<
               }
               {...field}
               placeholder={props.placeholder}
-              className="shad-input border-0 text-center !placeholder-[#A4A7F7] !rounded-2xl text-xl"
+              className="shad-input border-0 text-center !placeholder-[#A4A7F7] !rounded-2xl lg:text-xl"
               onChange={(e) => {
                 field.onChange(e.target.value)
                 if (props.onChange) {
@@ -274,7 +274,7 @@ function CustomFormField<
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem className="flex flex-row  rounded-2xl gap-2 ">
+          <FormItem className="flex flex-row  rounded-lg gap-2 ">
             {props.fieldType !== FormFieldType.CHECKBOX && label && (
               <FormLabel className="shad-input-label whitespace-nowrap ">
                 {label}

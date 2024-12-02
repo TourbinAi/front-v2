@@ -51,16 +51,20 @@ export function Attractions() {
       <div className="w-full">
         <div>
           <h1 className="mb-2 mt-3 rounded-md p-5 text-xl font-semibold">
-          {t("title")}
-        </h1>
+            {t("title")}
+          </h1>
         </div>
-        <div className="flex my-2">
-          <p className="bg-[#ECEDFD] px-5 py-2"></p>
+        <div className="flex my-2 gap-1">
+          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">طبیعی </p>
+          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">تاریخی </p>
+          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">فرهنگی </p>
+          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">تفریحی </p>
+          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">همه </p>
         </div>
         <Carousel
-        opts={{
-          align: "start",
-        }}
+          opts={{
+            align: "start",
+          }}
           dir="ltr"
           className="w-full  bg-[#ECEDFD]"
         >
@@ -76,11 +80,11 @@ export function Attractions() {
               ))}
             </CarouselContent>
           ) : (
-            <CarouselContent className="mx-0 my-5 flex gap-1">
+            <CarouselContent className="mx-10 my-5 flex gap-1">
               {Object.values(responseData).map((blog, blogIndex) => (
                 <CarouselItem
                   key={blogIndex}
-                  className="flex p-0 shrink-0 md:basis-1/2 lg:basis-1/6 flex-col items-center border-none bg-none transition-transform hover:scale-105"
+                  className="flex p-0 shrink-0 md:basis-1/2 lg:basis-1/4 flex-col items-center border-none bg-none transition-transform hover:scale-105"
                 >
                   <Link
                     href={`blog/${blog.title}/?blogtype=1&blogid=${blog.id}`}
