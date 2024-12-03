@@ -52,23 +52,23 @@ function Section({
     <div
       id={name}
       className={cn(
-        "flex min-h-0 flex-col items-center justify-between lg:min-h-[600px] lg:justify-around z-10  ",
+        "flex min-h-0 flex-col items-center justify-center lg:min-h-[600px] lg:justify-around z-10  lg:mx-20 ",
         dir == "ltr" ? "lg:flex-row" : "lg:flex-row-reverse"
       )}
 
     >
-      <div className={bgColor ? "flex justify-center bg-[#ECEDFD] hidden w-[35%] lg:flex mx-10 lg:mx-0 rounded-xl "
-        : "flex justify-center  hidden w-[35%] lg:flex mx-10 lg:mx-0 rounded-xl"}>
+      <div className={bgColor ? "flex justify-center bg-[#ECEDFD] hidden w-[35%] lg:flex mx-10 rounded-xl "
+        : "flex justify-center  hidden w-[35%] lg:flex mx-10  rounded-xl"}>
         <div className="relative flex itmes-center items-end justify-center ">
           <Image
-            alt="compass object-fit "
+            alt="compass object-cover "
             src={outlinedImage}
             className={cn(
               "h-full w-full object-fit ",
               dir === "ltr" ? "right-0" : "left-0"
             )}
           />
-          {buttons ? <Button className="absolute bg-[#EE4037]  z-20 text-white py-7 px-24 translate-y-6" >برای شروع کلیک کنید</Button> : <></>}
+          {buttons ? <Button className="absolute bg-[#EE4037] opacity-80 hover:opacity-100 z-20 text-white py-7 px-24 translate-y-6" >برای شروع کلیک کنید</Button> : <></>}
         </div>
       </div>
       {/* <div className={bgColor ? "flex justify-center lg:hidden bg-[#ECEDFD]  mx-10 rounded-xl "
@@ -82,7 +82,7 @@ function Section({
           {buttons ? <Button className="absolute bg-[#EE4037]  z-20 text-white py-7 px-24 translate-y-6" >برای شروع کلیک کنید</Button> : <></>}
         </div>
       </div> */}
-      <div className="flex flex-col justify-center w-full grow">
+      <div className="flex flex-col justify-center  ">
         {responsiveText ?
           <div className=" flex grow flex-col items-center w-full justify-center text-xl mt-10">
             <div className="flex max-w-[600px] w-full">
@@ -92,8 +92,9 @@ function Section({
               </section>
             </div>
           </div> : <></>}
+        <div className="px-4 pb-8">{children}</div>
       </div>
-      <div className="px-4 pb-8">{children}</div>
+      
     </div>
   )
 }
@@ -114,7 +115,7 @@ export function FeatureDetails() {
       >
         <Tourbintravelmaker />
       </Section>
-      <div className="relative flex justify-center ">
+      <div className="relative  ">
         <Section
           dir="ltr"
           name="routeFinder"
@@ -128,7 +129,7 @@ export function FeatureDetails() {
         </Section>
         <Image className="object-fit absolute w-screen h-full -z-10 top-0 left-0" src={bgImage} alt="" />
       </div>
-      <div className="relative flex flex-col gap-4 ">
+      <div className="relative flex flex-col gap-4 mt-2">
         <Section
           dir="rtl"
           name="souvenirsAndFood"
@@ -151,7 +152,7 @@ export function FeatureDetails() {
         >
           <CelebrationsAndEventForm />
         </Section>
-        <Image className="object-fit absolute w-screen h-full -z-10 top-0 left-0 hidden lg:block" src={bgpicture} alt="" />
+        <Image className="object-fit absolute w-full h-full -z-10 top-0 left-0 hidden lg:block" src={bgpicture} alt="" />
       </div>
     </div>
   )

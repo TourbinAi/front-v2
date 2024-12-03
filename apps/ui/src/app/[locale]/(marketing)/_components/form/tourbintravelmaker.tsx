@@ -20,31 +20,13 @@ import arrowX from "public/assets/icons/Polygon 2.png"
 import arrowY from "public/assets/icons/Polygon 1.png"
 import Image from "next/image"
 import cameraman1Small from "public/assets/images/cameramanONESMALL.png"
+import { TravelMakerForm } from "./travelMakerForm"
 
 export const Tourbintravelmaker = () => {
   const t = useTranslations("landingPage.featureDetails.tourbinTravelMaker")
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [isopen , setIsopen]=useState(false)
 
-  const form = useForm<z.infer<typeof souvenirsAndFood>>({
-    resolver: zodResolver(souvenirsAndFood),
-    defaultValues: {
-      food: "",
-      city: "",
-    },
-  })
-
-  const onSubmit = async () => {
-    setIsLoading(true)
-    router.push("/blog/Souvenirs/?blogtype=2&blogid=3")
-    try {
-      setIsLoading(true)
-    } catch (error) {
-      console.error(error)
-    }
-
-    setIsLoading(false)
-  }
 
   return (
     <div className="flex flex-col gap-2 " >
@@ -64,10 +46,12 @@ export const Tourbintravelmaker = () => {
           <Button className="absolute bg-[#EE4037]  z-20 text-white py-7 px-24 translate-y-6 " >برای شروع کلیک کنید</Button>
         </div>
       </div>
-      <Button className=" w-full flex text-black justify-between text-[#5C61F1] mt-10 p-7" href="/blog">
+      <Button onClick={()=>{setIsopen(!isopen)}} className=" w-full flex text-black justify-between text-[#5C61F1] mt-10 p-7" href="/blog">
         {t("form.collapseButton")}
-        <Image src={arrowY} alt={''} />
+        <Image className={isopen ? "rotate-180" : "rotate-0"} src={arrowY} alt={''} />
       </Button>
+      {isopen ?<TravelMakerForm/> :<></>}
+      
     </div>
   )
 }
