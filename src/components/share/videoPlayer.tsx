@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Play, Pause, RotateCcw } from "lucide-react";
+import { Play, Pause, RotateCcw, AlertTriangle } from "lucide-react";
+import { toast } from "sonner";
 
 interface CustomVideoPlayerProps {
   canPause?: boolean;
@@ -43,24 +44,35 @@ export default function CustomVideoPlayer({
     setIsEnded(true);
   };
 
+  const handleError = (event: Event) => {
+    console.error("Video error:", event);
+    toast.error("Failed to load video. Please check your internet connection.");
+    setIsEnded(true);
+  };
+
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
       video.addEventListener("ended", handleVideoEnd);
-      return () => video.removeEventListener("ended", handleVideoEnd);
+      video.addEventListener("error", handleError);
+
+      return () => {
+        video.removeEventListener("ended", handleVideoEnd);
+        video.removeEventListener("error", handleError);
+      };
     }
   }, []);
 
   return (
     <div
-      className="relative h-[300px] w-[300px] overflow-hidden rounded-lg border-4 border-gray-300"
+      className="relative size-full overflow-hidden rounded-lg border-4 border-gray-300"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       <video
         ref={videoRef}
         className="h-full w-full object-cover"
-        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+        src={videoUrl}
         loop={false}
         playsInline
       />
@@ -71,18 +83,22 @@ export default function CustomVideoPlayer({
             : "opacity-0"
         }`}
       >
-        <button
-          onClick={isEnded ? restartVideo : togglePlay}
-          className="rounded-full bg-black bg-opacity-50 p-4 text-white transition-colors duration-300 hover:bg-opacity-75"
-        >
-          {isEnded ? (
-            <RotateCcw size={24} />
-          ) : isPlaying && canPause ? (
-            <Pause size={24} />
-          ) : (
-            <Play size={24} />
-          )}
-        </button>
+        {isEnded ? (
+          <AlertTriangle size={24} className="text-red-500" />
+        ) : (
+          <button
+            onClick={isEnded ? restartVideo : togglePlay}
+            className="rounded-full bg-black bg-opacity-50 p-4 text-white transition-colors duration-300 hover:bg-opacity-75"
+          >
+            {isEnded ? (
+              <RotateCcw size={24} />
+            ) : isPlaying && canPause ? (
+              <Pause size={24} />
+            ) : (
+              <Play size={24} />
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

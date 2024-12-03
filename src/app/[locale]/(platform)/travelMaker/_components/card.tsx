@@ -12,6 +12,8 @@ import { ChevronLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import defaultImage from "public/assets/images/placeholderImages.png";
+import path from "path";
+import { env } from "@/env.mjs";
 
 type City = {
   id: number;
@@ -40,6 +42,7 @@ export default function RouteCard({
   const [selectedCity, setSelectedCity] = useState<City>(
     cities[cities.length - 1]
   );
+  console.log("cities:", cities);
   const [images, setImages] = useState<{ [key: string]: StaticImageData }>({});
   const [loading, setLoading] = useState(true);
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -67,7 +70,10 @@ export default function RouteCard({
             }
 
             try {
-              const imageUrl = `https://${process.env.NEXT_PUBLIC_BACKEND_URL}${city.image_url}`;
+              const imageUrl = path.join(
+                env.NEXT_PUBLIC_BACKEND_URL,
+                city.image_url
+              );
               const response = await fetch(imageUrl);
               if (!response.ok) {
                 throw new Error(`Failed to fetch image for city: ${city.name}`);
@@ -172,7 +178,7 @@ export default function RouteCard({
         fill
         src={
           selectedCity.image_url
-            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${selectedCity.image_url}`
+            ? path.join(env.NEXT_PUBLIC_BACKEND_URL, selectedCity.image_url)
             : defaultImage.src
         }
         alt={selectedCity.name}

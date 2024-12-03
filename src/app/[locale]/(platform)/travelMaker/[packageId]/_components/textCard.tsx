@@ -11,7 +11,7 @@ export default function TextCard(props: TextCardProps) {
     <>
       <Card
         className={cn(
-          "flex max-h-[400px] flex-col items-center",
+          "flex max-h-[380px] flex-col items-center rounded-2xl",
           props.className
         )}
       >

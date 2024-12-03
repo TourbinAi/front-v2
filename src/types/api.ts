@@ -18,7 +18,7 @@ export type TravelMakerListRes = Array<{
   places: {
     id: number;
     name: string;
-    image_url: string;
+    image_url: string | null;
   }[];
   longitude: string;
   latitude: string;
@@ -30,21 +30,21 @@ export interface PackagesPlaceReq {
 
 export type PackagesPlaceRes = {
   description: string;
-  travel_plan: string;
-  summary_of_travel_plan: string;
+  travel_plan?: string;
+  summary_of_travel_plan: string | null;
   places: {
     id: number;
     name: string;
     longitude: string;
     latitude: string;
-    first_image: string;
-    field1: string;
-    field2: string;
-    field3: string;
-    field4: string;
+    first_image: string | null;
+    field1: string | null;
+    field2: string | null;
+    field3: string | null;
+    field4: string | null;
     rating: number;
   }[];
-  video_url: string;
+  video_url: string | null;
 };
 
 export type AttractionsCarouselRes = {

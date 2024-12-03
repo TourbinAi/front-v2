@@ -269,18 +269,18 @@ function CustomFormField<
   const { control, name, label } = props;
 
   return (
-    <div className="mb-5">
-      <FormField<TFieldValues, TName> // Ensure generics are passed
+    <div className="w-full space-y-3">
+      <FormField<TFieldValues, TName>
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem className="flex flex-row items-baseline gap-2">
+          <FormItem className="mt-4 flex w-full flex-col gap-2">
             {props.fieldType !== FormFieldType.CHECKBOX && label && (
               <FormLabel className="shad-input-label whitespace-nowrap">
                 {label}
               </FormLabel>
             )}
-            <RenderInput<TSchema, TFieldValues, TName> // Ensure generics are passed
+            <RenderInput<TSchema, TFieldValues, TName>
               field={field}
               props={props}
             />

@@ -96,12 +96,12 @@ export default async function RootLayout({
       dir={locale === "fa" ? "rtl" : "ltr"}
     >
       <body>
-        <ServerProviders params={{ locale }}>
+        <NextIntlClientProvider messages={messages}>
           <ClientProviders>
             <div className="h-full">{children}</div>
             <Toaster />
           </ClientProviders>
-        </ServerProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

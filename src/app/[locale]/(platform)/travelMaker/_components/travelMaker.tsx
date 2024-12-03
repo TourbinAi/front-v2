@@ -195,183 +195,166 @@ export default function TravelMaker() {
       setOpen={setOpen}
       button={typeof list === "undefined" ? false : list.length !== 0}
       sideBarComponent={
-        <div className="h-full overflow-x-hidden p-5">
-          <div className="flex h-full flex-wrap justify-center">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="origin"
-                  label={t("form.origin.title")}
-                  placeholder={t("form.origin.placeholder")}
-                >
-                  {["تهران", "مشهد"].map((city, i) => (
-                    <SelectItem key={i} value={city}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{city}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                {/* 
-                <CustomFormField
-                  fieldType={FormFieldType.DATE_PICKER}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="date"
-                  label={t("form.date.title")}
-                /> */}
-
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="distance"
-                  label={t("form.distance.title")}
-                  placeholder={t("form.distance.placeholder")}
-                >
-                  {tmsv.distance.map((dis, i) => (
-                    <SelectItem key={i} value={dis}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.distance.select.${dis}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.MULTISELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="tags"
-                  label={t("form.place.placeholder")}
-                  placeholder={t("form.place.select.title-nature-placeHolder")}
-                  options={tmsv.placeNature.map((p) => ({
-                    value: p,
-                    label: t(`form.place.select.${p}`),
-                  }))}
-                />
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="duration"
-                  label={t("form.duration.title")}
-                  placeholder={t("form.duration.placeholder")}
-                >
-                  {tmsv.duration.map((time, i) => (
-                    <SelectItem key={i} value={time}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.duration.select.${time}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="route"
-                  label={t("form.route.title")}
-                  placeholder={t("form.route.placeholder")}
-                >
-                  {tmsv.route.map((route, i) => (
-                    <SelectItem key={i} value={route}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.route.select.${route}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="routStop"
-                  label={t("form.destination-state.title")}
-                  placeholder={t("form.destination-state.placeholder")}
-                >
-                  {tmsv.disState.map((state, i) => (
-                    <SelectItem key={i} value={state}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.destination-state.select.${state}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="vehicle"
-                  label={t("form.vehicle.title")}
-                  placeholder={t("form.vehicle.placeholder")}
-                >
-                  {tmsv.vehicle.map((vehicle, i) => (
-                    <SelectItem key={i} value={vehicle}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.vehicle.select.${vehicle}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="optional">
-                    <AccordionTrigger>
-                      {t("form.popover-button")}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <CustomFormField
-                        fieldType={FormFieldType.CHECKBOX}
-                        onChange={updateQuery}
-                        control={form.control}
-                        name="oldPerson"
-                        label={t("form.oldPerson.title")}
-                        // placeholder={t("form.oldPerson.placeholder")}
-                      />
-                      <CustomFormField
-                        fieldType={FormFieldType.SELECT}
-                        onChange={updateQuery}
-                        control={form.control}
-                        name="direction"
-                        label={t("form.travel-direction.title")}
-                        placeholder={t("form.travel-direction.placeholder")}
-                      >
-                        {tmsv.direction.map((dir, i) => (
-                          <SelectItem key={i} value={dir}>
-                            <p>{t(`form.travel-direction.select.${dir}`)}</p>
-                          </SelectItem>
-                        ))}
-                      </CustomFormField>
-                      <CustomFormField
-                        fieldType={FormFieldType.SELECT}
-                        onChange={updateQuery}
-                        control={form.control}
-                        name="accommodation"
-                        label={t("form.accommodation.title")}
-                        placeholder={t("form.accommodation.placeholder")}
-                      >
-                        {tmsv.accommodation.map((accommodation, i) => (
-                          <SelectItem key={i} value={accommodation}>
-                            <p>
-                              {t(
-                                `form.accommodation.accommodationSelect.${accommodation}`
-                              )}
-                            </p>
-                          </SelectItem>
-                        ))}
-                      </CustomFormField>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <SubmitButton isLoading={loading}>
-                  {t("form.Button")}
-                </SubmitButton>
-              </form>
-            </Form>
-          </div>
-        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              onChange={updateQuery}
+              control={form.control}
+              name="origin"
+              label={t("form.origin.title")}
+              placeholder={t("form.origin.placeholder")}
+            >
+              {["تهران", "مشهد"].map((city, i) => (
+                <SelectItem key={i} value={city}>
+                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
+                    <p>{city}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              onChange={updateQuery}
+              control={form.control}
+              name="distance"
+              label={t("form.distance.title")}
+              placeholder={t("form.distance.placeholder")}
+            >
+              {tmsv.distance.map((dis, i) => (
+                <SelectItem key={i} value={dis}>
+                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
+                    <p>{t(`form.distance.select.${dis}`)}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
+            <CustomFormField
+              fieldType={FormFieldType.MULTISELECT}
+              onChange={updateQuery}
+              control={form.control}
+              name="tags"
+              label={t("form.place.placeholder")}
+              placeholder={t("form.place.select.title-nature-placeHolder")}
+              options={tmsv.placeNature.map((p) => ({
+                value: p,
+                label: t(`form.place.select.${p}`),
+              }))}
+            />
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              onChange={updateQuery}
+              control={form.control}
+              name="duration"
+              label={t("form.duration.title")}
+              placeholder={t("form.duration.placeholder")}
+            >
+              {tmsv.duration.map((time, i) => (
+                <SelectItem key={i} value={time}>
+                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
+                    <p>{t(`form.duration.select.${time}`)}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              onChange={updateQuery}
+              control={form.control}
+              name="route"
+              label={t("form.route.title")}
+              placeholder={t("form.route.placeholder")}
+            >
+              {tmsv.route.map((route, i) => (
+                <SelectItem key={i} value={route}>
+                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
+                    <p>{t(`form.route.select.${route}`)}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              onChange={updateQuery}
+              control={form.control}
+              name="routStop"
+              label={t("form.destination-state.title")}
+              placeholder={t("form.destination-state.placeholder")}
+            >
+              {tmsv.disState.map((state, i) => (
+                <SelectItem key={i} value={state}>
+                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
+                    <p>{t(`form.destination-state.select.${state}`)}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              onChange={updateQuery}
+              control={form.control}
+              name="vehicle"
+              label={t("form.vehicle.title")}
+              placeholder={t("form.vehicle.placeholder")}
+            >
+              {tmsv.vehicle.map((vehicle, i) => (
+                <SelectItem key={i} value={vehicle}>
+                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
+                    <p>{t(`form.vehicle.select.${vehicle}`)}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="optional">
+                <AccordionTrigger>{t("form.popover-button")}</AccordionTrigger>
+                <AccordionContent>
+                  <CustomFormField
+                    fieldType={FormFieldType.CHECKBOX}
+                    onChange={updateQuery}
+                    control={form.control}
+                    name="oldPerson"
+                    label={t("form.oldPerson.title")}
+                    // placeholder={t("form.oldPerson.placeholder")}
+                  />
+                  <CustomFormField
+                    fieldType={FormFieldType.SELECT}
+                    onChange={updateQuery}
+                    control={form.control}
+                    name="direction"
+                    label={t("form.travel-direction.title")}
+                    placeholder={t("form.travel-direction.placeholder")}
+                  >
+                    {tmsv.direction.map((dir, i) => (
+                      <SelectItem key={i} value={dir}>
+                        <p>{t(`form.travel-direction.select.${dir}`)}</p>
+                      </SelectItem>
+                    ))}
+                  </CustomFormField>
+                  <CustomFormField
+                    fieldType={FormFieldType.SELECT}
+                    onChange={updateQuery}
+                    control={form.control}
+                    name="accommodation"
+                    label={t("form.accommodation.title")}
+                    placeholder={t("form.accommodation.placeholder")}
+                  >
+                    {tmsv.accommodation.map((accommodation, i) => (
+                      <SelectItem key={i} value={accommodation}>
+                        <p>
+                          {t(
+                            `form.accommodation.accommodationSelect.${accommodation}`
+                          )}
+                        </p>
+                      </SelectItem>
+                    ))}
+                  </CustomFormField>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <SubmitButton isLoading={loading}>{t("form.Button")}</SubmitButton>
+          </form>
+        </Form>
       }
     >
       {error ? (
@@ -434,17 +417,23 @@ export default function TravelMaker() {
                 </div>
               ) : (
                 <div className="flex w-full flex-col gap-4">
-                  {list.map((item) => (
-                    <RouteCard
-                      key={item.id}
-                      id={item.id}
-                      name={item.description}
-                      description={item.description}
-                      latitude={item.latitude}
-                      longitude={item.longitude}
-                      cities={[...item.places].reverse()}
-                    />
-                  ))}
+                  {list.map((item) => {
+                    if (item.places.length === 0) {
+                      return null;
+                    }
+
+                    return (
+                      <RouteCard
+                        key={item.id}
+                        id={item.id}
+                        name={item.description}
+                        description={item.description}
+                        latitude={item.latitude}
+                        longitude={item.longitude}
+                        cities={[...item.places].reverse()}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </>

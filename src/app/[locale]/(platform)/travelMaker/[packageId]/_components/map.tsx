@@ -15,6 +15,7 @@ import { PackagesPlaceRes } from "@/types/api";
 import { postData } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
 import StarRating from "@/components/ui/starRating";
+import PlaceHolderImage from "public/assets/images/placeholderImages.png";
 
 // Dynamic import for MapContainer with SSR disabled
 const MapWithNoSSR = dynamic(
@@ -180,12 +181,12 @@ function Map({ packageId, setPlan }: MapProps) {
   }
 
   return (
-    <div className="">
+    <div>
       <MapWithNoSSR
         center={center}
         zoom={8}
         scrollWheelZoom={false}
-        className="h-[49vh] w-full"
+        className="h-[40vh] w-full"
       >
         <TileLayerWithNoSSR
           attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -208,7 +209,7 @@ function Map({ packageId, setPlan }: MapProps) {
                         fill
                         src={path.join(
                           env.NEXT_PUBLIC_BACKEND_URL,
-                          position.imagePlace
+                          position.imagePlace || PlaceHolderImage.src
                         )}
                         alt="image"
                         className="absolute inset-0 size-full object-cover"
