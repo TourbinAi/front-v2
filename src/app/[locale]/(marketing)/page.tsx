@@ -1,21 +1,17 @@
-import { unstable_setRequestLocale } from "next-intl/server";
-import { Hero } from "./_components/Hero";
-import React from "react";
-import { FeatureDetails } from "./_components/FeatureDetails";
-import { Attractions } from "./_components/Attractions";
-import { Header } from "./_components/Header";
+import React from "react"
 
-interface HomeProps {
-  params: { locale: string };
-}
+import { Attractions } from "./_components/Attractions"
+import { FeatureDetails } from "./_components/FeatureDetails"
+import { Header } from "./_components/Header"
+import { Hero } from "./_components/Hero"
 
-export default function Home({ params }: HomeProps) {
-  unstable_setRequestLocale(params.locale);
+export default function Home() {
   return (
     <main className="relative">
+      <Header />
       <Hero />
       <FeatureDetails />
       <Attractions />
     </main>
-  );
+  )
 }
