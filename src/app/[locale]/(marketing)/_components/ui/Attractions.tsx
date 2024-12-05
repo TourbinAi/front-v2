@@ -1,96 +1,86 @@
-"use client"
+"use client";
 
-import path from "path"
+import path from "path";
+import * as React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { env } from "@/env.mjs";
+import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 
-import * as React from "react"
-import { useEffect, useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { env } from "@/env.mjs"
-import { useTranslations } from "next-intl"
-
-import { AttractionsLandingRes } from "@/types/api"
-
-import { AttractionsLanding } from "@/lib/api"
-import { Card, CardContent } from "@/components/ui/card"
+import { AttractionsLanding } from "@/lib/api";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Skeleton } from "@/components/ui/skeleton"
+} from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function Attractions() {
-  const [responseData, setData] = useState<AttractionsLandingRes>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const t = useTranslations("landingPage.tourismPlaces");
 
-  const t = useTranslations("landingPage.tourismPlaces")
+  const { data: responseData, isLoading } = useQuery({
+    queryKey: ["attractions"],
+    queryFn: async () => {
+      const response = await AttractionsLanding(10);
+      return response.data;
+    },
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const response = await AttractionsLanding(10)
-        // console.log("response: ", response);
-        setData(response.data)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [])
+  const attractionCategories = ["طبیعی", "تاریخی", "فرهنگی", "تفریحی"];
+
   return (
     <div
       id="tourismPlaces"
-      className="my-10 flex flex-col items-center justify-center space-y-6 "
+      className="my-10 flex flex-col items-center justify-center space-y-6"
     >
-      <div className="w-full">
-        <div>
-          <h1 className="mb-2 mt-3 rounded-md p-5 text-xl font-semibold">
+      <div className="w-full space-y-2">
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="mt-3 rounded-md p-5 text-xl font-semibold">
             {t("title")}
           </h1>
-        </div>
-        <div className="flex my-2 gap-1">
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">طبیعی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">تاریخی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">فرهنگی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">تفریحی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">همه </p>
+          <div className="flex gap-1">
+            {attractionCategories.map((category, categoryIndex) => (
+              <p
+                key={categoryIndex}
+                className="rounded-lg bg-[#ECEDFD] px-4 py-2"
+              >
+                {category}
+              </p>
+            ))}
+          </div>
         </div>
         <Carousel
           opts={{
             align: "start",
           }}
           dir="ltr"
-          className="w-full  bg-[#ECEDFD]"
+          className="w-full bg-[#ECEDFD]"
         >
-          {loading ? (
+          {isLoading ? (
             <CarouselContent className="mx-10 my-5 gap-1">
-              {[0, 1, 2, 3, 4].map((ind) => (
+              {attractionCategories.map((_, categoryIndex) => (
                 <CarouselItem
-                  key={ind}
-                  className="flex shrink-0 flex-col items-center transition-transform hover:scale-105 "
+                  key={categoryIndex}
+                  className="flex shrink-0 flex-col items-center transition-transform hover:scale-105"
                 >
-                  <Skeleton className=" bg-gray-400" />
+                  <Skeleton className="bg-gray-400" />
                 </CarouselItem>
               ))}
             </CarouselContent>
           ) : (
-            <CarouselContent className="mx-10 my-5 flex gap-1">
-              {Object.values(responseData).map((blog, blogIndex) => (
-                <CarouselItem
-                  key={blogIndex}
-                  className="flex p-0 shrink-0 md:basis-1/2 lg:basis-1/4 flex-col items-center border-none bg-none transition-transform hover:scale-105"
-                >
-                  <Link
-                    href={`blog/${blog.title}/?blogtype=1&blogid=${blog.id}`}
+            <CarouselContent className="my-4 flex gap-1">
+              {responseData &&
+                Object.values(responseData).map((blog, blogIndex) => (
+                  <CarouselItem
+                    key={blogIndex}
+                    className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl"
                   >
-                    <Card className="relative size-96 cursor-pointer overflow-hidden">
-                      <CardContent className="relative w-full h-full">
+                    <Card className="relative h-72 w-72 cursor-pointer overflow-hidden">
+                      <CardContent className="relative h-full w-full">
                         <Image
                           fill
                           src={path.join(
@@ -98,22 +88,21 @@ export function Attractions() {
                             blog.card_image
                           )}
                           alt={blog.place_name}
-                          className="absolute w-full h-full object-cover"
+                          className="absolute inset-0 h-full w-full object-cover"
                         />
-                        <span className="absolute bottom-0 left-0 w-full bg-black/50 py-3 text-center text-white">
+                        <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
                           {blog.place_name || "NAME PLACE"}
                         </span>
                       </CardContent>
                     </Card>
-                  </Link>
-                </CarouselItem>
-              ))}
+                  </CarouselItem>
+                ))}
             </CarouselContent>
           )}
-          <CarouselPrevious className="absolute left-0 size-96 w-8 border border-[#A4A7F7]  " />
-          <CarouselNext className="absolute right-0 size-96 w-8 border border-[#A4A7F7] " />
+          <CarouselPrevious className="absolute left-0 size-8 w-8 border border-[#A4A7F7]" />
+          <CarouselNext className="absolute right-0 size-8 w-8 border border-[#A4A7F7]" />
         </Carousel>
       </div>
     </div>
-  )
+  );
 }

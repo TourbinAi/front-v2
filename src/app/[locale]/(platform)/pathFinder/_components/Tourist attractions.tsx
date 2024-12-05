@@ -98,16 +98,12 @@ export function CarouselSpacing({ destination }: { destination: any[] }) {
           >
             <CarouselContent className="flex gap-1">
               {item.blogs.map((blog: any, blogIndex: number) => {
-                // console.log(
-                //   "urllll: ",
-                //   process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
-                // );
                 return (
                   <CarouselItem
                     key={blogIndex}
                     className="flex flex-shrink-0 basis-80 flex-col items-center rounded-2xl"
                   >
-                    <Card className="relative h-52 w-72 cursor-pointer overflow-hidden">
+                    <Card className="relative size-72 cursor-pointer overflow-hidden">
                       <CardContent className="relative h-full w-full">
                         <Image
                           fill
