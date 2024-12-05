@@ -64,7 +64,10 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             {open ? <PanelRightClose /> : <PanelRightOpen />}
           </Button>
         </SheetTrigger>
-        <SheetContent side={dir === "rtl" ? "right" : "left"}>
+        <SheetContent
+          className="overflow-y-scroll pt-12"
+          side={dir === "rtl" ? "right" : "left"}
+        >
           {sideBarComponent}
         </SheetContent>
       </Sheet>
