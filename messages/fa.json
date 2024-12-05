@@ -1,78 +1,65 @@
 {
   "Error": {
-    "description": "<p>Unfortunately, we encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>",
-    "title": "Something went wrong!"
+    "description": "<p>متاسفانه با یک خطا مواجه شدیم.</p><p>می‌توانید تلاش کنید تا <retry>صفحه را مجدداً بارگذاری کنید</retry> که در حال بازدید بودید.</p>",
+    "title": "مشکلی پیش آمده است!"
   },
   "errors": {
     "global": {
-      "title": "An unknown error occurred",
-      "tryAgain": "Try again",
-      "invalidContent": "This content could not be displayed",
-      "somethingWentWrong": "Something went wrong 🥺"
+      "title": "یک خطای ناشناخته رخ داده است",
+      "tryAgain": "دوباره امتحان کنید",
+      "invalidContent": "این محتوا قابل نمایش نیست",
+      "somethingWentWrong": "یک مشکلی پیش آمد 🥺"
     },
 
     "notFound": {
-      "title": "Page not found",
-      "description": "The page you are looking for was not found.",
-      "solution": "Please check if you have entered the correct URL or return to the home page.",
-      "redirect": "Go to home page"
+      "title": "صفحه مورد نظر یافت نشد",
+      "description": "صفحه‌ای که به دنبال آن هستید یافت نشد.",
+      "solution": "لطفاً بررسی کنید که آیا آدرس صحیح وارد شده است یا به صفحه اصلی بازگردید.",
+      "redirect": "رفتن به صفحه اصلی"
     },
 
     "forms": {
-      "errorsInForm": "The form contains errors",
-      "checkFormForErrors": "Please check if any values are missing"
+      "errorsInForm": "فرم دارای خطا است",
+      "checkFormForErrors": "لطفاً بررسی کنید که آیا مقداری از قلم نیفتاده است"
     },
 
     "zodValidation": {
-      "invalid_type": "Expected type is {expected}, but received {received}",
-      "invalid_type_received_undefined": "Field is required",
-      "invalid_literal": "Invalid value, expected {expected}",
+      "invalid_type": "نوع مورد انتظار {expected} است، اما {received} دریافت شد",
+      "invalid_type_received_undefined": "این فیلد الزامی است",
+      "invalid_literal": "مقدار نامعتبر، مقدار مورد انتظار {expected} است",
 
       "invalid_string": {
-        "regex": "Invalid format"
+        "regex": "فرمت نامعتبر"
       },
       "too_small": {
         "string": {
-          "exact": "String must be exactly {minimum} characters",
-          "inclusive": "String must be at least {minimum} characters",
-          "not_inclusive": "String must be more than {minimum} characters"
+          "exact": "رشته باید دقیقاً {minimum} کاراکتر باشد",
+          "inclusive": "رشته باید حداقل {minimum} کاراکتر باشد",
+          "not_inclusive": "رشته باید بیشتر از {minimum} کاراکتر باشد"
         },
         "number": {
-          "exact": "Value must be exactly {minimum}",
-          "inclusive": "Minimum value is {minimum}",
-          "not_inclusive": "Number must be greater than {minimum}"
+          "exact": "مقدار باید دقیقاً {minimum} باشد",
+          "inclusive": "کمترین مقدار {minimum} است",
+          "not_inclusive": "عدد باید بیشتر از {minimum} باشد"
         }
       },
       "too_big": {
         "string": {
-          "exact": "String must be exactly {maximum} characters",
-          "inclusive": "String must be at most {maximum} characters",
-          "not_inclusive": "String must be less than {maximum} characters"
+          "exact": "رشته باید دقیقاً {maximum} کاراکتر باشد",
+          "inclusive": "رشته باید حداکثر {maximum} کاراکتر باشد",
+          "not_inclusive": "رشته باید کمتر از {maximum} کاراکتر باشد"
         },
         "number": {
-          "exact": "Value must be exactly {maximum}",
-          "inclusive": "Maximum value is {maximum}",
-          "not_inclusive": "Number must be less than {maximum}"
+          "exact": "مقدار باید دقیقاً {maximum} باشد",
+          "inclusive": "بیشترین مقدار {maximum} است",
+          "not_inclusive": "عدد باید کمتر از {maximum} باشد"
         }
       },
       "custom": {
-        "password": "Passwords do not match",
-        "passwordWithNumber": "String must contain at least 1 number",
-        "phoneNumber": "This field must contain 9 numbers"
+        "password": "رمز عبور با هم مطابقت ندارد",
+        "passwordWithNumber": "رشته باید حداقل 1 عدد داشته باشد",
+        "phoneNumber": "این فیلد باید شامل 9 رقم باشد"
       }
-    },
-
-    "http": {
-      "400": "Something went wrong. Please try again or contact support.",
-      "401": "Session expired. Please sign in again.",
-      "403": "You do not have access to this data",
-      "404": "Requested data not found.",
-      "408": "Request timed out. Please try again.",
-      "413": "You are uploading a file that is too large.",
-      "415": "The file you are uploading is of an unsupported type.",
-      "429": "You have sent too many requests.",
-      "500": "Server is unavailable or something went wrong. Please try again or contact support.",
-      "503": "Server is unavailable. Please try again or contact support"
     }
   },
 
@@ -100,286 +87,280 @@
   },
 
   "localeLayout": {
-    "title": "Turbine"
+    "title": "توربین"
   },
   "footer": {
     "links": {
-      "about": "About toorbeen",
-      "article": "Attraction Article",
-      "pathFinder": "Path Finder",
-      "travelMaker": "Travel maker",
-      "attractions": "Attractions",
-      "souvenirsAndFood": "Souvenirs and food",
-      "celebrationsAndEvents": "Celebrations and events",
-      "tours": "Tours"
+      "about": "درباره توربین",
+      "article": "مجله گردشگری",
+      "pathFinder": "مسیریاب توربین",
+      "travelMaker": "سفرساز توربین",
+      "attractions": "جاذبه‌های گردشگری",
+      "souvenirsAndFood": "غذاها و سوغات",
+      "celebrationsAndEvents": "جشن‌ها و رویداد‌ها",
+      "tours": "تورهای گردشگری"
     },
-    "goUp": "Top of the page",
-    "stayInTouch": "Stay in touch"
+    "goUp": "رفتن به بالای صفحه",
+    "stayInTouch": "ارتباط با ما"
   },
   "header": {
     "menu": {
-      "pathFinder": "Path Finder",
-      "travelMaker": "Travel Maker",
-      "news": "News",
-      "aboutUs": "About Us"
+      "pathFinder": "مسیریاب",
+      "travelMaker": "سفرساز",
+      "news": "اخبار و مقالات",
+      "aboutUs": "درباره‌ما"
     },
     "modeSwitcher": {
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System"
+      "light": "روشن",
+      "dark": "تاریک",
+      "system": "سیستم"
     },
     "localeSwitcher": {
-      "en": "English",
-      "fa": "Farsi"
+      "en": "انگلیسی",
+      "fa": "فارسی"
     },
-    "login/register": "Login/Register"
+    "login/register": "ورود/ثبت‌نام"
   },
   "landingPage": {
     "hero": {
       "header": {
-        "top": "A comprehensive platform for nature tourism and short-term trips",
-        "bottom": "Based on artificial intelligence"
+        "top": "پلتفرم جامع طبیعت گردی و سفر های کوتاه مدت",
+        "bottom": "بر پایه هوش مصنوعی"
       }
     },
     "primaryFeatures": {
-      "features": "Platform's features",
-      "souvenirsAndFood": "Souvenirs and food",
-      "tourismPlaces": "Tourism places",
-      "celebrationsAndEvents": "Celebrations and events",
-      "travelMaker": "Travel maker",
-      "routeFinder": "Route finder"
+      "features": "امکانات پلتفرم",
+      "souvenirsAndFood": "سوغات و غذا",
+      "tourismPlaces": "مکان‌های گردشگری",
+      "celebrationsAndEvents": "جشن‌ها و رویدادها",
+      "travelMaker": "سفر ساز",
+      "routeFinder": "مسیر یاب"
     },
     "featureDetails": {
       "about": {
-        "title": "About Toorbin",
-        "description": "Rituals, celebrations and ethnic, historical and national events by city and province.",
-        "readMore": "Read more"
+        "title": "درباره توربین",
+        "description": "توربین یک پلتفرم جامع برای طبیعت‌گردی و سفرهای کوتاه مدت بر پایه هوش مصنوعی است. به کمک هوش مصنوعی توربین شما میتوانید با توجه به شرایط و علایق شخصی. بهترین گزینه‌های برنامه سفر را با جزایات کامل دریافت کنید.",
+        "readMore": "ادامه"
       },
-      "routeFinder": {
-        "title": "Route finder",
-        "description": "Finding the best travel route and estimating travel time with toorbin",
-        "form": {
-          "origin": {
-            "title": "Origin",
-            "placeholder": "Enter the city of origin."
-          },
-          "destination": {
-            "title": "Destination",
-            "placeholder": "Enter the city of destination",
-            "button": "add destination"
-          },
-          "submit": "Search path"
-        }
-      },
-      "travelMaker": {
-        "title": "Travel Maker",
-        "description": "Suggesting the best travel plan according to your conditions and characteristics",
-        "fillTheForm": "Fill the form",
-        "talkToAI": "Talk to the tourbin ai",
-        "clickToStart": "Click to start"
-      },
-      "souvenirsAndFood": {
-        "title": "Souvenirs and food",
-        "description": "souvenirs, drinks and local dishes of Iran's different cities and ethnicities to cook their recipes",
-        "form": {
-          "food": {
-            "title": "Food",
-            "placeholder": "Enter the name of the food or drink."
-          },
-          "city": {
-            "title": "City",
-            "placeholder": "Enter the name of the city or ethnicity."
-          },
-          "submit": "Search",
-          "goTo": "Souvenirs and Food page"
-        }
-      },
-      "celebrationsAndEvents": {
-        "title": "Celebrations and events",
-        "description": "Rituals, celebrations and ethnic, historical and national events by city and province.",
-        "form": {
-          "occasion": {
-            "title": "Occasion",
-            "placeholder": "Enter occasion or event."
-          },
-          "month": {
-            "title": "Month",
-            "placeholder": "Select a month",
-            "options": {
-              "farvardin": "Farvardin",
-              "ordibehesht": "Ordibehesht",
-              "khordad": "Khordad",
-              "tir": "Tir",
-              "mordad": "Mordad",
-              "shahrivar": "Shahrivar",
-              "mehr": "Mehr",
-              "aban": "Aban",
-              "azar": "Azar",
-              "day": "Day",
-              "bahman": "Bahman",
-              "esfand": "Esfand"
-            }
-          },
-          "submit": "Search",
-          "goTo": "Celebrations and events page"
-        }
-      }
-    },
-    "tourismPlaces": {
-      "title": "Tourism places",
-      "goTo": "Tourism places page"
-    }
-  },
-  "notFoundPage": {
-    "title": "404 Not Found",
-    "destination": "You've gone the wrong way!"
-  },
-
-  "travelMaker": {
-    "form": {
-      "validateError": {
-        "origin": "origin is required",
-        "distance": "distance is required",
-        "place": "place is required",
-        "duration": "duration is required",
-        "date": "date is required",
-        "route": "route is required",
-        "routeState": "route state is required"
-      },
-
-      "origin": { "title": "origin travel", "placeholder": "origin travel" },
-      "date": { "title": "Date" },
-      "distance": {
-        "title": "distance from the origin",
-        "placeholder": "select distance",
-        "select": {
-          "3h": "To be away from the origin for 3 hours",
-          "5h": "To be away from the origin for 5 hours",
-          "7h": "To be away from the origin for 7 hours"
-        }
-      },
-      "place": {
-        "placeholder": "Select like your place ",
-        "selectAll": "Select All",
-        "search": "Search...",
-        "select": {
-          "title-nature-placeHolder": "nature",
-          "shadowAndGreen": "Shadow & Green",
-          "sunnyAndSea": "Sunny & Sea",
-          "MountainAndDesert": "Mountain & Desert",
-          "Entertainment": "Entertainment",
-          "HistoryAndCulture": "History & Culture"
-        }
-      },
-      "duration": {
-        "title": "travel duration",
-        "placeholder": "select duration",
-        "select": {
-          "1d": "1 day",
-          "2d": "2 day",
-          "3d": "3 day"
-        }
-      },
-      "travelStartDate": {
-        "title": "travel start date"
-      },
-      "route": {
-        "title": "route type",
-        "placeholder": "select route",
-        "select": {
-          "easy": "Easy",
-          "hard": "Hard",
-          "none": "No walking"
-        }
-      },
-      "destination-state": {
-        "title": "stop in route",
-        "placeholder": "select stop in route",
-        "select": {
-          "oneWay": "One-way: we go directly to the destination and stop there",
-          "multiple": "Multiple destinations: We visit and pass several destinations and attractions"
-        }
-      },
-      "vehicle": {
-        "title": "Vehicle",
-        "placeholder": "Select the vehicle.",
-        "select": {
-          "car": "Normal Car",
-          "bicycle": "bicycle",
-          "bus": "Van or minibus",
-          "off-road": "off-road vehicle",
-          "Car-offroad": "Normal car - Off-road vehicle",
-          "offroad-bicycle": "Off-road vehicle - Bicycle",
-          "car-bicycle": "Normal car - Bicycle'",
-          "nissan-car": "Nissan - Normal car"
-        }
-      },
-      "travel-direction": {
-        "title": "direction of travel",
-        "placeholder": "Select the direction",
-        "select": {
-          "north": "to the north",
-          "south": "to the south",
-          "west": "to the west",
-          "east": "to the east"
-        }
-      },
-      "oldPerson": {
-        "title": "number of elderly",
-        "placeholder": "number"
-      },
-      "accommodation": {
-        "title": "Type of accommodation",
-        "placeholder": "select",
-        "accommodationSelect": {
-          "camp": "Camp",
-          "hotel": "Hotel",
-          "visit": "Visit"
-        }
-      },
-
-      "Button": "Submit",
-      "popover-button": "optional",
-      "noResults": "No result found",
-      "error": "Something went wrong",
-      "tryAnother": "Try another combination",
-      "form-header": {
-        "title": " travel maker",
-        "text": "By answering the following questions, you will help the tourbin to create an excellent travel plan and a pure and memorable experience for you with the help of Turbine artificial intelligence, like an experienced and knowledgeable tour leader.",
-        "fillForm": "Fill the form"
-      }
-    },
-    "card": {
-      "seeMore": "See more"
-    },
-    "package": {
-      "error": "Something went wrong",
-      "tryAgain": "Try again",
-      "mapOpen": "open map",
-      "mapClose": "close map"
-    }
-  },
-  "PathFinder": {
-    "origin": { "title": "origin", "placeHolder": "Enter the origin" },
-    "destination": {
-      "title": "Destination",
-      "placeHolder": "Enter the Destination"
-    },
-    "submit": "submit",
-    "addDestination": "Add Destination"
-  },
-  "blogCategory": {
-    "title": "Categoryes",
-    "place": "Places",
-    "food": "Food and Souvenirs",
-    "event": "Events"
-  },
-  "tourbinTravelMaker": {
+      "tourbinTravelMaker": {
         "title": "سفرساز توربین",
         "description": "برنامه‌ریزی سفر توسط هوش مصنوعی متناسب با شرایط شما",
         "form": {
           "goTo": "صحبت با هوش مصنوعی توربین",
           "collapseButton": "استفاده از سفرساز با تکمیل فرم"
         }
+      },
+      "routeFinder": {
+        "title": "مسیریاب",
+        "description": "یافتن بهترین مسیر سفر و تخمین زمان سفر با توربین",
+        "form": {
+          "origin": {
+            "title": "مبدا",
+            "placeholder": "نام شهر مبدا را وارد کنید."
+          },
+          "destination": {
+            "title": "مقصد",
+            "placeholder": "نام مقصد شهر را وارد کنید",
+            "button": "افزودن مقصد"
+          },
+          "submit": "جستجوی مسیر"
+        }
+      },
+      "travelMaker": {
+        "title": "سفر ساز",
+        "description": "پیشنهاد بهترین برنامه سفر با توجه به شرایط و خصوصیات شما",
+        "fillTheForm": "استفاده از سفرساز با تکمیل فرم",
+        "talkToAI": "با هوش مصنوعی توربین صحبت کنید",
+        "clickToStart": "برای شروع کلیک کنید"
+      },
+      "souvenirsAndFood": {
+        "title": "سوغات و غذا",
+        "description": "سوغات، نوشیدنی‌ها و غذاهای محلی شهرها و اقوام مختلف ایران با دستور پخت آنها",
+        "form": {
+          "food": {
+            "title": "غذا",
+            "placeholder": "نام غذا یا نوشیدنی را وارد کنید."
+          },
+          "city": {
+            "title": "شهر",
+            "placeholder": "نام شهر یا قومیت را وارد کنید."
+          },
+          "submit": "جستجو",
+          "goTo": "صفحه سوغات و غذا"
+        }
+      },
+      "celebrationsAndEvents": {
+        "title": "جشن‌ها و رویدادها",
+        "description": "آیین‌ها، جشن‌ها و رویدادهای قومی، تاریخی و ملی به تفکیک شهر و استان.",
+        "form": {
+          "occasion": {
+            "title": "مناسبت",
+            "placeholder": "مناسبت یا رویداد را وارد کنید."
+          },
+          "month": {
+            "title": "ماه",
+            "placeholder": "یک ماه را انتخاب کنید",
+            "options": {
+              "farvardin": "فروردین",
+              "ordibehesht": "اردیبهشت",
+              "khordad": "خرداد",
+              "tir": "تیر",
+              "mordad": "مرداد",
+              "shahrivar": "شهریور",
+              "mehr": "مهر",
+              "aban": "آبان",
+              "azar": "آذر",
+              "day": "دی",
+              "bahman": "بهمن",
+              "esfand": "اسفند"
+            }
+          },
+          "submit": "جستجو",
+          "goTo": "صفحه جشن‌ها و رویدادها"
+        }
       }
+    },
+    "tourismPlaces": {
+      "title": "مکان‌های گردشگری",
+      "goTo": "صفحه مکان‌های گردشگری"
+    }
+  },
+  "notFoundPage": {
+    "title": "یافت نشد 404",
+    "destination": "مسیر اشتباهی رو اومدی!"
+  },
+
+  "travelMaker": {
+    "form": {
+      "validateError": {
+        "origin": "مبدا را وارد کنید",
+        "distance": "مقصد را وارد کنید",
+        "place": "مکان مورد نظر را وارد کنید",
+        "duration": "مدت زمان سفر را وارد کنید",
+        "date": "تاریخ حرکت را وارد کنید",
+        "route": "مسیر را وارد کنید",
+        "routeState": "حالت مسیر را وارد کنید"
+      },
+      "origin": { "title": "مبدا سفر", "placeholder": "مبدا سفر" },
+      "date": { "title": "تاریخ" },
+      "distance": {
+        "title": "مدت زمان رانندگی",
+        "placeholder": "انتخاب مدت زمان",
+        "select": {
+          "3h": "تا سه ساعت از مبدا دور شویم",
+          "5h": "تا پنج ساعت از مبدا دور شویم",
+          "7h": "تا هفت ساعت از مبدا دور شویم"
+        }
+      },
+      "place": {
+        "placeholder": "نوع جاذبه مورد علاقه",
+        "selectAll": "همه موارد",
+        "search": "جستوجو",
+        "select": {
+          "title-nature-placeHolder": "طبیعت",
+          "shadowAndGreen": "سایه و سرسبزی",
+          "sunnyAndSea": "آفتاب و دریا",
+          "MountainAndDesert": "کوه و کویر",
+          "Entertainment": "تفریح و هیجان",
+          "HistoryAndCulture": "تاریخ و فرهنگ"
+        }
+      },
+      "duration": {
+        "title": "مدت زمان سفر",
+        "placeholder": "انتخاب مدت زمان",
+        "select": {
+          "1d": "1 روز",
+          "2d": "2 روز",
+          "3d": "3 روز"
+        }
+      },
+      "travelStartDate": { "title": "تاریخ شروع حرکت" },
+      "route": {
+        "title": "پیاده‌روی",
+        "placeholder": "پیاده‌روی را مشخص کنید",
+        "select": {
+          "easy": "ملایم و هموار",
+          "hard": "چالشی و سخت",
+          "none": "بدون پیاده روی"
+        }
+      },
+      "destination-state": {
+        "title": "نوع سفر",
+        "placeholder": "نوع سفر",
+        "select": {
+          "oneWay": "تک مقصده",
+          "multiple": "چند مقصده"
+        }
+      },
+      "vehicle": {
+        "title": "وسیله نقلیه",
+        "placeholder": "وسیله نقلیه را انتخاب کنید",
+        "select": {
+          "car": "ماشین معمولی",
+          "bicycle": "دوچرخه",
+          "bus": "ون یا اتوبوس",
+          "off-road": "ماشین افرود",
+          "Car-offroad": "ماشین معمولی - ماشین افرود",
+          "offroad-bicycle": "ماشین افرود - دوچرخه",
+          "car-bicycle": "ماشین معمولی - دوچرخه",
+          "nissan-car": "نیسان - ماشین معمولی"
+        }
+      },
+      "travel-direction": {
+        "title": "جهت حرکت سفر",
+        "placeholder": "جهت را انتخاب کنید",
+        "select": {
+          "north": "به سمت شمال",
+          "south": "به سمت جنوب",
+          "west": "به سمت غرب",
+          "east": "به سمت شرق"
+        }
+      },
+      "oldPerson": {
+        "title": "همسفر سالمند/ خردسال",
+        "placeholder": "تعداد"
+      },
+      "accommodation": {
+        "title": "نوع اقامت",
+        "placeholder": "نوع اقامت را انتخاب کنید",
+        "accommodationSelect": {
+          "camp": "کمپ",
+          "hotel": "هتل",
+          "visit": "بازدید"
+        }
+      },
+
+      "Button": "تایید",
+      "popover-button": "اختیاری",
+      "noResults": "نتیجه ای یافت نشد",
+      "error": "یک خطای ناشناخته رخ داده است",
+      "tryAnother": "مقادیر دیگری را امتحان کنید",
+      "form-header": {
+        "title": " سفرساز توربین",
+        "text": "با پاسخ به سوالات به توربین کمک می کنید تا با کمک هوش مصنوعی توربین، مانند یک تور لیدر با تجربه و آگاه، یک برنامه سفر عالی و تجربه ای ناب و به یاد ماندنی را برای شما ایجاد کند.",
+        "fillForm": "فرم را پر کنید"
+      }
+    },
+    "card": {
+      "seeMore": "مشاهده بیشتر سفر"
+    },
+    "package": {
+      "error": "یک خطای ناشناخته رخ داده است",
+      "tryAgain": "مقادیر دیگری را امتحان کنید",
+      "mapOpen": "باز کردن نقشه",
+      "mapClose": "بستن نقشه"
+    }
+  },
+  "PathFinder": {
+    "origin": { "title": "مبدا", "placeHolder": "مبدا را وارد کنید" },
+    "destination": { "title": "مقصد", "placeHolder": "مقصد را وارد کنید" },
+    "submit": "تایید",
+    "addDestination": "اضافه کردن مقصد"
+  },
+  "blogCategory": {
+    "title": "دسته بندی ها",
+    "place": "مکان های گردشگری",
+    "food": "غذا و سوغات",
+    "event": " جشنواره ها"
+  }
 }
