@@ -11,14 +11,14 @@ export default function TextCard(props: TextCardProps) {
     <>
       <Card
         className={cn(
-          "flex max-h-[380px] flex-col items-center rounded-2xl",
+          "flex flex-col items-center rounded-2xl",
           props.className
         )}
       >
         <CardHeader className="w-full rounded-t-2xl bg-red-500 py-0 text-center text-white">
           <CardHeader className="m-0">{props.title}</CardHeader>
         </CardHeader>
-        <CardContent className="h-[94%] overflow-y-scroll rounded-b-2xl border border-t-0 pb-7 pt-2 text-right">
+        <CardContent className="overflow-y-scroll pb-7 pt-2 text-right">
           {props.text}
         </CardContent>
       </Card>

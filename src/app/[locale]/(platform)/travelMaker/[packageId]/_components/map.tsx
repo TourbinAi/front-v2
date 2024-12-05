@@ -181,58 +181,56 @@ function Map({ packageId, setPlan }: MapProps) {
   }
 
   return (
-    <div>
-      <MapWithNoSSR
-        center={center}
-        zoom={8}
-        scrollWheelZoom={false}
-        className="h-[40vh] w-full"
-      >
-        <TileLayerWithNoSSR
-          attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-          maxZoom={18}
-        />
-        {route.length > 0 && (
-          <>
-            {waypoint.map((position, idx) => (
-              <MarkerWithNoSSR
-                key={idx}
-                position={
-                  [position.longitude, position.latitude] as [number, number]
-                }
-              >
-                <PopupWithNoSSR>
-                  <Card className="relative size-72 cursor-pointer overflow-hidden">
-                    <CardContent className="relative size-full">
-                      <Image
-                        fill
-                        src={path.join(
-                          env.NEXT_PUBLIC_BACKEND_URL,
-                          position.imagePlace || PlaceHolderImage.src
-                        )}
-                        alt="image"
-                        className="absolute inset-0 size-full object-cover"
-                      />
-                      <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black/50 py-2 text-center text-white">
-                        {position.namePlace}
-                      </span>
-                      <StarRating rating={position.rateStar} />
-                    </CardContent>
-                  </Card>
-                </PopupWithNoSSR>
-              </MarkerWithNoSSR>
-            ))}
-
-            <MarkerWithNoSSR position={[info.originLat, info.originLong]}>
-              <PopupWithNoSSR>Your starting point</PopupWithNoSSR>
+    <MapWithNoSSR
+      center={center}
+      zoom={8}
+      scrollWheelZoom={false}
+      className="size-full"
+    >
+      <TileLayerWithNoSSR
+        attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        maxZoom={18}
+      />
+      {route.length > 0 && (
+        <>
+          {waypoint.map((position, idx) => (
+            <MarkerWithNoSSR
+              key={idx}
+              position={
+                [position.longitude, position.latitude] as [number, number]
+              }
+            >
+              <PopupWithNoSSR>
+                <Card className="relative size-72 cursor-pointer overflow-hidden">
+                  <CardContent className="relative size-full">
+                    <Image
+                      fill
+                      src={path.join(
+                        env.NEXT_PUBLIC_BACKEND_URL,
+                        position.imagePlace || PlaceHolderImage.src
+                      )}
+                      alt="image"
+                      className="absolute inset-0 size-full object-cover"
+                    />
+                    <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black/50 py-2 text-center text-white">
+                      {position.namePlace}
+                    </span>
+                    <StarRating rating={position.rateStar} />
+                  </CardContent>
+                </Card>
+              </PopupWithNoSSR>
             </MarkerWithNoSSR>
+          ))}
 
-            <PolylineWithNoSSR positions={route} color="red" />
-          </>
-        )}
-      </MapWithNoSSR>
-    </div>
+          <MarkerWithNoSSR position={[info.originLat, info.originLong]}>
+            <PopupWithNoSSR>Your starting point</PopupWithNoSSR>
+          </MarkerWithNoSSR>
+
+          <PolylineWithNoSSR positions={route} color="red" />
+        </>
+      )}
+    </MapWithNoSSR>
   );
 }
 
