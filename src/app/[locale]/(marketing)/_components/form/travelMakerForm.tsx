@@ -1,64 +1,41 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import moment from "jalali-moment"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import moment from "jalali-moment";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { useRouter } from "@/lib/navigation"
+import { useRouter } from "@/i18n/navigation";
 import {
   SidebarSchema,
   TravelMakerSelectValues as tmsv,
-} from "@/lib/validation/travelMaker"
+} from "@/lib/validation/travelMaker";
 import CustomFormField, {
   FormFieldType,
-} from "@/components/forms/CustomeFormField"
-import SubmitButton from "@/components/forms/SubmitButton"
+} from "@/components/forms/CustomeFormField";
+import SubmitButton from "@/components/forms/SubmitButton";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Form } from "@/components/ui/form"
-import { SelectItem } from "@/components/ui/select"
-import { useTravelMakerForm } from "../../../../../hooks/usereacthoojform"
-const persianDate = moment().format("jYYYY-jM-jD")
+} from "@/components/ui/accordian";
+import { Form } from "@/components/ui/Form";
+import { SelectItem } from "@/components/ui/Select";
+import { useTravelMakerForm } from "@/hooks/usereacthoojform";
+const persianDate = moment().format("jYYYY-jM-jD");
 
-const [year, month, day] = persianDate.split("-").map(Number)
-
-
+const [year, month, day] = persianDate.split("-").map(Number);
 
 export const TravelMakerForm = () => {
-  const t = useTranslations("travelMaker")
-  const router = useRouter()
-  const form = useTravelMakerForm()
-  // const form = useForm<z.infer<typeof SidebarSchema>>({
-  //   resolver: zodResolver(SidebarSchema),
-  //   defaultValues: {
-  //     origin: "",
-  //     direction: "north",
-  //     distance: "3h",
-  //     duration: "1d",
-  //     tags: [],
-  //     route: "easy",
-  //     vehicle: "car",
-  //     oldPerson: false,
-  //     routStop: "multiple",
-  //     accommodation: "camp",
-  //     date: {
-  //       year: year,
-  //       month: month,
-  //       day: day,
-  //     },
-  //   },
-  // })
+  const t = useTranslations("travelMaker");
+  const router = useRouter();
+  const form = useTravelMakerForm();
   const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
-    // console.log("yes");
-    const queryParams = new URLSearchParams(values as any).toString()
-    router.push(`/travelMaker?${queryParams}`)
-  }
+    const queryParams = new URLSearchParams(values as any).toString();
+    router.push(`/travelMaker?${queryParams}`);
+  };
 
   return (
     <div className="flex size-full flex-wrap justify-center">
@@ -176,7 +153,7 @@ export const TravelMakerForm = () => {
                   control={form.control}
                   name="oldPerson"
                   label={t("form.oldPerson.title")}
-                // placeholder={t("form.oldPerson.placeholder")}
+                  // placeholder={t("form.oldPerson.placeholder")}
                 />
                 <CustomFormField
                   fieldType={FormFieldType.SELECT}
@@ -215,5 +192,5 @@ export const TravelMakerForm = () => {
         </form>
       </Form>
     </div>
-  )
-}
+  );
+};

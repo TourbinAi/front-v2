@@ -12,7 +12,9 @@ import {
 } from "@/lib/validation/travelMaker";
 import { Form } from "@/components/ui/Form";
 import SubmitButton from "@/components/SubmitButton";
-import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/forms/CustomeFormField";
 import {
   Accordion,
   AccordionContent,

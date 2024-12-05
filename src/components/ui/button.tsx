@@ -60,8 +60,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-const test = () => {
-  return <Button variant="outline"></Button>;
-};
-
 export { Button, buttonVariants };

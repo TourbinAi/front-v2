@@ -14,7 +14,9 @@ import * as Sentry from "@sentry/nextjs";
 import { useTranslations } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
-import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/forms/CustomeFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { Button } from "@/components/ui/button";
 import cameraman3Small from "public/assets/images/cameramanTHREESMALL.png";

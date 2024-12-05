@@ -15,7 +15,9 @@ import {
   TravelMakerSelectValues as tmsv,
 } from "@/lib/validation/travelMaker";
 import { Form } from "@/components/ui/Form";
-import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/forms/CustomeFormField";
 import { SelectItem } from "@/components/ui/Select";
 import {
   Accordion,

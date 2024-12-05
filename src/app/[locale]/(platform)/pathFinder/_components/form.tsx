@@ -4,7 +4,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/Form";
-import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/forms/CustomeFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { useTranslations } from "next-intl";
 import { PathFinderSchema } from "@/lib/validation/pathFinder";
@@ -212,7 +214,6 @@ export const PathFinderForm: React.FC<FormProps> = ({
     // console.log(DataDestination);
   };
 
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -220,8 +221,8 @@ export const PathFinderForm: React.FC<FormProps> = ({
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="origin"
-          label={t("Origin.title")}
-          placeholder={t("Origin.placeHolder")}
+          label={t("origin.title")}
+          placeholder={t("origin.placeHolder")}
           onChange={(e) => changeHandler(e, "origin")}
         />
         {originValue && (

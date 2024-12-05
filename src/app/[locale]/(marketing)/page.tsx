@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
-import { Attractions } from "./_components/Attractions"
-import { FeatureDetails } from "./_components/FeatureDetails"
-import { Header } from "./_components/Header"
-import { Hero } from "./_components/Hero"
+import { Attractions } from "./_components/ui/Attractions";
+import { FeatureDetails } from "./_components/ui/FeatureDetails";
+import { Header } from "./_components/ui/Header";
+import { Hero } from "./_components/ui/Hero";
 
 export default function Home() {
   return (
@@ -13,5 +13,5 @@ export default function Home() {
       <FeatureDetails />
       <Attractions />
     </main>
-  )
+  );
 }

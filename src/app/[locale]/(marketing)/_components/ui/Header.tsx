@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { usePathname } from "@/lib/navigation"
-import { cn } from "@/lib/styles"
-import { Container } from "@/components/elementary/Container"
-import DesktopMenu from "@/components/elementary/DesktopMenu"
-import LocaleSwitcher from "@/components/elementary/LocaleSwitcher"
-import { Logo } from "@/components/elementary/Logo"
-import MobileMenu from "@/components/elementary/MobileMenu"
+import { usePathname } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { Container } from "@/components/ui/container";
+import DesktopMenu from "@/components/share/DesktopMenu";
+import LocaleSwitcher from "@/components/share/LocalSwitcher";
+import { Logo } from "@/components/share/Logo";
+import MobileMenu from "@/components/share/MobileMenu";
 
 export function Header() {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
-    <header className="absolute top-0 z-60 h-64 w-full bg-gradient-to-b from-background to-transparent">
+    <header className="z-60 absolute top-0 h-64 w-full bg-gradient-to-b from-background to-transparent">
       <nav>
         <Container className="relative z-50 flex justify-between py-8">
           <div className="relative z-10 flex items-center gap-16">
@@ -37,5 +37,5 @@ export function Header() {
         </Container>
       </nav>
     </header>
-  )
+  );
 }

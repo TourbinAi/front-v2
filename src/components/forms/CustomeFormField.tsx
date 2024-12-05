@@ -1,6 +1,8 @@
-import * as z from "zod";
-import { E164Number } from "libphonenumber-js/core";
+import React from "react";
 import Image from "next/image";
+import { E164Number } from "libphonenumber-js/core";
+import { icons } from "lucide-react";
+import { useLocale } from "next-intl";
 import {
   Control,
   ControllerRenderProps,
@@ -8,8 +10,11 @@ import {
   FieldValues,
 } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
-import { format } from "date-fns";
-import { useLocale } from "next-intl";
+import * as z from "zod";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   FormControl,
@@ -18,13 +23,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/Form";
-import { Calendar } from "@/components/ui/calendar";
+import { Icon } from "@/components/ui/Icon";
 import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/button";
+import { MultiSelect } from "@/components/ui/multiSelect";
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import {
   Select,
@@ -33,12 +38,6 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
-import { Icon } from "@/components/ui/Icon";
-import { cn } from "@/lib/utils";
-import { icons } from "lucide-react";
-import { MultiSelect } from "@/components/ui/multiSelect";
-import React from "react";
-import { DayValue } from "@hassanmojab/react-modern-calendar-datepicker";
 
 export enum FormFieldType {
   NUMBER = "number",
@@ -199,7 +198,7 @@ function RenderInput<
             <PopoverTrigger asChild>
               <FormControl className="w-full">
                 <Button
-                  variant={"outline"}
+                  variant="outline"
                   className={cn(
                     "",
                     !field.value && "w-full align-middle text-muted-foreground"
@@ -215,17 +214,17 @@ function RenderInput<
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
-                value={field.value || null}
-                onChange={(date: DayValue | null) => {
-                  if (date && date.year && date.month && date.day) {
+                selected={field.value || undefined}
+                onSelect={(date) => {
+                  if (date) {
                     field.onChange(date);
                     if (props.onChange) props.onChange(date);
                   } else {
                     field.onChange(null);
                   }
                 }}
-                shouldHighlightWeekends
-                locale="fa"
+                mode="single"
+                {...props}
               />
             </PopoverContent>
           </Popover>
@@ -269,18 +268,18 @@ function CustomFormField<
   const { control, name, label } = props;
 
   return (
-    <div className="w-full space-y-3">
-      <FormField<TFieldValues, TName>
+    <div className="mb-5">
+      <FormField<TFieldValues, TName> // Ensure generics are passed
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem className="mt-4 flex w-full flex-col gap-2">
+          <FormItem className="flex flex-col gap-2">
             {props.fieldType !== FormFieldType.CHECKBOX && label && (
               <FormLabel className="shad-input-label whitespace-nowrap">
                 {label}
               </FormLabel>
             )}
-            <RenderInput<TSchema, TFieldValues, TName>
+            <RenderInput<TSchema, TFieldValues, TName> // Ensure generics are passed
               field={field}
               props={props}
             />

@@ -76,6 +76,29 @@
     }
   },
 
+  "comps": {
+    "fileInput": {
+      "label": "Select file",
+      "dragAndDrop": "Add file by dragging or select by clicking",
+      "validFileTypes": "File must be in {validFileTypes} format",
+      "wrongFileType": "This file type is not supported",
+      "selectedFile": "Selected file: {fileName}",
+      "removeFile": "Remove file"
+    },
+    "datePicker": {
+      "label": "Select date"
+    },
+    "dateRangePicker": {
+      "label": "Select date range"
+    },
+    "themeToggle": {
+      "label": "Toggle theme"
+    },
+    "dialog": {
+      "confirmClose": "Do you want to close the dialog? You will lose all unsaved changes."
+    }
+  },
+
   "localeLayout": {
     "title": "Turbine"
   },
@@ -151,48 +174,9 @@
       "travelMaker": {
         "title": "Travel Maker",
         "description": "Suggesting the best travel plan according to your conditions and characteristics",
-        "form": {
-          "origin": {
-            "title": "Origin",
-            "placeholder": "Select the starting city."
-          },
-          "distance": {
-            "title": "Distance",
-            "placeholder": "Select an interval."
-          },
-          "passengers": {
-            "title": "Passengers",
-            "placeholder": "Select the number of passengers."
-          },
-          "duration": {
-            "title": "Duration",
-            "placeholder": "Select the duration of the trip."
-          },
-          "vehicle": {
-            "title": "Vehicle",
-            "placeholder": "Select the vehicle.",
-            "options": {
-              "car": "Car",
-              "train": "Train",
-              "plane": "Plane"
-            }
-          },
-          "style": {
-            "title": "Style",
-            "placeholder": "Select the style."
-          },
-          "direction": {
-            "title": "Direction",
-            "placeholder": "Select the direction.",
-            "options": {
-              "north": "North",
-              "south": "South",
-              "east": "East",
-              "west": "West"
-            }
-          },
-          "submit": "Give suggestion"
-        }
+        "fillTheForm": "Fill the form",
+        "talkToAI": "Talk to the tourbin ai",
+        "clickToStart": "Click to start"
       },
       "souvenirsAndFood": {
         "title": "Souvenirs and food",
@@ -376,7 +360,7 @@
     }
   },
   "PathFinder": {
-    "Origin": { "title": "origin", "placeHolder": "Enter the origin" },
+    "origin": { "title": "origin", "placeHolder": "Enter the origin" },
     "destination": {
       "title": "Destination",
       "placeHolder": "Enter the Destination"

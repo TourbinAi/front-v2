@@ -62,6 +62,30 @@
       }
     }
   },
+
+  "comps": {
+    "fileInput": {
+      "label": "Select file",
+      "dragAndDrop": "Add file by dragging or select by clicking",
+      "validFileTypes": "File must be in {validFileTypes} format",
+      "wrongFileType": "This file type is not supported",
+      "selectedFile": "Selected file: {fileName}",
+      "removeFile": "Remove file"
+    },
+    "datePicker": {
+      "label": "Select date"
+    },
+    "dateRangePicker": {
+      "label": "Select date range"
+    },
+    "themeToggle": {
+      "label": "Toggle theme"
+    },
+    "dialog": {
+      "confirmClose": "Do you want to close the dialog? You will lose all unsaved changes."
+    }
+  },
+
   "localeLayout": {
     "title": "توربین"
   },
@@ -137,48 +161,9 @@
       "travelMaker": {
         "title": "سفر ساز",
         "description": "پیشنهاد بهترین برنامه سفر با توجه به شرایط و خصوصیات شما",
-        "form": {
-          "origin": {
-            "title": "مبدا",
-            "placeholder": "شهر مبدا را انتخاب کنید."
-          },
-          "distance": {
-            "title": "فاصله",
-            "placeholder": "یک بازه را انتخاب کنید."
-          },
-          "passengers": {
-            "title": "مسافران",
-            "placeholder": "تعداد مسافران را انتخاب کنید."
-          },
-          "duration": {
-            "title": "مدت زمان",
-            "placeholder": "مدت زمان سفر را انتخاب کنید."
-          },
-          "vehicle": {
-            "title": "وسیله نقلیه",
-            "placeholder": "وسیله نقلیه را انتخاب کنید.",
-            "options": {
-              "car": "ماشین",
-              "train": "قطار",
-              "plane": "هواپیما"
-            }
-          },
-          "style": {
-            "title": "سبک",
-            "placeholder": "سبک سفر را انتخاب کنید."
-          },
-          "direction": {
-            "title": "جهت",
-            "placeholder": "جهت سفر را انتخاب کنید.",
-            "options": {
-              "north": "شمال",
-              "south": "جنوب",
-              "east": "شرق",
-              "west": "غرب"
-            }
-          },
-          "submit": "پیشنهاد دهید"
-        }
+        "fillTheForm": "استفاده از سفرساز با تکمیل فرم",
+        "talkToAI": "با هوش مصنوعی توربین صحبت کنید",
+        "clickToStart": "برای شروع کلیک کنید"
       },
       "souvenirsAndFood": {
         "title": "سوغات و غذا",
@@ -359,7 +344,7 @@
     }
   },
   "PathFinder": {
-    "Origin": { "title": "مبدا", "placeHolder": "مبدا را وارد کنید" },
+    "origin": { "title": "مبدا", "placeHolder": "مبدا را وارد کنید" },
     "destination": { "title": "مقصد", "placeHolder": "مقصد را وارد کنید" },
     "submit": "تایید",
     "addDestination": "اضافه کردن مقصد"

@@ -1,25 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useRouter } from "@/i18n/navigation";
-import { souvenirsAndFood } from "@/lib/validation/landing";
-import CustomFormField, {
-  FormFieldType,
-} from "@/components/forms/CustomeFormField";
 import SubmitButton from "@/components/forms/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/Form";
 import arrowX from "public/assets/icons/Polygon 2.png";
 import arrowY from "public/assets/icons/Polygon 1.png";
 import Image from "next/image";
-import cameraman1Small from "public/assets/images/cameramanONESMALL.png";
 import { TravelMakerForm } from "./travelMakerForm";
-// import { useTravelMakerForm } from "../../../../../hooks/usereacthoojform"
+import { useTravelMakerForm } from "@/hooks/usereacthoojform";
 import {
   SidebarSchema,
   TravelMakerSelectValues as tmsv,
@@ -79,20 +72,14 @@ export const Tourbintravelmaker = () => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-2">
-        <SubmitButton
-          className="hidden w-full justify-between bg-[#EE4037] p-7 text-white lg:flex"
-          isLoading={isLoading}
-        >
-          {t("form.goTo")}
+        <Button className="hidden w-full justify-between bg-[#EE4037] p-7 text-white lg:flex">
+          {t("fillTheForm")}
           <Image src={arrowY} alt={""} />
-        </SubmitButton>
-        <SubmitButton
-          className="flex w-full justify-between bg-[#EE4037] p-7 text-white lg:hidden"
-          isLoading={isLoading}
-        >
-          {t("form.goTo")}
+        </Button>
+        <Button className="flex w-full justify-between bg-[#EE4037] p-7 text-white lg:hidden">
+          {t("talkToAI")}
           <Image src={arrowX} alt={""} />
-        </SubmitButton>
+        </Button>
         <div className="mx-10 flex justify-center rounded-xl bg-[#ECEDFD] lg:hidden">
           <div className="itmes-center relative flex h-full items-end justify-center">
             <video
@@ -114,7 +101,7 @@ export const Tourbintravelmaker = () => {
               }}
               className="absolute z-20 translate-y-6 bg-[#EE4037] px-24 py-7 text-white"
             >
-              برای شروع کلیک کنید
+              {t("clickToStart")}
             </Button>
           </div>
         </div>
@@ -122,10 +109,10 @@ export const Tourbintravelmaker = () => {
           onClick={() => {
             setIsopen(!isopen);
           }}
-          className="mt-10 flex w-full justify-between p-7 text-[#5C61F1] text-black"
+          className="mt-10 flex w-full justify-between p-7 text-[#5C61F1]"
           href="/blog"
         >
-          {t("form.collapseButton")}
+          hhuh?
           <Image
             className={isopen ? "rotate-180" : "rotate-0"}
             src={arrowY}

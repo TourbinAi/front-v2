@@ -1,106 +1,31 @@
-import localFont from "next/font/local";
+import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import {
-  getMessages,
-  getTranslations,
-  unstable_setRequestLocale,
-} from "next-intl/server";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-
-import { locales } from "@/i18n/config";
-import { Toaster } from "@/components/ui/sonner";
-import { ServerProviders } from "@/components/providers/ServerProviders";
+import { getMessages } from "next-intl/server";
 import { ClientProviders } from "@/components/providers/ClientProviders";
 
-const sans = localFont({
-  src: [
-    {
-      path: "../../../public/assets/fonts/IRANSansX-Thin.woff",
-      weight: "100",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-UltraLight.woff",
-      weight: "200",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-Light.woff",
-      weight: "300",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-Regular.woff",
-      weight: "400",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-Medium.woff",
-      weight: "500",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-DemiBold.woff",
-      weight: "600",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-Bold.woff",
-      weight: "700",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-ExtraBold.woff",
-      weight: "800",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-Black.woff",
-      weight: "900",
-    },
-    {
-      path: "../../../public/assets/fonts/IRANSansX-ExtraBlack.woff",
-      weight: "1000",
-    },
-  ],
-  variable: "--font-ir-sans",
-});
-
-type Props = {
-  children: React.ReactNode;
-  params: { locale: string };
-};
-
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return [{ locale: "en" }, { locale: "fa" }];
 }
 
-export async function generateMetadata({
-  params: { locale },
-}: Omit<Props, "children">) {
-  const t = await getTranslations("localeLayout");
-
-  return {
-    title: t("title"),
-    icons: {
-      icon: "/assets/icons/logo.svg",
-    },
-  };
-}
-
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
   params: { locale },
-}: Props) {
-  unstable_setRequestLocale(locale);
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
+  let messages;
+  try {
+    messages = await getMessages({ locale });
+  } catch (error) {
+    notFound();
+  }
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
   return (
-    <html
-      lang={locale}
-      className={`${sans.variable} font-sans`}
-      dir={locale === "fa" ? "rtl" : "ltr"}
-    >
+    <html lang={locale} dir={locale === "fa" ? "rtl" : "ltr"}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <ClientProviders>
-            <div className="h-full">{children}</div>
-            <Toaster />
-          </ClientProviders>
+          <ClientProviders>{children}</ClientProviders>
         </NextIntlClientProvider>
       </body>
     </html>
