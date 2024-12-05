@@ -3,7 +3,7 @@ import { ClassValue } from "clsx";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
-import logo from "public/assets/images/logo.png";
+import logo from "public/assets/images/tourbinimage.png";
 
 interface SVGProps extends React.SVGProps<SVGSVGElement> {}
 
@@ -32,7 +32,7 @@ export function Logo({ className }: LogoProps) {
         className
       )}
     >
-      <Image alt="logo" width={70} height={70} src={logo} />
+      <Image alt="logo" width={100} height={100} src={logo} />
       {/* <Logomark width="40" height="40" className="fill-cyan-500" /> */}
       {/* <h1 className="font-semibold text-xl">{t("title")}</h1> */}
     </div>

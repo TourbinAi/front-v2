@@ -1,12 +1,9 @@
 import Image, { StaticImageData } from "next/image";
 import { FeatureDetailsType } from "@/constants";
 import { useTranslations } from "next-intl";
-import outlinedCompass from "public/assets/images/compass_outlined.png";
 import cameraMan2 from "public/assets/images/cameramanTWO.png";
 import cameraMan3 from "public/assets/images/cameramanTHREE.png";
 import cameraMan4 from "public/assets/images/cameramanFOUR.png";
-import cameraman1Small from "public/assets/images/cameramanONESMALL.png";
-import cameraMan1 from "public/assets/images/cameramanONE.png";
 import bgImage from "public/assets/images/Rectangle 43.png";
 import bgpicture from "public/assets/images/Rectangle 55.png";
 import { cn } from "@/lib/utils";
@@ -15,6 +12,7 @@ import { CelebrationsAndEventForm } from "../form/celebrationsAndEventsForm";
 import { PathFinderForm } from "../form/pathFinderForm";
 import { SouvenirsAndFoodForm } from "../form/souvenirsAndFoodForm";
 import { Tourbintravelmaker } from "../form/tourbintravelmaker";
+import Survey from "../survey";
 
 interface SectionProps {
   dir: "ltr" | "rtl";
@@ -26,7 +24,7 @@ interface SectionProps {
   bgColor: boolean;
   responsiveText: boolean;
 }
-const direction = "ltr";
+
 function Section({
   dir = "ltr",
   name,
@@ -53,22 +51,15 @@ function Section({
             : "mx-10 flex w-[35%] justify-center rounded-xl lg:flex"
         }
       >
-        <div className="itmes-center relative flex items-end justify-center">
+        <div className="itmes-center relative hidden items-end justify-center lg:flex">
           <Image
-            alt="compass object-cover "
+            alt="compass object-cover"
             src={outlinedImage}
             className={cn(
               "object-fit h-full w-full",
               dir === "ltr" ? "right-0" : "left-0"
             )}
           />
-          {buttons ? (
-            <Button className="absolute z-20 translate-y-6 bg-[#EE4037] px-24 py-7 text-white opacity-80 hover:opacity-100">
-              برای شروع کلیک کنید
-            </Button>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
       <div className="flex flex-col justify-center">
@@ -95,17 +86,25 @@ export function FeatureDetails() {
 
   return (
     <div className="flex w-full flex-col gap-10">
-      <Section
-        dir="rtl"
-        name="travelMaker"
-        image={cameraman1Small}
-        outlinedImage={cameraMan1}
-        buttons={true}
-        bgColor={true}
-        responsiveText={true}
-      >
-        <Tourbintravelmaker />
-      </Section>
+      <div className="z-10 flex min-h-0 flex-col items-center justify-center lg:mx-20 lg:min-h-[600px] lg:flex-row-reverse lg:justify-around">
+        <Survey />
+
+        <div className="flex flex-col justify-center">
+          <div className="mt-10 flex w-full grow flex-col items-center justify-center text-xl">
+            <div className="flex w-full max-w-[600px]">
+              <section className="w-full space-y-2 self-stretch p-4">
+                <h2 className="text-2xl font-semibold">
+                  {t("travelMaker.title")}
+                </h2>
+                <p>{t("travelMaker.description")}</p>
+              </section>
+            </div>
+          </div>
+          <div className="px-4 pb-8">
+            <Tourbintravelmaker />
+          </div>
+        </div>
+      </div>
       <div className="relative">
         <Section
           dir="ltr"

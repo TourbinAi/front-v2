@@ -106,8 +106,9 @@ export default function TravelMaker() {
           tmsv.direction.indexOf(values.direction)
         ),
       };
-
+      console.log("requestObject", requestObject);
       const respond = await TravelMakerList(requestObject);
+      console.log("respond", requestObject);
       setList(respond.data);
     } catch (error) {
       setError(true);
