@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ClientProviders } from "@/components/providers/ClientProviders";
+import { fontSans } from "@/lib/fonts";
 
 export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "fa" }];
@@ -22,7 +23,11 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} dir={locale === "fa" ? "rtl" : "ltr"}>
+    <html
+      className={`${fontSans.variable} font-sans`}
+      lang={locale}
+      dir={locale === "fa" ? "rtl" : "ltr"}
+    >
       <body>
         <NextIntlClientProvider messages={messages}>
           <ClientProviders>{children}</ClientProviders>
