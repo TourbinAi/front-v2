@@ -48,7 +48,7 @@ export const TravelMakerForm = () => {
             label={t("form.origin.title")}
             placeholder={t("form.origin.placeholder")}
           >
-            {["اصفهان", "تهران", "مشهد"].map((city, i) => (
+            {["تهران", "مشهد"].map((city, i) => (
               <SelectItem key={i} value={city}>
                 <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
                   <p>{city}</p>

@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { postData } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import TextCard from "../_components/textCard";
-import VideoPlayer from "@/components/share/videoPlayer";
+import VideoPlayer from "./videoPlayer";
 import ErrorMessage from "../_components/error";
 import { env } from "@/env.mjs";
 import { useState } from "react";
