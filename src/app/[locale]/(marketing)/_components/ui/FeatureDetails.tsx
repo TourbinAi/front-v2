@@ -47,8 +47,8 @@ function Section({
       <div
         className={
           bgColor
-            ? "mx-10 flex w-[35%] justify-center rounded-xl bg-[#ECEDFD] lg:flex"
-            : "mx-10 flex w-[35%] justify-center rounded-xl lg:flex"
+            ? "mx-10 flex w-[50%] justify-center rounded-xl bg-[#ECEDFD] lg:flex"
+            : "mx-10 flex w-[50%] justify-center rounded-xl lg:flex"
         }
       >
         <div className="itmes-center relative hidden items-end justify-center lg:flex">
