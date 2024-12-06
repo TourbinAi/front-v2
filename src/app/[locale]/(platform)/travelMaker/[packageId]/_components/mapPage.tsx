@@ -15,19 +15,11 @@ import PlaceHolderImage from "public/assets/images/placeholderImages.png";
 import path from "path";
 import { Link } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
-import dynamic from "next/dynamic";
-import { toast } from "sonner";
+import ReactPlayer from "react-player";
 
 interface MapPageProps {
   packageId: string;
 }
-
-// Update type to match VideoPlayer's prop type
-// type VideoResponse =
-//   | {
-//       src: string;
-//     }
-//   | string;
 
 export default function MapPageComponent({ packageId }: MapPageProps) {
   const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>();
@@ -36,24 +28,6 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
     queryKey: ["places"],
     queryFn: () => postData(Number(packageId)),
   });
-
-  // Update the import transformation
-  // const getVideoForId = async (): Promise<VideoResponse> => {
-  //   try {
-  //     const video = await import(`/assets/videos/pck/${packageId}.mp4`);
-  //     return { src: video.default }; // Transform to match expected type
-  //   } catch (error) {
-  //     console.error("Video not found:", error);
-  //     toast.error("Video not found");
-  //     return `/assets/videos/pck/${packageId}.mp4`;
-  //   }
-  // };
-
-  // // Type the query properly
-  // const { data: videoData } = useQuery<VideoResponse, Error>({
-  //   queryKey: ["video", packageId],
-  //   queryFn: getVideoForId,
-  // });
 
   if (error) {
     return <ErrorMessage />;
@@ -122,14 +96,9 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
             <div className="aspect-square h-1/2 w-full rounded-lg border-4 border-gray-300 lg:h-2/3">
               <Map packageId={Number(packageId)} setPlan={setTravelPlan} />
             </div>
-            {!data?.data.video_url || isLoading ? (
-              <Skeleton className="size-40 h-1/2 rounded-full lg:h-1/3" />
-            ) : (
-              <div className="flex aspect-square h-1/2 items-center justify-center lg:h-1/3">
-                <VideoPlayer videoUrl={`/assets/videos/pck/${packageId}.mp4`} />
-                {/* <video src={`./pck/200.mp4`} /> */}
-              </div>
-            )}
+            <div className="flex aspect-square h-1/2 items-center justify-center lg:h-1/3">
+              <VideoPlayer videoUrl={`/assets/videos/pck/${packageId}.mp4`} />
+            </div>
           </div>
         </>
       )}

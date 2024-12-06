@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import VideoPlayer from "@/components/share/videoPlayer";
-import SurveyOptions from "./surveyOptions";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
