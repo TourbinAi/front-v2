@@ -63,7 +63,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                   No places found
                 </div>
               ) : (
-                <div className="m-1 grid aspect-square w-full grid-cols-2 grid-rows-2 items-center justify-items-center gap-4">
+                <div className="m-1 flex aspect-square w-full flex-col items-center justify-items-center gap-4 lg:grid lg:grid-cols-2 lg:grid-rows-2">
                   {data?.data.places.slice(0, 4).map((place) => (
                     <Link
                       className="size-full"
