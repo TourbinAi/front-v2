@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { TypingAnimation } from "@/components/ui/typing";
 import { cn } from "@/lib/utils";
 
 interface TextCardProps {
@@ -19,7 +20,7 @@ export default function TextCard(props: TextCardProps) {
           <CardHeader className="m-0">{props.title}</CardHeader>
         </CardHeader>
         <CardContent className="overflow-y-scroll pb-7 pt-2 text-right">
-          {props.text}
+          <TypingAnimation text={props.text} duration={20} />
         </CardContent>
       </Card>
     </>

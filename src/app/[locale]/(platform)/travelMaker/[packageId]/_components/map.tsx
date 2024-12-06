@@ -202,7 +202,7 @@ function Map({ packageId, setPlan }: MapProps) {
               }
             >
               <PopupWithNoSSR>
-                <Card className="relative size-72 cursor-pointer overflow-hidden">
+                <Card className="relative size-40 cursor-pointer overflow-hidden">
                   <CardContent className="relative size-full">
                     <Image
                       fill

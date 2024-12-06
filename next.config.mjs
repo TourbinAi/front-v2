@@ -4,6 +4,13 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/index.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(mp4)$/i,
+      type: "asset/resource",
+    });
+    return config;
+  },
   transpilePackages: ["lucide-react"],
   trailingSlash: true,
   images: {

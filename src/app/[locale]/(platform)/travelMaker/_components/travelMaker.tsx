@@ -208,7 +208,7 @@ export default function TravelMaker() {
               label={t("form.origin.title")}
               placeholder={t("form.origin.placeholder")}
             >
-              {["تهران", "مشهد"].map((city, i) => (
+              {["تهران", "مشهد", "اصفهان"].map((city, i) => (
                 <SelectItem key={i} value={city}>
                   <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
                     <p>{city}</p>
@@ -364,7 +364,7 @@ export default function TravelMaker() {
         <div className="flex size-full items-center justify-center">
           <Card className="max-w-96">
             <CardHeader className="flex w-full flex-col items-center justify-center">
-              <CardTitle className="flex pb-2">
+              <CardTitle className="flex gap-3 pb-2">
                 <TriangleAlert className="size-10 text-destructive" />
                 <span className="">{t("form.error")} </span>
               </CardTitle>
