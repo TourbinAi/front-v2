@@ -101,7 +101,7 @@ export default function Survey() {
 
   const handleRedirect = () => {
     router.push(
-      `/travelMaker/?origin=${surveyResults.origin}&distance=${surveyResults.distance}&tags=sunnyAndSea&duration=${surveyResults.duration}&route=easy&vehicle=car&routStop=oneWay&direction=north&oldPerson=false&accommodation=visit&date=[object+Object]`
+      `/travelMaker/?origin=مشهد&distance=${surveyResults.distance}&tags=sunnyAndSea&duration=${surveyResults.duration}&route=easy&vehicle=car&routStop=oneWay&direction=north&oldPerson=false&accommodation=visit&date=[object+Object]`
     );
   };
 
