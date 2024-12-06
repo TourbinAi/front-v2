@@ -49,55 +49,38 @@ export default function Survey() {
     },
   ];
 
-  const distance: Question[] = [
-    {
-      questionId: 2,
-      id: 1,
-      text: "سه ساعت",
-      video: videos.intro3,
-      options: duration,
-    },
-    {
-      questionId: 2,
-      id: 2,
-      text: "پنج ساعت",
-      video: videos.intro3,
-      options: duration,
-    },
-    {
-      questionId: 2,
-      id: 3,
-      text: "هفت ساعت",
-      video: videos.intro3,
-      options: duration,
-    },
-  ];
-
-  const surveyData: Question = {
-    questionId: 0,
-    id: 1,
-    text: "شروع کنید",
-    video: videos.intro1,
+  const distance: Question = {
+    questionId: 1,
+    id: 2,
+    text: "مشهد",
+    video: videos.intro2,
     options: [
       {
-        questionId: 1,
+        questionId: 2,
         id: 1,
-        text: "تهران",
-        video: videos.draft,
-        options: distance,
+        text: "سه ساعت",
+        video: videos.intro3,
+        options: duration,
       },
       {
-        questionId: 1,
+        questionId: 2,
         id: 2,
-        text: "مشهد",
-        video: videos.intro2,
-        options: distance,
+        text: "پنج ساعت",
+        video: videos.intro3,
+        options: duration,
+      },
+      {
+        questionId: 2,
+        id: 3,
+        text: "هفت ساعت",
+        video: videos.intro3,
+        options: duration,
       },
     ],
   };
 
   const [surveyStarted, setSurveyStarted] = useState(false);
-  const [currentVideo, setCurrentVideo] = useState<Question>(surveyData);
+  const [currentVideo, setCurrentVideo] = useState<Question>(distance);
   const [showOptions, setShowOptions] = useState(false);
   const [surveyComplete, setSurveyComplete] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
@@ -106,7 +89,7 @@ export default function Survey() {
     origin?: string;
     duration?: string;
     distance?: string;
-  }>({});
+  }>({ origin: "مشهد" });
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
 
@@ -174,7 +157,7 @@ export default function Survey() {
   const startSurvey = () => {
     setSurveyComplete(false);
     setSurveyResults({});
-    setCurrentVideo(surveyData);
+    setCurrentVideo(distance);
     setIsVideoEnded(false);
     setIsVideoPlaying(true);
     videoRef.current?.play();
