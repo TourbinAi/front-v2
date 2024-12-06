@@ -62,6 +62,7 @@ export default function Survey() {
       id: 2,
       text: "پنج ساعت",
       video: videos.intro3,
+      options: duration,
     },
     {
       questionId: 2,
@@ -92,13 +93,6 @@ export default function Survey() {
         video: videos.intro2,
         options: distance,
       },
-      {
-        questionId: 1,
-        id: 3,
-        text: "اصفهان",
-        video: videos.draft,
-        options: distance,
-      },
     ],
   };
 
@@ -107,7 +101,7 @@ export default function Survey() {
   const [showOptions, setShowOptions] = useState(false);
   const [surveyComplete, setSurveyComplete] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [surveyResults, setSurveyResults] = useState<{
     origin?: string;
     duration?: string;
@@ -182,6 +176,7 @@ export default function Survey() {
     setSurveyResults({});
     setCurrentVideo(surveyData);
     setIsVideoEnded(false);
+    setIsVideoPlaying(true);
     videoRef.current?.play();
     setSurveyStarted(true);
   };
@@ -210,10 +205,10 @@ export default function Survey() {
         className="aspect-square sm:w-full"
         videoUrl={currentVideo.video}
         onEnded={handleVideoEnd}
-        isEnded={isVideoEnded}
-        setIsEnded={setIsVideoEnded}
-        isPlaying={isVideoPlaying}
-        setIsPlaying={setIsVideoPlaying}
+        // isEnded={isVideoEnded}
+        // setIsEnded={setIsVideoEnded}
+        // isPlaying={isVideoPlaying}
+        // setIsPlaying={setIsVideoPlaying}
       />
       {showOptions && !surveyComplete && (
         <div className="mt-2 flex w-full flex-row items-center justify-center gap-4">
@@ -230,7 +225,9 @@ export default function Survey() {
       )}
       {surveyComplete && (
         <div className="mt-4 flex items-center justify-center gap-4 text-center">
-          <Button onClick={startSurvey}>شروع مجدد</Button>
+          <Button variant="outline" onClick={startSurvey}>
+            شروع مجدد
+          </Button>
           <Button onClick={handleRedirect}>دیدن نتایج</Button>
         </div>
       )}
