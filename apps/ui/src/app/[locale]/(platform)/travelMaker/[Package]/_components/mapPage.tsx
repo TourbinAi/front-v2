@@ -27,8 +27,7 @@ export default function MapPageComp() {
 
   return (
     <>
-
-      <div className="hidden lg:grid grid-cols-2 h-fit gap-2 justify-items-cenetr">
+      <div className="hidden h-fit grid-cols-2 justify-items-center gap-2 lg:grid">
         <div>
           <SideBarMap packageId={packageId} ResData={ResponseData} />
         </div>
@@ -37,7 +36,7 @@ export default function MapPageComp() {
         </div>
       </div>
       <ScrollArea className="h-[99%]">
-        <div className="lg:hidden flex flex-col items-center">
+        <div className="flex flex-col items-center lg:hidden">
           <div className="-mr-5 ml-0 w-full md:w-1/3">
             <SideBarMap packageId={packageId} ResData={ResponseData} />
           </div>
