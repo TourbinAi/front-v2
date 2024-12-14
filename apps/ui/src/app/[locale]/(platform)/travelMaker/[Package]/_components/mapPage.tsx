@@ -24,22 +24,19 @@ export default function MapPageComp() {
   const packageId = Number(route.Package)
   const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>()
   const t = useTranslations("travelMaker.package")
-  // useEffect(() => {
-  //   // console.log(ResponseData);
-  // }, [ResponseData]);
 
   return (
     <>
-      <div className="hidden h-full flex-col md:flex-row lg:flex">
-        <div className="w-full overflow-auto md:w-1/3">
+      <div className="hidden h-fit grid-cols-2 justify-items-center gap-2 lg:grid">
+        <div>
           <SideBarMap packageId={packageId} ResData={ResponseData} />
         </div>
-        <div className="mx-0 w-full md:ml-6 md:mr-4 md:w-3/4">
+        <div className="">
           <Map packageId={packageId} setPlan={setTravelPlan} />
         </div>
       </div>
       <ScrollArea className="h-[99%]">
-        <div className="lg:hidden">
+        <div className="flex flex-col items-center lg:hidden">
           <div className="-mr-5 ml-0 w-full md:w-1/3">
             <SideBarMap packageId={packageId} ResData={ResponseData} />
           </div>

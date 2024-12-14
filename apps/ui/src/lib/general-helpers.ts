@@ -22,3 +22,7 @@ export const removeThisWhenYouNeedMe = (functionName: string) => {
     `TODO: Delete 'removeThisWhenYouNeedMe' call from '${functionName}' and confirm the usage.`
   )
 }
+
+export function absoluteUrl(path: string) {
+  return `${env.NEXT_PUBLIC_APP_PUBLIC_URL}${path}`
+}

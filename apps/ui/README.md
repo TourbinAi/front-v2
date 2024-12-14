@@ -37,7 +37,7 @@ To turn this project template into a project:
 
 - Remove packages you don't need from `package.json` and reinstall dependencies.
 - Remove `src/app/[locale]/docs` as it isn't needed in final app.
-- Remove `src/app/[locale]/builder` and `src/components/page-builder` directories if builder isn't developed.
+- Remove `src/app/[locale]/blog` and `src/components/page-builder` directories if builder isn't developed.
 
 _[After this preparation is done, delete this section]_
 
@@ -371,10 +371,10 @@ export function UserProfile(){
 
 #### Handler
 
-By default, page builder landing page is rendered inside [/builder route](src/app/[locale]/builder/page.tsx). Pages created in Strapi DB are then rendered as nested URLs based on their slug (e.g. `/builder/page-slug-from-strapi`). If you need to remove "/builder" from URL and run page builder on the root page, you have to:
+By default, page builder landing page is rendered inside [/blog route](src/app/[locale]/blog/page.tsx). Pages created in Strapi DB are then rendered as nested URLs based on their slug (e.g. `/blog/page-slug-from-strapi`). If you need to remove "/blog" from URL and run page builder on the root page, you have to:
 
-- move [[...rest]](src/app/[locale]/builder/[...rest]) directory to the root [src/app/[locale]](src/app/[locale]) or change the name of "builder" directory to `(builder)` and fix multiple `page.tsx` files
-- in [StrapiPage](src/app/[locale]/builder//[...rest]//page.tsx) change code that filters out "builder" word from URL (2 places).
+- move [[...rest]](src/app/[locale]/blog/[...rest]) directory to the root [src/app/[locale]](src/app/[locale]) or change the name of "builder" directory to `(builder)` and fix multiple `page.tsx` files
+- in [StrapiPage](src/app/[locale]/blog//[...rest]//page.tsx) change code that filters out "builder" word from URL (2 places).
 
 #### Flow
 

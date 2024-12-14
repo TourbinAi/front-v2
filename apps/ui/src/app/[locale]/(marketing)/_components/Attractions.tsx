@@ -6,7 +6,6 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { env } from "@/env.mjs"
 import { useTranslations } from "next-intl"
 
@@ -70,7 +69,7 @@ export function Attractions() {
             </CarouselContent>
           ) : (
             <CarouselContent className="mx-10 my-5 flex gap-1">
-              {responseData.map((blog, blogIndex) => (
+              {Object.values(responseData).map((blog, blogIndex) => (
                 <CarouselItem
                   key={blogIndex}
                   className="flex shrink-0 basis-80 flex-col items-center rounded-2xl border-none bg-none transition-transform hover:scale-105"

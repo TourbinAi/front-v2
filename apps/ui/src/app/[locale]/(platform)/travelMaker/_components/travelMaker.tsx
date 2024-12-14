@@ -4,9 +4,10 @@ import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import moment from "jalali-moment"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, TriangleAlert } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 import { TravelMakerListReq, TravelMakerListRes } from "@/types/api"
@@ -71,7 +72,10 @@ export default function TravelMaker() {
   const [loading, setLoading] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
   const [list, setList] = useState<TravelMakerListRes>()
+  const [error, setError] = useState<boolean>(false)
   const [mounted, setMounted] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+
   const t = useTranslations("travelMaker")
 
   const router = useRouter()
@@ -117,11 +121,12 @@ export default function TravelMaker() {
             tmsv.direction.indexOf(values.direction)
           ),
         }
-
         const respond = await TravelMakerList(requestObject)
         setList(respond.data)
       } catch (error) {
         console.error("Form submission failed:", error)
+        setError(true)
+        toast.error(t("form.error"))
       } finally {
         setLoading(false)
         setOpen(false)
@@ -130,67 +135,74 @@ export default function TravelMaker() {
     [updateQuery, setLoading, setOpen, setList]
   )
   useEffect(() => {
-    if (Object.keys(query).length > 0) {
-      const parseTags = (tags: string): string[] =>
-        tags ? tags.split(",") : []
+    // Ensure this only runs after initial render and if query params exist
+    if (!isInitialLoad || Object.keys(query).length === 0) return
 
-      const parseDate = (dateStr: string | undefined): Date | undefined => {
-        if (dateStr) {
-          const parsedDate = new Date(dateStr)
-          return isNaN(parsedDate.getTime()) ? undefined : parsedDate
-        }
-        return undefined
+    const parseTags = (tags: string): string[] => (tags ? tags.split(",") : [])
+
+    const parseDate = (dateStr: string | undefined): Date | undefined => {
+      if (dateStr) {
+        const parsedDate = new Date(dateStr)
+        return isNaN(parsedDate.getTime()) ? undefined : parsedDate
       }
-
-      const safeQuery = {
-        origin: query.origin
-          ? decodeURIComponent(query.origin)
-          : defaultValue.origin,
-        distance: tmsv.distance.includes(query.distance as any)
-          ? (query.distance as any)
-          : defaultValue.distance,
-        duration: ["1d", "2d", "3d"].includes(query.duration as any)
-          ? (query.duration as any)
-          : defaultValue.duration,
-        tags: parseTags(query.tags || "").filter((tag) =>
-          tmsv.placeNature.includes(tag as any)
-        ),
-        route: tmsv.route.includes(query.route as any)
-          ? (query.route as any)
-          : defaultValue.route,
-        vehicle: tmsv.vehicle.includes(query.vehicle as any)
-          ? (query.vehicle as any)
-          : defaultValue.vehicle,
-        routStop: tmsv.disState.includes(query.routStop as any)
-          ? (query.routStop as any)
-          : defaultValue.routStop,
-        direction: tmsv.direction.includes(query.direction as any)
-          ? (query.direction as any)
-          : defaultValue.direction,
-        oldPerson: query.oldPerson
-          ? query.oldPerson === "false"
-            ? false
-            : true
-          : defaultValue.oldPerson,
-        accommodation: tmsv.accommodation.includes(query.accommodation as any)
-          ? (query.accommodation as any)
-          : defaultValue.accommodation,
-        date: parseDate(query.date) || defaultValue.date, // Ensure date is parsed and valid
-      }
-
-      const result = SidebarSchema.safeParse(safeQuery)
-      if (result.success) {
-        // Reset form with the new default values
-        form.reset(result.data)
-
-        // Immediately submit the form with these values
-        form.handleSubmit(onSubmit)()
-      } else {
-        console.error("Query parsing or schema validation failed", result.error)
-      }
+      return undefined
     }
-    setMounted(true)
-  }, [mounted, form, query, onSubmit])
+
+    const safeQuery = {
+      origin: query.origin
+        ? decodeURIComponent(query.origin)
+        : defaultValue.origin,
+      distance: tmsv.distance.includes(query.distance as any)
+        ? (query.distance as any)
+        : defaultValue.distance,
+      duration: ["1d", "2d", "3d"].includes(query.duration as any)
+        ? (query.duration as any)
+        : defaultValue.duration,
+      tags: parseTags(query.tags || "").filter((tag) =>
+        tmsv.placeNature.includes(tag as any)
+      ),
+      route: tmsv.route.includes(query.route as any)
+        ? (query.route as any)
+        : defaultValue.route,
+      vehicle: tmsv.vehicle.includes(query.vehicle as any)
+        ? (query.vehicle as any)
+        : defaultValue.vehicle,
+      routStop: tmsv.disState.includes(query.routStop as any)
+        ? (query.routStop as any)
+        : defaultValue.routStop,
+      direction: tmsv.direction.includes(query.direction as any)
+        ? (query.direction as any)
+        : defaultValue.direction,
+      oldPerson: query.oldPerson
+        ? query.oldPerson === "false"
+          ? false
+          : true
+        : defaultValue.oldPerson,
+      accommodation: tmsv.accommodation.includes(query.accommodation as any)
+        ? (query.accommodation as any)
+        : defaultValue.accommodation,
+      date: parseDate(query.date) || defaultValue.date,
+    }
+
+    const result = SidebarSchema.safeParse(safeQuery)
+    if (result.success) {
+      form.reset(result.data)
+      form.handleSubmit(onSubmit)()
+
+      // Prevent future automatic submissions
+      setIsInitialLoad(false)
+    } else {
+      console.error("Query parsing failed", result.error)
+      setIsInitialLoad(false)
+    }
+  }, [isInitialLoad, form, query, onSubmit])
+
+  // Modify initial mounted state setting
+  useEffect(() => {
+    // Small delay to ensure initial render is complete
+    const timeoutId = setTimeout(() => setMounted(true), 0)
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   if (!mounted) return null
 
@@ -220,15 +232,6 @@ export default function TravelMaker() {
                     </SelectItem>
                   ))}
                 </CustomFormField>
-                {/* 
-                <CustomFormField
-                  fieldType={FormFieldType.DATE_PICKER}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="date"
-                  label={t("form.date.title")}
-                /> */}
-
                 <CustomFormField
                   fieldType={FormFieldType.SELECT}
                   onChange={updateQuery}
@@ -379,7 +382,31 @@ export default function TravelMaker() {
         </div>
       }
     >
-      {loading ? (
+      {error ? (
+        <div className="flex size-full items-center justify-center">
+          <Card className="max-w-96">
+            <CardHeader className="flex w-full flex-col items-center justify-center">
+              <CardTitle className="flex gap-2 pb-2">
+                <TriangleAlert className="size-10 text-destructive" />
+                <span className="text-md">{t("form.error")} </span>
+              </CardTitle>
+              <CardDescription className="text-center">
+                {t("form.tryAnother")}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex size-full flex-col items-center justify-center">
+              <Button
+                className="flex lg:hidden"
+                variant="outline"
+                onClick={() => setOpen(true)}
+              >
+                <ChevronRight />
+                {t("form.form-header.fillForm")}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      ) : loading ? (
         <div className="flx-col flex w-full gap-4">
           <Skeleton className="h-[300px] w-full" />
           <Skeleton className="h-[300px] w-full" />

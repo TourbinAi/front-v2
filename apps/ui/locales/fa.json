@@ -196,6 +196,7 @@
         }
       },
       "travelMaker": {
+        "submissionError": "خطایی در ثبت فرم پیش آمده",
         "title": "سفرساز",
         "description": "پیشنهاد بهترین برنامه سفر با توجه به شرایط و ویژگی‌های شما",
         "form": {
@@ -298,6 +299,7 @@
     "destination": "شما راه را اشتباه آمده‌اید!"
   },
   "travelMaker": {
+    "submissionError": "خطایی در ثبت فرم پیش آمده",
     "form": {
       "validateError": {
         "origin": "مبدأ الزامی است",
@@ -401,6 +403,7 @@
       "Button": "ارسال",
       "popover-button": "اختیاری",
       "noResults": "نتیجه‌ای یافت نشد",
+      "error": "یک خطای ناشناخته رخ داده است",
       "tryAnother": "ترکیب دیگری را امتحان کنید",
       "form-header": {
         "title": "سفرساز",

@@ -49,8 +49,6 @@
         "sections.heading-with-cta-button",
         "sections.image-with-cta-button",
         "sections.animated-logo-row",
-        "sections.newsletter",
-        "sections.contact-form",
         "sections.blog-markdown"
       ],
       "pluginOptions": {
@@ -58,6 +56,28 @@
           "localized": true
         }
       }
+    },
+    "title": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
+    },
+    "cover": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": false
     }
   }
 }

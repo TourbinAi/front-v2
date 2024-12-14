@@ -15,7 +15,6 @@ type CustomFetchOptions = {
  * Add endpoints here that are queried from the frontend.
  * Mapping of Strapi content type UIDs to API endpoint paths.
  */
-// eslint-disable-next-line no-unused-vars
 export const API_ENDPOINTS: { [key in Common.UID.ContentType]?: string } = {
   "api::configuration.configuration": "/configuration",
   "plugin::users-permissions.user": "/users",
@@ -34,7 +33,7 @@ export default class Strapi {
   ) {
     const { url, headers } = this.prepareRequest(path, params)
     const response = await fetch(url, {
-      cache: "no-cache", // `next: { revalidate: 60 }`
+      cache: "no-cache",
       ...requestInit,
       headers: { ...requestInit?.headers, ...headers },
     })
@@ -55,9 +54,6 @@ export default class Strapi {
     return data
   }
 
-  /**
-   * Fetches a single entity by ID or fetch single type
-   */
   public static async fetchOne<
     TContentTypeUID extends Common.UID.ContentType,
     TParams extends APIUrlParams<TContentTypeUID>,
@@ -73,9 +69,6 @@ export default class Strapi {
     return this.fetchAPI(url, params, requestInit, options)
   }
 
-  /**
-   * Fetches multiple entities
-   */
   public static async fetchMany<
     TContentTypeUID extends Common.UID.ContentType,
     TParams extends APIUrlParams<TContentTypeUID>,
@@ -89,9 +82,6 @@ export default class Strapi {
     return this.fetchAPI(path, params, requestInit, options)
   }
 
-  /**
-   * Fetches all entities
-   */
   public static async fetchAll<
     TContentTypeUID extends Common.UID.ContentType,
     TParams extends APIUrlParams<TContentTypeUID>,
@@ -134,9 +124,6 @@ export default class Strapi {
     }))
   }
 
-  /**
-   * Fetches a single entity by slug
-   */
   public static async fetchOneBySlug<
     TContentTypeUID extends Common.UID.ContentType,
     TParams extends APIUrlParams<TContentTypeUID>,
@@ -156,7 +143,6 @@ export default class Strapi {
     const path = this.getStrapiApiPathByUId(uid)
     const response: APIResponseCollection<TContentTypeUID> =
       await this.fetchAPI(path, mergedParams, requestInit, options)
-    // return last published entry
     return {
       data: response.data.pop() ?? null,
       meta: {},
@@ -183,11 +169,6 @@ export default class Strapi {
     }
   }
 
-  /**
-   * Get Path of the API route by UID
-   * @param uid - UID of the Endpoint
-   * @returns API Endpoint path
-   */
   private static getStrapiApiPathByUId(
     uid: keyof typeof API_ENDPOINTS
   ): string {

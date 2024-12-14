@@ -4,11 +4,11 @@ import path from "path"
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { env } from "@/env.mjs"
 
 import { PackagesPlaceRes } from "@/types/api"
 
+import { Link } from "@/lib/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scrollArea"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -55,16 +55,16 @@ function SideBarMap({ ResData }: MapProps) {
   }, [typedDescription])
 
   return (
-    <div className="mr-5 mt-5 flex flex-col flex-wrap rounded-lg border bg-white px-4 pt-3">
+    <div className=" flex flex-col h-full flex-wrap rounded-lg border bg-white px-4 pt-3 ">
       {isLoading ? (
         <>
           <div className="flex h-48 justify-center">
             <Skeleton className="m-2 w-full bg-slate-950" />
           </div>
-          <div className="flex h-1/2 flex-col flex-wrap items-center justify-center lg:flex-row">
-            <Skeleton className="m-2 h-32 w-2/3 bg-slate-950 lg:w-32" />
-            <Skeleton className="m-2 h-32 w-2/3 bg-slate-950 lg:w-32" />
-            <Skeleton className="m-2 h-32 w-2/3 bg-slate-950 lg:w-32" />
+          <div className="flex xl:h-1/2 flex-col flex-wrap items-center justify-center lg:flex-row mt-0 lg:mt-5 xl:mt-0 ">
+            <Skeleton className="m-2 h-28 w-2/3 bg-slate-950 lg:w-32" />
+            <Skeleton className="m-2 h-28 w-2/3 bg-slate-950 lg:w-32" />
+            <Skeleton className="m-2 h-28 w-2/3 bg-slate-950 lg:w-32" />
           </div>
         </>
       ) : (
@@ -86,7 +86,7 @@ function SideBarMap({ ResData }: MapProps) {
               >
                 <CardContent className="relative size-full">
                   <Link
-                    href={`/fa/blog/filband/?blogtype=${url.field1}&blogid=${url.field2}`}
+                    href={`/blog/filband/?blogtype=${url.field1}&blogid=${url.field2}`}
                   >
                     <Image
                       fill

@@ -4,7 +4,7 @@
 name: dev-templates
 services:
   db:
-    platform: linux/amd64 #for platform error on Apple M1 chips
+    platform: linux/amd64/windows #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
     image: postgres:16.0-alpine
@@ -22,6 +22,7 @@ services:
 
 volumes:
   data:
+
 
 networks:
   db_network:

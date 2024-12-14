@@ -10,6 +10,8 @@ import { ChevronLeft } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { useRouter } from "@/lib/navigation"
+import { ImageWithFallback } from "@/components/elementary/ImageWithFallback"
+import { ImageWithPlaiceholder } from "@/components/elementary/ImageWithPlaiceholder"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -140,12 +142,14 @@ export default function RouteCard({ id, name, cities }: RouteCardProps) {
 
   return (
     <Card className="relative h-[250px] w-full max-w-7xl overflow-hidden">
-      <Image
-        fill
-        src={path.join(env.NEXT_PUBLIC_BACKEND_URL, selectedCity.image_url)}
-        alt={selectedCity.name}
-        className="absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full"
-      />
+      {selectedCity.image_url && (
+        <Image
+          fill
+          src={path.join(env.NEXT_PUBLIC_BACKEND_URL, selectedCity.image_url)}
+          alt={selectedCity.name}
+          className="absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
         <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black/60 px-4 py-2">
