@@ -37,13 +37,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Form } from "@/components/ui/form"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { SelectItem } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import RouteCard from "./card"
@@ -203,14 +197,14 @@ export default function TravelMaker() {
     }
   }, [isInitialLoad, form, query, onSubmit])
 
-  // // Modify initial mounted state setting
-  // useEffect(() => {
-  //   // Small delay to ensure initial render is complete
-  //   const timeoutId = setTimeout(() => setMounted(true), 0)
-  //   return () => clearTimeout(timeoutId)
-  // }, [])
+  // Modify initial mounted state setting
+  useEffect(() => {
+    // Small delay to ensure initial render is complete
+    const timeoutId = setTimeout(() => setMounted(true), 0)
+    return () => clearTimeout(timeoutId)
+  }, [])
 
-  // if (!mounted) return null
+  if (!mounted) return null
 
   return (
     <SheetLayout
@@ -393,8 +387,8 @@ export default function TravelMaker() {
           <Card className="max-w-96">
             <CardHeader className="flex w-full flex-col items-center justify-center">
               <CardTitle className="flex gap-2 pb-2">
-                <span>{t("form.error")} </span>
                 <TriangleAlert className="size-10 text-destructive" />
+                <span className="text-md">{t("form.error")} </span>
               </CardTitle>
               <CardDescription className="text-center">
                 {t("form.tryAnother")}
