@@ -24,7 +24,9 @@ export const env = createEnv({
     NEXT_PUBLIC_NESHAN_KEY: z.string().url(),
     NEXT_OUTPUT: z.string().optional(),
     NEXT_IMAGES_UNOPTIMIZED: optionalZodBoolean.default(false),
-    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
     NEXT_RUNTIME: z.enum(["nodejs", "edge"]).default("nodejs"),
     SENTRY_AUTH_TOKEN: z.string().optional(),
     SENTRY_ORG: z.string().optional(),
@@ -38,6 +40,7 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_PUBLIC_URL: z.string().url(),
     NEXT_PUBLIC_BACKEND_URL: z.string().url(),
     NEXT_PUBLIC_STRAPI_URL: z.string().url(),
+    NEXT_PUBLIC_STRAPI_KEY: z.string(),
     NEXT_PUBLIC_PREVENT_UNUSED_FUNCTIONS_ERROR_LOGS: optionalZodBoolean,
     NEXT_PUBLIC_NODE_ENV: z.string().optional(),
     NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
@@ -59,6 +62,7 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_PUBLIC_URL: process.env.NEXT_PUBLIC_APP_PUBLIC_URL,
     NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
     NEXT_PUBLIC_STRAPI_URL: process.env.NEXT_PUBLIC_STRAPI_URL,
+    NEXT_PUBLIC_STRAPI_KEY: process.env.NEXT_PUBLIC_STRAPI_KEY,
     NEXT_PUBLIC_PREVENT_UNUSED_FUNCTIONS_ERROR_LOGS:
       process.env.NEXT_PUBLIC_PREVENT_UNUSED_FUNCTIONS_ERROR_LOGS,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
