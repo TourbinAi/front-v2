@@ -1,37 +1,46 @@
 import React from "react"
+import { cva } from "class-variance-authority"
+
+import type { VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/styles"
 
-export const variantStyles = {
-  base: "text-base leading-[25px]",
-  // more variants will be added here
-}
+const paragraphVariants = cva(
+  // Base styles shared across all variants
+  "leading-[25px]",
+  {
+    variants: {
+      variant: {
+        base: "text-base",
+      },
+      textColor: {
+        black: "text-black",
+        white: "text-white",
+      },
+    },
+    defaultVariants: {
+      variant: "base",
+      textColor: "black",
+    },
+  }
+)
 
-export const textColorVariants = {
-  black: "text-black",
-  white: "text-white",
-  // more variants will be added here
-}
-
-type Variant = keyof typeof variantStyles
-type TextColor = keyof typeof textColorVariants
+interface ParagraphProps
+  extends React.HTMLAttributes<HTMLParagraphElement>,
+    VariantProps<typeof paragraphVariants> {}
 
 export const Paragraph = ({
   children,
   className,
-  variant = "base",
-  textColor = "black",
-}: {
-  className?: string
-  children?: React.ReactNode
-  variant?: Variant
-  textColor?: TextColor
-}) => {
-  const selectedVariant = variantStyles[variant]
-  const selectedTextColor = textColorVariants[textColor]
-
+  variant,
+  textColor,
+  ...props
+}: ParagraphProps) => {
   return (
-    <p className={cn(selectedVariant, selectedTextColor, className)}>
+    <p
+      className={cn(paragraphVariants({ variant, textColor, className }))}
+      {...props}
+    >
       {children}
     </p>
   )

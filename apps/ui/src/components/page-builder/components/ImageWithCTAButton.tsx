@@ -1,6 +1,5 @@
 import { Attribute } from "@repo/strapi"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { Container } from "@/components/elementary/Container"
 
 import { BasicImage } from "./BasicImage"
@@ -13,8 +12,6 @@ export const ImageWithCTAButton = ({
     Attribute.DynamicZone<["sections.image-with-cta-button"]>
   >[number]
 }) => {
-  removeThisWhenYouNeedMe("ImageWithCTAButton")
-
   return (
     <section className="">
       <Container className="items-center gap-8 px-4 py-8 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">

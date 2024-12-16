@@ -4,9 +4,14 @@ import { useMDXComponent } from "next-contentlayer/hooks"
 
 import type { MDXComponents } from "mdx/types"
 
+import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/styles"
 import { Callout } from "@/components/page-builder/callout"
 import { MdxCard } from "@/components/page-builder/mdx-card"
+
+import Heading from "../typography/Heading"
+import { Paragraph } from "../typography/Paragraph"
+import { LinkStrapi } from "./components/LinkStrapi"
 
 const components: MDXComponents = {
   h1: ({
@@ -14,90 +19,54 @@ const components: MDXComponents = {
     children,
     ...props
   }: React.HTMLProps<HTMLHeadingElement>) => (
-    <h1
-      className={cn(
-        "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
-        className
-      )}
-      {...props}
-    >
+    <Heading tag="h1" variant="heading1" className={className} {...props}>
       {children}
-    </h1>
+    </Heading>
   ),
   h2: ({
     className,
     children,
     ...props
   }: React.HTMLProps<HTMLHeadingElement>) => (
-    <h2
-      className={cn(
-        "mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
-        className
-      )}
-      {...props}
-    >
+    <Heading tag="h2" variant="heading2" className={className} {...props}>
       {children}
-    </h2>
+    </Heading>
   ),
   h3: ({
     className,
     children,
     ...props
   }: React.HTMLProps<HTMLHeadingElement>) => (
-    <h3
-      className={cn(
-        "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight",
-        className
-      )}
-      {...props}
-    >
+    <Heading tag="h3" variant="heading3" className={className} {...props}>
       {children}
-    </h3>
+    </Heading>
   ),
   h4: ({
     className,
     children,
     ...props
   }: React.HTMLProps<HTMLHeadingElement>) => (
-    <h4
-      className={cn(
-        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-        className
-      )}
-      {...props}
-    >
+    <Heading tag="h4" variant="heading4" className={className} {...props}>
       {children}
-    </h4>
+    </Heading>
   ),
   h5: ({
     className,
     children,
     ...props
   }: React.HTMLProps<HTMLHeadingElement>) => (
-    <h5
-      className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-        className
-      )}
-      {...props}
-    >
+    <Heading tag="h5" variant="heading5" className={className} {...props}>
       {children}
-    </h5>
+    </Heading>
   ),
   h6: ({
     className,
     children,
     ...props
   }: React.HTMLProps<HTMLHeadingElement>) => (
-    <h6
-      className={cn(
-        "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
-        className
-      )}
-      {...props}
-    >
+    <Heading tag="h6" variant="heading6" className={className} {...props}>
       {children}
-    </h6>
+    </Heading>
   ),
   a: ({
     className,
@@ -119,12 +88,12 @@ const components: MDXComponents = {
     className?: string
     children?: React.ReactNode
   }) => (
-    <p
+    <Paragraph
       className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
       {...props}
     >
       {children}
-    </p>
+    </Paragraph>
   ),
   ul: ({
     className,
@@ -185,12 +154,19 @@ const components: MDXComponents = {
   img: ({
     className,
     alt,
+    src,
+    width,
+    height,
     ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement> & {
-    children?: React.ReactNode
-  }) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className={cn("rounded-md border", className)} alt={alt} {...props} />
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <Image
+      className={cn("rounded-md border", className)}
+      alt={alt ?? ""}
+      src={src ?? ""}
+      width={width ? Number(width) : 1200}
+      height={height ? Number(height) : 630}
+      {...props}
+    />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (

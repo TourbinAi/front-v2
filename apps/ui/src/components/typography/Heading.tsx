@@ -1,50 +1,58 @@
 import React from "react"
+import { cva } from "class-variance-authority"
+
+import type { VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/styles"
 
-const variantStyles = {
-  heading1:
-    "text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl",
-  heading3: "md:text-4xl text-2xl font-bold",
-  // more variants will be added here
-}
+const headingVariants = cva(
+  // Base styles shared across all variants
+  "font-bold leading-none tracking-tight",
+  {
+    variants: {
+      variant: {
+        heading1: "text-4xl font-extrabold md:text-5xl xl:text-6xl",
+        heading2: "text-3xl md:text-4xl",
+        heading3: "text-2xl md:text-4xl",
+        heading4: "text-xl md:text-4xl",
+        heading5: "text-lg md:text-4xl",
+        heading6: "text-base md:text-4xl",
+      },
+      textColor: {
+        black: "text-black",
+        white: "text-white",
+      },
+    },
+    defaultVariants: {
+      variant: "heading3",
+      textColor: "black",
+    },
+  }
+)
 
-const textColorVariants = {
-  black: "text-black",
-  white: "text-white",
-  // more variants will be added here
-}
-
-type Variant = keyof typeof variantStyles
-type TextColor = keyof typeof textColorVariants
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 
-interface HeadingProps {
-  children: React.ReactNode
-  className?: string
-  variant?: Variant
-  textColor?: TextColor
+interface HeadingProps
+  extends React.HTMLAttributes<HTMLHeadingElement>,
+    VariantProps<typeof headingVariants> {
   tag?: HeadingTag
 }
 
 const Heading = ({
   children,
   className,
-  variant = "heading3",
-  textColor = "black",
+  variant,
+  textColor,
   tag = "h3",
+  ...props
 }: HeadingProps) => {
-  const selectedVariant = variantStyles[variant]
-  const selectedTextColor = textColorVariants[textColor]
-
-  const Tag = tag as HeadingTag
-
-  if (!Tag) {
-    return null
-  }
+  const Tag = tag
 
   return (
-    <Tag className={cn(selectedVariant, selectedTextColor, className)}>
+    <Tag
+      className={cn(headingVariants({ variant, textColor, className }))}
+      {...props}
+    >
       {children}
     </Tag>
   )

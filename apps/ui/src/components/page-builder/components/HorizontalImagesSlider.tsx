@@ -1,6 +1,5 @@
 import { Attribute } from "@repo/strapi"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { cn } from "@/lib/styles"
 import { Container } from "@/components/elementary/Container"
 
@@ -13,8 +12,6 @@ export function HorizontalImages({
     Attribute.DynamicZone<["sections.horizontal-images"]>
   >[number]
 }) {
-  removeThisWhenYouNeedMe("HorizontalImages")
-
   return (
     <section>
       <Container className="py-8">
