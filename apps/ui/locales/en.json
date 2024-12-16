@@ -60,6 +60,10 @@
     "descending": "Descending",
     "noData": "No data"
   },
+  "Error": {
+    "description": "<p>Unfortunately, we encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>",
+    "title": "Something went wrong!"
+  },
   "errors": {
     "global": {
       "title": "An unknown error occurred",
@@ -165,8 +169,8 @@
   "landingPage": {
     "hero": {
       "header": {
-        "top": "tourbin",
-        "bottom": "a complite platform for nature tourism and short trips bisides of artifical intlligent"
+        "top": "A comprehensive platform for nature tourism and short-term trips",
+        "bottom": "Based on artificial intelligence"
       }
     },
     "primaryFeatures": {
@@ -200,6 +204,7 @@
         }
       },
       "travelMaker": {
+        "submissionError": "Form submission failed",
         "title": "Travel Maker",
         "description": "Suggesting the best travel plan according to your conditions and characteristics",
         "form": {
@@ -261,14 +266,6 @@
           "goTo": "Souvenirs and Food page"
         }
       },
-      "tourbinTravelMaker": {
-        "title": "Turbine Travel Maker ",
-        "description": "AI-powered trip planning tailored to your circumstances",
-        "form": {
-          "goTo": "Talking to Turbine AI",
-          "collapseButton": "Using a travel builder by filling out the form "
-        }
-      },
       "celebrationsAndEvents": {
         "title": "Celebrations and events",
         "description": "Rituals, celebrations and ethnic, historical and national events by city and province.",
@@ -298,8 +295,7 @@
           "submit": "Search",
           "goTo": "Celebrations and events page"
         }
-      },
-      "imageButton": "برای شروع کلیک کنید"
+      }
     },
     "tourismPlaces": {
       "title": "Tourism places",
@@ -311,6 +307,7 @@
     "destination": "You've gone the wrong way!"
   },
   "travelMaker": {
+    "submissionError": "Form submission failed",
     "form": {
       "validateError": {
         "origin": "origin is required",
@@ -419,6 +416,7 @@
       "Button": "Submit",
       "popover-button": "optional",
       "noResults": "No result found",
+      "error": "Something went wrong",
       "tryAnother": "Try another combination",
       "form-header": {
         "title": " travel maker",
@@ -430,6 +428,8 @@
       "seeMore": "See more"
     },
     "package": {
+      "error": "Something went wrong",
+      "tryAgain": "Try again",
       "mapOpen": "open map",
       "mapClose": "close map"
     }

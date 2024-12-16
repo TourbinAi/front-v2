@@ -46,36 +46,24 @@ export function Attractions() {
   return (
     <div
       id="tourismPlaces"
-      className="my-10 flex flex-col items-center justify-center space-y-6 "
+      className="my-10 flex flex-col items-center justify-center space-y-6"
     >
       <div className="w-full">
-        <div>
-          <h1 className="mb-2 mt-3 rounded-md p-5 text-xl font-semibold">
-            {t("title")}
-          </h1>
-        </div>
-        <div className="flex my-2 gap-1">
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">طبیعی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">تاریخی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">فرهنگی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">تفریحی </p>
-          <p className="bg-[#ECEDFD] px-4 py-2 rounded-lg">همه </p>
-        </div>
+        <h1 className="mb-2 mt-3 rounded-md p-5 text-xl font-semibold">
+          {t("title")}
+        </h1>
         <Carousel
-          opts={{
-            align: "start",
-          }}
           dir="ltr"
-          className="w-full  bg-[#ECEDFD]"
+          className="flex min-h-20 w-full items-center justify-center"
         >
           {loading ? (
             <CarouselContent className="mx-10 my-5 gap-1">
               {[0, 1, 2, 3, 4].map((ind) => (
                 <CarouselItem
                   key={ind}
-                  className="flex shrink-0 flex-col items-center transition-transform hover:scale-105 "
+                  className="flex shrink-0 basis-80 flex-col items-center rounded-2xl border-none bg-none transition-transform hover:scale-105"
                 >
-                  <Skeleton className=" bg-gray-400" />
+                  <Skeleton className="size-72 bg-gray-400" />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -84,13 +72,13 @@ export function Attractions() {
               {Object.values(responseData).map((blog, blogIndex) => (
                 <CarouselItem
                   key={blogIndex}
-                  className="flex p-0 shrink-0 md:basis-1/2 lg:basis-1/4 flex-col items-center border-none bg-none transition-transform hover:scale-105"
+                  className="flex shrink-0 basis-80 flex-col items-center rounded-2xl border-none bg-none transition-transform hover:scale-105"
                 >
                   <Link
                     href={`blog/${blog.title}/?blogtype=1&blogid=${blog.id}`}
                   >
-                    <Card className="relative size-96 cursor-pointer overflow-hidden">
-                      <CardContent className="relative w-full h-full">
+                    <Card className="relative size-72 cursor-pointer overflow-hidden">
+                      <CardContent className="relative size-full">
                         <Image
                           fill
                           src={path.join(
@@ -98,9 +86,9 @@ export function Attractions() {
                             blog.card_image
                           )}
                           alt={blog.place_name}
-                          className="absolute w-full h-full object-cover"
+                          className="absolute inset-0 size-full object-cover"
                         />
-                        <span className="absolute bottom-0 left-0 w-full bg-black/50 py-3 text-center text-white">
+                        <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black/50 py-2 text-center text-white">
                           {blog.place_name || "NAME PLACE"}
                         </span>
                       </CardContent>
@@ -110,8 +98,8 @@ export function Attractions() {
               ))}
             </CarouselContent>
           )}
-          <CarouselPrevious className="absolute left-0 size-96 w-8 border border-[#A4A7F7]  " />
-          <CarouselNext className="absolute right-0 size-96 w-8 border border-[#A4A7F7] " />
+          <CarouselPrevious className="absolute left-1" />
+          <CarouselNext className="absolute right-1" />
         </Carousel>
       </div>
     </div>

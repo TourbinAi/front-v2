@@ -16,8 +16,7 @@ import { useDebouncedCallback } from "@/hooks/useDebouncedCallback"
 import { AppAutoComplete } from "@/components/forms/AppAutoComplete"
 import { AppForm } from "@/components/forms/AppForm"
 import SubmitButton from "@/components/forms/SubmitButton"
-import camerman2Small from "public/assets/images/cameramanTWOSMALL.png"
-import Image from "next/image"
+
 export const PathFinderForm = () => {
   const t = useTranslations("PathFinder")
   const [isLoading, setIsLoading] = useState(false)
@@ -116,6 +115,7 @@ export const PathFinderForm = () => {
       )?.map((item) => item.title)}
       isLoading={type === "origin" ? loadingOrigin : loadingDes}
       placeholder={t(`${type}.placeHolder`)}
+      label={t(`${type}.title`)}
       onChangeHandler={(e) => changeHandler(e, type)}
       itemClickHandler={(item) => handleItemClick(item, type)}
     />
@@ -123,26 +123,13 @@ export const PathFinderForm = () => {
 
   return (
     <AppForm form={form} onSubmit={onSubmit}>
-      <div className="flex">
-        <div className="flex justify-center lg:hidden bg-[#ECEDFD] w-[50%] lg:w-full rounded-xl lg:hidden ">
-          <div className=" relative flex itmes-center items-end justify-center h-full">
-            <Image
-              alt="compass"
-              src={camerman2Small}
-              className=" h-full object-contain "
-            />
-          </div>
-        </div>
-        <div className="flex flex-col w-[70%] lg:w-full gap-2">
-          <div className="lg:flex  flex-col flex-wrap text-center border border-[#5C61F1] rounded-xl p-1 bg-white text-[#5C61F1] opacity-60">
-            {renderAutoComplete("origin")}
-          </div>
-          <div className=" text-center  relative lg:mb-6 lg:mt-8 border border-[#5C61F1] rounded-xl p-1 bg-white text-[#5C61F1] opacity-60">
-            {renderAutoComplete("destination")}
-          </div>
-          <SubmitButton isLoading={isLoading}>{t("submit")}</SubmitButton>
-        </div>
+      <div className="flex h-1/2 flex-col flex-wrap text-center">
+        {renderAutoComplete("origin")}
       </div>
+      <div className="relative mb-6 mt-8">
+        {renderAutoComplete("destination")}
+      </div>
+      <SubmitButton isLoading={isLoading}>{t("submit")}</SubmitButton>
     </AppForm>
   )
 }
