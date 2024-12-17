@@ -16,48 +16,14 @@ import { postData } from "@/lib/api"
 import { Card, CardContent } from "@/components/ui/card"
 import StarRating from "@/components/ui/starRating"
 
-// Dynamic import for MapContainer with SSR disabled
-const MapWithNoSSR = dynamic(
-  () => import("react-leaflet").then((mod) => mod.MapContainer),
-  {
-    ssr: false,
-    loading: () => <p>Loading map...</p>,
-  }
-)
-
-const TileLayerWithNoSSR = dynamic(
-  () => import("react-leaflet").then((mod) => mod.TileLayer),
-  {
-    ssr: false,
-  }
-)
-
-const MarkerWithNoSSR = dynamic(
-  () => import("react-leaflet").then((mod) => mod.Marker),
-  {
-    ssr: false,
-  }
-)
-
-const PolylineWithNoSSR = dynamic(
-  () => import("react-leaflet").then((mod) => mod.Polyline),
-  {
-    ssr: false,
-  }
-)
-
-const PopupWithNoSSR = dynamic(
-  () => import("react-leaflet").then((mod) => mod.Popup),
-  {
-    ssr: false,
-  }
-)
-
-let L: any = null
-if (typeof window !== "undefined") {
-  L = require("leaflet")
-  require("leaflet/dist/leaflet.css")
-}
+import {
+  L,
+  MapWithNoSSR,
+  MarkerWithNoSSR,
+  PolylineWithNoSSR,
+  PopupWithNoSSR,
+  TileLayerWithNoSSR,
+} from "@/app/[locale]/(platform)/_components/leafletNOSSR"
 
 interface Info {
   type: string

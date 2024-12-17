@@ -6,9 +6,9 @@ export interface TravelMakerListReq {
   route_type: 1 | 2
   stop_and_quit: 1 | 2
   means_of_travel: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-  direction_of_movement?: 1 | 2 | 3 | 4
+  direction_of_movement?: 1 | 2 | 3 | 4 | 0
   count_of_elder_people?: number
-  overnight_stay?: 1 | 2 | 3
+  overnight_stay?: 1 | 2 | 3 | 0 
 }
 
 export type TravelMakerListRes = Array<{
