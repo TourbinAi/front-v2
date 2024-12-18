@@ -10,6 +10,7 @@ import { HeadingWithCTAButton } from "./components/HeadingWithCTAButton"
 import { Hero } from "./components/Hero"
 import { HorizontalImages } from "./components/HorizontalImagesSlider"
 import { ImageWithCTAButton } from "./components/ImageWithCTAButton"
+import { Mdx } from "./mdx-components"
 
 // Define page-level components supported by this switch
 const printableComps: {

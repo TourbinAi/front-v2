@@ -1,4 +1,6 @@
-import { useCallback } from "react"
+"use client"
+
+import { Dispatch, SetStateAction } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import moment from "jalali-moment"
 import { useTranslations } from "next-intl"
@@ -6,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { TravelMakerListReq } from "@/types/api"
+import { TravelMakerListReq, TravelMakerListRes } from "@/types/api"
 
 import {
   SidebarSchema,
@@ -22,6 +24,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { SelectItem } from "@/components/ui/select"
 
@@ -48,7 +51,14 @@ export const defaultValue = {
   },
 } as z.infer<typeof SidebarSchema>
 
-const TravelMakerForm = () => {
+interface TravelMakerFormProps {
+  setIsLoading?: Dispatch<SetStateAction<boolean>>
+  setList?: Dispatch<SetStateAction<TravelMakerListRes>>
+  setError?: Dispatch<SetStateAction<boolean>>
+  submitFunction: (values: TravelMakerListReq) => void
+}
+
+const TravelMakerForm = (props: TravelMakerFormProps) => {
   const t = useTranslations("travelMaker")
 
   const form = useForm<z.infer<typeof SidebarSchema>>({
@@ -57,6 +67,9 @@ const TravelMakerForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
+    props.setIsLoading?.(true)
+    props.setError?.(false)
+
     try {
       const requestObject: TravelMakerListReq = {
         origin_of_trip: values.origin,
@@ -80,9 +93,14 @@ const TravelMakerForm = () => {
           tmsv.direction.indexOf(values.direction)
         ),
       }
+      await props.submitFunction(requestObject)
     } catch (error) {
       console.error("Form submission failed:", error)
       toast.error(t("form.error"))
+      props.setError?.(true)
+      throw error
+    } finally {
+      props.setIsLoading?.(false)
     }
   }
 
