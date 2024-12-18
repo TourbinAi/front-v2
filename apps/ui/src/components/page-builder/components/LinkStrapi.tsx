@@ -17,8 +17,6 @@ export function LinkStrapi({
   className,
   hideWhenMissing,
 }: LinkStrapiProps) {
-  removeThisWhenYouNeedMe("LinkStrapi")
-
   if (component == null && hideWhenMissing) {
     return null
   }

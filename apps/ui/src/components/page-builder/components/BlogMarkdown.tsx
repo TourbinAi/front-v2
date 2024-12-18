@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { Attribute } from "@repo/strapi"
 import { serialize } from "next-mdx-remote/serialize"
