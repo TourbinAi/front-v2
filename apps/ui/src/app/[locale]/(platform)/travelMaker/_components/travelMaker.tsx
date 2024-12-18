@@ -1,29 +1,12 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import moment from "jalali-moment"
+import { useState } from "react"
 import { ChevronRight, TriangleAlert } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { z } from "zod"
 
 import { TravelMakerListReq, TravelMakerListRes } from "@/types/api"
 
 import { TravelMakerList } from "@/lib/api"
-import { useRouter } from "@/lib/navigation"
-import CustomFormField, {
-  FormFieldType,
-} from "@/components/forms/CustomeFormField"
-import SubmitButton from "@/components/forms/SubmitButton"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -32,40 +15,37 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Form } from "@/components/ui/form"
-import { SelectItem } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { TravelMakerForm } from "@/app/[locale]/(marketing)/_components/form/travelMakerForm"
 
 import RouteCard from "./card"
 import SheetLayout from "./sheetLayout"
+import TravelMakerForm from "./travelMakerForm"
 
 export default function TravelMaker() {
-  const searchParams = useSearchParams() // Get search params
-  const query = Object.fromEntries(searchParams.entries()) // Convert search params to object
-  const [loading, setLoading] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const [list, setList] = useState<TravelMakerListRes>()
   const [error, setError] = useState<boolean>(false)
-  const [mounted, setMounted] = useState(false)
+
+  const submitFunction = async (values: TravelMakerListReq) => {
+    const response = await TravelMakerList(values)
+    setList(response.data)
+  }
 
   const t = useTranslations("travelMaker")
-
-  // Modify initial mounted state setting
-  useEffect(() => {
-    // Small delay to ensure initial render is complete
-    const timeoutId = setTimeout(() => setMounted(true), 0)
-    return () => clearTimeout(timeoutId)
-  }, [])
-
-  if (!mounted) return null
 
   return (
     <SheetLayout
       open={open}
       setOpen={setOpen}
       button={typeof list === "undefined" ? false : list.length !== 0}
-      sideBarComponent={<TravelMakerForm />}
+      sideBarComponent={
+        <TravelMakerForm
+          setError={setError}
+          setIsLoading={setLoading}
+          submitFunction={submitFunction}
+        />
+      }
     >
       {error ? (
         <div className="flex size-full items-center justify-center">

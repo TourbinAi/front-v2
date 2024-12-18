@@ -1,12 +1,15 @@
-import { useCallback } from "react"
+"use client"
+
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import moment from "jalali-moment"
 import { useTranslations } from "next-intl"
+import { useQueryState } from "nuqs"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { TravelMakerListReq } from "@/types/api"
+import { TravelMakerListReq, TravelMakerListRes } from "@/types/api"
 
 import {
   SidebarSchema,
@@ -22,6 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { SelectItem } from "@/components/ui/select"
 
@@ -30,33 +34,63 @@ const persianDate = moment().format("jYYYY-jM-jD") // Get the current Persian da
 
 const [year, month, day] = persianDate.split("-").map(Number)
 
-export const defaultValue = {
-  origin: "",
-  direction: "north",
-  distance: "3h",
-  duration: "2d",
-  tags: ["sunnyAndSea"],
-  route: "easy",
-  vehicle: "car",
-  oldPerson: false,
-  routStop: "oneWay",
-  accommodation: "camp",
-  date: {
-    year: year,
-    month: month,
-    day: day,
-  },
-} as z.infer<typeof SidebarSchema>
+interface TravelMakerFormProps {
+  setIsLoading?: Dispatch<SetStateAction<boolean>>
+  setList?: Dispatch<SetStateAction<TravelMakerListRes>>
+  setError?: Dispatch<SetStateAction<boolean>>
+  submitFunction: (values: TravelMakerListReq) => void
+}
 
-const TravelMakerForm = () => {
+const TravelMakerForm = (props: TravelMakerFormProps) => {
   const t = useTranslations("travelMaker")
+
+  const [originQuery, setOriginQuery] = useQueryState("origin")
+  const [distanceQuery, setDistanceQuery] = useQueryState("distance")
+  const [durationQuery, setDurationQuery] = useQueryState("duration")
+  const [tagsQuery, setTagsQuery] = useQueryState("tags")
+  const [routeQuery, setRouteQuery] = useQueryState("route")
+  const [vehicleQuery, setVehicleQuery] = useQueryState("vehicle")
+  const [routStopQuery, setRoutStopQuery] = useQueryState("routStop")
+  const [directionQuery, setDirectionQuery] = useQueryState("direction")
+  const [accommodationQuery, setAccommodationQuery] =
+    useQueryState("accommodation")
+  const [oldPersonQuery, setOldPersonQuery] = useQueryState("oldPerson")
+  const [accoFlag, setFlag] = useState("")
 
   const form = useForm<z.infer<typeof SidebarSchema>>({
     resolver: zodResolver(SidebarSchema),
-    defaultValues: defaultValue,
   })
+  const { watch } = form
+  const watchedValues = watch()
+
+  useEffect(() => {
+    const subscription = watch((values) => {
+      if (values.duration === "1d") {
+        setFlag("hidden")
+      } else {
+        setFlag("")
+      }
+      values.origin && setOriginQuery(values.origin)
+      values.vehicle && setVehicleQuery(values.vehicle)
+      values.routStop && setRoutStopQuery(values.routStop)
+      values.tags && setTagsQuery(values.tags?.join(","))
+      values.route && setRouteQuery(values.route)
+      values.direction && setDirectionQuery(values.direction)
+      values.accommodation && setAccommodationQuery(values.accommodation)
+      values.duration && setDurationQuery(values.duration)
+      values.distance && setDistanceQuery(values.distance)
+      values.oldPerson === true
+        ? setOldPersonQuery("true")
+        : setOldPersonQuery("false")
+    })
+
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
+    props.setIsLoading?.(true)
+    props.setError?.(false)
+
     try {
       const requestObject: TravelMakerListReq = {
         origin_of_trip: values.origin,
@@ -67,22 +101,29 @@ const TravelMakerForm = () => {
         route_type: ([1, 2] as const).at(tmsv.route.indexOf(values.route)) || 1,
         stop_and_quit:
           ([1, 2] as const).at(tmsv.disState.indexOf(values.routStop)) || 1,
-        overnight_stay: ([1, 2, 3] as const).at(
-          tmsv.accommodation.indexOf(values.accommodation)
-        ),
+        overnight_stay: values.accommodation
+          ? ([1, 2, 3] as const).at(
+              tmsv.accommodation.indexOf(values.accommodation)
+            )
+          : 0,
         count_of_elder_people: values.oldPerson ? 1 : 0,
         tags: values.tags.map((place) => tmsv.placeNature.indexOf(place)),
         means_of_travel:
           ([1, 2, 3, 4, 5, 6, 7, 8] as const).at(
             tmsv.vehicle.indexOf(values.vehicle)
           ) || 1,
-        direction_of_movement: ([1, 2, 3, 4] as const).at(
-          tmsv.direction.indexOf(values.direction)
-        ),
+        direction_of_movement: values.direction
+          ? ([1, 2, 3, 4] as const).at(tmsv.direction.indexOf(values.direction))
+          : 0,
       }
+      await props.submitFunction(requestObject)
     } catch (error) {
       console.error("Form submission failed:", error)
       toast.error(t("form.error"))
+      props.setError?.(true)
+      throw error
+    } finally {
+      props.setIsLoading?.(false)
     }
   }
 
@@ -224,7 +265,11 @@ const TravelMakerForm = () => {
                     placeholder={t("form.accommodation.placeholder")}
                   >
                     {tmsv.accommodation.map((accommodation, i) => (
-                      <SelectItem key={i} value={accommodation}>
+                      <SelectItem
+                        key={i}
+                        value={accommodation}
+                        className={accoFlag}
+                      >
                         <p>
                           {t(
                             `form.accommodation.accommodationSelect.${accommodation}`

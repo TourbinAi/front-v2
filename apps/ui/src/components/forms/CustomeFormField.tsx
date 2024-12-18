@@ -142,7 +142,7 @@ function RenderInput<
             options={props?.options || []}
             defaultValue={(props?.options || [])
               ?.map((prop) => prop.value)
-              .filter((option) => field.value.includes(option))}
+              ?.filter((option) => field?.value?.includes(option))}
             onValueChange={(newSelected) => {
               field.onChange(newSelected)
             }}
