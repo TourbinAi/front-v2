@@ -1,7 +1,8 @@
 import React from "react"
 import { Attribute } from "@repo/strapi"
-import { MDXRemote } from "next-mdx-remote"
 import { serialize } from "next-mdx-remote/serialize"
+
+import { Mdx } from "../mdx-components"
 
 interface BlogMarkdownProps {
   component: Attribute.GetDynamicZoneValue<
@@ -26,7 +27,7 @@ export function BlogMarkdown({ component }: BlogMarkdownProps) {
 
   return (
     <div className="prose prose-lg max-w-none">
-      <MDXRemote {...mdxSource} />
+      <Mdx {...mdxSource} />
     </div>
   )
 }

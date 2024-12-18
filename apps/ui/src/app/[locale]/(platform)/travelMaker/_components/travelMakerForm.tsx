@@ -66,14 +66,10 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
   useEffect(() => {
     const subscription = watch((values) => {
       if (values.duration === "1d") {
-        console.log(values.duration)
         setFlag("hidden")
       } else {
         setFlag("")
       }
-      // console.log(values.duration)
-      // console.log(accoFlag)
-
       values.origin && setOriginQuery(values.origin)
       values.vehicle && setVehicleQuery(values.vehicle)
       values.routStop && setRoutStopQuery(values.routStop)
@@ -105,20 +101,20 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
         route_type: ([1, 2] as const).at(tmsv.route.indexOf(values.route)) || 1,
         stop_and_quit:
           ([1, 2] as const).at(tmsv.disState.indexOf(values.routStop)) || 1,
-        overnight_stay:
-          values.accommodation ?
-          ([1, 2, 3] as const).at(
-            tmsv.accommodation.indexOf(values.accommodation)
-          ):0,
+        overnight_stay: values.accommodation
+          ? ([1, 2, 3] as const).at(
+              tmsv.accommodation.indexOf(values.accommodation)
+            )
+          : 0,
         count_of_elder_people: values.oldPerson ? 1 : 0,
         tags: values.tags.map((place) => tmsv.placeNature.indexOf(place)),
         means_of_travel:
           ([1, 2, 3, 4, 5, 6, 7, 8] as const).at(
             tmsv.vehicle.indexOf(values.vehicle)
           ) || 1,
-        direction_of_movement:
-          values.direction ?
-          ([1, 2, 3, 4] as const).at(tmsv.direction.indexOf(values.direction)):0,
+        direction_of_movement: values.direction
+          ? ([1, 2, 3, 4] as const).at(tmsv.direction.indexOf(values.direction))
+          : 0,
       }
       await props.submitFunction(requestObject)
     } catch (error) {

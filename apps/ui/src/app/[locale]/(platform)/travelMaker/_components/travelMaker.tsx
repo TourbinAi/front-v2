@@ -29,8 +29,6 @@ export default function TravelMaker() {
 
   const submitFunction = async (values: TravelMakerListReq) => {
     const response = await TravelMakerList(values)
-    console.log(values);
-    
     setList(response.data)
   }
 
