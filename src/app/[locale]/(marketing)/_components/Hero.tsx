@@ -3,8 +3,9 @@
 import { primaryFeatures } from "@/constants";
 import Image from "next/image";
 import BeachImage from "public/assets/images/beachSunSet.png";
-import Logo from "public/assets/images/logo.png";
-import { useTranslations } from "next-intl";
+import faLogo from "public/assets/icons/Tourbin Logo-01.svg";
+import enLogo from "public/assets/icons/Tourbin Logo-02.svg";
+import { useLocale, useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function Hero() {
@@ -24,23 +25,18 @@ export function Hero() {
     }
   };
 
+  const locale = useLocale();
+  const logo = locale === "fa" ? faLogo : enLogo;
+
   return (
     <div
       id="hero"
       className="relative flex h-auto min-h-screen w-full flex-col"
     >
       <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-[80vh] bg-gradient-to-t from-[#faf8f1] to-transparent"></div>
-      <div className="absolute left-0 right-0 top-0 -z-10 [mask-image:linear-gradient(to_bottom,white_40%,transparent)]">
-        <Image
-          src={BeachImage}
-          alt="Main Background"
-          className="h-[100vh] w-full object-cover lg:h-[80vh]"
-        />
-      </div>
-      sm:basis-80
-      <div className="mt-32 flex w-full flex-col items-center justify-center gap-16 pb-4">
-        <Image src={Logo} alt="Centered Image" className="w-1/2 md:w-[20%]" />
-        <h1 className="text-gl flex items-center justify-center text-center font-bold text-blue-900 sm:text-xl md:text-2xl lg:text-3xl">
+      <div className="mt-16 flex w-full flex-col items-center justify-center pb-4">
+        <Image src={logo} alt="Centered Image" className="w-3/4 md:w-[40%]" />
+        <h1 className="text-gl mb-16 flex items-center justify-center text-center font-bold text-blue-900 sm:text-xl md:text-2xl lg:text-3xl">
           {t("hero.header.top")}
           <br />
           {t("hero.header.bottom")}

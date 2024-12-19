@@ -81,9 +81,9 @@ export function FeatureDetails() {
 
   return (
     <div className="flex w-full flex-col justify-stretch">
-      <Section dir="ltr" name="about" image={tent} outlinedImage={outlinedTent}>
+      {/* <Section dir="ltr" name="about" image={tent} outlinedImage={outlinedTent}>
         <Button>{t("about.readMore")}</Button>
-      </Section>
+      </Section> */}
       <Section
         dir="rtl"
         name="routeFinder"

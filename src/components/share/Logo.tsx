@@ -1,9 +1,10 @@
 import { cn } from "../../lib/utils";
 import { ClassValue } from "clsx";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
-import logo from "public/assets/images/logo.png";
+import faLogo from "public/assets/icons/Tourbin Logo-01.svg";
+import enLogo from "public/assets/icons/Tourbin Logo-02.svg";
 
 interface SVGProps extends React.SVGProps<SVGSVGElement> {}
 
@@ -25,14 +26,17 @@ interface LogoProps {
 
 export function Logo({ className }: LogoProps) {
   const t = useTranslations("localeLayout");
+  const locale = useLocale();
+  const logo = locale === "fa" ? faLogo : enLogo;
+
   return (
     <div
       className={cn(
-        "flex flex-row items-center justify-center gap-x-2",
+        "flex h-full flex-row items-center justify-center gap-x-2 object-cover",
         className
       )}
     >
-      <Image alt="logo" width={70} height={70} src={logo} />
+      <Image alt="logo" width={110} height={110} src={logo} />
       {/* <Logomark width="40" height="40" className="fill-cyan-500" /> */}
       {/* <h1 className="font-semibold text-xl">{t("title")}</h1> */}
     </div>

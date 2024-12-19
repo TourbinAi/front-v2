@@ -10,7 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "aa44-195-248-240-38.ngrok-free.app",
+        hostname: process.env.NEXT_PUBLIC_BACKEND_DOMAIN,
         port: "",
       },
     ],
