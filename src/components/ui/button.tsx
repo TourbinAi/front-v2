@@ -55,7 +55,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={() => href && router.push(href)}
         {...props}
       />
-    );
+    ) as any;
   }
 );
 Button.displayName = "Button";
