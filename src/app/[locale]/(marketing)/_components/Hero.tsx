@@ -33,9 +33,13 @@ export function Hero() {
       id="hero"
       className="relative flex h-auto min-h-screen w-full flex-col"
     >
-      <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-[80vh] bg-gradient-to-t from-[#faf8f1] to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-[80vh]"></div>
       <div className="mt-16 flex w-full flex-col items-center justify-center pb-4">
-        <Image src={logo} alt="Centered Image" className="w-3/4 md:w-[40%]" />
+        <Image
+          src={logo}
+          alt="Centered Image"
+          className="h-[300px] w-3/4 object-cover md:w-[40%]"
+        />
         <h1 className="text-gl mb-16 flex items-center justify-center text-center font-bold text-blue-900 sm:text-xl md:text-2xl lg:text-3xl">
           {t("hero.header.top")}
           <br />
