@@ -31,7 +31,9 @@ export interface PackagesPlaceReq {
 export type PackagesPlaceRes = {
   description: string
   travel_plan: string
+  video_url: string
   summary_of_travel_plan : string
+  directions_url : string
   places: {
     id: number
     name: string

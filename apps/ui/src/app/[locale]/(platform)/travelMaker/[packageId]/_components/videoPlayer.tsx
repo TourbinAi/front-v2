@@ -99,8 +99,8 @@ export default function CustomVideoPlayer({
     if (isPathFinder) {
         videoSrc =
             typeof videoUrl === "string"
-                ? `/assets/videos/pck/${videoUrl}.mp4`
-                : `/assets/videos/pck/${videoUrl.src}.mp4`;
+                ? `${videoUrl}`
+                : `${videoUrl.src}`;
     } else {
         videoSrc = typeof videoUrl === "string" ? videoUrl : videoUrl.src;
     }

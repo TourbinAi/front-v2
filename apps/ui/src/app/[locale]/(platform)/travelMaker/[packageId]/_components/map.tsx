@@ -88,16 +88,17 @@ interface FullData {
 interface MapProps {
   packageId: number;
   setPlan: Dispatch<SetStateAction<PackagesPlaceRes | undefined>>;
+  dirction_url : string 
 }
 
-function Map({ packageId, setPlan }: MapProps) {
+function Map({ packageId, setPlan ,dirction_url}: MapProps) {
   const [route, setRoute] = useState<any[]>([]);
   const [fulldata, setData] = useState<FullData>({ legs: [] });
   const [waypoint, setWaypoint] = useState<any[]>([]);
   const [info, setinfo] = useState<Info>({
     type: "car",
     originLat: 35.69524140795555, // Tehran
-    originLong: 51.40891271972657,
+    originLong: 51.1932372500000000000,
     destinationLat: 35.534802198378785,
     destinationLong: 57.126487269498455,
     traffic: false,
@@ -105,12 +106,11 @@ function Map({ packageId, setPlan }: MapProps) {
     alternative: false,
     bearing: 170,
   });
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const responseData = await postData(packageId);
-        // console.log(responseData);
         setPlan(responseData.data);
         const waypointInfo = responseData.data.places.map((place) => ({
           longitude: place.latitude,
@@ -128,17 +128,15 @@ function Map({ packageId, setPlan }: MapProps) {
     };
     fetchData();
   }, [packageId, setPlan]);
-
   useEffect(() => {
     async function apiReq() {
       let waypointparams = waypoint
         .map((p) => `${p.longitude},${p.latitude}%7C`)
         .join("");
       let waypointreq = waypointparams.slice(0, -3); // Remove last "%7C"
-
       try {
         const response = await axios.get(
-          `https://api.neshan.org/v4/direction?type=${info.type}&origin=${info.originLat},${info.originLong}&destination=${info.originLat},${info.originLong}&waypoints=${waypointreq}&avoidTrafficZone=${info.traffic}&avoidOddEvenZone=${info.oddeven}&alternative=${info.alternative}&bearing=${info.bearing}`,
+          `${dirction_url}`,
           {
             headers: { "api-key": env.NEXT_PUBLIC_NESHAN_KEY },
           }
@@ -162,8 +160,11 @@ function Map({ packageId, setPlan }: MapProps) {
       leg.steps.flatMap((step) => polyline.decode(step.polyline))
     );
   };
-
-  const center: [number, number] = [info.originLat, info.originLong];
+    const startIndex = dirction_url.indexOf("origin=") + "origin=".length;
+    const endIndex = dirction_url.indexOf("&", startIndex);
+    const origin = dirction_url.substring(startIndex, endIndex);
+    const [latitude,longitude] = origin.split(",").map(Number); 
+    const center:[number , number ] = [latitude || 2, longitude ||2];
 
   let customIcon = null;
   if (L) {
@@ -179,7 +180,6 @@ function Map({ packageId, setPlan }: MapProps) {
 
     L.Marker.prototype.options.icon = customIcon;
   }
-
   return (
     <MapWithNoSSR
       center={center}
@@ -223,7 +223,7 @@ function Map({ packageId, setPlan }: MapProps) {
             </MarkerWithNoSSR>
           ))}
 
-          <MarkerWithNoSSR position={[info.originLat, info.originLong]}>
+          <MarkerWithNoSSR position={[latitude || 2, longitude || 2]}>
             <PopupWithNoSSR>Your starting point</PopupWithNoSSR>
           </MarkerWithNoSSR>
 

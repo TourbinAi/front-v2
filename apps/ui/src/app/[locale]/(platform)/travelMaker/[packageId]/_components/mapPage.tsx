@@ -28,11 +28,9 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
     queryKey: ["places"],
     queryFn: () => postData(Number(packageId)),
   });
-
   if (error) {
     return <ErrorMessage />;
   }
-
   return (
     <>
       <div className="hidden lg:flex size-full flex-col items-stretch justify-start gap-4 p-4 lg:flex-row lg:justify-end ">
@@ -95,10 +93,10 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
             </div>
             <div className="flex flex-col items-stretch gap-4 lg:h-full basis-1/3">
               <div className="aspect-square h-1/3 w-full rounded-lg border-4 border-gray-300 lg:h-2/4">
-                <Map packageId={Number(packageId)} setPlan={setTravelPlan} />
+                <Map packageId={Number(packageId)} setPlan={setTravelPlan} dirction_url={data?.data?.directions_url || ""}/>
               </div>
               <div className="flex aspect-square h-1/3 items-center justify-stretch lg:h-2/4">
-                <VideoPlayer videoUrl={`/assets/videos/pck/${packageId}.mp4`} />
+                <VideoPlayer videoUrl={path.join(env.NEXT_PUBLIC_BACKEND_URL , data?.data?.video_url || "")} />
               </div>
             </div>
           </>
@@ -110,7 +108,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
       {/* responsive */}
       <div className="m-2 flex flex-col lg:hidden gap-2">
         <div className="aspect-square h-1/3 w-full rounded-lg border-4 border-gray-300 lg:h-2/4">
-          <Map packageId={Number(packageId)} setPlan={setTravelPlan} />
+          <Map packageId={Number(packageId)} setPlan={setTravelPlan} dirction_url={data?.data?.directions_url || ""}/>
         </div>
         <div className="w-full h-full">
           <TextCard
@@ -121,7 +119,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div className="flex h-full items-center  lg:h-2/4">
-            <VideoPlayer videoUrl={`/assets/videos/pck/${packageId}.mp4`} />
+            <VideoPlayer videoUrl={path.join(env.NEXT_PUBLIC_BACKEND_URL || "" , data?.data?.video_url || "")} />
           </div>
           <div className="w-full">
             <TextCard
