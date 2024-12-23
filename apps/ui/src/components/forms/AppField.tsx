@@ -19,11 +19,11 @@ import { AppFormLabel } from "./AppFormLabel"
 /**
  * AppField component documentation.
  *
- * This module exports the AppField component, which is a form input field.
- * It uses the `useFormContext` hook from `react-hook-form`.
+ * This module exports the AppField component, which is a form input field
+ * that provides text input functionality. It uses the `Input` component and
+ * integrates with react-hook-form for form state management.
  *
- * The component accepts several props, including `name`, `label`, `endAdornment`,
- * `containerClassName`, `fieldClassName`, and `description`.
+ * The component supports various input types and includes validation state display.
  *
  * @see Props
  * @see AppField
@@ -33,13 +33,12 @@ import { AppFormLabel } from "./AppFormLabel"
  * Props for the AppField component.
  *
  * @typedef {Object} Props
- * @property {string} name - The name of the form field.
- * @property {React.ReactNode} [label] - The label for the form field.
- * @property {React.ReactNode} [endAdornment] - The end adornment for the form field.
- * @property {string} [containerClassName] - The class name for the container element.
- * @property {string} [fieldClassName] - The class name for the field element.
- * @property {React.ReactNode} [description] - The description for the form field.
- * @property {React.InputHTMLAttributes<HTMLInputElement>} nativeProps - The native props for the form field.
+ * @property {string} name - The name of the form field
+ * @property {React.ReactNode} [label] - The label for the form field
+ * @property {React.ReactNode} [endAdornment] - Element to display at the end of the input
+ * @property {string} [containerClassName] - Class name for the container element
+ * @property {string} [fieldClassName] - Class name for the field element
+ * @property {React.ReactNode} [description] - Description text below the field
  */
 
 type Props = {
