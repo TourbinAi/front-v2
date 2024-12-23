@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { UseQueryStateOptions } from "nuqs"
 import { useFormContext } from "react-hook-form"
 
 import { cn } from "@/lib/styles"
@@ -21,6 +22,33 @@ import {
 import { AppFormDescription } from "./AppFormDescription"
 import { AppFormLabel } from "./AppFormLabel"
 
+/**
+ * AppSelect component documentation.
+ *
+ * This module exports the AppSelect component, which is a form select field
+ * that provides a dropdown selection feature. It uses the `Select` component from
+ * `@/components/ui/select` and integrates with react-hook-form and nuqs for URL state.
+ *
+ * The component handles form state management and URL synchronization through query parameters.
+ *
+ * @see Props
+ * @see AppSelect
+ */
+
+/**
+ * Props for the AppSelect component.
+ *
+ * @typedef {Object} Props
+ * @property {string} name - The name of the form field
+ * @property {Array<{label: string, value: string}>} options - Array of options for the select
+ * @property {React.ReactNode} [label] - The label for the form field
+ * @property {string} [placeholder] - Placeholder text when no option is selected
+ * @property {string} [containerClassName] - Class name for the container element
+ * @property {string} [fieldClassName] - Class name for the field element
+ * @property {React.ReactNode} [description] - Description text below the field
+ * @property {Function} [setQueryState] - Function to update URL query parameters
+ */
+
 type Props = {
   readonly name: string
   readonly options: { label: string; value: string }[]
@@ -29,6 +57,10 @@ type Props = {
   readonly containerClassName?: string
   readonly fieldClassName?: string
   readonly description?: React.ReactNode
+  readonly setQueryState?: (
+    value: string | null,
+    options?: UseQueryStateOptions<string>
+  ) => Promise<URLSearchParams>
 } & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "className">
 
 export function AppSelect({
@@ -39,6 +71,7 @@ export function AppSelect({
   containerClassName,
   fieldClassName,
   description,
+  setQueryState,
   ...nativeProps
 }: Props) {
   const { control } = useFormContext()
@@ -59,7 +92,10 @@ export function AppSelect({
             {...field}
             {...nativeProps}
             dir={(nativeProps.dir ?? "rtl") as any}
-            onValueChange={field.onChange}
+            onValueChange={(value) => {
+              field.onChange(value)
+              setQueryState?.(value)
+            }}
             defaultValue={field.value}
           >
             <FormControl>

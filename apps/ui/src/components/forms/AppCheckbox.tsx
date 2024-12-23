@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { UseQueryStateOptions } from "nuqs"
 import { useFormContext } from "react-hook-form"
 
 import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
@@ -48,6 +49,10 @@ type Props = {
   readonly containerClassName?: string
   readonly fieldClassName?: string
   readonly description?: React.ReactNode
+  readonly setQueryState?: (
+    value: boolean | null,
+    options?: UseQueryStateOptions<boolean>
+  ) => Promise<URLSearchParams>
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "className">
 
 export function AppCheckbox({
@@ -56,6 +61,7 @@ export function AppCheckbox({
   containerClassName,
   fieldClassName,
   description,
+  setQueryState,
   ...nativeProps
 }: Props) {
   removeThisWhenYouNeedMe("AppCheckbox")
@@ -79,7 +85,10 @@ export function AppCheckbox({
                 {...field}
                 {...(nativeProps as any)}
                 checked={field.value}
-                onCheckedChange={field.onChange}
+                onCheckedChange={(checked) => {
+                  field.onChange(checked)
+                  setQueryState?.(checked === true)
+                }}
                 className={fieldClassName}
               />
             </FormControl>

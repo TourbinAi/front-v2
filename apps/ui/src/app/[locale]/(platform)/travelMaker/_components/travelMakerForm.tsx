@@ -2,7 +2,6 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import moment from "jalali-moment"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 import { useForm } from "react-hook-form"
@@ -15,9 +14,10 @@ import {
   SidebarSchema,
   TravelMakerSelectValues as tmsv,
 } from "@/lib/validation/travelMaker"
-import CustomFormField, {
-  FormFieldType,
-} from "@/components/forms/CustomeFormField"
+import { AppCheckbox } from "@/components/forms/AppCheckbox"
+import { AppForm } from "@/components/forms/AppForm"
+import { AppMultiSelect } from "@/components/forms/AppMultiSelect"
+import { AppSelect } from "@/components/forms/AppSelect"
 import SubmitButton from "@/components/forms/SubmitButton"
 import {
   Accordion,
@@ -25,67 +25,124 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
-import { SelectItem } from "@/components/ui/select"
 
-// Inside your TravelMakerForm component:
-const persianDate = moment().format("jYYYY-jM-jD") // Get the current Persian date
-
-const [year, month, day] = persianDate.split("-").map(Number)
+const defaultFormValues = {
+  origin: "تهران",
+  distance: "3h" as const,
+  duration: "1d" as const,
+  tags: ["shadowAndGreen"] as (typeof tmsv.placeNature)[number][],
+  route: "easy" as const,
+  vehicle: "car" as const,
+  routStop: "oneWay" as const,
+  direction: "north" as const,
+  accommodation: "camp" as const,
+  oldPerson: false,
+}
 
 interface TravelMakerFormProps {
   setIsLoading?: Dispatch<SetStateAction<boolean>>
-  setList?: Dispatch<SetStateAction<TravelMakerListRes>>
+  setList?: Dispatch<SetStateAction<TravelMakerListRes | undefined>>
   setError?: Dispatch<SetStateAction<boolean>>
   submitFunction: (values: TravelMakerListReq) => void
 }
 
 const TravelMakerForm = (props: TravelMakerFormProps) => {
   const t = useTranslations("travelMaker")
+  const [accoFlag, setFlag] = useState(true)
 
-  const [originQuery, setOriginQuery] = useQueryState("origin")
-  const [distanceQuery, setDistanceQuery] = useQueryState("distance")
-  const [durationQuery, setDurationQuery] = useQueryState("duration")
-  const [tagsQuery, setTagsQuery] = useQueryState("tags")
-  const [routeQuery, setRouteQuery] = useQueryState("route")
-  const [vehicleQuery, setVehicleQuery] = useQueryState("vehicle")
-  const [routStopQuery, setRoutStopQuery] = useQueryState("routStop")
-  const [directionQuery, setDirectionQuery] = useQueryState("direction")
-  const [accommodationQuery, setAccommodationQuery] =
-    useQueryState("accommodation")
-  const [oldPersonQuery, setOldPersonQuery] = useQueryState("oldPerson")
-  const [accoFlag, setFlag] = useState("")
+  const [originQuery, setOriginQuery] = useQueryState("origin", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.origin,
+  })
+  const [distanceQuery, setDistanceQuery] = useQueryState("distance", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.distance,
+  })
+  const [durationQuery, setDurationQuery] = useQueryState("duration", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.duration,
+  })
+  const [tagsQuery, setTagsQuery] = useQueryState("tags", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.tags.join(","),
+  })
+  const [routeQuery, setRouteQuery] = useQueryState("route", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.route,
+  })
+  const [vehicleQuery, setVehicleQuery] = useQueryState("vehicle", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.vehicle,
+  })
+  const [routStopQuery, setRoutStopQuery] = useQueryState("routStop", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.routStop,
+  })
+  const [directionQuery, setDirectionQuery] = useQueryState("direction", {
+    history: "push",
+    parse: (value) => value || defaultFormValues.direction,
+  })
+  const [accommodationQuery, setAccommodationQuery] = useQueryState(
+    "accommodation",
+    {
+      history: "push",
+      parse: (value) => value || defaultFormValues.accommodation,
+    }
+  )
+  const [oldPersonQuery, setOldPersonQuery] = useQueryState("oldPerson", {
+    history: "push",
+    parse: (value) => value === "true",
+  })
 
   const form = useForm<z.infer<typeof SidebarSchema>>({
     resolver: zodResolver(SidebarSchema),
+    defaultValues: defaultFormValues,
   })
-  const { watch } = form
-  const watchedValues = watch()
 
+  // Reset form when URL parameters change
   useEffect(() => {
-    const subscription = watch((values) => {
-      if (values.duration === "1d") {
-        setFlag("hidden")
-      } else {
-        setFlag("")
-      }
-      values.origin && setOriginQuery(values.origin)
-      values.vehicle && setVehicleQuery(values.vehicle)
-      values.routStop && setRoutStopQuery(values.routStop)
-      values.tags && setTagsQuery(values.tags?.join(","))
-      values.route && setRouteQuery(values.route)
-      values.direction && setDirectionQuery(values.direction)
-      values.accommodation && setAccommodationQuery(values.accommodation)
-      values.duration && setDurationQuery(values.duration)
-      values.distance && setDistanceQuery(values.distance)
-      values.oldPerson === true
-        ? setOldPersonQuery("true")
-        : setOldPersonQuery("false")
+    form.reset({
+      origin: originQuery || defaultFormValues.origin,
+      distance: (distanceQuery ||
+        defaultFormValues.distance) as (typeof tmsv.distance)[number],
+      duration: (durationQuery ||
+        defaultFormValues.duration) as (typeof tmsv.duration)[number],
+      tags: tagsQuery
+        ? (tagsQuery.split(",") as (typeof tmsv.placeNature)[number][])
+        : defaultFormValues.tags,
+      route: (routeQuery ||
+        defaultFormValues.route) as (typeof tmsv.route)[number],
+      vehicle: (vehicleQuery ||
+        defaultFormValues.vehicle) as (typeof tmsv.vehicle)[number],
+      routStop: (routStopQuery ||
+        defaultFormValues.routStop) as (typeof tmsv.disState)[number],
+      direction: (directionQuery ||
+        defaultFormValues.direction) as (typeof tmsv.direction)[number],
+      accommodation: (accommodationQuery ||
+        defaultFormValues.accommodation) as (typeof tmsv.accommodation)[number],
+      oldPerson: oldPersonQuery ?? defaultFormValues.oldPerson,
     })
+  }, [
+    form,
+    originQuery,
+    distanceQuery,
+    durationQuery,
+    tagsQuery,
+    routeQuery,
+    vehicleQuery,
+    routStopQuery,
+    directionQuery,
+    accommodationQuery,
+    oldPersonQuery,
+  ])
 
-    return () => subscription.unsubscribe()
-  }, [watch])
+  // Watch duration for accommodation visibility
+  const duration = form.watch("duration")
+  if (duration === "1d" && accoFlag) {
+    setFlag(false)
+  } else if (duration !== "1d" && !accoFlag) {
+    setFlag(true)
+  }
 
   const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
     props.setIsLoading?.(true)
@@ -104,7 +161,7 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
         overnight_stay: values.accommodation
           ? ([1, 2, 3] as const).at(
               tmsv.accommodation.indexOf(values.accommodation)
-            )
+            ) || 0
           : 0,
         count_of_elder_people: values.oldPerson ? 1 : 0,
         tags: values.tags.map((place) => tmsv.placeNature.indexOf(place)),
@@ -113,7 +170,9 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
             tmsv.vehicle.indexOf(values.vehicle)
           ) || 1,
         direction_of_movement: values.direction
-          ? ([1, 2, 3, 4] as const).at(tmsv.direction.indexOf(values.direction))
+          ? ([1, 2, 3, 4] as const).at(
+              tmsv.direction.indexOf(values.direction)
+            ) || 0
           : 0,
       }
       await props.submitFunction(requestObject)
@@ -128,164 +187,123 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
   }
 
   return (
-    <div className="h-full overflow-x-hidden p-5">
-      <div className="flex h-full flex-wrap justify-center">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CustomFormField
-              fieldType={FormFieldType.SELECT}
-              control={form.control}
-              name="origin"
-              label={t("form.origin.title")}
-              placeholder={t("form.origin.placeholder")}
-            >
-              {["تهران", "مشهد"].map((city, i) => (
-                <SelectItem key={i} value={city}>
-                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                    <p>{city}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </CustomFormField>
-            <CustomFormField
-              fieldType={FormFieldType.SELECT}
-              control={form.control}
-              name="distance"
-              label={t("form.distance.title")}
-              placeholder={t("form.distance.placeholder")}
-            >
-              {tmsv.distance.map((dis, i) => (
-                <SelectItem key={i} value={dis}>
-                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                    <p>{t(`form.distance.select.${dis}`)}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </CustomFormField>
-            <CustomFormField
-              fieldType={FormFieldType.MULTISELECT}
-              control={form.control}
-              name="tags"
-              label={t("form.place.placeholder")}
-              placeholder={t("form.place.select.title-nature-placeHolder")}
-              options={tmsv.placeNature.map((p) => ({
-                value: p,
-                label: t(`form.place.select.${p}`),
-              }))}
+    <AppForm form={form} onSubmit={onSubmit}>
+      <AppSelect
+        name="origin"
+        label={t("form.origin.title")}
+        placeholder={t("form.origin.placeholder")}
+        options={["تهران", "مشهد"].map((city) => ({
+          value: city,
+          label: city,
+        }))}
+        setQueryState={setOriginQuery}
+      />
+
+      <AppSelect
+        name="distance"
+        label={t("form.distance.title")}
+        placeholder={t("form.distance.placeholder")}
+        options={tmsv.distance.map((dis) => ({
+          value: dis,
+          label: t(`form.distance.select.${dis}`),
+        }))}
+        setQueryState={setDistanceQuery}
+      />
+
+      <AppMultiSelect
+        name="tags"
+        label={t("form.place.placeholder")}
+        placeholder={t("form.place.select.title-nature-placeHolder")}
+        options={tmsv.placeNature.map((p) => ({
+          value: p,
+          label: t(`form.place.select.${p}`),
+        }))}
+        setQueryState={setTagsQuery}
+      />
+
+      <AppSelect
+        name="duration"
+        label={t("form.duration.title")}
+        placeholder={t("form.duration.placeholder")}
+        options={tmsv.duration.map((time) => ({
+          value: time,
+          label: t(`form.duration.select.${time}`),
+        }))}
+        setQueryState={setDurationQuery}
+      />
+
+      <AppSelect
+        name="route"
+        label={t("form.route.title")}
+        placeholder={t("form.route.placeholder")}
+        options={tmsv.route.map((route) => ({
+          value: route,
+          label: t(`form.route.select.${route}`),
+        }))}
+        setQueryState={setRouteQuery}
+      />
+
+      <AppSelect
+        name="routStop"
+        label={t("form.destination-state.title")}
+        placeholder={t("form.destination-state.placeholder")}
+        options={tmsv.disState.map((state) => ({
+          value: state,
+          label: t(`form.destination-state.select.${state}`),
+        }))}
+        setQueryState={setRoutStopQuery}
+      />
+
+      <AppSelect
+        name="vehicle"
+        label={t("form.vehicle.title")}
+        placeholder={t("form.vehicle.placeholder")}
+        options={tmsv.vehicle.map((vehicle) => ({
+          value: vehicle,
+          label: t(`form.vehicle.select.${vehicle}`),
+        }))}
+        setQueryState={setVehicleQuery}
+      />
+
+      <Accordion type="single" collapsible>
+        <AccordionItem value="optional">
+          <AccordionTrigger>{t("form.popover-button")}</AccordionTrigger>
+          <AccordionContent>
+            <AppCheckbox
+              name="oldPerson"
+              label={t("form.oldPerson.title")}
+              setQueryState={setOldPersonQuery}
             />
-            <CustomFormField
-              fieldType={FormFieldType.SELECT}
-              control={form.control}
-              name="duration"
-              label={t("form.duration.title")}
-              placeholder={t("form.duration.placeholder")}
-            >
-              {tmsv.duration.map((time, i) => (
-                <SelectItem key={i} value={time}>
-                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                    <p>{t(`form.duration.select.${time}`)}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </CustomFormField>
-            <CustomFormField
-              fieldType={FormFieldType.SELECT}
-              control={form.control}
-              name="route"
-              label={t("form.route.title")}
-              placeholder={t("form.route.placeholder")}
-            >
-              {tmsv.route.map((route, i) => (
-                <SelectItem key={i} value={route}>
-                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                    <p>{t(`form.route.select.${route}`)}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </CustomFormField>
-            <CustomFormField
-              fieldType={FormFieldType.SELECT}
-              control={form.control}
-              name="routStop"
-              label={t("form.destination-state.title")}
-              placeholder={t("form.destination-state.placeholder")}
-            >
-              {tmsv.disState.map((state, i) => (
-                <SelectItem key={i} value={state}>
-                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                    <p>{t(`form.destination-state.select.${state}`)}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </CustomFormField>
-            <CustomFormField
-              fieldType={FormFieldType.SELECT}
-              control={form.control}
-              name="vehicle"
-              label={t("form.vehicle.title")}
-              placeholder={t("form.vehicle.placeholder")}
-            >
-              {tmsv.vehicle.map((vehicle, i) => (
-                <SelectItem key={i} value={vehicle}>
-                  <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                    <p>{t(`form.vehicle.select.${vehicle}`)}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </CustomFormField>
-            <Accordion type="single" collapsible>
-              <AccordionItem value="optional">
-                <AccordionTrigger>{t("form.popover-button")}</AccordionTrigger>
-                <AccordionContent>
-                  <CustomFormField
-                    fieldType={FormFieldType.CHECKBOX}
-                    control={form.control}
-                    name="oldPerson"
-                    label={t("form.oldPerson.title")}
-                    // placeholder={t("form.oldPerson.placeholder")}
-                  />
-                  <CustomFormField
-                    fieldType={FormFieldType.SELECT}
-                    control={form.control}
-                    name="direction"
-                    label={t("form.travel-direction.title")}
-                    placeholder={t("form.travel-direction.placeholder")}
-                  >
-                    {tmsv.direction.map((dir, i) => (
-                      <SelectItem key={i} value={dir}>
-                        <p>{t(`form.travel-direction.select.${dir}`)}</p>
-                      </SelectItem>
-                    ))}
-                  </CustomFormField>
-                  <CustomFormField
-                    fieldType={FormFieldType.SELECT}
-                    control={form.control}
-                    name="accommodation"
-                    label={t("form.accommodation.title")}
-                    placeholder={t("form.accommodation.placeholder")}
-                  >
-                    {tmsv.accommodation.map((accommodation, i) => (
-                      <SelectItem
-                        key={i}
-                        value={accommodation}
-                        className={accoFlag}
-                      >
-                        <p>
-                          {t(
-                            `form.accommodation.accommodationSelect.${accommodation}`
-                          )}
-                        </p>
-                      </SelectItem>
-                    ))}
-                  </CustomFormField>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-            <SubmitButton>{t("form.Button")}</SubmitButton>
-          </form>
-        </Form>
-      </div>
-    </div>
+
+            <AppSelect
+              name="direction"
+              label={t("form.travel-direction.title")}
+              placeholder={t("form.travel-direction.placeholder")}
+              options={tmsv.direction.map((dir) => ({
+                value: dir,
+                label: t(`form.travel-direction.select.${dir}`),
+              }))}
+              setQueryState={setDirectionQuery}
+            />
+
+            {accoFlag && (
+              <AppSelect
+                name="accommodation"
+                label={t("form.accommodation.title")}
+                placeholder={t("form.accommodation.placeholder")}
+                options={tmsv.accommodation.map((acc) => ({
+                  value: acc,
+                  label: t(`form.accommodation.accommodationSelect.${acc}`),
+                }))}
+                setQueryState={setAccommodationQuery}
+              />
+            )}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      <SubmitButton>{t("form.Button")}</SubmitButton>
+    </AppForm>
   )
 }
 

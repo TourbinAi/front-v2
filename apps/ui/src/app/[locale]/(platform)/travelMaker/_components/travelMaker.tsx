@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { ChevronRight, TriangleAlert } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -27,12 +27,18 @@ export default function TravelMaker() {
   const [list, setList] = useState<TravelMakerListRes>()
   const [error, setError] = useState<boolean>(false)
 
-  const submitFunction = async (values: TravelMakerListReq) => {
-    const response = await TravelMakerList(values)
-    setList(response.data)
-  }
-
   const t = useTranslations("travelMaker")
+
+  const submitFunction = useCallback(async (values: TravelMakerListReq) => {
+    try {
+      const response = await TravelMakerList(values)
+      setList(response.data)
+      setOpen(false)
+    } catch (error) {
+      console.error("Form submission failed:", error)
+      setError(true)
+    }
+  }, [])
 
   return (
     <SheetLayout
@@ -43,6 +49,7 @@ export default function TravelMaker() {
         <TravelMakerForm
           setError={setError}
           setIsLoading={setLoading}
+          setList={setList}
           submitFunction={submitFunction}
         />
       }
@@ -52,8 +59,8 @@ export default function TravelMaker() {
           <Card className="max-w-96">
             <CardHeader className="flex w-full flex-col items-center justify-center">
               <CardTitle className="flex gap-2 pb-2">
+                <span>{t("form.error")} </span>
                 <TriangleAlert className="size-10 text-destructive" />
-                <span className="text-md">{t("form.error")} </span>
               </CardTitle>
               <CardDescription className="text-center">
                 {t("form.tryAnother")}
