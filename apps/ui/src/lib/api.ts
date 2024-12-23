@@ -8,6 +8,7 @@ import type {
   TravelMakerListReq,
   TravelMakerListRes,
 } from "@/types/api"
+import { string } from "zod"
 
 const api = axios.create({
   headers: {

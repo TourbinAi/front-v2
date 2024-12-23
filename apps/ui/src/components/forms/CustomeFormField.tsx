@@ -1,6 +1,5 @@
 import React from "react"
 import Image from "next/image"
-import { DayValue } from "@hassanmojab/react-modern-calendar-datepicker"
 import { E164Number } from "libphonenumber-js/core"
 import { icons } from "lucide-react"
 import { useLocale } from "next-intl"
@@ -99,7 +98,7 @@ function RenderInput<
     case FormFieldType.INPUT:
     case FormFieldType.NUMBER:
       return (
-        <div className="border-dark-500 bg-dark-400flex flex w-full cursor-pointer flex-row items-center gap-2 rounded-md border ltr:flex-row-reverse">
+        <div className="bg-dark-400flex flex w-full cursor-pointer flex-row items-center gap-2 rounded-2xl border border-[#A4A7F7] ltr:flex-row-reverse">
           {props.iconSrc && (
             <Image
               src={props.iconSrc}
@@ -124,7 +123,7 @@ function RenderInput<
               }
               {...field}
               placeholder={props.placeholder}
-              className="shad-input border-0"
+              className="shad-input !rounded-2xl border-0 text-center !placeholder-[#A4A7F7] lg:text-xl"
               onChange={(e) => {
                 field.onChange(e.target.value)
                 if (props.onChange) {
@@ -274,7 +273,7 @@ function CustomFormField<
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem className="flex flex-col gap-2">
+          <FormItem className="flex flex-row gap-2 rounded-lg">
             {props.fieldType !== FormFieldType.CHECKBOX && label && (
               <FormLabel className="shad-input-label whitespace-nowrap">
                 {label}
