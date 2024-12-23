@@ -134,6 +134,7 @@ function Map({ packageId, setPlan ,dirction_url}: MapProps) {
         .map((p) => `${p.longitude},${p.latitude}%7C`)
         .join("");
       let waypointreq = waypointparams.slice(0, -3); // Remove last "%7C"
+      console.log(dirction_url)
       try {
         const response = await axios.get(
           `${dirction_url}`,
@@ -164,7 +165,7 @@ function Map({ packageId, setPlan ,dirction_url}: MapProps) {
     const endIndex = dirction_url.indexOf("&", startIndex);
     const origin = dirction_url.substring(startIndex, endIndex);
     const [latitude,longitude] = origin.split(",").map(Number); 
-    const center:[number , number ] = [latitude || 2, longitude ||2];
+    const center:[number , number ] = [latitude || 2, longitude || 2];
 
   let customIcon = null;
   if (L) {
