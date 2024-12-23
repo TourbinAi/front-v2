@@ -165,6 +165,7 @@ export default class Strapi {
       headers: {
         Accept: "application/json",
         "Content-type": "application/json",
+        Authorization: `Bearer ${env.NEXT_PUBLIC_STRAPI_KEY}`,
       },
     }
   }

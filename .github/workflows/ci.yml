@@ -34,6 +34,16 @@ jobs:
       - name: Install dependencies
         run: yarn
       
+      # add this when you want to add sonarQube static code analysis into the github pipeline
+      # - name: SonarQube Scan
+      #   uses: sonarsource/sonarqube-scan-action@v1
+      #   with:
+      #     projectBaseDir: .
+      #     token: ${{ secrets.SONAR_TOKEN }}
+      #     extras: |
+      #       sonar.coverage.exclusions=**/__tests__/**/*, **/*.test.js
+      #       sonar.test.inclusions=__tests__/**/*.test.js
+
       - name: Build UI
         run: yarn build:ui
         env:
@@ -44,7 +54,4 @@ jobs:
 
       - name: Build Strapi
         run: yarn build:strapi
-        
-
-
 

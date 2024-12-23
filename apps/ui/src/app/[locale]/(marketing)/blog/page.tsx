@@ -1,6 +1,5 @@
 import { AppLocale } from "@/types/general"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { Link } from "@/lib/navigation"
 import Strapi from "@/lib/strapi"
 
@@ -15,8 +14,6 @@ async function getData() {
 }
 
 export default async function RootBuilderPage() {
-  removeThisWhenYouNeedMe("RootBuilderPage")
-
   const pages = await getData()
 
   return (
@@ -32,7 +29,7 @@ export default async function RootBuilderPage() {
             {pages.map((page, i) => (
               <Link
                 locale={page.attributes.locale as AppLocale}
-                href={`/builder/${page.attributes.slug}`}
+                href={`/blog/${page.attributes.slug}`}
                 key={String(page.id) + i}
               >
                 <div className="rounded-md bg-gray-200 p-6 text-center transition-colors duration-200 hover:bg-gray-400">

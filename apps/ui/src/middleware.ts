@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
-import { env } from "./env.mjs"
 import { defaultLocale, locales } from "./lib/i18n"
 
 // https://next-intl-docs.vercel.app/docs/getting-started/app-router
@@ -58,7 +57,7 @@ export const config = {
     "/",
     // Set a cookie to remember the previous locale for
     // all requests that have a locale prefix
-    `/(cs|en)/:path*`,
+    `/(fa|en)/:path*`,
 
     // Skip all paths that should not be internationalized
     "/((?!_next|_vercel|api|.*\\..*).*)",

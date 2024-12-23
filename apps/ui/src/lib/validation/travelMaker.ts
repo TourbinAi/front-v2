@@ -42,12 +42,12 @@ export const SidebarSchema = z.object({
   routStop: z.enum(TravelMakerSelectValues.disState, {
     required_error: " required",
   }),
-  direction: z.enum(TravelMakerSelectValues.direction),
-  oldPerson: z.boolean(),
-  accommodation: z.enum(TravelMakerSelectValues.accommodation),
+  direction: z.enum(TravelMakerSelectValues.direction).optional(),
+  oldPerson: z.boolean().optional(),
+  accommodation: z.enum(TravelMakerSelectValues.accommodation).optional(),
   date: z.object({
     year: z.number(),
     month: z.number(),
     day: z.number(),
-  }),
+  }).optional(),
 })

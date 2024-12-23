@@ -102,11 +102,6 @@ html {
   }
 }
 
-.infinite-scroll-container-horizontal {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .infinite-scroll-horizontal {
   width: max-content;
   flex-wrap: nowrap;
