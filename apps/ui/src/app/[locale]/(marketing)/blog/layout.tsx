@@ -11,6 +11,7 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({ children }) => {
     <>
       <Header />
       {children}
+      <Footer />
     </>
   )
 }

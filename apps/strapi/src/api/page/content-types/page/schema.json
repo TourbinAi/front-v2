@@ -19,8 +19,6 @@
     "slug": {
       "type": "string",
       "required": true,
-      "unique": false,
-      "regex": "^[a-z0-9/-]+$",
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -37,25 +35,20 @@
         }
       }
     },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "pages"
+    },
     "content": {
-      "type": "dynamiczone",
-      "components": [
-        "layout.navbar",
-        "sections.faq",
-        "sections.horizontal-images",
-        "sections.hero",
-        "sections.feature-grid",
-        "sections.carousel",
-        "sections.heading-with-cta-button",
-        "sections.image-with-cta-button",
-        "sections.animated-logo-row",
-        "sections.blog-markdown"
-      ],
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "type": "richtext",
+      "required": true
     },
     "title": {
       "pluginOptions": {
@@ -77,7 +70,7 @@
           "localized": true
         }
       },
-      "required": false
+      "required": true
     }
   }
 }

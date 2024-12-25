@@ -1,0 +1,5 @@
+/**
+ * category service
+ */
+
+export default () => ({});

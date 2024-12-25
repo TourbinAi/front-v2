@@ -360,46 +360,16 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   }
 }
 
-export interface ApiConfigurationConfiguration extends Schema.SingleType {
-  collectionName: "configurations"
+export interface ApiAuthorAuthor extends Schema.CollectionType {
+  collectionName: "authors"
   info: {
-    singularName: "configuration"
-    pluralName: "configurations"
-    displayName: "Configuration"
-    description: ""
+    singularName: "author"
+    pluralName: "authors"
+    displayName: "Author"
+    description: "Content creators and writers"
   }
   options: {
-    draftAndPublish: false
-  }
-  attributes: {
-    darkMode: Attribute.Boolean & Attribute.DefaultTo<false>
-    createdAt: Attribute.DateTime
-    updatedAt: Attribute.DateTime
-    createdBy: Attribute.Relation<
-      "api::configuration.configuration",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private
-    updatedBy: Attribute.Relation<
-      "api::configuration.configuration",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private
-  }
-}
-
-export interface ApiFooterFooter extends Schema.SingleType {
-  collectionName: "footers"
-  info: {
-    singularName: "footer"
-    pluralName: "footers"
-    displayName: "Footer"
-    description: ""
-  }
-  options: {
-    draftAndPublish: false
+    draftAndPublish: true
   }
   pluginOptions: {
     i18n: {
@@ -407,108 +377,65 @@ export interface ApiFooterFooter extends Schema.SingleType {
     }
   }
   attributes: {
-    gridCols: Attribute.Component<"shared.grid-column"> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    sections: Attribute.Component<"shared.footer-item", true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    links: Attribute.Component<"shared.link", true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    copyRight: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    logoImage: Attribute.Component<"shared.image-with-link"> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
+    name: Attribute.String & Attribute.Required
+    email: Attribute.Email & Attribute.Required & Attribute.Unique
+    avatar: Attribute.Media<"images">
+    pages: Attribute.Relation<
+      "api::author.author",
+      "oneToMany",
+      "api::page.page"
+    >
     createdAt: Attribute.DateTime
     updatedAt: Attribute.DateTime
+    publishedAt: Attribute.DateTime
     createdBy: Attribute.Relation<
-      "api::footer.footer",
+      "api::author.author",
       "oneToOne",
       "admin::user"
     > &
       Attribute.Private
     updatedBy: Attribute.Relation<
-      "api::footer.footer",
+      "api::author.author",
       "oneToOne",
       "admin::user"
     > &
       Attribute.Private
     localizations: Attribute.Relation<
-      "api::footer.footer",
+      "api::author.author",
       "oneToMany",
-      "api::footer.footer"
+      "api::author.author"
     >
     locale: Attribute.String
   }
 }
 
-export interface ApiNavbarNavbar extends Schema.SingleType {
-  collectionName: "navbars"
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: "categories"
   info: {
-    singularName: "navbar"
-    pluralName: "navbars"
-    displayName: "Navbar"
-    description: ""
+    singularName: "category"
+    pluralName: "categories"
+    displayName: "Category"
   }
   options: {
     draftAndPublish: false
-  }
-  pluginOptions: {
-    i18n: {
-      localized: true
-    }
+    comment: ""
   }
   attributes: {
-    links: Attribute.Component<"shared.link", true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    logoImage: Attribute.Component<"shared.image-with-link"> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
+    name: Attribute.String
     createdAt: Attribute.DateTime
     updatedAt: Attribute.DateTime
     createdBy: Attribute.Relation<
-      "api::navbar.navbar",
+      "api::category.category",
       "oneToOne",
       "admin::user"
     > &
       Attribute.Private
     updatedBy: Attribute.Relation<
-      "api::navbar.navbar",
+      "api::category.category",
       "oneToOne",
       "admin::user"
     > &
       Attribute.Private
-    localizations: Attribute.Relation<
-      "api::navbar.navbar",
-      "oneToMany",
-      "api::navbar.navbar"
-    >
-    locale: Attribute.String
   }
 }
 
@@ -542,20 +469,27 @@ export interface ApiPagePage extends Schema.CollectionType {
           localized: true
         }
       }>
-    content: Attribute.DynamicZone<
-      [
-        "layout.navbar",
-        "sections.faq",
-        "sections.horizontal-images",
-        "sections.hero",
-        "sections.feature-grid",
-        "sections.carousel",
-        "sections.heading-with-cta-button",
-        "sections.image-with-cta-button",
-        "sections.animated-logo-row",
-        "sections.blog-markdown"
-      ]
-    > &
+    author: Attribute.Relation<
+      "api::page.page",
+      "manyToOne",
+      "api::author.author"
+    >
+    content: Attribute.RichText &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    cover: Attribute.Media<"images"> &
+      Attribute.Required &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true
@@ -1013,9 +947,8 @@ declare module "@strapi/types" {
       "admin::api-token-permission": AdminApiTokenPermission
       "admin::transfer-token": AdminTransferToken
       "admin::transfer-token-permission": AdminTransferTokenPermission
-      "api::configuration.configuration": ApiConfigurationConfiguration
-      "api::footer.footer": ApiFooterFooter
-      "api::navbar.navbar": ApiNavbarNavbar
+      "api::author.author": ApiAuthorAuthor
+      "api::category.category": ApiCategoryCategory
       "api::page.page": ApiPagePage
       "plugin::upload.file": PluginUploadFile
       "plugin::upload.folder": PluginUploadFolder
