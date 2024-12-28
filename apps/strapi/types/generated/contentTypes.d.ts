@@ -369,12 +369,7 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
     description: "Content creators and writers"
   }
   options: {
-    draftAndPublish: true
-  }
-  pluginOptions: {
-    i18n: {
-      localized: true
-    }
+    draftAndPublish: false
   }
   attributes: {
     name: Attribute.String & Attribute.Required
@@ -385,9 +380,9 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
       "oneToMany",
       "api::page.page"
     >
+    username: Attribute.String & Attribute.Required & Attribute.Unique
     createdAt: Attribute.DateTime
     updatedAt: Attribute.DateTime
-    publishedAt: Attribute.DateTime
     createdBy: Attribute.Relation<
       "api::author.author",
       "oneToOne",
@@ -400,12 +395,6 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
       "admin::user"
     > &
       Attribute.Private
-    localizations: Attribute.Relation<
-      "api::author.author",
-      "oneToMany",
-      "api::author.author"
-    >
-    locale: Attribute.String
   }
 }
 
@@ -474,13 +463,6 @@ export interface ApiPagePage extends Schema.CollectionType {
       "manyToOne",
       "api::author.author"
     >
-    content: Attribute.RichText &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
     title: Attribute.String &
       Attribute.Required &
       Attribute.SetPluginOptions<{
@@ -489,6 +471,13 @@ export interface ApiPagePage extends Schema.CollectionType {
         }
       }>
     cover: Attribute.Media<"images"> &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    content: Attribute.RichText &
       Attribute.Required &
       Attribute.SetPluginOptions<{
         i18n: {

@@ -1,8 +1,8 @@
+import createMDX from "@next/mdx"
 import withPlaiceholder from "@plaiceholder/next"
 import { withSentryConfig } from "@sentry/nextjs"
-import createMDX from '@next/mdx'
-import remarkGfm from 'remark-gfm'
 import plugin from "next-intl/plugin"
+import remarkGfm from "remark-gfm"
 
 import { env } from "./src/env.mjs"
 
@@ -17,7 +17,7 @@ const withMDX = createMDX({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   output: env.NEXT_OUTPUT,
   reactStrictMode: true,
   experimental: {},

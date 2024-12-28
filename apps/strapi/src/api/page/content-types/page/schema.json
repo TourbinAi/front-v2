@@ -41,15 +41,6 @@
       "target": "api::author.author",
       "inversedBy": "pages"
     },
-    "content": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "richtext",
-      "required": true
-    },
     "title": {
       "pluginOptions": {
         "i18n": {
@@ -60,16 +51,25 @@
       "required": true
     },
     "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images"
       ],
-      "type": "media",
-      "multiple": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "content": {
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
+      "type": "richtext",
       "required": true
     }
   }

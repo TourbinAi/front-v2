@@ -13,6 +13,9 @@ coverage
 out/
 build
 
+# contentlayer
+.contentlayer
+
 # other
 dist/
 

@@ -307,6 +307,14 @@
       "goTo": "Tourism places page"
     }
   },
+  "blog": {
+    "title": "Blog",
+    "goTo": "Blog page",
+    "single": {
+      "seeAllPosts": "See all posts",
+      "publishedOn": "Published on"
+    }
+  },
   "notFoundPage": {
     "title": "404 Not Found",
     "destination": "You've gone the wrong way!"

@@ -1,19 +1,33 @@
+import { format as formatJalali } from "date-fns-jalali"
 import dayjs from "dayjs"
-import cs from "dayjs/locale/cs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 import timezone from "dayjs/plugin/timezone"
 import utc from "dayjs/plugin/utc"
 
-export const DATE_FORMAT = "DD/MM/YY"
+export const DATE_FORMAT = "dd/MM/yy"
 export const TIME_FORMAT = "H:mm"
-export const DATE_TIME_FORMAT = "DD/MM/YY HH:mm"
+export const DATE_TIME_FORMAT = "dd/MM/yy HH:mm"
 
 export const setupDaysJs = () => {
   dayjs.extend(utc)
   dayjs.extend(timezone)
   dayjs.extend(localizedFormat)
-  dayjs.locale(cs)
-  dayjs.tz.setDefault("Europe/Prague")
+  dayjs.tz.setDefault("Asia/Tehran")
+}
+
+export function formatDate(
+  date: string | Date | undefined,
+  format = DATE_FORMAT,
+  locale?: "fa" | "en"
+): string {
+  if (!date) return ""
+  const dateObj = typeof date === "string" ? new Date(date) : date
+
+  if (locale === "fa") {
+    return formatJalali(dateObj, format)
+  }
+
+  return dayjs(dateObj).format(format)
 }
 
 export function formatDateRange(
@@ -36,13 +50,6 @@ export function formatDateRange(
     return `${start.format(format)}–${end.format(format)}`
   }
   return undefined
-}
-
-export function formatDate(
-  date: string | Date | undefined,
-  format = DATE_FORMAT
-): string {
-  return dayjs(date).format(format)
 }
 
 export function getToday(format = DATE_FORMAT): string {

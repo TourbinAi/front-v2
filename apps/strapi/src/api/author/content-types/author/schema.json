@@ -8,13 +8,9 @@
     "description": "Content creators and writers"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
@@ -38,6 +34,12 @@
       "relation": "oneToMany",
       "target": "api::page.page",
       "mappedBy": "author"
+    },
+    "username": {
+      "pluginOptions": {},
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
