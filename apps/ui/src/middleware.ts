@@ -7,7 +7,7 @@ import { defaultLocale, locales } from "./lib/i18n"
 const intlMiddleware = createMiddleware({
   locales,
   defaultLocale,
-  localePrefix: "as-needed",
+  localePrefix: "always",
 })
 
 const publicPages = [
@@ -51,15 +51,11 @@ export default function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Match only internationalized pathnames
   matcher: [
-    // Enable a redirect to a matching locale at the root
-    "/",
-    // Set a cookie to remember the previous locale for
-    // all requests that have a locale prefix
-    `/(fa|en)/:path*`,
-
-    // Skip all paths that should not be internationalized
-    "/((?!_next|_vercel|api|.*\\..*).*)",
+    // Match all paths except those starting with:
+    // - api (API routes)
+    // - _next (Next.js internals)
+    // - .*\\..*$ (files with extensions, e.g. favicon.ico)
+    "/((?!api|_next|.*\\..*).*)",
   ],
 }

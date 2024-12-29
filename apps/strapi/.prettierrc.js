@@ -1,4 +1,8 @@
+/** @type {import('prettier').Config} */
 module.exports = {
   ...require("@repo/prettier-config"),
-  plugins: [], // Override plugins to remove tailwindcss plugin during type generation
-};
+  plugins: [
+    "prettier-plugin-packagejson",
+    "@ianvs/prettier-plugin-sort-imports",
+  ],
+}

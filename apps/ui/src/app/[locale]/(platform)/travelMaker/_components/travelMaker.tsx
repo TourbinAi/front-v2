@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { ChevronRight, TriangleAlert } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -27,18 +27,12 @@ export default function TravelMaker() {
   const [list, setList] = useState<TravelMakerListRes>()
   const [error, setError] = useState<boolean>(false)
 
-  const t = useTranslations("travelMaker")
+  const submitFunction = async (values: TravelMakerListReq) => {
+    const response = await TravelMakerList(values)
+    setList(response.data)
+  }
 
-  const submitFunction = useCallback(async (values: TravelMakerListReq) => {
-    try {
-      const response = await TravelMakerList(values)
-      setList(response.data)
-      setOpen(false)
-    } catch (error) {
-      console.error("Form submission failed:", error)
-      setError(true)
-    }
-  }, [])
+  const t = useTranslations("travelMaker")
 
   return (
     <SheetLayout
@@ -49,7 +43,6 @@ export default function TravelMaker() {
         <TravelMakerForm
           setError={setError}
           setIsLoading={setLoading}
-          setList={setList}
           submitFunction={submitFunction}
         />
       }

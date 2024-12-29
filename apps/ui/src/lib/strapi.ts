@@ -16,11 +16,9 @@ type CustomFetchOptions = {
  * Mapping of Strapi content type UIDs to API endpoint paths.
  */
 export const API_ENDPOINTS: { [key in Common.UID.ContentType]?: string } = {
-  "api::configuration.configuration": "/configuration",
   "plugin::users-permissions.user": "/users",
   "api::page.page": "/pages",
-  "api::footer.footer": "/footer",
-  "api::navbar.navbar": "/navbar",
+  "api::author.author": "/authors",
   // Add UID<->endpoint mapping for ContentTypes here
 } as const
 

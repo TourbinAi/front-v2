@@ -41,7 +41,7 @@ const defaultFormValues = {
 
 interface TravelMakerFormProps {
   setIsLoading?: Dispatch<SetStateAction<boolean>>
-  setList?: Dispatch<SetStateAction<TravelMakerListRes | undefined>>
+  setList?: Dispatch<SetStateAction<TravelMakerListRes>>
   setError?: Dispatch<SetStateAction<boolean>>
   submitFunction: (values: TravelMakerListReq) => void
 }

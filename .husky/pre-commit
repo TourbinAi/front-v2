@@ -1,10 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-echo '🏗️👷 Running knip and styling your changes before committing 👷‍♂️🏗️'
-
-# Run knip to check for unused files or dependencies
-# npx --no knip
-
-# Run lint-staged
+echo '🏗️👷 Styling your changes before committing 👷‍♂️🏗️'
+ 
 git rev-parse -q --no-revs --verify MERGE_HEAD || npx lint-staged --verbose --concurrent false

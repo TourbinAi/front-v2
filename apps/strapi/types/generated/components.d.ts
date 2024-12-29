@@ -50,6 +50,19 @@ export interface SectionsCarousel extends Schema.Component {
       Attribute.DefaultTo<false>
   }
 }
+
+export interface SectionsContactForm extends Schema.Component {
+  collectionName: "components_sections_contact_forms"
+  info: {
+    displayName: "ContactForm"
+  }
+  attributes: {
+    title: Attribute.String
+    description: Attribute.Text
+    gdpr: Attribute.Component<"shared.link">
+  }
+}
+
 export interface SectionsFaq extends Schema.Component {
   collectionName: "components_sections_faqs"
   info: {
@@ -325,6 +338,7 @@ declare module "@strapi/types" {
       "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.blog-markdown": SectionsBlogMarkdown
       "sections.carousel": SectionsCarousel
+      "sections.contact-form": SectionsContactForm
       "sections.faq": SectionsFaq
       "sections.feature-grid": SectionsFeatureGrid
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton

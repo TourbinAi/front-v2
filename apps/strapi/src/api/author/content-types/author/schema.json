@@ -5,38 +5,39 @@
     "singularName": "author",
     "pluralName": "authors",
     "displayName": "Author",
-    "description": ""
+    "description": "Content creators and writers"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "userName": {
+    "name": {
       "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
       "required": true,
       "unique": true
     },
-    "firstName": {
-      "type": "string",
-      "required": true
-    },
-    "lastName": {
-      "type": "string",
-      "required": true
-    },
-    "profile": {
-      "allowedTypes": [
-        "images"
-      ],
+    "avatar": {
       "type": "media",
-      "multiple": false
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     },
-    "blogs": {
+    "pages": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::page.page",
       "mappedBy": "author"
+    },
+    "username": {
+      "pluginOptions": {},
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
