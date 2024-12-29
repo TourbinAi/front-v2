@@ -27,7 +27,6 @@
     "submitForm": "Submit",
     "saveChanges": "Save changes"
   },
-
   "comps": {
     "fileInput": {
       "label": "Select file",
@@ -50,7 +49,6 @@
       "confirmClose": "Do you want to close the dialog? You will lose all unsaved changes."
     }
   },
-
   "tables": {
     "previousPage": "Previous page",
     "nextPage": "Next page",
@@ -62,7 +60,10 @@
     "descending": "Descending",
     "noData": "No data"
   },
-
+  "Error": {
+    "description": "<p>Unfortunately, we encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>",
+    "title": "Something went wrong!"
+  },
   "errors": {
     "global": {
       "title": "An unknown error occurred",
@@ -70,24 +71,20 @@
       "invalidContent": "This content could not be displayed",
       "somethingWentWrong": "Something went wrong 🥺"
     },
-
     "notFound": {
       "title": "Page not found",
       "description": "The page you are looking for was not found.",
       "solution": "Please check if you have entered the correct URL or return to the home page.",
       "redirect": "Go to home page"
     },
-
     "forms": {
       "errorsInForm": "The form contains errors",
       "checkFormForErrors": "Please check if any values are missing"
     },
-
     "zodValidation": {
       "invalid_type": "Expected type is {expected}, but received {received}",
       "invalid_type_received_undefined": "Field is required",
       "invalid_literal": "Invalid value, expected {expected}",
-
       "invalid_string": {
         "regex": "Invalid format"
       },
@@ -121,7 +118,6 @@
         "phoneNumber": "This field must contain 9 numbers"
       }
     },
-
     "http": {
       "400": "Something went wrong. Please try again or contact support.",
       "401": "Session expired. Please sign in again.",
@@ -135,7 +131,6 @@
       "503": "Server is unavailable. Please try again or contact support"
     }
   },
-
   "localeLayout": {
     "title": "Turbine"
   },
@@ -319,7 +314,6 @@
     "title": "404 Not Found",
     "destination": "You've gone the wrong way!"
   },
-
   "travelMaker": {
     "submissionError": "Form submission failed",
     "form": {
@@ -332,9 +326,13 @@
         "route": "route is required",
         "routeState": "route state is required"
       },
-
-      "origin": { "title": "origin travel", "placeholder": "origin travel" },
-      "date": { "title": "Date" },
+      "origin": {
+        "title": "origin travel",
+        "placeholder": "origin travel"
+      },
+      "date": {
+        "title": "Date"
+      },
       "distance": {
         "title": "distance from the origin",
         "placeholder": "select distance",
@@ -423,7 +421,6 @@
           "visit": "Visit"
         }
       },
-
       "Button": "Submit",
       "popover-button": "optional",
       "noResults": "No result found",
@@ -438,10 +435,18 @@
     "card": {
       "seeMore": "See more"
     },
-    "package": { "mapOpen": "open map", "mapClose": "close map" }
+    "package": {
+      "error": "Something went wrong",
+      "tryAgain": "Try again",
+      "mapOpen": "open map",
+      "mapClose": "close map"
+    }
   },
   "PathFinder": {
-    "origin": { "title": "origin", "placeHolder": "Enter the origin" },
+    "origin": {
+      "title": "origin",
+      "placeHolder": "Enter the origin"
+    },
     "destination": {
       "title": "Destination",
       "placeHolder": "Enter the Destination"

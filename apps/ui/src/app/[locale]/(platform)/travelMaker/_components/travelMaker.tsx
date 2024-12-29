@@ -52,8 +52,8 @@ export default function TravelMaker() {
           <Card className="max-w-96">
             <CardHeader className="flex w-full flex-col items-center justify-center">
               <CardTitle className="flex gap-2 pb-2">
+                <span>{t("form.error")} </span>
                 <TriangleAlert className="size-10 text-destructive" />
-                <span className="text-md">{t("form.error")} </span>
               </CardTitle>
               <CardDescription className="text-center">
                 {t("form.tryAnother")}

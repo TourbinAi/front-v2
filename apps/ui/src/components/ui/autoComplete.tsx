@@ -62,7 +62,7 @@ export function AutoComplete<T extends string>({
     onSearchValueChange("")
   }
 
-  const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {}
+  const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => { }
 
   const onSelectItem = (inputValue: string) => {
     if (inputValue === selectedValue) {

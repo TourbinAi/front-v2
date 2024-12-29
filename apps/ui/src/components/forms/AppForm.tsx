@@ -10,6 +10,33 @@ import {
 
 import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 
+/**
+ * AppForm component documentation.
+ *
+ * This module exports the AppForm component, which is a wrapper for form functionality
+ * that provides integration with react-hook-form. It handles form submission,
+ * validation, and error handling.
+ *
+ * The component serves as a provider for form context and manages form state
+ * for all child form components.
+ *
+ * @see Props
+ * @see AppForm
+ */
+
+/**
+ * Props for the AppForm component.
+ *
+ * @typedef {Object} Props
+ * @property {UseFormReturn<T>} form - The form instance from react-hook-form
+ * @property {Function} onSubmit - Handler function called on form submission
+ * @property {Function} [onError] - Handler function called on form validation errors
+ * @property {React.ReactNode} children - Child components within the form
+ * @property {string} [className] - Class name for the form element
+ * @property {string} [id] - ID attribute for the form element
+ * @property {boolean} [disabled] - Whether the entire form is disabled
+ */
+
 interface Props<T extends FieldValues = FieldValues> {
   readonly form: UseFormReturn<T>
   readonly onSubmit: (
@@ -42,11 +69,11 @@ export function AppForm<T extends FieldValues = FieldValues>({
     <FormProvider {...form}>
       <form
         onSubmit={handleSubmit(onSubmit, onError)}
-        className={className}
+        className={className }
         id={id}
         noValidate
       >
-        <fieldset disabled={disabled} className="space-y-4">
+        <fieldset disabled={disabled} className="space-y-4 ">
           {children}
         </fieldset>
       </form>

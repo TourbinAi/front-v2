@@ -27,7 +27,6 @@
     "submitForm": "ارسال",
     "saveChanges": "ذخیره تغییرات"
   },
-
   "comps": {
     "fileInput": {
       "label": "انتخاب فایل",
@@ -50,7 +49,6 @@
       "confirmClose": "آیا می‌خواهید گفت‌وگو را ببندید؟ تمامی تغییرات ذخیره‌نشده از دست خواهند رفت."
     }
   },
-
   "tables": {
     "previousPage": "صفحه قبل",
     "nextPage": "صفحه بعد",
@@ -62,7 +60,6 @@
     "descending": "نزولی",
     "noData": "داده‌ای موجود نیست"
   },
-
   "errors": {
     "global": {
       "title": "یک خطای ناشناخته رخ داده است",
@@ -70,24 +67,20 @@
       "invalidContent": "این محتوا قابل نمایش نیست",
       "somethingWentWrong": "یک مشکلی پیش آمد 🥺"
     },
-
     "notFound": {
       "title": "صفحه مورد نظر یافت نشد",
       "description": "صفحه‌ای که به دنبال آن هستید یافت نشد.",
       "solution": "لطفاً بررسی کنید که آیا آدرس صحیح وارد شده است یا به صفحه اصلی بازگردید.",
       "redirect": "رفتن به صفحه اصلی"
     },
-
     "forms": {
       "errorsInForm": "فرم دارای خطا است",
       "checkFormForErrors": "لطفاً بررسی کنید که آیا مقداری از قلم نیفتاده است"
     },
-
     "zodValidation": {
       "invalid_type": "نوع مورد انتظار {expected} است، اما {received} دریافت شد",
       "invalid_type_received_undefined": "این فیلد الزامی است",
       "invalid_literal": "مقدار نامعتبر، مقدار مورد انتظار {expected} است",
-
       "invalid_string": {
         "regex": "فرمت نامعتبر"
       },
@@ -122,7 +115,6 @@
       }
     }
   },
-
   "localeLayout": {
     "title": "توربین"
   },
@@ -318,8 +310,13 @@
         "route": "مسیر الزامی است",
         "routeState": "وضعیت مسیر الزامی است"
       },
-      "origin": { "title": "مبدأ سفر", "placeholder": "مبدأ سفر" },
-      "date": { "title": "تاریخ" },
+      "origin": {
+        "title": "مبدأ سفر",
+        "placeholder": "مبدأ سفر"
+      },
+      "date": {
+        "title": "تاریخ"
+      },
       "distance": {
         "title": "فاصله از مبدأ",
         "placeholder": "فاصله را انتخاب کنید",
@@ -422,10 +419,18 @@
     "card": {
       "seeMore": "مشاهده بیشتر"
     },
-    "package": { "mapOpen": "باز کردن نقشه", "mapClose": "بستن نقشه" }
+    "package": {
+      "error": "یک خطای ناشناخته رخ داده است",
+      "tryAgain": "مقادیر دیگری را امتحان کنید",
+      "mapOpen": "باز کردن نقشه",
+      "mapClose": "بستن نقشه"
+    }
   },
   "PathFinder": {
-    "origin": { "title": "مبدأ", "placeHolder": "مبدأ را وارد کنید" },
+    "origin": {
+      "title": "مبدأ",
+      "placeHolder": "مبدأ را وارد کنید"
+    },
     "destination": {
       "title": "مقصد",
       "placeHolder": "مقصد را وارد کنید"

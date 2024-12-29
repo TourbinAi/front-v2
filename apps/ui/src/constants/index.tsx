@@ -2,7 +2,7 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import { StaticImageData } from "next/image"
 import { icons } from "lucide-react"
 import iconEvent from "public/assets/images/iconEvent.png"
-import iconFood from "public/assets/images/iconFood.png"
+import iconFood from "public/assets/images/iconFoods.png"
 import iconLocation from "public/assets/images/iconLocation.png"
 import iconRoute from "public/assets/images/iconRoute.png"
 import iconTravelMaker from "public/assets/images/iconTravelMaker.png"
@@ -89,50 +89,50 @@ export const Vehicles: {
   name: VehiclesName
   icon: keyof typeof icons
 }[] = [
-  {
-    name: "car",
-    icon: "Car",
-  },
-  {
-    name: "train",
-    icon: "TrainFront",
-  },
-  {
-    name: "plane",
-    icon: "Plane",
-  },
-]
+    {
+      name: "car",
+      icon: "Car",
+    },
+    {
+      name: "train",
+      icon: "TrainFront",
+    },
+    {
+      name: "plane",
+      icon: "Plane",
+    },
+  ]
 
 export type DirectionsName = "north" | "east" | "south" | "west"
 export const Directions: {
   name: DirectionsName
   icon: keyof typeof icons
 }[] = [
-  {
-    name: "north",
-    icon: "CircleArrowUp",
-  },
-  {
-    name: "east",
-    icon: "CircleArrowRight",
-  },
-  {
-    name: "west",
-    icon: "CircleArrowLeft",
-  },
-  {
-    name: "south",
-    icon: "CircleArrowDown",
-  },
-]
+    {
+      name: "north",
+      icon: "CircleArrowUp",
+    },
+    {
+      name: "east",
+      icon: "CircleArrowRight",
+    },
+    {
+      name: "west",
+      icon: "CircleArrowLeft",
+    },
+    {
+      name: "south",
+      icon: "CircleArrowDown",
+    },
+  ]
 
 export const attractions: {
   name: string
   image: StaticImageData
   like: number
 }[] = [
-  { name: "آبشار اسرار‌آمیز در دلی کویر", image: waterfall, like: 18 },
-  { name: "مسیر صعود آسان به دماوند", image: mountain, like: 31 },
-  { name: "سواحل پارسیان، نگین دریای جنوبی", image: rockyBeach, like: 20 },
-  { name: "سبزی بی‌پایان در جنگل‌های غرب", image: jungleMountain, like: 47 },
-]
+    { name: "آبشار اسرار‌آمیز در دلی کویر", image: waterfall, like: 18 },
+    { name: "مسیر صعود آسان به دماوند", image: mountain, like: 31 },
+    { name: "سواحل پارسیان، نگین دریای جنوبی", image: rockyBeach, like: 20 },
+    { name: "سبزی بی‌پایان در جنگل‌های غرب", image: jungleMountain, like: 47 },
+  ]
