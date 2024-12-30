@@ -113,9 +113,7 @@ export default function TravelMaker() {
           tmsv.direction.indexOf(values.direction || "north")
         ),
       }
-      console.log("request: ", JSON.stringify(requestObject))
       const respond = await TravelMakerList(requestObject)
-      console.log("respond: ", respond)
       setList(respond.data)
     } catch (error) {
       console.error("Form submission failed:", error)
