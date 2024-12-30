@@ -98,9 +98,11 @@ export default function TravelMaker() {
         route_type: ([1, 2] as const).at(tmsv.route.indexOf(values.route)) || 1,
         stop_and_quit:
           ([1, 2] as const).at(tmsv.disState.indexOf(values.routStop)) || 1,
-        overnight_stay: ([1, 2, 3] as const).at(
-          tmsv.accommodation.indexOf(values.accommodation || "camp")
-        ),
+        overnight_stay: accoFlag
+          ? ([1, 2, 3] as const).at(
+              tmsv.accommodation.indexOf(values.accommodation || "camp")
+            )
+          : undefined,
         count_of_elder_people: values.oldPerson ? 1 : 0,
         tags: values.tags.map((place) => tmsv.placeNature.indexOf(place)),
         means_of_travel:
@@ -111,8 +113,9 @@ export default function TravelMaker() {
           tmsv.direction.indexOf(values.direction || "north")
         ),
       }
-
+      console.log("request: ", JSON.stringify(requestObject))
       const respond = await TravelMakerList(requestObject)
+      console.log("respond: ", respond)
       setList(respond.data)
     } catch (error) {
       console.error("Form submission failed:", error)
@@ -169,7 +172,6 @@ export default function TravelMaker() {
           : defaultValue.accommodation,
         date: parseDate(query.date) || defaultValue.date, // Ensure date is parsed and valid
       }
-
       const result = SidebarSchema.safeParse(safeQuery)
       if (result.success) {
         // Reset form with the new default values
