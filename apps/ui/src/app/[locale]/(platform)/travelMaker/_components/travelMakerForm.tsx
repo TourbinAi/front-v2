@@ -1,6 +1,7 @@
 "use client"
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
@@ -49,78 +50,86 @@ interface TravelMakerFormProps {
 const TravelMakerForm = (props: TravelMakerFormProps) => {
   const t = useTranslations("travelMaker")
   const [accoFlag, setFlag] = useState(true)
+  const params = useSearchParams()
+
+  const firstValue = useMemo(
+    () => ({
+      ...defaultFormValues,
+      ...params,
+    }),
+    [params]
+  )
 
   const [originQuery, setOriginQuery] = useQueryState("origin", {
     history: "push",
-    parse: (value) => value || defaultFormValues.origin,
+    parse: (value) => value || firstValue.origin,
   })
   const [distanceQuery, setDistanceQuery] = useQueryState("distance", {
     history: "push",
-    parse: (value) => value || defaultFormValues.distance,
+    parse: (value) => value || firstValue.distance,
   })
   const [durationQuery, setDurationQuery] = useQueryState("duration", {
     history: "push",
-    parse: (value) => value || defaultFormValues.duration,
+    defaultValue: firstValue.duration,
   })
   const [tagsQuery, setTagsQuery] = useQueryState("tags", {
     history: "push",
-    parse: (value) => value || defaultFormValues.tags.join(","),
+    defaultValue: firstValue.tags.join(","),
   })
   const [routeQuery, setRouteQuery] = useQueryState("route", {
     history: "push",
-    parse: (value) => value || defaultFormValues.route,
+    defaultValue: firstValue.route,
   })
   const [vehicleQuery, setVehicleQuery] = useQueryState("vehicle", {
     history: "push",
-    parse: (value) => value || defaultFormValues.vehicle,
+    defaultValue: firstValue.vehicle,
   })
   const [routStopQuery, setRoutStopQuery] = useQueryState("routStop", {
     history: "push",
-    parse: (value) => value || defaultFormValues.routStop,
+    defaultValue: firstValue.routStop,
   })
   const [directionQuery, setDirectionQuery] = useQueryState("direction", {
     history: "push",
-    parse: (value) => value || defaultFormValues.direction,
+    defaultValue: firstValue.direction,
   })
   const [accommodationQuery, setAccommodationQuery] = useQueryState(
     "accommodation",
     {
       history: "push",
-      parse: (value) => value || defaultFormValues.accommodation,
+      defaultValue: firstValue.accommodation,
     }
   )
   const [oldPersonQuery, setOldPersonQuery] = useQueryState("oldPerson", {
     history: "push",
-    parse: (value) => value === "true",
+    parse: (value) => value || firstValue.oldPerson,
   })
 
   const form = useForm<z.infer<typeof SidebarSchema>>({
     resolver: zodResolver(SidebarSchema),
-    defaultValues: defaultFormValues,
+    defaultValues: firstValue,
   })
 
   // Reset form when URL parameters change
   useEffect(() => {
     form.reset({
-      origin: originQuery || defaultFormValues.origin,
+      origin: originQuery || firstValue.origin,
       distance: (distanceQuery ||
-        defaultFormValues.distance) as (typeof tmsv.distance)[number],
+        firstValue.distance) as (typeof tmsv.distance)[number],
       duration: (durationQuery ||
-        defaultFormValues.duration) as (typeof tmsv.duration)[number],
+        firstValue.duration) as (typeof tmsv.duration)[number],
       tags: tagsQuery
         ? (tagsQuery.split(",") as (typeof tmsv.placeNature)[number][])
-        : defaultFormValues.tags,
-      route: (routeQuery ||
-        defaultFormValues.route) as (typeof tmsv.route)[number],
+        : firstValue.tags,
+      route: (routeQuery || firstValue.route) as (typeof tmsv.route)[number],
       vehicle: (vehicleQuery ||
-        defaultFormValues.vehicle) as (typeof tmsv.vehicle)[number],
+        firstValue.vehicle) as (typeof tmsv.vehicle)[number],
       routStop: (routStopQuery ||
-        defaultFormValues.routStop) as (typeof tmsv.disState)[number],
+        firstValue.routStop) as (typeof tmsv.disState)[number],
       direction: (directionQuery ||
-        defaultFormValues.direction) as (typeof tmsv.direction)[number],
+        firstValue.direction) as (typeof tmsv.direction)[number],
       accommodation: (accommodationQuery ||
-        defaultFormValues.accommodation) as (typeof tmsv.accommodation)[number],
-      oldPerson: oldPersonQuery ?? defaultFormValues.oldPerson,
+        firstValue.accommodation) as (typeof tmsv.accommodation)[number],
+      oldPerson: oldPersonQuery ? firstValue.oldPerson : false,
     })
   }, [
     form,
@@ -134,6 +143,7 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
     directionQuery,
     accommodationQuery,
     oldPersonQuery,
+    firstValue,
   ])
 
   // Watch duration for accommodation visibility
@@ -187,7 +197,7 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
   }
 
   return (
-    <AppForm form={form} onSubmit={onSubmit}>
+    <AppForm form={form} className="mx-6" onSubmit={onSubmit}>
       <AppSelect
         name="origin"
         label={t("form.origin.title")}

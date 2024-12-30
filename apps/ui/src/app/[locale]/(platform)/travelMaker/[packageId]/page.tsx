@@ -1,8 +1,7 @@
-import { redirect } from "next/navigation";
-import TravelMaker from "../_components/travelMaker";
+import { redirect } from "next/navigation"
 
-const PackagePage = () => {
-  redirect("/map");
-};
+const PackagePage = ({ params }: { params: { packageId: string } }) => {
+  redirect(`${params.packageId}/map`)
+}
 
-export default PackagePage;
+export default PackagePage
