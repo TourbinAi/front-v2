@@ -112,7 +112,7 @@ export const CelebrationsAndEventForm = () => {
           {t("form.submit")}
         </SubmitButton>
       </form>
-      <Button className="w-full" variant="outline" href="/blog">
+      <Button className="mt-4 w-full" variant="outline" href="/blog">
         {t("form.goTo")}
       </Button>
     </Form>

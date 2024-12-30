@@ -78,6 +78,7 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
           </Button>
         </SheetTrigger>
         <SheetContent
+          className="bg-background"
           side={dir === "rtl" ? "right" : "left"}
           onPointerDownOutside={(e) => e.preventDefault()}
           onInteractOutside={(e) => e.preventDefault()}
