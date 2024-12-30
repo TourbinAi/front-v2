@@ -7,9 +7,7 @@ const TravelMakerPage = () => {
   return (
     <NuqsAdapter>
       <Suspense fallback={<div>Loading Page...</div>}>
-        <NuqsAdapter>
-          <TravelMaker />
-        </NuqsAdapter>
+        <TravelMaker />
       </Suspense>
     </NuqsAdapter>
   )

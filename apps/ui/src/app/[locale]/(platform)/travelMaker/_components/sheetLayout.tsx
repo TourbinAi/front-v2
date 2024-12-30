@@ -39,7 +39,7 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
   const dir = locale === "fa" ? "rtl" : "ltr"
 
   return (
-    <div className="h-full overflow-auto">
+    <div className="h-full">
       <div className="relative flex size-full items-stretch gap-5 p-5">
         {/* Desktop sidebar */}
         <div
