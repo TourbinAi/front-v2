@@ -14,7 +14,7 @@ export const Icon = ({ name, ...props }: IconProps) => {
 interface DynamicIconProps extends LucideProps {
   name: keyof typeof dynamicIconImports
 }
-export const DynamicIcon = ({ name, ...props }: DynamicIconProps) => {
+const DynamicIcon = ({ name, ...props }: DynamicIconProps) => {
   const LucideIcon = dynamic(dynamicIconImports[name])
   return <LucideIcon {...props} />
 }

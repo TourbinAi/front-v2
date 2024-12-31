@@ -1,45 +1,53 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import Map from "./map";
-import { useQuery } from "@tanstack/react-query";
-import { postData } from "@/lib/api";
-import { Skeleton } from "@/components/ui/skeleton";
-import TextCard from "./textCard";
+import path from "path"
+
+import { useState } from "react"
+import Image from "next/image"
+import { env } from "@/env.mjs"
+import { useQuery } from "@tanstack/react-query"
+import PlaceHolderImage from "public/assets/images/placeholderImages.png"
+
+import { PackagesPlaceRes } from "@/types/api"
+
+import { postData } from "@/lib/api"
+import { Link } from "@/lib/navigation"
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel"
+import { Skeleton } from "@/components/ui/skeleton"
+
+import ErrorMessage from "./error"
+import Map from "./map"
+import TextCard from "./textCard"
 import VideoPlayer from "./videoPlayer"
-import ErrorMessage from "./error";
-import { env } from "@/env.mjs";
-import { useState } from "react";
-import { PackagesPlaceRes } from "@/types/api";
-import PlaceHolderImage from "public/assets/images/placeholderImages.png";
-import path from "path";
-import { Link } from "@/lib/navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
 interface MapPageProps {
-  packageId: string;
+  packageId: string
 }
 
 export default function MapPageComponent({ packageId }: MapPageProps) {
-  const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>();
+  const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>()
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["places"],
     queryFn: () => postData(Number(packageId)),
-  });
+  })
   if (error) {
-    return <ErrorMessage />;
+    return <ErrorMessage />
   }
   return (
     <>
-      <div className="hidden lg:flex size-full flex-col items-stretch justify-start gap-4 p-4 lg:flex-row lg:justify-end ">
+      <div className="hidden size-full flex-col items-stretch justify-start gap-4 p-4 lg:flex lg:flex-row lg:justify-end">
         {isLoading || !data?.data ? (
           <Skeleton className="size-full rounded-full" />
         ) : (
           <>
-            <div className="flex flex-col basis-2/3 items-stretch justify-stretch gap-4 ">
-              <div className="w-full h-full ">
+            <div className="flex basis-2/3 flex-col items-stretch justify-stretch gap-4">
+              <div className="h-full w-full">
                 <TextCard
                   title="سفرساز توربین - برنامه هوشمند سفر"
                   text={data?.data.travel_plan || ""}
@@ -52,7 +60,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                   <TextCard
                     title="خلاصه سفر"
                     text={data?.data.summary_of_travel_plan || ""}
-                    className=" h-full w-full lg:max-h-none"
+                    className="h-full w-full lg:max-h-none"
                   />
                 </div>
 
@@ -91,26 +99,37 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                 )}
               </div>
             </div>
-            <div className="flex flex-col items-stretch gap-4 lg:h-full basis-1/3">
+            <div className="flex basis-1/3 flex-col items-stretch gap-4 lg:h-full">
               <div className="aspect-square h-1/3 w-full rounded-lg border-4 border-gray-300 lg:h-2/4">
-                <Map packageId={Number(packageId)} setPlan={setTravelPlan} dirction_url={data?.data?.directions_url || ""}/>
+                <Map
+                  packageId={Number(packageId)}
+                  setPlan={setTravelPlan}
+                  dirction_url={data?.data?.directions_url || ""}
+                />
               </div>
               <div className="flex aspect-square h-1/3 items-center justify-stretch lg:h-2/4">
-                <VideoPlayer videoUrl={path.join(env.NEXT_PUBLIC_BACKEND_URL , data?.data?.video_url || "")} />
+                <VideoPlayer
+                  videoUrl={path.join(
+                    env.NEXT_PUBLIC_BACKEND_URL,
+                    data?.data?.video_url || ""
+                  )}
+                />
               </div>
             </div>
           </>
         )}
-
-
       </div>
 
       {/* responsive */}
-      <div className="m-2 flex flex-col lg:hidden gap-2">
+      <div className="m-2 flex flex-col gap-2 lg:hidden">
         <div className="aspect-square h-1/3 w-full rounded-lg border-4 border-gray-300 lg:h-2/4">
-          <Map packageId={Number(packageId)} setPlan={setTravelPlan} dirction_url={data?.data?.directions_url || ""}/>
+          <Map
+            packageId={Number(packageId)}
+            setPlan={setTravelPlan}
+            dirction_url={data?.data?.directions_url || ""}
+          />
         </div>
-        <div className="w-full h-full">
+        <div className="h-full w-full">
           <TextCard
             title="سفرساز توربین - برنامه هوشمند سفر"
             text={data?.data.travel_plan || ""}
@@ -118,38 +137,41 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
           />
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <div className="flex h-full items-center  lg:h-2/4">
-            <VideoPlayer videoUrl={path.join(env.NEXT_PUBLIC_BACKEND_URL || "" , data?.data?.video_url || "")} />
+          <div className="flex h-full items-center lg:h-2/4">
+            <VideoPlayer
+              videoUrl={path.join(
+                env.NEXT_PUBLIC_BACKEND_URL || "",
+                data?.data?.video_url || ""
+              )}
+            />
           </div>
           <div className="w-full">
             <TextCard
               title="خلاصه سفر"
               text={data?.data.summary_of_travel_plan || ""}
-              className=" w-full h-fit"
+              className="h-fit w-full"
             />
           </div>
         </div>
         {data?.data.places.length === 0 || isLoading ? (
-          <div className="flex  items-center justify-center rounded-2xl ">
+          <div className="flex items-center justify-center rounded-2xl">
             No places found
           </div>
         ) : (
-          <Carousel
-            className="size-full "
-            dir="ltr"
-          >
+          <Carousel className="size-full" dir="ltr">
             <CarouselContent className="">
               {data?.data.places.slice(0, 4).map((place) => (
                 <CarouselItem
-                className="flex shrink-0 flex-col items-center rounded-2xl border-none bg-none transition-transform md:basis-1/3"
+                  key={place.id}
+                  className="flex shrink-0 flex-col items-center rounded-2xl border-none bg-none transition-transform md:basis-1/3"
                 >
                   <Link
                     className=""
                     key={place.id}
                     href={`blog/${place.name}/?blogtype=1&blogid=${place.id}`}
                   >
-                    <Card className="relative size-[96vw] md:size-56 cursor-pointer overflow-hidden">
-                      <CardContent className=" flex aspect-square items-center justify-center ">
+                    <Card className="relative size-[96vw] cursor-pointer overflow-hidden md:size-56">
+                      <CardContent className="flex aspect-square items-center justify-center">
                         <Image
                           fill
                           src={path.join(
@@ -157,7 +179,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                             place.first_image || PlaceHolderImage.src
                           )}
                           alt={place.name}
-                          className="absolute  size-full object-cover"
+                          className="absolute size-full object-cover"
                         />
                         <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
                           {place.name || "NAME PLACE"}
@@ -166,13 +188,11 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                     </Card>
                   </Link>
                 </CarouselItem>
-
               ))}
             </CarouselContent>
           </Carousel>
         )}
       </div>
-
     </>
-  );
+  )
 }

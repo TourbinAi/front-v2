@@ -14,7 +14,7 @@ export interface AppError {
   translateKeyPrefixForErrors?: Parameters<typeof useTranslations>[0]
 }
 
-export interface AppLink {
+interface AppLink {
   href: string
   target?: string
   label?: string

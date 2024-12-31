@@ -4,19 +4,19 @@ interface APIIdProperty {
   id: number
 }
 
-export interface APIResponseData<TContentTypeUID extends Common.UID.ContentType>
+interface APIResponseData<TContentTypeUID extends Common.UID.ContentType>
   extends APIIdProperty {
   attributes: Attribute.GetValues<TContentTypeUID>
 }
 
-export interface APIResponseCollectionPagination {
+interface APIResponseCollectionPagination {
   page: number
   pageSize: number
   pageCount: number
   total: number
 }
 
-export interface APIResponseCollectionMetadata {
+interface APIResponseCollectionMetadata {
   pagination: APIResponseCollectionPagination
 }
 
@@ -32,7 +32,7 @@ export interface APIResponseCollection<
   meta: APIResponseCollectionMetadata
 }
 
-export type APILocaleCode = string
+type APILocaleCode = string
 
 type WithLocale<T> = T & { locale?: APILocaleCode }
 
@@ -49,7 +49,7 @@ export type APIUrlParams<TContentTypeUID extends Common.UID.ContentType> =
     >
   >
 
-export interface ApiLocale {
+interface ApiLocale {
   id: Entity.ID
   createdAt: string
   updatedAt: string
@@ -58,7 +58,7 @@ export interface ApiLocale {
   name: string
 }
 
-export type UnwrappedAPIResponseData<
+type UnwrappedAPIResponseData<
   T extends APIResponseData<Common.UID.ContentType>,
 > = T["attributes"] & {
   id: T["id"]
@@ -76,7 +76,7 @@ type StrapiImageMediaFormat = {
   height?: number
 }
 
-export type StrapiImageMedia = {
+type StrapiImageMedia = {
   name?: string
   alternativeText?: string
   caption?: string
@@ -101,7 +101,7 @@ export type StrapiImageMedia = {
   provider_metadata?: string
 }
 
-export type StrapiDataWrapper<T> = {
+type StrapiDataWrapper<T> = {
   data: {
     id: Entity.ID
     attributes: T

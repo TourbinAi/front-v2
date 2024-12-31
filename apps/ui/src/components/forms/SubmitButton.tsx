@@ -21,7 +21,10 @@ const SubmitButton = ({
       onClick={onClick}
       type="submit"
       disabled={isLoading}
-      className={className ?? " shad-primary-btn w-full bg-[#EE4037] text-white text-xl py-5" } 
+      className={
+        className ??
+        " shad-primary-btn w-full bg-[#EE4037] text-white text-xl py-5"
+      }
     >
       {isLoading ? (
         <div className="flex items-center gap-4 ">

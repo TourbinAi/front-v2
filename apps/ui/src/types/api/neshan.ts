@@ -14,28 +14,28 @@ export interface NeshanSearchType {
 export interface NeshanDirectionType {
   routes: Route[]
 }
-export interface Route {
+interface Route {
   overview_polyline: OverviewPolyline
   legs: Leg[]
 }
-export interface OverviewPolyline {
+interface OverviewPolyline {
   points: string
 }
-export interface Leg {
+interface Leg {
   summary: string
   distance: Distance
   duration: Duration
   steps: Step[]
 }
-export interface Distance {
+interface Distance {
   value: number
   text: string
 }
-export interface Duration {
+interface Duration {
   value: number
   text: string
 }
-export interface Step {
+interface Step {
   name: string
   instruction: string
   bearing_after: number

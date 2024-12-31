@@ -11,7 +11,7 @@ import mountain from "public/assets/images/mountan.jpg"
 import rockyBeach from "public/assets/images/rockyBeach.jpg"
 import waterfall from "public/assets/images/waterfall.jpg"
 
-export type MenuItemsType = "pathFinder" | "travelMaker" | "news" | "aboutUs"
+type MenuItemsType = "pathFinder" | "travelMaker" | "news" | "aboutUs"
 
 export type FeatureDetailsType =
   | "souvenirsAndFood"
@@ -43,7 +43,7 @@ export const navbarMenuItems: NavbarMenuItemProps[] = [
   },
 ]
 
-export type PrimaryFuturesType =
+type PrimaryFuturesType =
   | "souvenirsAndFood"
   | "tourismPlaces"
   | "celebrationsAndEvents"
@@ -84,55 +84,55 @@ export const primaryFeatures: PrimaryFeatureProps[] = [
   },
 ]
 
-export type VehiclesName = "car" | "train" | "plane"
-export const Vehicles: {
+type VehiclesName = "car" | "train" | "plane"
+const Vehicles: {
   name: VehiclesName
   icon: keyof typeof icons
 }[] = [
-    {
-      name: "car",
-      icon: "Car",
-    },
-    {
-      name: "train",
-      icon: "TrainFront",
-    },
-    {
-      name: "plane",
-      icon: "Plane",
-    },
-  ]
+  {
+    name: "car",
+    icon: "Car",
+  },
+  {
+    name: "train",
+    icon: "TrainFront",
+  },
+  {
+    name: "plane",
+    icon: "Plane",
+  },
+]
 
-export type DirectionsName = "north" | "east" | "south" | "west"
-export const Directions: {
+type DirectionsName = "north" | "east" | "south" | "west"
+const Directions: {
   name: DirectionsName
   icon: keyof typeof icons
 }[] = [
-    {
-      name: "north",
-      icon: "CircleArrowUp",
-    },
-    {
-      name: "east",
-      icon: "CircleArrowRight",
-    },
-    {
-      name: "west",
-      icon: "CircleArrowLeft",
-    },
-    {
-      name: "south",
-      icon: "CircleArrowDown",
-    },
-  ]
+  {
+    name: "north",
+    icon: "CircleArrowUp",
+  },
+  {
+    name: "east",
+    icon: "CircleArrowRight",
+  },
+  {
+    name: "west",
+    icon: "CircleArrowLeft",
+  },
+  {
+    name: "south",
+    icon: "CircleArrowDown",
+  },
+]
 
-export const attractions: {
+const attractions: {
   name: string
   image: StaticImageData
   like: number
 }[] = [
-    { name: "آبشار اسرار‌آمیز در دلی کویر", image: waterfall, like: 18 },
-    { name: "مسیر صعود آسان به دماوند", image: mountain, like: 31 },
-    { name: "سواحل پارسیان، نگین دریای جنوبی", image: rockyBeach, like: 20 },
-    { name: "سبزی بی‌پایان در جنگل‌های غرب", image: jungleMountain, like: 47 },
-  ]
+  { name: "آبشار اسرار‌آمیز در دلی کویر", image: waterfall, like: 18 },
+  { name: "مسیر صعود آسان به دماوند", image: mountain, like: 31 },
+  { name: "سواحل پارسیان، نگین دریای جنوبی", image: rockyBeach, like: 20 },
+  { name: "سبزی بی‌پایان در جنگل‌های غرب", image: jungleMountain, like: 47 },
+]

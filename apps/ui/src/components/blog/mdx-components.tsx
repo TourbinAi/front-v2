@@ -11,7 +11,7 @@ import { cn } from "@/lib/styles"
 import { Callout } from "@/components/blog/callout"
 import { MdxCard } from "@/components/blog/mdx-card"
 
-export const mdxComponents: MDXComponents = {
+const mdxComponents: MDXComponents = {
   h1: ({
     className,
     children,

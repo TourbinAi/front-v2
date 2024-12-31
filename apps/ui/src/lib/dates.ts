@@ -4,9 +4,9 @@ import localizedFormat from "dayjs/plugin/localizedFormat"
 import timezone from "dayjs/plugin/timezone"
 import utc from "dayjs/plugin/utc"
 
-export const DATE_FORMAT = "dd/MM/yy"
-export const TIME_FORMAT = "H:mm"
-export const DATE_TIME_FORMAT = "dd/MM/yy HH:mm"
+const DATE_FORMAT = "dd/MM/yy"
+const TIME_FORMAT = "H:mm"
+const DATE_TIME_FORMAT = "dd/MM/yy HH:mm"
 
 export const setupDaysJs = () => {
   dayjs.extend(utc)
@@ -30,7 +30,7 @@ export function formatDate(
   return dayjs(dateObj).format(format)
 }
 
-export function formatDateRange(
+function formatDateRange(
   startDate: string,
   endDate: string,
   format = DATE_FORMAT
@@ -52,11 +52,11 @@ export function formatDateRange(
   return undefined
 }
 
-export function getToday(format = DATE_FORMAT): string {
+function getToday(format = DATE_FORMAT): string {
   return dayjs().format(format)
 }
 
-export function getDiffInDays(startDate: string, endDate: string): number {
+function getDiffInDays(startDate: string, endDate: string): number {
   const start = dayjs(startDate)
   const end = dayjs(endDate)
   return end.diff(start, "day")

@@ -41,10 +41,7 @@
     "start:ui": "turbo run start --filter=@repo/ui"
   },
   "prettier": "@repo/prettier-config",
-  "dependencies": {
-    "leaflet": "^1.9.4",
-    "react-leaflet": "^4.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",

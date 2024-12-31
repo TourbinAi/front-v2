@@ -20,7 +20,7 @@ const publicPages = [
   "/blog/.*",
   "/auth/signin",
   "/docs",
-  "/about"
+  "/about",
 ]
 
 export default function middleware(req: NextRequest) {

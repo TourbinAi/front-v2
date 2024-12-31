@@ -26,14 +26,12 @@ function SideBarMap({ ResData }: MapProps) {
   const descriptionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // console.log("Travelplan received:", ResData);
     if (ResData) {
       const desc = ResData.travel_plan
       setDescription(desc)
       const urlImages = ResData.places.map((place: any) => {
         return place
       })
-      // console.log(urlImages);
       setURL(urlImages)
       setLoading(false)
     }
@@ -55,13 +53,13 @@ function SideBarMap({ ResData }: MapProps) {
   }, [typedDescription])
 
   return (
-    <div className=" flex flex-col h-full flex-wrap rounded-lg border bg-white px-4 pt-3 ">
+    <div className="flex h-full flex-col flex-wrap rounded-lg border bg-white px-4 pt-3">
       {isLoading ? (
         <>
           <div className="flex h-48 justify-center">
             <Skeleton className="m-2 w-full bg-slate-950" />
           </div>
-          <div className="flex xl:h-1/2 flex-col flex-wrap items-center justify-center lg:flex-row mt-0 lg:mt-5 xl:mt-0 ">
+          <div className="mt-0 flex flex-col flex-wrap items-center justify-center lg:mt-5 lg:flex-row xl:mt-0 xl:h-1/2">
             <Skeleton className="m-2 h-28 w-2/3 bg-slate-950 lg:w-32" />
             <Skeleton className="m-2 h-28 w-2/3 bg-slate-950 lg:w-32" />
             <Skeleton className="m-2 h-28 w-2/3 bg-slate-950 lg:w-32" />

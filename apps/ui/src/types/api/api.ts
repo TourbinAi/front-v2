@@ -8,7 +8,7 @@ export interface TravelMakerListReq {
   means_of_travel: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
   direction_of_movement?: 1 | 2 | 3 | 4 | 0
   count_of_elder_people?: number
-  overnight_stay?: 1 | 2 | 3 | 0 
+  overnight_stay?: 1 | 2 | 3 | 0
 }
 
 export type TravelMakerListRes = Array<{
@@ -24,7 +24,7 @@ export type TravelMakerListRes = Array<{
   latitude: string
 }>
 
-export interface PackagesPlaceReq {
+interface PackagesPlaceReq {
   package_id: number
 }
 
@@ -32,8 +32,8 @@ export type PackagesPlaceRes = {
   description: string
   travel_plan: string
   video_url: string
-  summary_of_travel_plan : string
-  directions_url : string
+  summary_of_travel_plan: string
+  directions_url: string
   places: {
     id: number
     name: string
@@ -69,7 +69,7 @@ export type AttractionsLandingRes = {
   link: string
 }[]
 
-export interface BlogRes {
+interface BlogRes {
   coverImageUrl: string
   title: string
   createdDate: Date
