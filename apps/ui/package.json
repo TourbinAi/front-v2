@@ -78,6 +78,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^14.2.5",
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "*",
     "@repo/strapi": "*",

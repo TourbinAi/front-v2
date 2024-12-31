@@ -3,7 +3,7 @@
 import React from "react"
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote"
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter"
-import onDark from "react-syntax-highlighter/dist/esm/styles/hljs"
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs"
 
 import type { MDXComponents } from "mdx/types"
 
