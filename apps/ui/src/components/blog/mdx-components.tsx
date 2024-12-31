@@ -3,7 +3,7 @@
 import React from "react"
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote"
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter"
-import onDark from "react-syntax-highlighter/dist/esm/styles/hljs"
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs"
 
 import type { MDXComponents } from "mdx/types"
 
@@ -224,7 +224,7 @@ const mdxComponents: MDXComponents = {
       return (
         <SyntaxHighlighter
           language={lang}
-          style={onDark}
+          style={docco}
           PreTag="div"
           dir="ltr"
           className="my-2 rounded-md p-6"
