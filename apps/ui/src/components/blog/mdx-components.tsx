@@ -224,7 +224,7 @@ const mdxComponents: MDXComponents = {
       return (
         <SyntaxHighlighter
           language={lang}
-          style={onDark}
+          style={docco}
           PreTag="div"
           dir="ltr"
           className="my-2 rounded-md p-6"
