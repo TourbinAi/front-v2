@@ -183,10 +183,7 @@ const CarouselItem = React.forwardRef<
       ref={ref}
       role="group"
       aria-roledescription="slide"
-      className={cn(
-        orientation === "horizontal" ? "pl-4" : "pt-4",
-        className
-      )}
+      className={cn(orientation === "horizontal" ? "pl-4" : "pt-4", className)}
       {...props}
     />
   )
@@ -252,7 +249,6 @@ const CarouselNext = React.forwardRef<
 CarouselNext.displayName = "CarouselNext"
 
 export {
-  type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,

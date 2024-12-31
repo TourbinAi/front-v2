@@ -33,7 +33,6 @@ export function Attractions() {
       setLoading(true)
       try {
         const response = await AttractionsLanding(10)
-        // console.log("response: ", response);
         setData(response.data)
       } catch (error) {
         console.error(error)

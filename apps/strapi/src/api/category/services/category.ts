@@ -2,4 +2,4 @@
  * category service
  */
 
-export default () => ({});
+export default () => ({})

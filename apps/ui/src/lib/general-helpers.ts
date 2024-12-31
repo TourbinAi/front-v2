@@ -23,6 +23,5 @@ export const removeThisWhenYouNeedMe = (functionName: string) => {
   )
 }
 
-export function absoluteUrl(path: string) {
-  return `${env.NEXT_PUBLIC_APP_PUBLIC_URL}${path}`
-}
+export const absoluteUrl = (path: string) =>
+  `${env.NEXT_PUBLIC_APP_PUBLIC_URL}${path}`

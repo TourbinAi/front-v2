@@ -62,7 +62,7 @@ export function AutoComplete<T extends string>({
     onSearchValueChange("")
   }
 
-  const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => { }
+  const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {}
 
   const onSelectItem = (inputValue: string) => {
     if (inputValue === selectedValue) {
@@ -160,4 +160,3 @@ export function AutoComplete<T extends string>({
     </div>
   )
 }
-export default AutoComplete

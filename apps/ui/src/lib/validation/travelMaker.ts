@@ -45,9 +45,11 @@ export const SidebarSchema = z.object({
   direction: z.enum(TravelMakerSelectValues.direction).optional(),
   oldPerson: z.boolean().optional(),
   accommodation: z.enum(TravelMakerSelectValues.accommodation).optional(),
-  date: z.object({
-    year: z.number(),
-    month: z.number(),
-    day: z.number(),
-  }).optional(),
+  date: z
+    .object({
+      year: z.number(),
+      month: z.number(),
+      day: z.number(),
+    })
+    .optional(),
 })

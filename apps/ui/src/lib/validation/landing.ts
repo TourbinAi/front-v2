@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const pathFinder = z.object({
+const pathFinder = z.object({
   origin: z.string(),
   destination: z.string(),
 })
@@ -14,7 +14,7 @@ export const celebrationsAndEvents = z.object({
   occasion: z.string(),
 })
 
-export const travelMaker = z.object({
+const travelMaker = z.object({
   origin: z.string(),
   distance: z.number(),
   people: z.number(),

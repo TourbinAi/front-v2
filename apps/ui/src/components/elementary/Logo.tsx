@@ -22,7 +22,7 @@ import { cn } from "@/lib/styles"
 
 interface SVGProps extends React.SVGProps<SVGSVGElement> {}
 
-export function Logomark(props: SVGProps) {
+function Logomark(props: SVGProps) {
   return (
     <svg viewBox="0 0 40 40" aria-hidden="true" {...props}>
       <path

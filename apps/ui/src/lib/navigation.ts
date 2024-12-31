@@ -4,13 +4,13 @@ import { defineRouting } from "next-intl/routing"
 
 import { locales } from "./i18n"
 
-export const routing = defineRouting({
+const routing = defineRouting({
   locales,
   defaultLocale: "fa",
 })
 
 // https://next-intl-docs.vercel.app/docs/routing/navigation
-export const { Link, redirect, usePathname, getPathname, useRouter } =
+export const { Link, usePathname, getPathname, useRouter } =
   createNavigation(routing)
 
 export function isAppLink(link: string): boolean {
