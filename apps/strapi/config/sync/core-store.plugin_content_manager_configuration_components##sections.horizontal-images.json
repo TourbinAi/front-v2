@@ -119,12 +119,21 @@
       }
     },
     "layouts": {
-      "list": ["id", "title", "images", "isVisible"],
+      "list": [
+        "id",
+        "title",
+        "isVisible",
+        "images"
+      ],
       "edit": [
         [
           {
             "name": "title",
             "size": 6
+          },
+          {
+            "name": "isVisible",
+            "size": 4
           }
         ],
         [
@@ -135,25 +144,19 @@
         ],
         [
           {
-            "name": "isVisible",
-            "size": 4
-          },
-          {
             "name": "spacing",
             "size": 4
-          }
-        ],
-        [
+          },
           {
             "name": "imageRadius",
             "size": 6
-          },
-          {
-            "name": "fixedImageHeight",
-            "size": 4
           }
         ],
         [
+          {
+            "name": "fixedImageHeight",
+            "size": 4
+          },
           {
             "name": "fixedImageWidth",
             "size": 4

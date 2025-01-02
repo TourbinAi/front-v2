@@ -47,16 +47,16 @@
           "sortable": true
         }
       },
-      "locale": {
+      "entryDocumentId": {
         "edit": {
-          "label": "locale",
+          "label": "entryDocumentId",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "locale",
+          "label": "entryDocumentId",
           "searchable": true,
           "sortable": true
         }
@@ -150,7 +150,12 @@
       }
     },
     "layouts": {
-      "list": ["id", "type", "contentType", "release"],
+      "list": [
+        "id",
+        "type",
+        "contentType",
+        "entryDocumentId"
+      ],
       "edit": [
         [
           {
@@ -164,11 +169,11 @@
         ],
         [
           {
-            "name": "release",
+            "name": "entryDocumentId",
             "size": 6
           },
           {
-            "name": "locale",
+            "name": "release",
             "size": 6
           }
         ],

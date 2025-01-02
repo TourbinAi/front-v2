@@ -77,7 +77,12 @@
       }
     },
     "layouts": {
-      "list": ["id", "title", "subText", "cta"],
+      "list": [
+        "id",
+        "title",
+        "subText",
+        "cta"
+      ],
       "edit": [
         [
           {
@@ -91,14 +96,14 @@
         ],
         [
           {
-            "name": "isVisible",
-            "size": 4
+            "name": "cta",
+            "size": 12
           }
         ],
         [
           {
-            "name": "cta",
-            "size": 12
+            "name": "isVisible",
+            "size": 4
           }
         ]
       ]

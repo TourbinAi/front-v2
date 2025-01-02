@@ -1,13 +1,15 @@
+import { StrapiApp } from "@strapi/strapi/admin"
+
 import { cs } from "./cs"
 
 export default {
   config: {
-    locales: ["en", "fa"],
+    locales: ["en", "cs"],
     translations: {
       cs,
     },
   },
-  bootstrap(app) {
+  bootstrap(app: StrapiApp) {
     console.log(app)
   },
 }

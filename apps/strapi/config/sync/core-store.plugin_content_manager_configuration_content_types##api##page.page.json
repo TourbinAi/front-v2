@@ -39,12 +39,41 @@
           "description": "",
           "placeholder": "",
           "visible": true,
-          "editable": true
+          "editable": true,
+          "mainField": "metaTitle"
         },
         "list": {
           "label": "seo",
           "searchable": false,
           "sortable": false
+        }
+      },
+      "cover": {
+        "edit": {
+          "label": "cover",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "cover",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "title": {
+        "edit": {
+          "label": "title",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "title",
+          "searchable": true,
+          "sortable": true
         }
       },
       "content": {
@@ -57,6 +86,36 @@
         },
         "list": {
           "label": "content",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "authors": {
+        "edit": {
+          "label": "authors",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "username"
+        },
+        "list": {
+          "label": "authors",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "categories": {
+        "edit": {
+          "label": "categories",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "categories",
           "searchable": false,
           "sortable": false
         }
@@ -121,11 +180,36 @@
       }
     },
     "layouts": {
-      "list": ["id", "slug", "createdAt", "updatedAt"],
       "edit": [
         [
           {
+            "name": "seo",
+            "size": 12
+          }
+        ],
+        [
+          {
             "name": "slug",
+            "size": 6
+          },
+          {
+            "name": "categories",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "title",
+            "size": 6
+          },
+          {
+            "name": "cover",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "authors",
             "size": 6
           }
         ],
@@ -134,13 +218,13 @@
             "name": "content",
             "size": 12
           }
-        ],
-        [
-          {
-            "name": "seo",
-            "size": 12
-          }
         ]
+      ],
+      "list": [
+        "id",
+        "slug",
+        "seo",
+        "createdAt"
       ]
     },
     "uid": "api::page.page"

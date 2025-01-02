@@ -105,7 +105,12 @@
       }
     },
     "layouts": {
-      "list": ["id", "title", "subTitle", "links"],
+      "list": [
+        "id",
+        "title",
+        "subTitle",
+        "links"
+      ],
       "edit": [
         [
           {
@@ -115,6 +120,12 @@
           {
             "name": "subTitle",
             "size": 6
+          }
+        ],
+        [
+          {
+            "name": "links",
+            "size": 12
           }
         ],
         [
@@ -131,12 +142,6 @@
           {
             "name": "bgColor",
             "size": 6
-          }
-        ],
-        [
-          {
-            "name": "links",
-            "size": 12
           }
         ]
       ]

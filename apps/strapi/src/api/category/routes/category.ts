@@ -1,13 +1,7 @@
-export default {
-  routes: [
-    // {
-    //  method: 'GET',
-    //  path: '/category',
-    //  handler: 'category.exampleAction',
-    //  config: {
-    //    policies: [],
-    //    middlewares: [],
-    //  },
-    // },
-  ],
-}
+/**
+ * category router
+ */
+
+import { factories } from "@strapi/strapi"
+
+export default factories.createCoreRouter("api::category.category")
