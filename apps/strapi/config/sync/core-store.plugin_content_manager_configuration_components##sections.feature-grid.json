@@ -105,7 +105,12 @@
       }
     },
     "layouts": {
-      "list": ["id", "title", "items", "imageSize"],
+      "list": [
+        "id",
+        "title",
+        "items",
+        "imageSize"
+      ],
       "edit": [
         [
           {

@@ -1,76 +1,166 @@
 {
+  "documentId": "scbbe1g8ga2vj653ug2abv5b",
   "name": "Author",
   "code": "strapi-author",
   "description": "Authors can manage the content they have created.",
+  "locale": null,
   "permissions": [
     {
+      "documentId": "jb1zcx1zdbijrc5gx7x6m20g",
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
-      "subject": "api::configuration.configuration",
+      "subject": "api::page.page",
       "properties": {
-        "fields": []
+        "fields": [
+          "slug",
+          "seo.metaTitle",
+          "seo.metaDescription",
+          "seo.metaImage",
+          "seo.keywords",
+          "seo.metaRobots",
+          "seo.twitter.card",
+          "seo.twitter.title",
+          "seo.twitter.description",
+          "seo.twitter.siteId",
+          "seo.twitter.creator",
+          "seo.twitter.creatorId",
+          "seo.twitter.images",
+          "seo.applicationName",
+          "seo.siteName",
+          "seo.email",
+          "cover",
+          "title",
+          "content"
+        ]
       },
-      "conditions": ["admin::is-creator"]
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
     },
     {
+      "documentId": "outpmpkon63rs3efh0ptny0q",
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
-      "subject": "api::configuration.configuration",
+      "subject": "api::page.page",
       "properties": {
-        "fields": []
+        "fields": [
+          "slug",
+          "seo.metaTitle",
+          "seo.metaDescription",
+          "seo.metaImage",
+          "seo.keywords",
+          "seo.metaRobots",
+          "seo.twitter.card",
+          "seo.twitter.title",
+          "seo.twitter.description",
+          "seo.twitter.siteId",
+          "seo.twitter.creator",
+          "seo.twitter.creatorId",
+          "seo.twitter.images",
+          "seo.applicationName",
+          "seo.siteName",
+          "seo.email",
+          "cover",
+          "title",
+          "content"
+        ]
       },
-      "conditions": ["admin::is-creator"]
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
     },
     {
+      "documentId": "avau83xdq4kt23579viv2ag1",
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
-      "subject": "api::configuration.configuration",
+      "subject": "api::page.page",
       "properties": {
-        "fields": []
+        "fields": [
+          "slug",
+          "seo.metaTitle",
+          "seo.metaDescription",
+          "seo.metaImage",
+          "seo.keywords",
+          "seo.metaRobots",
+          "seo.twitter.card",
+          "seo.twitter.title",
+          "seo.twitter.description",
+          "seo.twitter.siteId",
+          "seo.twitter.creator",
+          "seo.twitter.creatorId",
+          "seo.twitter.images",
+          "seo.applicationName",
+          "seo.siteName",
+          "seo.email",
+          "cover",
+          "title",
+          "content"
+        ]
       },
-      "conditions": ["admin::is-creator"]
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
     },
     {
+      "documentId": "tp7vzlzz2ipgtsj0onhysftz",
       "action": "plugin::upload.assets.copy-link",
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "locale": null
     },
     {
+      "documentId": "bfl942id9hdavj8nmj9b7ms8",
       "action": "plugin::upload.assets.create",
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "locale": null
     },
     {
+      "documentId": "hq1g4okaclx2lqhii5xz3hf2",
       "action": "plugin::upload.assets.download",
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "locale": null
     },
     {
+      "documentId": "sxy8bsgyrlk2equ85ee7umqj",
       "action": "plugin::upload.assets.update",
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": ["admin::is-creator"]
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
     },
     {
+      "documentId": "mehzcfgqe5rde594mmimql75",
       "action": "plugin::upload.configure-view",
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": []
+      "conditions": [],
+      "locale": null
     },
     {
+      "documentId": "w1j4b3v9nee9x6o9iyzlvpy3",
       "action": "plugin::upload.read",
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": ["admin::is-creator"]
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
     }
   ]
 }

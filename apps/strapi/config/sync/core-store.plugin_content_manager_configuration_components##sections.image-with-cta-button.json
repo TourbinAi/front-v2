@@ -91,7 +91,12 @@
       }
     },
     "layouts": {
-      "list": ["id", "title", "subText", "image"],
+      "list": [
+        "id",
+        "title",
+        "subText",
+        "image"
+      ],
       "edit": [
         [
           {
@@ -111,14 +116,14 @@
         ],
         [
           {
-            "name": "isVisible",
-            "size": 4
+            "name": "link",
+            "size": 12
           }
         ],
         [
           {
-            "name": "link",
-            "size": 12
+            "name": "isVisible",
+            "size": 4
           }
         ]
       ]

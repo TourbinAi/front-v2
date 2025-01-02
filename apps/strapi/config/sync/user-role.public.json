@@ -1,58 +1,44 @@
 {
+  "documentId": "mwsybjvezshyhhw4zzxhzgtt",
   "name": "Public",
   "description": "Default role given to unauthenticated user.",
   "type": "public",
+  "locale": null,
   "permissions": [
     {
-      "action": "api::configuration.configuration.find"
+      "documentId": "v8g932ew5xfjybuwrydig8b1",
+      "action": "plugin::users-permissions.auth.callback",
+      "locale": null
     },
     {
-      "action": "api::footer.footer.find"
+      "documentId": "crzrnlrvs9pjo18qh97i3vxm",
+      "action": "plugin::users-permissions.auth.connect",
+      "locale": null
     },
     {
-      "action": "api::navbar.navbar.find"
+      "documentId": "ofv08qe1jhnkob91ghelsprw",
+      "action": "plugin::users-permissions.auth.emailConfirmation",
+      "locale": null
     },
     {
-      "action": "api::page.page.find"
+      "documentId": "x2jgvexzvpet320fw53s0ijs",
+      "action": "plugin::users-permissions.auth.forgotPassword",
+      "locale": null
     },
     {
-      "action": "api::page.page.findOne"
+      "documentId": "iqa7y93yienbxim9yqw8pvqt",
+      "action": "plugin::users-permissions.auth.register",
+      "locale": null
     },
     {
-      "action": "plugin::users-permissions.auth.callback"
+      "documentId": "gu1xctqmkeulrla8crd4a483",
+      "action": "plugin::users-permissions.auth.resetPassword",
+      "locale": null
     },
     {
-      "action": "plugin::users-permissions.auth.connect"
-    },
-    {
-      "action": "plugin::users-permissions.auth.emailConfirmation"
-    },
-    {
-      "action": "plugin::users-permissions.auth.forgotPassword"
-    },
-    {
-      "action": "plugin::users-permissions.auth.register"
-    },
-    {
-      "action": "plugin::users-permissions.auth.resetPassword"
-    },
-    {
-      "action": "plugin::users-permissions.auth.sendEmailConfirmation"
-    },
-    {
-      "action": "plugin::users-permissions.role.find"
-    },
-    {
-      "action": "plugin::users-permissions.role.findOne"
-    },
-    {
-      "action": "plugin::users-permissions.user.find"
-    },
-    {
-      "action": "plugin::users-permissions.user.findOne"
-    },
-    {
-      "action": "plugin::users-permissions.user.me"
+      "documentId": "ifsj1g4hq7l5p1d6e14y5qpm",
+      "action": "plugin::users-permissions.auth.sendEmailConfirmation",
+      "locale": null
     }
   ]
 }

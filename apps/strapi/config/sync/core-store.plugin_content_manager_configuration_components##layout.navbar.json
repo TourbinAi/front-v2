@@ -49,7 +49,11 @@
       }
     },
     "layouts": {
-      "list": ["id", "links", "logoImage"],
+      "list": [
+        "id",
+        "links",
+        "logoImage"
+      ],
       "edit": [
         [
           {

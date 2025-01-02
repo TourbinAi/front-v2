@@ -63,7 +63,12 @@
       }
     },
     "layouts": {
-      "list": ["id", "desktop", "tablet", "mobile"],
+      "list": [
+        "id",
+        "desktop",
+        "tablet",
+        "mobile"
+      ],
       "edit": [
         [
           {
