@@ -39,8 +39,7 @@
           "description": "",
           "placeholder": "",
           "visible": true,
-          "editable": true,
-          "mainField": "metaTitle"
+          "editable": true
         },
         "list": {
           "label": "seo",
@@ -180,36 +179,16 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "slug",
+        "createdAt",
+        "updatedAt"
+      ],
       "edit": [
         [
           {
-            "name": "seo",
-            "size": 12
-          }
-        ],
-        [
-          {
             "name": "slug",
-            "size": 6
-          },
-          {
-            "name": "categories",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "title",
-            "size": 6
-          },
-          {
-            "name": "cover",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "authors",
             "size": 6
           }
         ],
@@ -218,13 +197,33 @@
             "name": "content",
             "size": 12
           }
+        ],
+        [
+          {
+            "name": "seo",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "cover",
+            "size": 6
+          },
+          {
+            "name": "title",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "authors",
+            "size": 6
+          },
+          {
+            "name": "categories",
+            "size": 6
+          }
         ]
-      ],
-      "list": [
-        "id",
-        "slug",
-        "seo",
-        "createdAt"
       ]
     },
     "uid": "api::page.page"

@@ -168,13 +168,13 @@
           {
             "name": "metaImage",
             "size": 6
-          },
-          {
-            "name": "keywords",
-            "size": 6
           }
         ],
         [
+          {
+            "name": "keywords",
+            "size": 6
+          },
           {
             "name": "metaRobots",
             "size": 6

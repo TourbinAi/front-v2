@@ -256,7 +256,7 @@ interface MDXContentProps {
 
 export function MDXContent({ mdxSource }: MDXContentProps) {
   return (
-    <div className="mdx">
+    <div className="mdx prose dark:prose-invert max-w-none">
       <MDXRemote {...mdxSource} components={mdxComponents} />
     </div>
   )

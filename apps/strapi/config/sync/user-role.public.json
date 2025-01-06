@@ -1,43 +1,78 @@
 {
-  "documentId": "mwsybjvezshyhhw4zzxhzgtt",
+  "documentId": "qyoqgw5r844913drh9g8rrui",
   "name": "Public",
   "description": "Default role given to unauthenticated user.",
   "type": "public",
   "locale": null,
   "permissions": [
     {
-      "documentId": "v8g932ew5xfjybuwrydig8b1",
+      "documentId": "r0x2bamup02f1ccu5y9bxp5g",
+      "action": "api::page.page.find",
+      "locale": null
+    },
+    {
+      "documentId": "zxw0cd9az8qcgprh9pdgp5n6",
+      "action": "api::page.page.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "m701344h59fsgyetswyf092p",
       "action": "plugin::users-permissions.auth.callback",
       "locale": null
     },
     {
-      "documentId": "crzrnlrvs9pjo18qh97i3vxm",
+      "documentId": "ankxdlnac5c232q2l06bkqvr",
       "action": "plugin::users-permissions.auth.connect",
       "locale": null
     },
     {
-      "documentId": "ofv08qe1jhnkob91ghelsprw",
+      "documentId": "c1y9r5bdemseneuvp4saaq4o",
       "action": "plugin::users-permissions.auth.emailConfirmation",
       "locale": null
     },
     {
-      "documentId": "x2jgvexzvpet320fw53s0ijs",
+      "documentId": "yrrgznhy7fl44y5zpumgnevq",
       "action": "plugin::users-permissions.auth.forgotPassword",
       "locale": null
     },
     {
-      "documentId": "iqa7y93yienbxim9yqw8pvqt",
+      "documentId": "uovdmxrna9brqpqyo2s33lvq",
       "action": "plugin::users-permissions.auth.register",
       "locale": null
     },
     {
-      "documentId": "gu1xctqmkeulrla8crd4a483",
+      "documentId": "r2pp149942y5c7cgs03jqn3d",
       "action": "plugin::users-permissions.auth.resetPassword",
       "locale": null
     },
     {
-      "documentId": "ifsj1g4hq7l5p1d6e14y5qpm",
+      "documentId": "ijgwr7djdf21c456cokc21dt",
       "action": "plugin::users-permissions.auth.sendEmailConfirmation",
+      "locale": null
+    },
+    {
+      "documentId": "lc7nbvj1k69q7dt9eckga19h",
+      "action": "plugin::users-permissions.role.find",
+      "locale": null
+    },
+    {
+      "documentId": "w6qpijmrq8s6ozo7rbmbkkq0",
+      "action": "plugin::users-permissions.role.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "id5428zkm5k79a0wwch2756o",
+      "action": "plugin::users-permissions.user.find",
+      "locale": null
+    },
+    {
+      "documentId": "ej7ztpljlx2pjridy337tmc2",
+      "action": "plugin::users-permissions.user.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "sho6qf3hbl35c5a1f3hn4o36",
+      "action": "plugin::users-permissions.user.me",
       "locale": null
     }
   ]

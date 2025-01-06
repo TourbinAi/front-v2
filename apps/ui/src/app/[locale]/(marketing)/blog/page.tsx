@@ -28,20 +28,16 @@ export default async function RootBuilderPage() {
           <div className="mt-5 flex gap-3">
             {pages.map((page, i) => (
               <Link
-                locale={page.attributes.locale as AppLocale}
-                href={`/blog/${page.attributes.slug}`}
+                locale={page.locale as AppLocale}
+                href={`/blog/${page.slug}`}
                 key={String(page.id) + i}
               >
                 <div className="rounded-md bg-gray-200 p-6 text-center transition-colors duration-200 hover:bg-gray-400">
                   <h3 className="text-lg font-bold text-gray-900">
-                    {page.attributes.slug} [{page.id}]
+                    l{page.slug}l [{page.id}]
                   </h3>
-                  {page.attributes.createdAt && (
-                    <p>{String(page.attributes.createdAt)}</p>
-                  )}
-                  {page.attributes.locale && (
-                    <p>{String(page.attributes.locale)}</p>
-                  )}
+                  {page.createdAt && <p>{String(page.createdAt)}</p>}
+                  {page.locale && <p>{String(page.locale)}</p>}
                 </div>
               </Link>
             ))}

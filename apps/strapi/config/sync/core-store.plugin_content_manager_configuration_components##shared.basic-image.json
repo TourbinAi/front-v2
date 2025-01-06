@@ -93,16 +93,12 @@
     "layouts": {
       "list": [
         "id",
-        "media",
         "alt",
-        "width"
+        "width",
+        "media"
       ],
       "edit": [
         [
-          {
-            "name": "media",
-            "size": 6
-          },
           {
             "name": "alt",
             "size": 6
@@ -121,6 +117,10 @@
         [
           {
             "name": "fallbackSrc",
+            "size": 6
+          },
+          {
+            "name": "media",
             "size": 6
           }
         ]

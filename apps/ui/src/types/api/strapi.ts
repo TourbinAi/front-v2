@@ -1,67 +1,27 @@
-import type { Attribute, Common, Entity, Params } from "@repo/strapi"
-
-interface APIIdProperty {
-  id: number
-}
-
-interface APIResponseData<TContentTypeUID extends Common.UID.ContentType>
-  extends APIIdProperty {
-  attributes: Attribute.GetValues<TContentTypeUID>
-}
-
-interface APIResponseCollectionPagination {
+export interface APIResponseCollectionPagination {
   page: number
   pageSize: number
   pageCount: number
   total: number
 }
 
-interface APIResponseCollectionMetadata {
-  pagination: APIResponseCollectionPagination
+export interface APIResponseCollectionMetadata {
+  pagination: {
+    page: number
+    pageSize: number
+    pageCount: number
+    total: number
+  }
 }
 
-export interface APIResponse<TContentTypeUID extends Common.UID.ContentType> {
-  data: APIResponseData<TContentTypeUID> | null
+export interface APIResponse<T> {
+  data: T | null
   meta: object
 }
 
-export interface APIResponseCollection<
-  TContentTypeUID extends Common.UID.ContentType,
-> {
-  data: APIResponseData<TContentTypeUID>[]
+export interface APIResponseCollection<T> {
+  data: T[]
   meta: APIResponseCollectionMetadata
-}
-
-type APILocaleCode = string
-
-type WithLocale<T> = T & { locale?: APILocaleCode }
-
-export type APIUrlParams<TContentTypeUID extends Common.UID.ContentType> =
-  WithLocale<
-    Params.Pick<
-      TContentTypeUID,
-      | "fields"
-      | "filters"
-      | "sort"
-      | "populate"
-      | "publicationState"
-      | "pagination"
-    >
-  >
-
-interface ApiLocale {
-  id: Entity.ID
-  createdAt: string
-  updatedAt: string
-  code: string
-  isDefault: boolean
-  name: string
-}
-
-type UnwrappedAPIResponseData<
-  T extends APIResponseData<Common.UID.ContentType>,
-> = T["attributes"] & {
-  id: T["id"]
 }
 
 type StrapiImageMediaFormat = {
@@ -76,7 +36,9 @@ type StrapiImageMediaFormat = {
   height?: number
 }
 
-type StrapiImageMedia = {
+export type StrapiImageMedia = {
+  documentId: string
+  id: number
   name?: string
   alternativeText?: string
   caption?: string
@@ -99,11 +61,4 @@ type StrapiImageMedia = {
   previewUrl?: string
   provider?: string
   provider_metadata?: string
-}
-
-type StrapiDataWrapper<T> = {
-  data: {
-    id: Entity.ID
-    attributes: T
-  }
 }

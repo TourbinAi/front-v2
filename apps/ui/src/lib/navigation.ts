@@ -2,16 +2,27 @@ import { env } from "@/env.mjs"
 import { createNavigation } from "next-intl/navigation"
 import { defineRouting } from "next-intl/routing"
 
-import { locales } from "./i18n"
+export const routing = defineRouting({
+  // A list of all locales that are supported
+  locales: ["fa", "en"],
 
-const routing = defineRouting({
-  locales,
+  // Used when no locale matches
   defaultLocale: "fa",
+
+  localePrefix: "as-needed",
 })
 
 // https://next-intl-docs.vercel.app/docs/routing/navigation
-export const { Link, usePathname, getPathname, useRouter } =
-  createNavigation(routing)
+export const {
+  Link,
+  redirect: _redirect,
+  usePathname,
+  useRouter,
+} = createNavigation(routing)
+
+// Help TypeScript detect unreachable code
+// https://next-intl-docs.vercel.app/docs/routing/navigation#redirect
+export const redirect: typeof _redirect = _redirect
 
 export function isAppLink(link: string): boolean {
   try {
