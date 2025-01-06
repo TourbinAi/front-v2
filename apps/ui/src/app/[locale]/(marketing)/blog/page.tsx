@@ -5,7 +5,9 @@ import Strapi from "@/lib/strapi"
 
 async function getData() {
   try {
-    const pages = await Strapi.fetchMany("api::page.page")
+    const pages = await Strapi.fetchMany("api::page.page", {
+      populate: ["cover"],
+    })
     return pages.data
   } catch (e) {
     console.error(`No page defined in Strapi or invalid permissions.`, e)
@@ -33,8 +35,16 @@ export default async function RootBuilderPage() {
                 key={String(page.id) + i}
               >
                 <div className="rounded-md bg-gray-200 p-6 text-center transition-colors duration-200 hover:bg-gray-400">
+                  {page.cover && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${page.cover.url}`}
+                      alt={page.title ?? ""}
+                      className="h-48 w-full rounded-md border bg-muted transition-colors object-cover"
+                    />
+                  )}
                   <h3 className="text-lg font-bold text-gray-900">
-                    l{page.slug}l [{page.id}]
+                    {page.title}
                   </h3>
                   {page.createdAt && <p>{String(page.createdAt)}</p>}
                   {page.locale && <p>{String(page.locale)}</p>}

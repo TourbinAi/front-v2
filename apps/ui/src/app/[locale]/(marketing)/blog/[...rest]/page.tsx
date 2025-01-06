@@ -15,10 +15,8 @@ import { Button } from "@/components/ui/button"
 async function fetchData(pageUrl: string, locale: string) {
   try {
     return Strapi.fetchOneBySlug("api::page.page", pageUrl, {
-      populate: {
-        populate: "*",
-      },
       locale,
+      populate: ["authors", "cover", "seo", "categories"],
     })
   } catch (e: any) {
     console.error(`"api::page.page" wasn't fetched: `, e?.message)
@@ -71,13 +69,16 @@ export default async function StrapiPage({ params }: Props) {
         </h1>
         {page.authors?.map((author) => (
           <div key={author.id} className="mt-4 flex space-x-4">
-            <Image
-              src={author.image.data.attributes.url}
-              alt={author.name ?? ""}
-              width={42}
-              height={42}
-              className="rounded-full bg-white"
-            />
+            {author.image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${author.image.url}`}
+                alt={author.name ?? ""}
+                width={42}
+                height={42}
+                className="rounded-full bg-white object-cover"
+              />
+            )}
             <div className="flex-1 text-left leading-tight">
               <p className="font-medium">{author.name}</p>
               <p className="text-[12px] text-muted-foreground">
@@ -88,16 +89,14 @@ export default async function StrapiPage({ params }: Props) {
         ))}
       </div>
       {page.cover && (
-        <Image
-          src={page.cover}
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${page.cover.url}`}
           alt={page.title ?? ""}
-          width={720}
-          height={405}
-          className="my-8 rounded-md border bg-muted transition-colors"
-          priority
+          className="my-8 h-auto w-full rounded-md border bg-muted transition-colors object-cover"
         />
       )}
-      {/* <MDXContent mdxSource={mdxSource} /> */}
+      <MDXContent mdxSource={mdxSource} />
       <hr className="mt-12" />
       <div className="flex justify-center py-6 lg:py-10">
         <Button href="/blog" variant="ghost">
