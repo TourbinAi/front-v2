@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote"
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter"
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs"
@@ -188,12 +189,18 @@ const mdxComponents: MDXComponents = {
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }) => (
     <div className="my-6 w-full overflow-y-auto">
-      <table className={cn("w-full", className)} {...props} />
+      <table
+        className={cn("w-full table-auto border-collapse", className)}
+        {...props}
+      />
     </div>
   ),
   tr: ({ className, ...props }) => (
     <tr
-      className={cn("m-0 border-t p-0 even:bg-muted", className)}
+      className={cn(
+        "m-0 border-t p-0 even:bg-muted hover:bg-muted/50",
+        className
+      )}
       {...props}
     />
   ),
@@ -246,6 +253,7 @@ const mdxComponents: MDXComponents = {
       </code>
     )
   },
+  Image,
   Callout,
   Card: MdxCard,
 }
@@ -256,7 +264,7 @@ interface MDXContentProps {
 
 export function MDXContent({ mdxSource }: MDXContentProps) {
   return (
-    <div className="mdx prose dark:prose-invert max-w-none">
+    <div className="mdx prose prose-slate dark:prose-invert max-w-none prose-table:my-0">
       <MDXRemote {...mdxSource} components={mdxComponents} />
     </div>
   )

@@ -15,6 +15,7 @@ export const routing = defineRouting({
 // https://next-intl-docs.vercel.app/docs/routing/navigation
 export const {
   Link,
+  getPathname,
   redirect: _redirect,
   usePathname,
   useRouter,
