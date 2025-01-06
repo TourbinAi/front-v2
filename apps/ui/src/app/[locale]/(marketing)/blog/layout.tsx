@@ -1,18 +1,15 @@
-import React from "react"
+import { Suspense } from "react"
 
-import { Header } from "@/components/elementary/Header"
-
-interface BlogLayoutProps {
+export default function BlogLayout({
+  children,
+}: {
   children: React.ReactNode
-}
-
-const BlogLayout: React.FC<BlogLayoutProps> = ({ children }) => {
+}) {
   return (
-    <>
-      <Header />
-      {children}
-    </>
+    <div className="container relative">
+      <Suspense fallback={<div className="py-10">Loading...</div>}>
+        <section>{children}</section>
+      </Suspense>
+    </div>
   )
 }
-
-export default BlogLayout

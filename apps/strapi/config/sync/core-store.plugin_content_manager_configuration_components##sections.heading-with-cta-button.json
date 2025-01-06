@@ -96,14 +96,14 @@
         ],
         [
           {
-            "name": "cta",
-            "size": 12
+            "name": "isVisible",
+            "size": 4
           }
         ],
         [
           {
-            "name": "isVisible",
-            "size": 4
+            "name": "cta",
+            "size": 12
           }
         ]
       ]

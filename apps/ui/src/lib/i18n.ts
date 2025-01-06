@@ -1,16 +1,26 @@
-import { notFound } from "next/navigation"
-import { LocalePrefix, Pathnames } from "next-intl/routing"
 import { getRequestConfig } from "next-intl/server"
 
-export const locales = ["en", "fa"] as const
-export const defaultLocale = "fa"
+import { routing } from "./navigation"
 
-export const pathnames: Pathnames<typeof locales> = {
-  "/": "/",
-  "/pathnames": {
-    en: "/pathnames",
-    fa: "/masir",
-  },
-}
+export const locales = routing.locales
+export const defaultLocale = routing.defaultLocale
 
-const localePrefix: LocalePrefix<typeof locales> = "always"
+export default getRequestConfig(async ({ requestLocale }) => {
+  // This typically corresponds to the `[locale]` segment
+  let locale = await requestLocale
+
+  // Ensure that a valid locale is used
+  if (!locale || !routing.locales.includes(locale as any)) {
+    locale = routing.defaultLocale
+  }
+
+  return {
+    messages: (
+      await (locale === "en"
+        ? // When using Turbopack, this will enable HMR for `en`
+          import("../../locales/en.json")
+        : import(`../../locales/${locale}.json`))
+    ).default,
+    timeZone: "Europe/Prague",
+  }
+})

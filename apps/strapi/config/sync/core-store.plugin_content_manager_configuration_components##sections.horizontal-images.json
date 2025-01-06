@@ -122,18 +122,14 @@
       "list": [
         "id",
         "title",
-        "isVisible",
-        "images"
+        "images",
+        "isVisible"
       ],
       "edit": [
         [
           {
             "name": "title",
             "size": 6
-          },
-          {
-            "name": "isVisible",
-            "size": 4
           }
         ],
         [
@@ -144,19 +140,25 @@
         ],
         [
           {
-            "name": "spacing",
+            "name": "isVisible",
             "size": 4
           },
           {
-            "name": "imageRadius",
-            "size": 6
+            "name": "spacing",
+            "size": 4
           }
         ],
         [
           {
+            "name": "imageRadius",
+            "size": 6
+          },
+          {
             "name": "fixedImageHeight",
             "size": 4
-          },
+          }
+        ],
+        [
           {
             "name": "fixedImageWidth",
             "size": 4

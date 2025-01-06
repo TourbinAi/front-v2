@@ -2,11 +2,16 @@ import { env } from "@/env.mjs"
 import { useTranslations } from "next-intl"
 import qs from "qs"
 
-import type { Common, Params } from "@repo/strapi"
-import { APIResponse, APIResponseCollection, APIUrlParams } from "@/types/api"
+import type { FindFirst, FindMany, ID, Result, UID } from "@repo/strapi"
+import { APIResponse, APIResponseCollection } from "@/types/api/strapi"
 import { AppError } from "@/types/general"
 
+import { isDevelopment } from "./general-helpers"
+
 type CustomFetchOptions = {
+  // omit "Authorization" header from the request
+  omitAuthorization?: boolean
+  // map error messages to translation keys
   translateKeyPrefixForErrors?: Parameters<typeof useTranslations>[0]
 }
 
@@ -15,7 +20,7 @@ type CustomFetchOptions = {
  * Add endpoints here that are queried from the frontend.
  * Mapping of Strapi content type UIDs to API endpoint paths.
  */
-export const API_ENDPOINTS: { [key in Common.UID.ContentType]?: string } = {
+export const API_ENDPOINTS: { [key in UID.ContentType]?: string } = {
   "plugin::users-permissions.user": "/users",
   "api::page.page": "/pages",
   "api::author.author": "/authors",
@@ -29,9 +34,14 @@ export default class Strapi {
     requestInit?: RequestInit,
     options?: CustomFetchOptions
   ) {
-    const { url, headers } = this.prepareRequest(path, params)
+    const { url, headers } = await this.prepareRequest(
+      path,
+      params,
+      options?.omitAuthorization
+    )
     const response = await fetch(url, {
-      cache: "no-cache",
+      // turn off caching in development
+      next: { revalidate: isDevelopment() ? 0 : 60 }, // Using hardcoded 60 seconds instead of env variable
       ...requestInit,
       headers: { ...requestInit?.headers, ...headers },
     })
@@ -52,45 +62,56 @@ export default class Strapi {
     return data
   }
 
+  /**
+   * Fetches one document by ID or Single type (without ID)
+   */
   public static async fetchOne<
-    TContentTypeUID extends Common.UID.ContentType,
-    TParams extends APIUrlParams<TContentTypeUID>,
+    TContentTypeUID extends UID.ContentType,
+    TParams extends FindFirst<TContentTypeUID>,
   >(
     uid: TContentTypeUID,
-    entityId?: Params.Attribute.ID,
+    documentId?: ID | undefined,
     params?: TParams,
     requestInit?: RequestInit,
     options?: CustomFetchOptions
-  ): Promise<APIResponse<TContentTypeUID>> {
+  ): Promise<APIResponse<Result<TContentTypeUID, TParams>>> {
     const path = this.getStrapiApiPathByUId(uid)
-    const url = `${path}${entityId ? "/" + entityId : ""}`
+    const url = `${path}${documentId ? "/" + documentId : ""}`
     return this.fetchAPI(url, params, requestInit, options)
   }
 
+  /**
+   * Fetches multiple documents
+   */
   public static async fetchMany<
-    TContentTypeUID extends Common.UID.ContentType,
-    TParams extends APIUrlParams<TContentTypeUID>,
+    TContentTypeUID extends UID.ContentType,
+    TParams extends FindMany<TContentTypeUID>,
   >(
     uid: TContentTypeUID,
     params?: TParams,
     requestInit?: RequestInit,
     options?: CustomFetchOptions
-  ): Promise<APIResponseCollection<TContentTypeUID>> {
+  ): Promise<APIResponseCollection<Result<TContentTypeUID, TParams>>> {
     const path = this.getStrapiApiPathByUId(uid)
     return this.fetchAPI(path, params, requestInit, options)
   }
 
+  /**
+   * Fetches all documents
+   */
   public static async fetchAll<
-    TContentTypeUID extends Common.UID.ContentType,
-    TParams extends APIUrlParams<TContentTypeUID>,
+    TContentTypeUID extends UID.ContentType,
+    TParams extends FindMany<TContentTypeUID>,
   >(
     uid: TContentTypeUID,
     params?: TParams,
-    requestInit?: RequestInit
-  ): Promise<APIResponseCollection<TContentTypeUID>> {
+    requestInit?: RequestInit,
+    options?: CustomFetchOptions
+  ): Promise<APIResponseCollection<Result<TContentTypeUID, TParams>>> {
     const path = this.getStrapiApiPathByUId(uid)
 
-    const firstPage = await this.fetchAPI(path, { ...params }, requestInit)
+    const firstPage: APIResponseCollection<Result<TContentTypeUID, TParams>> =
+      await this.fetchAPI(path, { ...params }, requestInit, options)
 
     if (firstPage.meta.pagination.pageCount === 1) {
       return firstPage
@@ -105,7 +126,8 @@ export default class Strapi {
             ...params,
             pagination: { page: i + 2 },
           },
-          requestInit
+          requestInit,
+          options
         )
     )
 
@@ -122,16 +144,19 @@ export default class Strapi {
     }))
   }
 
+  /**
+   * Fetches a single entity by slug
+   */
   public static async fetchOneBySlug<
-    TContentTypeUID extends Common.UID.ContentType,
-    TParams extends APIUrlParams<TContentTypeUID>,
+    TContentTypeUID extends UID.ContentType,
+    TParams extends FindMany<TContentTypeUID>,
   >(
     uid: TContentTypeUID,
     slug: string | null,
     params?: TParams,
     requestInit?: RequestInit,
     options?: CustomFetchOptions
-  ): Promise<APIResponse<TContentTypeUID>> {
+  ): Promise<APIResponse<Result<TContentTypeUID, TParams>>> {
     const slugFilter = slug && slug.length > 0 ? { $eq: slug } : { $null: true }
     const mergedParams = {
       ...params,
@@ -139,15 +164,21 @@ export default class Strapi {
       filters: { ...params?.filters, slug: slugFilter },
     }
     const path = this.getStrapiApiPathByUId(uid)
-    const response: APIResponseCollection<TContentTypeUID> =
+    const response: APIResponseCollection<Result<TContentTypeUID, TParams>> =
       await this.fetchAPI(path, mergedParams, requestInit, options)
+
+    // return last published entry
     return {
       data: response.data.pop() ?? null,
       meta: {},
     }
   }
 
-  public static prepareRequest(path: string, params: Object) {
+  public static async prepareRequest(
+    path: string,
+    params: Object,
+    omitAuthorization?: boolean
+  ) {
     let url = `/api${path.startsWith("/") ? path : `/${path}`}`
 
     const queryString =
@@ -163,11 +194,15 @@ export default class Strapi {
       headers: {
         Accept: "application/json",
         "Content-type": "application/json",
-        Authorization: `Bearer ${env.NEXT_PUBLIC_STRAPI_KEY}`,
       },
     }
   }
 
+  /**
+   * Get Path of the API route by UID
+   * @param uid - UID of the Endpoint
+   * @returns API Endpoint path
+   */
   private static getStrapiApiPathByUId(
     uid: keyof typeof API_ENDPOINTS
   ): string {

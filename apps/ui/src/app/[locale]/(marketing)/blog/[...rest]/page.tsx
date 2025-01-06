@@ -15,8 +15,9 @@ import { Button } from "@/components/ui/button"
 async function fetchData(pageUrl: string, locale: string) {
   try {
     return Strapi.fetchOneBySlug("api::page.page", pageUrl, {
-      // @ts-ignore - "deep" is not recognized as it comes from strapi extension
-      populate: "deep" as "*",
+      populate: {
+        populate: "*",
+      },
       locale,
     })
   } catch (e: any) {
@@ -35,10 +36,10 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function StrapiPage({ params }: Props) {
-  const t = useTranslations("blog.single")
+  // const t = useTranslations("blog.single")
   const pageUrl = params.rest.filter((part) => part != "builder").join("/")
   const response = await fetchData(pageUrl, params.locale)
-  const page = response?.data?.attributes
+  const page = response?.data
 
   if (page?.content == null) {
     notFound()
@@ -53,7 +54,7 @@ export default async function StrapiPage({ params }: Props) {
         variant="ghost"
         className="absolute left-[-200px] top-14 hidden xl:inline-flex"
       >
-        {t("seeAllPosts")}
+        seeAllPosts
         <ChevronLeft className="mr-2 size-4" />
       </Button>
       <div>
@@ -62,41 +63,41 @@ export default async function StrapiPage({ params }: Props) {
             dateTime={page.publishedAt.toString()}
             className="block text-sm text-muted-foreground"
           >
-            {t("publishedOn")} {formatDate(page.publishedAt)}
+            publishedOn {formatDate(page.publishedAt)}
           </time>
         )}
         <h1 className="font-heading mt-2 inline-block text-4xl leading-tight lg:text-5xl">
           {page.title}
         </h1>
-        {page.author?.avatar && (
-          <div className="mt-4 flex space-x-4">
+        {page.authors?.map((author) => (
+          <div key={author.id} className="mt-4 flex space-x-4">
             <Image
-              src={page.author?.avatar}
-              alt={page.author?.name}
+              src={author.image.data.attributes.url}
+              alt={author.name ?? ""}
               width={42}
               height={42}
               className="rounded-full bg-white"
             />
             <div className="flex-1 text-left leading-tight">
-              <p className="font-medium">{page.author?.name}</p>
+              <p className="font-medium">{author.name}</p>
               <p className="text-[12px] text-muted-foreground">
-                @{page.author?.name}
+                @{author.name}
               </p>
             </div>
           </div>
-        )}
+        ))}
       </div>
       {page.cover && (
         <Image
           src={page.cover}
-          alt={page.title}
+          alt={page.title ?? ""}
           width={720}
           height={405}
           className="my-8 rounded-md border bg-muted transition-colors"
           priority
         />
       )}
-      <MDXContent mdxSource={mdxSource} />
+      {/* <MDXContent mdxSource={mdxSource} /> */}
       <hr className="mt-12" />
       <div className="flex justify-center py-6 lg:py-10">
         <Button href="/blog" variant="ghost">

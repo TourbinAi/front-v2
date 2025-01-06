@@ -7,7 +7,7 @@ import moment from "jalali-moment" // Import the library
 
 import { ChevronRight } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { z } from "zod"
 
 import { TravelMakerListReq, TravelMakerListRes } from "@/types/api"
@@ -18,9 +18,10 @@ import {
   SidebarSchema,
   TravelMakerSelectValues as tmsv,
 } from "@/lib/validation/travelMaker"
-import CustomFormField, {
-  FormFieldType,
-} from "@/components/forms/CustomeFormField"
+import { AppCheckbox } from "@/components/forms/AppCheckbox"
+import { AppForm } from "@/components/forms/AppForm"
+import { AppMultiSelect } from "@/components/forms/AppMultiSelect"
+import { AppSelect } from "@/components/forms/AppSelect"
 import SubmitButton from "@/components/forms/SubmitButton"
 import {
   Accordion,
@@ -36,12 +37,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Form } from "@/components/ui/form"
-import { SelectItem } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import RouteCard from "./card"
-import CustomCard from "./customeCard"
 import SheetLayout from "./sheetLayout"
 
 // Inside your TravelMakerForm component:
@@ -85,8 +83,16 @@ export default function TravelMaker() {
     defaultValues: defaultValue,
   })
 
-  const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
-    updateQuery()
+  const onSubmit = async (
+    values: z.infer<typeof SidebarSchema>,
+    isInitialLoad = false
+  ) => {
+    // Only update URL if it's not the initial load
+    if (!isInitialLoad) {
+      const queryParams = new URLSearchParams(values as any).toString()
+      router.push(`/travelMaker?${queryParams}`)
+    }
+
     setLoading(true)
     try {
       const requestObject: TravelMakerListReq = {
@@ -122,8 +128,23 @@ export default function TravelMaker() {
       setOpen(false)
     }
   }
+  // Watch duration for accommodation visibility
+  const duration = useWatch({
+    control: form.control,
+    name: "duration",
+  })
+
   useEffect(() => {
-    if (Object.keys(query).length > 0) {
+    if (duration === "1d" && accoFlag) {
+      setFlag(false)
+    } else if (duration !== "1d" && !accoFlag) {
+      setFlag(true)
+    }
+  }, [duration, accoFlag])
+
+  // Initial load effect with auto-submit
+  useEffect(() => {
+    if (!mounted && Object.keys(query).length > 0) {
       const parseTags = (tags: string): string[] =>
         tags ? tags.split(",") : []
 
@@ -168,15 +189,12 @@ export default function TravelMaker() {
         accommodation: tmsv.accommodation.includes(query.accommodation as any)
           ? (query.accommodation as any)
           : defaultValue.accommodation,
-        date: parseDate(query.date) || defaultValue.date, // Ensure date is parsed and valid
+        date: parseDate(query.date) || defaultValue.date,
       }
       const result = SidebarSchema.safeParse(safeQuery)
       if (result.success) {
-        // Reset form with the new default values
         form.reset(result.data)
-
-        // Immediately submit the form with these values
-        form.handleSubmit(onSubmit)()
+        onSubmit(result.data, true)
       } else {
         console.error("Query parsing or schema validation failed", result.error)
       }
@@ -184,17 +202,8 @@ export default function TravelMaker() {
     setMounted(true)
   }, [])
 
-  // Watch duration for accommodation visibility
-  const duration = form.watch("duration")
-  if (duration === "1d" && accoFlag) {
-    setFlag(false)
-  } else if (duration !== "1d" && !accoFlag) {
-    setFlag(true)
-  }
-
-  const updateQuery = () => {
-    const queryParams = new URLSearchParams(form.getValues() as any).toString()
-    router.push(`/travelMaker?${queryParams}`)
+  const handleFormSubmit = (values: z.infer<typeof SidebarSchema>) => {
+    return onSubmit(values, false)
   }
 
   if (!mounted) return null
@@ -207,173 +216,118 @@ export default function TravelMaker() {
       sideBarComponent={
         <div className="h-full overflow-x-hidden p-5">
           <div className="flex h-full flex-wrap justify-center">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="origin"
-                  label={t("form.origin.title")}
-                  placeholder={t("form.origin.placeholder")}
-                >
-                  {["تهران", "مشهد"].map((city, i) => (
-                    <SelectItem key={i} value={city}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{city}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
+            <AppForm form={form} onSubmit={handleFormSubmit}>
+              <AppSelect
+                name="origin"
+                label={t("form.origin.title")}
+                placeholder={t("form.origin.placeholder")}
+                options={["تهران", "مشهد"].map((city) => ({
+                  value: city,
+                  label: city,
+                }))}
+              />
 
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="distance"
-                  label={t("form.distance.title")}
-                  placeholder={t("form.distance.placeholder")}
-                >
-                  {tmsv.distance.map((dis, i) => (
-                    <SelectItem key={i} value={dis}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.distance.select.${dis}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.MULTISELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="tags"
-                  label={t("form.place.placeholder")}
-                  placeholder={t("form.place.select.title-nature-placeHolder")}
-                  options={tmsv.placeNature.map((p) => ({
-                    value: p,
-                    label: t(`form.place.select.${p}`),
-                  }))}
-                />
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="duration"
-                  label={t("form.duration.title")}
-                  placeholder={t("form.duration.placeholder")}
-                >
-                  {tmsv.duration.map((time, i) => (
-                    <SelectItem key={i} value={time}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.duration.select.${time}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="route"
-                  label={t("form.route.title")}
-                  placeholder={t("form.route.placeholder")}
-                >
-                  {tmsv.route.map((route, i) => (
-                    <SelectItem key={i} value={route}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.route.select.${route}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="routStop"
-                  label={t("form.destination-state.title")}
-                  placeholder={t("form.destination-state.placeholder")}
-                >
-                  {tmsv.disState.map((state, i) => (
-                    <SelectItem key={i} value={state}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.destination-state.select.${state}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <CustomFormField
-                  fieldType={FormFieldType.SELECT}
-                  onChange={updateQuery}
-                  control={form.control}
-                  name="vehicle"
-                  label={t("form.vehicle.title")}
-                  placeholder={t("form.vehicle.placeholder")}
-                >
-                  {tmsv.vehicle.map((vehicle, i) => (
-                    <SelectItem key={i} value={vehicle}>
-                      <div className="flex w-full cursor-pointer flex-row items-center gap-2 ltr:flex-row-reverse">
-                        <p>{t(`form.vehicle.select.${vehicle}`)}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </CustomFormField>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="optional">
-                    <AccordionTrigger>
-                      {t("form.popover-button")}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <CustomFormField
-                        fieldType={FormFieldType.CHECKBOX}
-                        onChange={updateQuery}
-                        control={form.control}
-                        name="oldPerson"
-                        label={t("form.oldPerson.title")}
-                        // placeholder={t("form.oldPerson.placeholder")}
+              <AppSelect
+                name="distance"
+                label={t("form.distance.title")}
+                placeholder={t("form.distance.placeholder")}
+                options={tmsv.distance.map((dis) => ({
+                  value: dis,
+                  label: t(`form.distance.select.${dis}`),
+                }))}
+              />
+
+              <AppMultiSelect
+                name="tags"
+                label={t("form.place.placeholder")}
+                placeholder={t("form.place.select.title-nature-placeHolder")}
+                options={tmsv.placeNature.map((p) => ({
+                  value: p,
+                  label: t(`form.place.select.${p}`),
+                }))}
+              />
+
+              <AppSelect
+                name="duration"
+                label={t("form.duration.title")}
+                placeholder={t("form.duration.placeholder")}
+                options={tmsv.duration.map((time) => ({
+                  value: time,
+                  label: t(`form.duration.select.${time}`),
+                }))}
+              />
+
+              <AppSelect
+                name="route"
+                label={t("form.route.title")}
+                placeholder={t("form.route.placeholder")}
+                options={tmsv.route.map((route) => ({
+                  value: route,
+                  label: t(`form.route.select.${route}`),
+                }))}
+              />
+
+              <AppSelect
+                name="routStop"
+                label={t("form.destination-state.title")}
+                placeholder={t("form.destination-state.placeholder")}
+                options={tmsv.disState.map((state) => ({
+                  value: state,
+                  label: t(`form.destination-state.select.${state}`),
+                }))}
+              />
+
+              <AppSelect
+                name="vehicle"
+                label={t("form.vehicle.title")}
+                placeholder={t("form.vehicle.placeholder")}
+                options={tmsv.vehicle.map((vehicle) => ({
+                  value: vehicle,
+                  label: t(`form.vehicle.select.${vehicle}`),
+                }))}
+              />
+
+              <Accordion type="single" collapsible>
+                <AccordionItem value="optional">
+                  <AccordionTrigger>
+                    {t("form.popover-button")}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <AppCheckbox
+                      name="oldPerson"
+                      label={t("form.oldPerson.title")}
+                    />
+
+                    <AppSelect
+                      name="direction"
+                      label={t("form.travel-direction.title")}
+                      placeholder={t("form.travel-direction.placeholder")}
+                      options={tmsv.direction.map((dir) => ({
+                        value: dir,
+                        label: t(`form.travel-direction.select.${dir}`),
+                      }))}
+                    />
+
+                    {accoFlag && (
+                      <AppSelect
+                        name="accommodation"
+                        label={t("form.accommodation.title")}
+                        placeholder={t("form.accommodation.placeholder")}
+                        options={tmsv.accommodation.map((acc) => ({
+                          value: acc,
+                          label: t(
+                            `form.accommodation.accommodationSelect.${acc}`
+                          ),
+                        }))}
                       />
-                      <CustomFormField
-                        fieldType={FormFieldType.SELECT}
-                        onChange={updateQuery}
-                        control={form.control}
-                        name="direction"
-                        label={t("form.travel-direction.title")}
-                        placeholder={t("form.travel-direction.placeholder")}
-                      >
-                        {tmsv.direction.map((dir, i) => (
-                          <SelectItem key={i} value={dir}>
-                            <p>{t(`form.travel-direction.select.${dir}`)}</p>
-                          </SelectItem>
-                        ))}
-                      </CustomFormField>
-                      {accoFlag && (
-                        <CustomFormField
-                          fieldType={FormFieldType.SELECT}
-                          onChange={updateQuery}
-                          control={form.control}
-                          name="accommodation"
-                          label={t("form.accommodation.title")}
-                          placeholder={t("form.accommodation.placeholder")}
-                        >
-                          {tmsv.accommodation.map((accommodation, i) => (
-                            <SelectItem key={i} value={accommodation}>
-                              <p>
-                                {t(
-                                  `form.accommodation.accommodationSelect.${accommodation}`
-                                )}
-                              </p>
-                            </SelectItem>
-                          ))}
-                        </CustomFormField>
-                      )}
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <SubmitButton isLoading={loading}>
-                  {t("form.Button")}
-                </SubmitButton>
-              </form>
-            </Form>
+                    )}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+              <SubmitButton isLoading={loading}>
+                {t("form.Button")}
+              </SubmitButton>
+            </AppForm>
           </div>
         </div>
       }
@@ -429,30 +383,28 @@ export default function TravelMaker() {
               )}
             </>
           ) : (
-            <>
-              <div className="flex size-full items-center justify-center">
-                <Card className="max-w-96">
-                  <CardHeader className="flex w-full flex-col items-center justify-center">
-                    <CardTitle className="pb-2">
-                      {t("form.form-header.title")}
-                    </CardTitle>
-                    <CardDescription className="text-center">
-                      {t("form.form-header.text")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex size-full flex-col items-center justify-center">
-                    <Button
-                      className="flex lg:hidden"
-                      variant="outline"
-                      onClick={() => setOpen(true)}
-                    >
-                      <ChevronRight />
-                      {t("form.form-header.fillForm")}
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </>
+            <div className="flex size-full items-center justify-center">
+              <Card className="max-w-96">
+                <CardHeader className="flex w-full flex-col items-center justify-center">
+                  <CardTitle className="pb-2">
+                    {t("form.form-header.title")}
+                  </CardTitle>
+                  <CardDescription className="text-center">
+                    {t("form.form-header.text")}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex size-full flex-col items-center justify-center">
+                  <Button
+                    className="flex lg:hidden"
+                    variant="outline"
+                    onClick={() => setOpen(true)}
+                  >
+                    <ChevronRight />
+                    {t("form.form-header.fillForm")}
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           )}
         </>
       )}
