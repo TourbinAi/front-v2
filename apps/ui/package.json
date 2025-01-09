@@ -17,6 +17,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@headlessui/react": "^2.2.0",
     "@hookform/resolvers": "^3.9.0",
     "@mapbox/polyline": "^1.2.1",
@@ -71,11 +72,12 @@
     "plaiceholder": "^3.0.0",
     "qs": "^6.12.3",
     "react": "^18.3.1",
-    "react-day-picker": "^8.0.5",
+    "react-day-picker": "^9.5.0",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^5.0.0",
     "react-hook-form": "^7.52.1",
     "react-leaflet": "^4.2.1",
+    "react-modern-calendar-datepicker": "^3.1.6",
     "react-phone-number-input": "^3.4.9",
     "react-syntax-highlighter": "^15.6.1",
     "remark-gfm": "^4.0.0",

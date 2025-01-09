@@ -196,6 +196,10 @@
             "title": "مبدأ",
             "placeholder": "شهر شروع را انتخاب کنید."
           },
+          "date": {
+            "title": "تاریخ",
+            "placeholder": "تاریخ را انتخاب کنید."
+          },
           "distance": {
             "title": "فاصله",
             "placeholder": "یک بازه را انتخاب کنید."

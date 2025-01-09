@@ -1,33 +1,39 @@
-/* eslint-disable react/no-unstable-nested-components */
-"use client"
-
 import * as React from "react"
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { DayPicker } from "react-day-picker"
+import { DayPicker as CalendarComponent } from "react-day-picker/persian"
 
+import {
+  formatJalaliDate,
+  jalaliLocale,
+  jalaliMonths,
+  jalaliWeekdaysShort,
+  parseJalaliDate,
+} from "@/lib/jalali-date"
 import { cn } from "@/lib/styles"
-import { buttonVariants } from "@/components/ui/button"
 
-type CalendarProps = React.ComponentProps<typeof DayPicker>
+interface CalendarProps {
+  selected?: Date
+  onSelect?: (date: Date | undefined) => void
+}
 
-function Calendar({
-  className,
-  classNames,
-  showOutsideDays = true,
-  ...props
-}: CalendarProps) {
+export function Calendar({ selected, onSelect }: CalendarProps) {
   return (
-    <DayPicker
-      showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+    <CalendarComponent
+      selected={selected}
+      onSelect={onSelect}
+      locale={jalaliLocale as any}
+      weekStartsOn={6}
+      formatters={{
+        formatWeekdayName: (day) => jalaliWeekdaysShort[day.getDay()] || "",
+        formatCaption: (date) => {
+          const jalaliDate = parseJalaliDate(formatJalaliDate(date))
+          return `${jalaliMonths[jalaliDate.getMonth()]} ${jalaliDate.getFullYear()}`
+        },
+      }}
       classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-        month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
-          buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
         ),
         nav_button_previous: "absolute left-1",
@@ -35,13 +41,10 @@ function Calendar({
         table: "w-full border-collapse space-y-1",
         head_row: "flex",
         head_cell:
-          "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
+          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-        day: cn(
-          buttonVariants({ variant: "ghost" }),
-          "h-8 w-8 p-0 font-normal aria-selected:opacity-100"
-        ),
+        day: cn("h-9 w-9 p-0 font-normal aria-selected:opacity-100"),
         day_selected:
           "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
         day_today: "bg-accent text-accent-foreground",
@@ -50,16 +53,7 @@ function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
-        ...classNames,
       }}
-      // components={{
-      //   IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
-      //   IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
-      // }}
-      {...props}
     />
   )
 }
-Calendar.displayName = "Calendar"
-
-export { Calendar }

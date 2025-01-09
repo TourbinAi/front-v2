@@ -11,13 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 type SheetLayoutProps = {
   children: React.ReactNode
@@ -37,18 +31,16 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
   const t = useTranslations("travelMaker.form.form-header")
   const locale = useLocale()
   const dir = locale === "fa" ? "rtl" : "ltr"
-
   return (
     <div className="h-full">
       <div className="relative flex size-full items-stretch gap-5 p-5">
-        {/* Desktop sidebar */}
         <div
           className={cn(
             "absolutes inset-y-0 z-50 hidden h-full flex-col items-center justify-start lg:flex",
             dir === "rtl" ? "right-0" : "left-0"
           )}
         >
-          <Card className="min-w[500px] m-0 w-[500px]">
+          <Card className="min-w[500px] m-0 p-4 mb-4 w-[500px]">
             <CardHeader className="flex w-full flex-col items-center justify-center">
               <CardTitle className="pb-2">{t("title")}</CardTitle>
               <CardDescription className="text-center">
@@ -58,12 +50,8 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             <CardContent>{sideBarComponent}</CardContent>
           </Card>
         </div>
-
-        {/* Main content */}
-        <div className="size-full h-full grow">{children}</div>
+        <div className="size-full grow">{children}</div>
       </div>
-
-      {/* Mobile sheet */}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger
           asChild
@@ -77,12 +65,7 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             {open ? <PanelRightClose /> : <PanelRightOpen />}
           </Button>
         </SheetTrigger>
-        <SheetContent
-          className="bg-background"
-          side={dir === "rtl" ? "right" : "left"}
-          onPointerDownOutside={(e) => e.preventDefault()}
-          onInteractOutside={(e) => e.preventDefault()}
-        >
+        <SheetContent side={dir === "rtl" ? "right" : "left"}>
           {sideBarComponent}
         </SheetContent>
       </Sheet>

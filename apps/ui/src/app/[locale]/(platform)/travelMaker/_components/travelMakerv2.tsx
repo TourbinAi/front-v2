@@ -7,7 +7,7 @@ import moment from "jalali-moment" // Import the library
 
 import { ChevronRight } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useForm, useWatch } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { TravelMakerListReq, TravelMakerListRes } from "@/types/api"
@@ -19,6 +19,7 @@ import {
   TravelMakerSelectValues as tmsv,
 } from "@/lib/validation/travelMaker"
 import { AppCheckbox } from "@/components/forms/AppCheckbox"
+import { AppDatePicker } from "@/components/forms/AppDatePicker"
 import { AppForm } from "@/components/forms/AppForm"
 import { AppMultiSelect } from "@/components/forms/AppMultiSelect"
 import { AppSelect } from "@/components/forms/AppSelect"
@@ -37,9 +38,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { SelectItem } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import RouteCard from "./card"
+import CustomCard from "./customeCard"
 import SheetLayout from "./sheetLayout"
 
 // Inside your TravelMakerForm component:
@@ -57,7 +60,7 @@ const defaultValue = {
   vehicle: "car",
   oldPerson: false,
   routStop: "oneWay",
-  accommodation: "camp",
+  accommodation: undefined,
   date: {
     year: year,
     month: month,
@@ -70,10 +73,9 @@ export default function TravelMaker() {
   const query = Object.fromEntries(searchParams.entries()) // Convert search params to object
   const [loading, setLoading] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [accoFlag, setFlag] = useState(true)
   const [list, setList] = useState<TravelMakerListRes>()
   const [mounted, setMounted] = useState(false)
-  const [accoFlag, setFlag] = useState(true)
-
   const t = useTranslations("travelMaker")
 
   const router = useRouter()
@@ -83,16 +85,8 @@ export default function TravelMaker() {
     defaultValues: defaultValue,
   })
 
-  const onSubmit = async (
-    values: z.infer<typeof SidebarSchema>,
-    isInitialLoad = false
-  ) => {
-    // Only update URL if it's not the initial load
-    if (!isInitialLoad) {
-      const queryParams = new URLSearchParams(values as any).toString()
-      router.push(`/travelMaker?${queryParams}`)
-    }
-
+  const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
+    updateQuery()
     setLoading(true)
     try {
       const requestObject: TravelMakerListReq = {
@@ -106,9 +100,11 @@ export default function TravelMaker() {
           ([1, 2] as const).at(tmsv.disState.indexOf(values.routStop)) || 1,
         overnight_stay: accoFlag
           ? ([1, 2, 3] as const).at(
-              tmsv.accommodation.indexOf(values.accommodation || "camp")
+              tmsv.accommodation.indexOf(
+                values.accommodation as "camp" | "hotel" | "visit"
+              )
             )
-          : undefined,
+          : 0,
         count_of_elder_people: values.oldPerson ? 1 : 0,
         tags: values.tags.map((place) => tmsv.placeNature.indexOf(place)),
         means_of_travel:
@@ -116,7 +112,9 @@ export default function TravelMaker() {
             tmsv.vehicle.indexOf(values.vehicle)
           ) || 1,
         direction_of_movement: ([1, 2, 3, 4] as const).at(
-          tmsv.direction.indexOf(values.direction || "north")
+          tmsv.direction.indexOf(
+            values.direction as "north" | "south" | "west" | "east"
+          )
         ),
       }
       const respond = await TravelMakerList(requestObject)
@@ -128,23 +126,8 @@ export default function TravelMaker() {
       setOpen(false)
     }
   }
-  // Watch duration for accommodation visibility
-  const duration = useWatch({
-    control: form.control,
-    name: "duration",
-  })
-
   useEffect(() => {
-    if (duration === "1d" && accoFlag) {
-      setFlag(false)
-    } else if (duration !== "1d" && !accoFlag) {
-      setFlag(true)
-    }
-  }, [duration, accoFlag])
-
-  // Initial load effect with auto-submit
-  useEffect(() => {
-    if (!mounted && Object.keys(query).length > 0) {
+    if (Object.keys(query).length > 0) {
       const parseTags = (tags: string): string[] =>
         tags ? tags.split(",") : []
 
@@ -186,15 +169,21 @@ export default function TravelMaker() {
             ? false
             : true
           : defaultValue.oldPerson,
-        accommodation: tmsv.accommodation.includes(query.accommodation as any)
-          ? (query.accommodation as any)
-          : defaultValue.accommodation,
+        accommodation: accoFlag
+          ? tmsv.accommodation.includes(query.accommodation as any)
+            ? (query.accommodation as any)
+            : defaultValue.accommodation
+          : undefined,
         date: parseDate(query.date) || defaultValue.date,
       }
+
       const result = SidebarSchema.safeParse(safeQuery)
       if (result.success) {
+        // Reset form with the new default values
         form.reset(result.data)
-        onSubmit(result.data, true)
+
+        // Immediately submit the form with these values
+        onSubmit(result.data)
       } else {
         console.error("Query parsing or schema validation failed", result.error)
       }
@@ -202,8 +191,17 @@ export default function TravelMaker() {
     setMounted(true)
   }, [])
 
-  const handleFormSubmit = (values: z.infer<typeof SidebarSchema>) => {
-    return onSubmit(values, false)
+  const updateQuery = () => {
+    const queryParams = new URLSearchParams(form.getValues() as any).toString()
+    router.push(`/travelMaker?${queryParams}`)
+  }
+
+  // Watch duration for accommodation visibility
+  const duration = form.watch("duration")
+  if (duration === "1d" && accoFlag) {
+    setFlag(false)
+  } else if (duration !== "1d" && !accoFlag) {
+    setFlag(true)
   }
 
   if (!mounted) return null
@@ -214,121 +212,135 @@ export default function TravelMaker() {
       setOpen={setOpen}
       button={typeof list === "undefined" ? false : list.length !== 0}
       sideBarComponent={
-        <div className="h-full overflow-x-hidden p-5">
-          <div className="flex h-full flex-wrap justify-center">
-            <AppForm form={form} onSubmit={handleFormSubmit}>
-              <AppSelect
-                name="origin"
-                label={t("form.origin.title")}
-                placeholder={t("form.origin.placeholder")}
-                options={["تهران", "مشهد"].map((city) => ({
-                  value: city,
-                  label: city,
-                }))}
-              />
+        <div className="mx-4 h-full">
+          <AppForm form={form} onSubmit={onSubmit}>
+            <AppSelect
+              name="origin"
+              label={t("form.origin.title")}
+              placeholder={t("form.origin.placeholder")}
+              onChange={updateQuery}
+              options={["تهران", "مشهد"].map((city) => ({
+                value: city,
+                label: city,
+              }))}
+            />
 
-              <AppSelect
-                name="distance"
-                label={t("form.distance.title")}
-                placeholder={t("form.distance.placeholder")}
-                options={tmsv.distance.map((dis) => ({
-                  value: dis,
-                  label: t(`form.distance.select.${dis}`),
-                }))}
-              />
+            <AppDatePicker
+              name="date"
+              label={t("form.date.title")}
+              onChange={updateQuery}
+            />
 
-              <AppMultiSelect
-                name="tags"
-                label={t("form.place.placeholder")}
-                placeholder={t("form.place.select.title-nature-placeHolder")}
-                options={tmsv.placeNature.map((p) => ({
-                  value: p,
-                  label: t(`form.place.select.${p}`),
-                }))}
-              />
+            <AppSelect
+              name="distance"
+              label={t("form.distance.title")}
+              placeholder={t("form.distance.placeholder")}
+              onChange={updateQuery}
+              options={tmsv.distance.map((dis) => ({
+                value: dis,
+                label: t(`form.distance.select.${dis}`),
+              }))}
+            />
 
-              <AppSelect
-                name="duration"
-                label={t("form.duration.title")}
-                placeholder={t("form.duration.placeholder")}
-                options={tmsv.duration.map((time) => ({
-                  value: time,
-                  label: t(`form.duration.select.${time}`),
-                }))}
-              />
+            <AppMultiSelect
+              name="tags"
+              label={t("form.place.placeholder")}
+              placeholder={t("form.place.select.title-nature-placeHolder")}
+              onChange={updateQuery}
+              options={tmsv.placeNature.map((p) => ({
+                value: p,
+                label: t(`form.place.select.${p}`),
+              }))}
+            />
 
-              <AppSelect
-                name="route"
-                label={t("form.route.title")}
-                placeholder={t("form.route.placeholder")}
-                options={tmsv.route.map((route) => ({
-                  value: route,
-                  label: t(`form.route.select.${route}`),
-                }))}
-              />
+            <AppSelect
+              name="duration"
+              label={t("form.duration.title")}
+              placeholder={t("form.duration.placeholder")}
+              onChange={updateQuery}
+              options={tmsv.duration.map((time) => ({
+                value: time,
+                label: t(`form.duration.select.${time}`),
+              }))}
+            />
 
-              <AppSelect
-                name="routStop"
-                label={t("form.destination-state.title")}
-                placeholder={t("form.destination-state.placeholder")}
-                options={tmsv.disState.map((state) => ({
-                  value: state,
-                  label: t(`form.destination-state.select.${state}`),
-                }))}
-              />
+            <AppSelect
+              name="route"
+              label={t("form.route.title")}
+              placeholder={t("form.route.placeholder")}
+              onChange={updateQuery}
+              options={tmsv.route.map((route) => ({
+                value: route,
+                label: t(`form.route.select.${route}`),
+              }))}
+            />
 
-              <AppSelect
-                name="vehicle"
-                label={t("form.vehicle.title")}
-                placeholder={t("form.vehicle.placeholder")}
-                options={tmsv.vehicle.map((vehicle) => ({
-                  value: vehicle,
-                  label: t(`form.vehicle.select.${vehicle}`),
-                }))}
-              />
+            <AppSelect
+              name="routStop"
+              label={t("form.destination-state.title")}
+              placeholder={t("form.destination-state.placeholder")}
+              onChange={updateQuery}
+              options={tmsv.disState.map((state) => ({
+                value: state,
+                label: t(`form.destination-state.select.${state}`),
+              }))}
+            />
 
-              <Accordion type="single" collapsible>
-                <AccordionItem value="optional">
-                  <AccordionTrigger>
-                    {t("form.popover-button")}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <AppCheckbox
-                      name="oldPerson"
-                      label={t("form.oldPerson.title")}
-                    />
+            <AppSelect
+              name="vehicle"
+              label={t("form.vehicle.title")}
+              placeholder={t("form.vehicle.placeholder")}
+              onChange={updateQuery}
+              options={tmsv.vehicle.map((vehicle) => ({
+                value: vehicle,
+                label: t(`form.vehicle.select.${vehicle}`),
+              }))}
+            />
 
+            <Accordion type="single" collapsible>
+              <AccordionItem value="optional">
+                <AccordionTrigger>{t("form.popover-button")}</AccordionTrigger>
+                <AccordionContent>
+                  <AppCheckbox
+                    name="oldPerson"
+                    label={t("form.oldPerson.title")}
+                    onChange={updateQuery}
+                  />
+
+                  <AppSelect
+                    name="direction"
+                    label={t("form.travel-direction.title")}
+                    placeholder={t("form.travel-direction.placeholder")}
+                    onChange={updateQuery}
+                    options={tmsv.direction.map((dir) => ({
+                      value: dir,
+                      label: t(`form.travel-direction.select.${dir}`),
+                    }))}
+                  />
+
+                  {accoFlag && (
                     <AppSelect
-                      name="direction"
-                      label={t("form.travel-direction.title")}
-                      placeholder={t("form.travel-direction.placeholder")}
-                      options={tmsv.direction.map((dir) => ({
-                        value: dir,
-                        label: t(`form.travel-direction.select.${dir}`),
+                      name="accommodation"
+                      label={t("form.accommodation.title")}
+                      placeholder={t("form.accommodation.placeholder")}
+                      onChange={updateQuery}
+                      options={tmsv.accommodation.map((accommodation) => ({
+                        value: accommodation,
+                        label: t(
+                          `form.accommodation.accommodationSelect.${accommodation}`
+                        ),
                       }))}
                     />
-
-                    {accoFlag && (
-                      <AppSelect
-                        name="accommodation"
-                        label={t("form.accommodation.title")}
-                        placeholder={t("form.accommodation.placeholder")}
-                        options={tmsv.accommodation.map((acc) => ({
-                          value: acc,
-                          label: t(
-                            `form.accommodation.accommodationSelect.${acc}`
-                          ),
-                        }))}
-                      />
-                    )}
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <div className="p-4 flex justify-center items-center">
               <SubmitButton isLoading={loading}>
                 {t("form.Button")}
               </SubmitButton>
-            </AppForm>
-          </div>
+            </div>
+          </AppForm>
         </div>
       }
     >
