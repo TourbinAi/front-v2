@@ -4,7 +4,6 @@ import React from "react"
 import { UseQueryStateOptions } from "nuqs"
 import { useFormContext } from "react-hook-form"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { cn } from "@/lib/styles"
 import { Checkbox as CheckboxComponent } from "@/components/ui/checkbox"
 import {
@@ -64,8 +63,6 @@ export function AppCheckbox({
   setQueryState,
   ...nativeProps
 }: Props) {
-  removeThisWhenYouNeedMe("AppCheckbox")
-
   const { control } = useFormContext()
 
   return (

@@ -3,7 +3,6 @@
 import { createContext, useContext, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { cn } from "@/lib/styles"
 import {
   Dialog,
@@ -48,8 +47,6 @@ export function AppDialog({
   confirmDialogClose,
   dialogCloseCallback,
 }: Props) {
-  removeThisWhenYouNeedMe("AppDialog")
-
   const t = useTranslations("comps.dialog")
   const [open, setOpen] = useState<boolean>(false)
   const [confirmClose, setConfirmClose] = useState<boolean>(

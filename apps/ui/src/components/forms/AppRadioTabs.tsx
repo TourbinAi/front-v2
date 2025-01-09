@@ -3,7 +3,6 @@
 import React from "react"
 import { useFormContext } from "react-hook-form"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { cn } from "@/lib/styles"
 import {
   FormControl,
@@ -41,8 +40,6 @@ export function AppRadioTabs({
   tabListProps,
   required,
 }: Props) {
-  removeThisWhenYouNeedMe("AppRadioTabs")
-
   const { control } = useFormContext()
 
   return (

@@ -1,24 +1,20 @@
 "use client"
 
-import path from "path"
-
 import { useEffect, useRef, useState } from "react"
 import Image, { StaticImageData } from "next/image"
-import { env } from "@/env.mjs"
 import * as d3 from "d3"
 import { ChevronLeft } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { useRouter } from "@/lib/navigation"
-import { ImageWithFallback } from "@/components/elementary/ImageWithFallback"
-import { ImageWithPlaiceholder } from "@/components/elementary/ImageWithPlaiceholder"
+import { cn } from "@/lib/styles"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
 type City = {
   id: number
   name: string
-  image_url: string
+  image_url: string | null
 }
 
 type RouteCardProps = {
@@ -30,16 +26,30 @@ type RouteCardProps = {
   cities: City[]
 }
 
-export default function RouteCard({ id, name, cities }: RouteCardProps) {
+export default function RouteCard({
+  id,
+  name,
+  cities,
+  longitude,
+  latitude,
+}: RouteCardProps) {
   const router = useRouter()
-  const [selectedCity, setSelectedCity] = useState<City>(
-    cities.length > 0 && cities
-      ? (cities[cities.length - 1] as City)
-      : ({ id: 0, name: "", image_url: "" } as City)
-  )
+  const [wetherReport, setWetherReport] = useState<string>("")
+  const [selectedCity, setSelectedCity] = useState<City>(cities[0] as City)
   const [images, setImages] = useState<{ [key: string]: StaticImageData }>({})
+  const [loading, setLoading] = useState(true)
   const svgRef = useRef<SVGSVGElement | null>(null)
   const t = useTranslations("travelMaker.card")
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      const obj = await fetch(
+        `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`
+      )
+      // console.log("weather:", obj);
+    }
+    fetchWeather()
+  }, [])
 
   useEffect(() => {
     const preloadImages = async () => {
@@ -47,10 +57,7 @@ export default function RouteCard({ id, name, cities }: RouteCardProps) {
       try {
         await Promise.all(
           cities.map(async (city) => {
-            const imageUrl = path.join(
-              env.NEXT_PUBLIC_BACKEND_URL,
-              city.image_url
-            )
+            const imageUrl = `https://${process.env.NEXT_PUBLIC_BACKEND_URL}${city.image_url}`
             const response = await fetch(imageUrl)
             if (!response.ok) {
               throw new Error(`Failed to fetch image for city: ${city.name}`)
@@ -70,6 +77,7 @@ export default function RouteCard({ id, name, cities }: RouteCardProps) {
         console.error("Error preloading images:", error)
       } finally {
         setImages(newImages)
+        setLoading(false)
       }
     }
 
@@ -82,7 +90,7 @@ export default function RouteCard({ id, name, cities }: RouteCardProps) {
         }
       })
     }
-  }, [cities, images])
+  }, [cities])
 
   useEffect(() => {
     if (!svgRef.current) return
@@ -132,7 +140,7 @@ export default function RouteCard({ id, name, cities }: RouteCardProps) {
 
       g.append("title").text(city.name)
 
-      g.on("click", () => setSelectedCity(city))
+      g.on("click", () => handleCityClick(city.name))
     })
   }, [cities, selectedCity.name])
 
@@ -140,19 +148,25 @@ export default function RouteCard({ id, name, cities }: RouteCardProps) {
     router.push(`/travelMaker/${id}/map`)
   }
 
+  const handleCityClick = (cityName: string) => {
+    setSelectedCity(
+      cities.find((c) => c.name === cityName) || (cities[0] as City)
+    )
+  }
+
   return (
     <Card className="relative h-[250px] w-full max-w-7xl overflow-hidden">
       {selectedCity.image_url && (
         <Image
           fill
-          src={path.join(env.NEXT_PUBLIC_BACKEND_URL, selectedCity.image_url)}
+          src={process.env.NEXT_PUBLIC_BACKEND_URL + selectedCity.image_url}
           alt={selectedCity.name}
           className="absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full"
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
-        <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black/60 px-4 py-2">
+        <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black bg-opacity-60 px-4 py-2 backdrop-blur-sm">
           {selectedCity.name}
         </span>
         <div className="flex size-full items-center justify-between">
@@ -171,8 +185,11 @@ export default function RouteCard({ id, name, cities }: RouteCardProps) {
                 onClick={handleViewDetails}
                 className="bg-white px-2 py-3 text-sm text-black hover:bg-gray-200 lg:text-xl"
               >
-                {t("seeMore")} <ChevronLeft className="size-6" />
+                {t("seeMore")} <ChevronLeft className="h-6 w-6" />
               </Button>
+              <div className="absolute bottom-0 left-0 flex flex-col items-center justify-center">
+                <span>{wetherReport}</span>
+              </div>
             </div>
           </div>
         </div>

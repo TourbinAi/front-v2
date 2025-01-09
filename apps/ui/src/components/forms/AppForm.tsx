@@ -8,8 +8,6 @@ import {
   UseFormReturn,
 } from "react-hook-form"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
-
 /**
  * AppForm component documentation.
  *
@@ -61,8 +59,6 @@ export function AppForm<T extends FieldValues = FieldValues>({
   form,
   disabled,
 }: Props<T>) {
-  removeThisWhenYouNeedMe("AppForm")
-
   const { handleSubmit } = form
 
   return (

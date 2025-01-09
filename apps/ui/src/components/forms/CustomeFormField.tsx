@@ -1,5 +1,7 @@
 import React from "react"
 import Image from "next/image"
+import { DayValue } from "@hassanmojab/react-modern-calendar-datepicker"
+import { format } from "date-fns"
 import { E164Number } from "libphonenumber-js/core"
 import { icons } from "lucide-react"
 import { useLocale } from "next-intl"
@@ -98,7 +100,7 @@ function RenderInput<
     case FormFieldType.INPUT:
     case FormFieldType.NUMBER:
       return (
-        <div className="bg-dark-400flex flex w-full cursor-pointer flex-row items-center gap-2 rounded-2xl border border-[#A4A7F7] ltr:flex-row-reverse">
+        <div className="border-dark-500 bg-dark-400flex flex w-full cursor-pointer flex-row items-center gap-2 rounded-md border ltr:flex-row-reverse">
           {props.iconSrc && (
             <Image
               src={props.iconSrc}
@@ -123,7 +125,7 @@ function RenderInput<
               }
               {...field}
               placeholder={props.placeholder}
-              className="shad-input !rounded-2xl border-0 text-center !placeholder-[#A4A7F7] lg:text-xl"
+              className="shad-input border-0"
               onChange={(e) => {
                 field.onChange(e.target.value)
                 if (props.onChange) {
@@ -141,7 +143,7 @@ function RenderInput<
             options={props?.options || []}
             defaultValue={(props?.options || [])
               ?.map((prop) => prop.value)
-              ?.filter((option) => field?.value?.includes(option))}
+              .filter((option) => field.value.includes(option))}
             onValueChange={(newSelected) => {
               field.onChange(newSelected)
             }}
@@ -191,46 +193,6 @@ function RenderInput<
           </div>
         </FormControl>
       )
-    case FormFieldType.DATE_PICKER:
-      return (
-        <div className="border-dark-500 bg-dark-400 flex w-full cursor-pointer flex-row items-center gap-2 rounded-md border ltr:flex-row-reverse">
-          <Popover>
-            <PopoverTrigger asChild>
-              <FormControl className="w-full">
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "",
-                    !field.value && "w-full align-middle text-muted-foreground"
-                  )}
-                >
-                  {field.value ? (
-                    `${field.value.day}-${field.value.month}-${field.value.year}`
-                  ) : (
-                    <span>{props.placeholder || "Pick a date"}</span>
-                  )}
-                </Button>
-              </FormControl>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                selected={field.value || undefined}
-                onSelect={(date) => {
-                  if (date) {
-                    field.onChange(date)
-                    if (props.onChange) props.onChange(date)
-                  } else {
-                    field.onChange(null)
-                  }
-                }}
-                mode="single"
-                {...props}
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-      )
-
     case FormFieldType.SELECT:
       return (
         <FormControl>
@@ -273,7 +235,7 @@ function CustomFormField<
         control={control}
         name={name}
         render={({ field }) => (
-          <FormItem className="flex flex-col gap-2 rounded-lg">
+          <FormItem className="flex flex-col items-baseline gap-2">
             {props.fieldType !== FormFieldType.CHECKBOX && label && (
               <FormLabel className="shad-input-label whitespace-nowrap">
                 {label}

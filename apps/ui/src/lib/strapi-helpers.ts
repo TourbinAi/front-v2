@@ -7,8 +7,6 @@ import { removeThisWhenYouNeedMe } from "./general-helpers"
 export const formatImageUrl = (
   imageUrl: string | StaticImport | undefined | null
 ): any => {
-  removeThisWhenYouNeedMe("formatImageUrl")
-
   if (!imageUrl) {
     return undefined
   }

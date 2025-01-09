@@ -13,6 +13,7 @@ import {
   TravelMakerSelectValues as tmsv,
 } from "@/lib/validation/travelMaker"
 import { AppCheckbox } from "@/components/forms/AppCheckbox"
+import { AppDatePicker } from "@/components/forms/AppDatePicker"
 import { AppForm } from "@/components/forms/AppForm"
 import { AppMultiSelect } from "@/components/forms/AppMultiSelect"
 import { AppSelect } from "@/components/forms/AppSelect"
@@ -31,7 +32,7 @@ const [year, month, day] = persianDate.split("-").map(Number)
 export const TravelMakerForm = () => {
   const t = useTranslations("travelMaker")
   const router = useRouter()
-  const [accoFlag, setFlag] = useState(true)
+  const [accoFlag, setFlag] = useState(false)
 
   const form = useForm<z.infer<typeof SidebarSchema>>({
     resolver: zodResolver(SidebarSchema),
@@ -45,7 +46,7 @@ export const TravelMakerForm = () => {
       vehicle: "car",
       oldPerson: false,
       routStop: "multiple",
-      accommodation: "camp",
+      accommodation: undefined,
       date: {
         year: year,
         month: month,
@@ -63,7 +64,16 @@ export const TravelMakerForm = () => {
   }
 
   const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
-    const queryParams = new URLSearchParams(values as any).toString()
+    const queryParams = new URLSearchParams({
+      ...values,
+      date: values.date
+        ? new Date(
+            values.date.year,
+            values.date.month - 1,
+            values.date.day
+          ).toISOString()
+        : "",
+    } as any).toString()
     router.push(`/travelMaker?${queryParams}`)
   }
 
@@ -79,6 +89,8 @@ export const TravelMakerForm = () => {
             label: city,
           }))}
         />
+
+        <AppDatePicker name="date" label={t("form.date.title")} />
 
         <AppSelect
           name="distance"

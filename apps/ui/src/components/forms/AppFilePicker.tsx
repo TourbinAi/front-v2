@@ -5,7 +5,6 @@ import { Cross1Icon } from "@radix-ui/react-icons"
 import { PaperclipIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
 import { cn } from "@/lib/styles"
 
 import { Tooltip } from "../elementary/Tooltip"
@@ -52,8 +51,6 @@ export function AppFilePicker({
   label,
   required,
 }: Props) {
-  removeThisWhenYouNeedMe("AppFilePicker")
-
   const [isDraggingOver, setIsDraggingOver] = useState(false)
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)

@@ -212,6 +212,10 @@
             "title": "Origin",
             "placeholder": "Select the starting city."
           },
+          "date": {
+            "title": "Date",
+            "placeholder": "Select an date."
+          },
           "distance": {
             "title": "Distance",
             "placeholder": "Select an interval."
