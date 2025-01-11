@@ -6,8 +6,8 @@ import { useFormContext } from "react-hook-form"
 
 import { cn } from "@/lib/styles"
 import { FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { MultiSelect } from "@/components/ui/multiSelect"
 
-import { MultiSelect } from "../ui/multiSelect"
 import { AppFormDescription } from "./AppFormDescription"
 import { AppFormLabel } from "./AppFormLabel"
 
@@ -45,9 +45,6 @@ type Props = {
   readonly name: string
   readonly options: { label: string; value: string }[]
   readonly label?: React.ReactNode
-  readonly placeholder?: string
-  readonly searchText?: string
-  readonly selectAllText?: string
   readonly containerClassName?: string
   readonly fieldClassName?: string
   readonly description?: React.ReactNode
@@ -61,9 +58,6 @@ export function AppMultiSelect({
   name,
   options,
   label,
-  placeholder,
-  searchText,
-  selectAllText,
   containerClassName,
   fieldClassName,
   description,
@@ -84,21 +78,15 @@ export function AppMultiSelect({
             required={nativeProps.required}
           />
           <MultiSelect
-            options={options || []}
-            defaultValue={(options || [])
-              ?.map((prop) => prop.value)
-              .filter((option) => field.value?.includes(option))}
+            options={options}
+            defaultValue={field.value || []}
             onValueChange={(newSelected) => {
               field.onChange(newSelected)
               setQueryState?.(newSelected.join(","))
             }}
             className={cn(fieldClassName)}
-            placeholder={placeholder}
-            searchText={searchText}
-            selectAllText={selectAllText}
           />
           <AppFormDescription description={description} />
-
           <FormMessage />
         </FormItem>
       )}

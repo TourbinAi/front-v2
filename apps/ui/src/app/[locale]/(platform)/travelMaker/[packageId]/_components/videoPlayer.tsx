@@ -48,7 +48,6 @@ export default function CustomVideoPlayer({
   const setIsEnded = externalSetIsEnded ?? setInternalIsEnded
   const isPlaying = externalIsPlaying ?? internalIsPlaying
   const setIsPlaying = externalSetIsPlaying ?? setInternalIsPlaying
-
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying && canPause) {

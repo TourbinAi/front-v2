@@ -11,7 +11,8 @@ export const souvenirsAndFood = z.object({
 })
 
 export const celebrationsAndEvents = z.object({
-  occasion: z.string(),
+  occasion: z.string().min(1, "Please enter an occasion"),
+  month: z.string().min(1, "Please select a month"),
 })
 
 const travelMaker = z.object({

@@ -107,14 +107,20 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                   dirction_url={data?.data?.directions_url || ""}
                 />
               </div>
-              <div className="flex aspect-square h-1/3 items-center justify-stretch lg:h-2/4">
-                <VideoPlayer
-                  videoUrl={path.join(
-                    env.NEXT_PUBLIC_BACKEND_URL,
-                    data?.data?.video_url || ""
-                  )}
-                />
-              </div>
+              {data?.data?.video_url && data?.data?.video_url !== "" ? (
+                <div className="flex aspect-square h-1/3 items-center justify-stretch lg:h-2/4">
+                  <VideoPlayer
+                    videoUrl={path.join(
+                      env.NEXT_PUBLIC_BACKEND_URL,
+                      data?.data?.video_url
+                    )}
+                  />
+                </div>
+              ) : (
+                <div className="border-2 border-gray-300 rounded-md flex aspect-square h-1/3 items-center justify-center lg:h-2/4">
+                  there is no video
+                </div>
+              )}
             </div>
           </>
         )}
@@ -136,15 +142,21 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
             className="h-full w-full"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          <div className="flex h-full items-center lg:h-2/4">
-            <VideoPlayer
-              videoUrl={path.join(
-                env.NEXT_PUBLIC_BACKEND_URL || "",
-                data?.data?.video_url || ""
-              )}
-            />
-          </div>
+        <div className="grid grid-rows-2 gap-2">
+          {data?.data?.video_url && data?.data?.video_url !== "" ? (
+            <div className="flex h-full items-center lg:h-2/4">
+              <VideoPlayer
+                videoUrl={path.join(
+                  env.NEXT_PUBLIC_BACKEND_URL || "",
+                  data?.data?.video_url || ""
+                )}
+              />
+            </div>
+          ) : (
+            <div className="border-2 border-gray-300 rounded-md flex h-full items-center justify-center lg:h-2/4">
+              there is no video
+            </div>
+          )}
           <div className="w-full">
             <TextCard
               title="خلاصه سفر"

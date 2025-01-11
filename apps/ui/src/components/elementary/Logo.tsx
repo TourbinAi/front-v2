@@ -1,7 +1,6 @@
 import React from "react"
 import Image from "next/image"
 import { ClassValue } from "clsx"
-import { useTranslations } from "next-intl"
 import logo from "public/assets/images/logo.png"
 
 import { cn } from "@/lib/styles"
@@ -39,7 +38,6 @@ interface LogoProps {
 }
 
 export function Logo({ className }: LogoProps) {
-  const t = useTranslations("localeLayout")
   return (
     <div
       className={cn(
