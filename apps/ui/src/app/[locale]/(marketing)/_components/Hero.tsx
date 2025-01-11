@@ -37,7 +37,6 @@ export function Hero() {
           className="h-screen w-full object-cover lg:h-[80vh]"
         />
       </div>
-      sm:basis-80
       <div className="mt-32 flex w-full flex-col items-center justify-center gap-16 pb-4">
         <Image src={Logo} alt="Centered Image" className="w-1/2 md:w-1/5" />
         <h1 className="text-gl flex items-center justify-center text-center font-bold text-blue-900 sm:text-xl md:text-2xl lg:text-3xl">

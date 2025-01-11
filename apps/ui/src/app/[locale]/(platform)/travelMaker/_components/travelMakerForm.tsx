@@ -223,7 +223,7 @@ const TravelMakerForm = (props: TravelMakerFormProps) => {
       <AppMultiSelect
         name="tags"
         label={t("form.place.placeholder")}
-        placeholder={t("form.place.select.title-nature-placeHolder")}
+        // placeholder={t("form.place.select.title-nature-placeHolder")}
         options={tmsv.placeNature.map((p) => ({
           value: p,
           label: t(`form.place.select.${p}`),

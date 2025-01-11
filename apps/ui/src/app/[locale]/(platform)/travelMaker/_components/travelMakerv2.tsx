@@ -19,7 +19,6 @@ import {
   TravelMakerSelectValues as tmsv,
 } from "@/lib/validation/travelMaker"
 import { AppCheckbox } from "@/components/forms/AppCheckbox"
-import { AppDatePicker } from "@/components/forms/AppDatePicker"
 import { AppForm } from "@/components/forms/AppForm"
 import { AppMultiSelect } from "@/components/forms/AppMultiSelect"
 import { AppSelect } from "@/components/forms/AppSelect"
@@ -38,11 +37,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { SelectItem } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import RouteCard from "./card"
-import CustomCard from "./customeCard"
 import SheetLayout from "./sheetLayout"
 
 // Inside your TravelMakerForm component:
@@ -225,12 +222,6 @@ export default function TravelMaker() {
               }))}
             />
 
-            <AppDatePicker
-              name="date"
-              label={t("form.date.title")}
-              onChange={updateQuery}
-            />
-
             <AppSelect
               name="distance"
               label={t("form.distance.title")}
@@ -245,12 +236,14 @@ export default function TravelMaker() {
             <AppMultiSelect
               name="tags"
               label={t("form.place.placeholder")}
-              placeholder={t("form.place.select.title-nature-placeHolder")}
-              onChange={updateQuery}
               options={tmsv.placeNature.map((p) => ({
                 value: p,
                 label: t(`form.place.select.${p}`),
               }))}
+              setQueryState={(value) => {
+                updateQuery()
+                return Promise.resolve(new URLSearchParams())
+              }}
             />
 
             <AppSelect
@@ -360,7 +353,7 @@ export default function TravelMaker() {
                     <CardHeader className="flex w-full flex-col items-center justify-center">
                       <CardTitle className="flex gap-2 pb-2">
                         <span>{t("form.noResults")}</span>
-                        <span className="-translate-y-1 text-2xl">{"):"}</span>
+                        <span className="-translate-y-1 text-2xl">):</span>
                       </CardTitle>
                       <CardDescription className="text-center">
                         {t("form.tryAnother")}
@@ -381,15 +374,19 @@ export default function TravelMaker() {
               ) : (
                 <div className="flex w-full flex-col gap-4">
                   {list.map((item) => (
-                    <RouteCard
-                      key={item.id}
-                      id={item.id}
-                      name={item.description}
-                      description={item.description}
-                      latitude={item.latitude}
-                      longitude={item.longitude}
-                      cities={[...item.places].reverse()}
-                    />
+                    <>
+                      {item.places.length > 0 && (
+                        <RouteCard
+                          key={item.id}
+                          id={item.id}
+                          name={item.description}
+                          description={item.description}
+                          latitude={item.latitude}
+                          longitude={item.longitude}
+                          cities={[...item.places].reverse()}
+                        />
+                      )}
+                    </>
                   ))}
                 </div>
               )}

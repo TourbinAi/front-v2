@@ -46,7 +46,6 @@ export default function RouteCard({
       const obj = await fetch(
         `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`
       )
-      // console.log("weather:", obj);
     }
     fetchWeather()
   }, [])

@@ -13,7 +13,6 @@ import {
   TravelMakerSelectValues as tmsv,
 } from "@/lib/validation/travelMaker"
 import { AppCheckbox } from "@/components/forms/AppCheckbox"
-import { AppDatePicker } from "@/components/forms/AppDatePicker"
 import { AppForm } from "@/components/forms/AppForm"
 import { AppMultiSelect } from "@/components/forms/AppMultiSelect"
 import { AppSelect } from "@/components/forms/AppSelect"
@@ -90,8 +89,6 @@ export const TravelMakerForm = () => {
           }))}
         />
 
-        <AppDatePicker name="date" label={t("form.date.title")} />
-
         <AppSelect
           name="distance"
           label={t("form.distance.title")}
@@ -105,11 +102,13 @@ export const TravelMakerForm = () => {
         <AppMultiSelect
           name="tags"
           label={t("form.place.placeholder")}
-          placeholder={t("form.place.select.title-nature-placeHolder")}
           options={tmsv.placeNature.map((p) => ({
             value: p,
             label: t(`form.place.select.${p}`),
           }))}
+          setQueryState={(value) =>
+            Promise.resolve(new URLSearchParams({ tags: value || "" }))
+          }
         />
 
         <AppSelect

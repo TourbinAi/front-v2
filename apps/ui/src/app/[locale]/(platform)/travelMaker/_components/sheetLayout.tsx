@@ -61,11 +61,17 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             button ? "block lg:hidden" : "hidden"
           )}
         >
-          <Button variant="outline" className="size-14 rounded-full">
+          <Button
+            variant="outline"
+            className="size-14 flex justify-center items-center rounded-full"
+          >
             {open ? <PanelRightClose /> : <PanelRightOpen />}
           </Button>
         </SheetTrigger>
-        <SheetContent side={dir === "rtl" ? "right" : "left"}>
+        <SheetContent
+          className="bg-white"
+          side={dir === "rtl" ? "right" : "left"}
+        >
           {sideBarComponent}
         </SheetContent>
       </Sheet>

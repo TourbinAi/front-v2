@@ -1,10 +1,23 @@
 import { format as formatJalali, parse as parseJalali } from "date-fns-jalali"
 
 export function formatJalaliDate(
-  date: Date,
+  date: Date | string | number | null | undefined,
   formatStr: string = "yyyy/MM/dd"
 ): string {
-  return formatJalali(date, formatStr)
+  if (!date) {
+    return ""
+  }
+
+  let dateObject: Date
+  try {
+    dateObject = date instanceof Date ? date : new Date(date)
+    if (isNaN(dateObject.getTime())) {
+      return ""
+    }
+    return formatJalali(dateObject, formatStr)
+  } catch (error) {
+    return ""
+  }
 }
 
 export function parseJalaliDate(
