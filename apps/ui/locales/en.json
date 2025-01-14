@@ -319,7 +319,40 @@
     "destination": "You've gone the wrong way!"
   },
   "travelMaker": {
+    "filter": {
+      "all": "All",
+      "route": {
+        "title": "Route",
+        "options": {
+          "easy": "Easy",
+          "hard": "Hard",
+          "none": "No walking"
+        }
+      },
+      "tripType": {
+        "title": "Trip Type",
+        "options": {
+          "oneWay": "One-way",
+          "multiple": "Multiple destinations"
+        }
+      },
+      "tags": {
+        "title": "Tags",
+        "options": {
+          "shade_and_greenery": "Shadow & Green",
+          "sun_and_sea": "Sunny & Sea",
+          "mountain": "Mountain & Desert",
+          "andventure_and_exitment": "andventure_and_exitment",
+          "historical_and_cultural": "History & Culture"
+        }
+      }
+    },
     "submissionError": "Form submission failed",
+    "centerCard": {
+      "title": "Travel Planner",
+      "description": "Use the sidebar to start planning your trip",
+      "button": "Open Sidebar"
+    },
     "form": {
       "validateError": {
         "origin": "origin is required",
@@ -346,19 +379,6 @@
           "7h": "To be away from the origin for 7 hours"
         }
       },
-      "place": {
-        "placeholder": "Select like your place ",
-        "selectAll": "Select All",
-        "search": "Search...",
-        "select": {
-          "title-nature-placeHolder": "nature",
-          "shadowAndGreen": "Shadow & Green",
-          "sunnyAndSea": "Sunny & Sea",
-          "MountainAndDesert": "Mountain & Desert",
-          "Entertainment": "Entertainment",
-          "HistoryAndCulture": "History & Culture"
-        }
-      },
       "duration": {
         "title": "travel duration",
         "placeholder": "select duration",
@@ -370,23 +390,6 @@
       },
       "travelStartDate": {
         "title": "travel start date"
-      },
-      "route": {
-        "title": "route type",
-        "placeholder": "select route",
-        "select": {
-          "easy": "Easy",
-          "hard": "Hard",
-          "none": "No walking"
-        }
-      },
-      "destination-state": {
-        "title": "stop in route",
-        "placeholder": "select stop in route",
-        "select": {
-          "oneWay": "One-way: we go directly to the destination and stop there",
-          "multiple": "Multiple destinations: We visit and pass several destinations and attractions"
-        }
       },
       "vehicle": {
         "title": "Vehicle",

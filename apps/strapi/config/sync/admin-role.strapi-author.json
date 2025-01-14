@@ -33,9 +33,7 @@
           "title"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
+      "conditions": ["admin::is-creator"],
       "locale": null
     },
     {
@@ -66,9 +64,7 @@
           "title"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
+      "conditions": ["admin::is-creator"],
       "locale": null
     },
     {
@@ -99,9 +95,7 @@
           "title"
         ]
       },
-      "conditions": [
-        "admin::is-creator"
-      ],
+      "conditions": ["admin::is-creator"],
       "locale": null
     },
     {
@@ -137,9 +131,7 @@
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ],
+      "conditions": ["admin::is-creator"],
       "locale": null
     },
     {
@@ -157,9 +149,7 @@
       "actionParameters": {},
       "subject": null,
       "properties": {},
-      "conditions": [
-        "admin::is-creator"
-      ],
+      "conditions": ["admin::is-creator"],
       "locale": null
     }
   ]

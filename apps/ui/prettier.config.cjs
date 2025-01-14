@@ -3,7 +3,5 @@ const globalConfig = require("@repo/prettier-config")
 /** @type {import('prettier').Config} */
 module.exports = {
   ...globalConfig,
-  plugins: [...globalConfig.plugins],
-  tailwindConfig: "./tailwind.config.js",
-  tailwindFunctions: ["cn"],
+  plugins: [...globalConfig.plugins, "prettier-plugin-tailwindcss"],
 }

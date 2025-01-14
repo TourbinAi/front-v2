@@ -53,11 +53,7 @@ export const CelebrationsAndEventForm = () => {
   }
 
   return (
-    <AppForm
-      form={form}
-      onSubmit={onSubmit}
-      className="w-full flex-1 space-y-4"
-    >
+    <AppForm form={form} onSubmit={onSubmit} className="w-3/4">
       <AppField
         name="occasion"
         label={t("form.occasion.title")}

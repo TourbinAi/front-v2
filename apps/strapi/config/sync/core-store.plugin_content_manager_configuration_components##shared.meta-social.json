@@ -77,12 +77,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "socialNetwork",
-        "title",
-        "description"
-      ],
+      "list": ["id", "socialNetwork", "title", "description"],
       "edit": [
         [
           {

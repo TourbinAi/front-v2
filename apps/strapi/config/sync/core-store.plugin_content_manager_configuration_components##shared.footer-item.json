@@ -49,11 +49,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "title",
-        "links"
-      ],
+      "list": ["id", "title", "links"],
       "edit": [
         [
           {

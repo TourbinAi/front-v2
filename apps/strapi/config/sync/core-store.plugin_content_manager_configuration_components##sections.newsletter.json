@@ -63,12 +63,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "title",
-        "description",
-        "gdpr"
-      ],
+      "list": ["id", "title", "description", "gdpr"],
       "edit": [
         [
           {

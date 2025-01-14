@@ -3,14 +3,14 @@ import { z } from "zod"
 export const TravelMakerSelectValues = {
   duration: ["1d", "2d", "3d"],
   placeNature: [
-    "shadowAndGreen",
-    "sunnyAndSea",
-    "MountainAndDesert",
-    "Entertainment",
-    "HistoryAndCulture",
+    "shade_and_greenery",
+    "sun_and_sea",
+    "mountain",
+    "andventure_and_exitment",
+    "historical_and_cultural",
   ],
   distance: ["3h", "5h", "7h"],
-  route: ["easy", "hard", "none"],
+  route: ["easy", "hard"],
   disState: ["oneWay", "multiple"],
   vehicle: [
     "car",
@@ -31,25 +31,13 @@ export const SidebarSchema = z.object({
   distance: z.enum(TravelMakerSelectValues.distance, {
     required_error: " required",
   }),
-  tags: z.array(z.enum(TravelMakerSelectValues.placeNature)),
   duration: z.enum(TravelMakerSelectValues.duration, {
     required_error: " required",
   }),
-  route: z.enum(TravelMakerSelectValues.route, { required_error: " required" }),
   vehicle: z.enum(TravelMakerSelectValues.vehicle, {
-    required_error: " required",
-  }),
-  routStop: z.enum(TravelMakerSelectValues.disState, {
     required_error: " required",
   }),
   direction: z.enum(TravelMakerSelectValues.direction).optional(),
   oldPerson: z.boolean().optional(),
   accommodation: z.enum(TravelMakerSelectValues.accommodation).optional(),
-  date: z
-    .object({
-      year: z.number(),
-      month: z.number(),
-      day: z.number(),
-    })
-    .optional(),
 })

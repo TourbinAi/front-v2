@@ -27,6 +27,8 @@
   "prettier.requireConfig": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
+    "andventure",
+    "exitment",
     "Hamed",
     "Moghadam",
     "Neshan",

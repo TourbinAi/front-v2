@@ -35,10 +35,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "author"
-      ],
+      "list": ["id", "author"],
       "edit": [
         [
           {

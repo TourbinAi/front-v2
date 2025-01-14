@@ -164,12 +164,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "name",
-        "releasedAt",
-        "actions"
-      ],
+      "list": ["id", "name", "releasedAt", "actions"],
       "edit": [
         [
           {

@@ -63,12 +63,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "images",
-        "radius",
-        "isVisible"
-      ],
+      "list": ["id", "images", "radius", "isVisible"],
       "edit": [
         [
           {
