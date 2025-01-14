@@ -1,13 +1,7 @@
-import { Suspense } from "react"
+import React from "react"
 
-import TravelMaker from "./_components/travelMakerv2"
+import TravelMaker from "./_components/travelMaker"
 
-const TravelMakerPage = () => {
-  return (
-    <Suspense fallback={<div>Loading Page...</div>}>
-      <TravelMaker />
-    </Suspense>
-  )
+export default function TravelMakerPage() {
+  return <TravelMaker />
 }
-
-export default TravelMakerPage

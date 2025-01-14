@@ -6,9 +6,9 @@ interface PlatformLayoutProps {
 
 const PlatformLayout: React.FC<PlatformLayoutProps> = ({ children }) => {
   return (
-    <div className="size-full">
+    <div className="h-screen flex flex-col justify-stretch items-stretch">
       <Header />
-      <div className="size-full">{children}</div>
+      {children}
     </div>
   )
 }

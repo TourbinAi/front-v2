@@ -11,16 +11,8 @@
       "actionParameters": {},
       "subject": "api::author.author",
       "properties": {
-        "fields": [
-          "username",
-          "image",
-          "name",
-          "pages"
-        ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "fields": ["username", "image", "name", "pages"],
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -31,10 +23,7 @@
       "actionParameters": {},
       "subject": "api::author.author",
       "properties": {
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -45,10 +34,7 @@
       "actionParameters": {},
       "subject": "api::author.author",
       "properties": {
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -59,16 +45,8 @@
       "actionParameters": {},
       "subject": "api::author.author",
       "properties": {
-        "fields": [
-          "username",
-          "image",
-          "name",
-          "pages"
-        ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "fields": ["username", "image", "name", "pages"],
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -79,16 +57,8 @@
       "actionParameters": {},
       "subject": "api::author.author",
       "properties": {
-        "fields": [
-          "username",
-          "image",
-          "name",
-          "pages"
-        ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "fields": ["username", "image", "name", "pages"],
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -99,14 +69,8 @@
       "actionParameters": {},
       "subject": "api::category.category",
       "properties": {
-        "fields": [
-          "name",
-          "pages"
-        ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "fields": ["name", "pages"],
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -117,10 +81,7 @@
       "actionParameters": {},
       "subject": "api::category.category",
       "properties": {
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -131,10 +92,7 @@
       "actionParameters": {},
       "subject": "api::category.category",
       "properties": {
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -145,14 +103,8 @@
       "actionParameters": {},
       "subject": "api::category.category",
       "properties": {
-        "fields": [
-          "name",
-          "pages"
-        ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "fields": ["name", "pages"],
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -163,14 +115,8 @@
       "actionParameters": {},
       "subject": "api::category.category",
       "properties": {
-        "fields": [
-          "name",
-          "pages"
-        ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "fields": ["name", "pages"],
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -204,10 +150,7 @@
           "authors",
           "categories"
         ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -218,10 +161,7 @@
       "actionParameters": {},
       "subject": "api::page.page",
       "properties": {
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -232,10 +172,7 @@
       "actionParameters": {},
       "subject": "api::page.page",
       "properties": {
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -269,10 +206,7 @@
           "authors",
           "categories"
         ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null
@@ -306,10 +240,7 @@
           "authors",
           "categories"
         ],
-        "locales": [
-          "en",
-          "fa"
-        ]
+        "locales": ["en", "fa"]
       },
       "conditions": [],
       "locale": null

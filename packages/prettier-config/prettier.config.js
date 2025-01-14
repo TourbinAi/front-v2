@@ -8,7 +8,6 @@ module.exports = {
   useTabs: false,
   plugins: [
     "prettier-plugin-packagejson",
-    "prettier-plugin-tailwindcss",
     "@ianvs/prettier-plugin-sort-imports",
   ],
   importOrder: [

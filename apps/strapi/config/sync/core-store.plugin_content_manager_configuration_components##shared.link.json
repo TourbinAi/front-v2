@@ -63,12 +63,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "href",
-        "newTab",
-        "label"
-      ],
+      "list": ["id", "href", "newTab", "label"],
       "edit": [
         [
           {

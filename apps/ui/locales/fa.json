@@ -303,6 +303,39 @@
     "destination": "شما راه را اشتباه آمده‌اید!"
   },
   "travelMaker": {
+    "filter": {
+      "all": "همه",
+      "route": {
+        "title": "مسیر",
+        "options": {
+          "easy": "آسان",
+          "hard": "سخت",
+          "none": "بدون پیاده‌روی"
+        }
+      },
+      "tripType": {
+        "title": "نوع سفر",
+        "options": {
+          "oneWay": "یک طرفه",
+          "multiple": "چند مقصد"
+        }
+      },
+      "tags": {
+        "title": "تگ‌ها",
+        "options": {
+          "shade_and_greenery": "سایه و سبز",
+          "sun_and_sea": "آفتابی و دریا",
+          "mountain": "کوه و کویر",
+          "andventure_and_exitment": "تفریحی",
+          "historical_and_cultural": "تاریخی و فرهنگی"
+        }
+      }
+    },
+    "centerCard": {
+      "title": "سفرساز",
+      "description": "فرم را پر کنید و برنامه سفر خود را بسازید",
+      "button": "باز کردن فرم"
+    },
     "submissionError": "خطایی در ثبت فرم پیش آمده",
     "form": {
       "validateError": {
@@ -330,19 +363,6 @@
           "7h": "تا 7 ساعت از مبدأ دور باشد"
         }
       },
-      "place": {
-        "placeholder": "مکان مورد علاقه خود را انتخاب کنید",
-        "selectAll": "انتخاب همه",
-        "search": "جستجو...",
-        "select": {
-          "title-nature-placeHolder": "طبیعت",
-          "shadowAndGreen": "سایه و سبز",
-          "sunnyAndSea": "آفتابی و دریا",
-          "MountainAndDesert": "کوه و کویر",
-          "Entertainment": "تفریحی",
-          "HistoryAndCulture": "تاریخی و فرهنگی"
-        }
-      },
       "duration": {
         "title": "مدت سفر",
         "placeholder": "مدت را انتخاب کنید",
@@ -354,23 +374,6 @@
       },
       "travelStartDate": {
         "title": "تاریخ شروع سفر"
-      },
-      "route": {
-        "title": "نوع مسیر",
-        "placeholder": "مسیر را انتخاب کنید",
-        "select": {
-          "easy": "آسان",
-          "hard": "سخت",
-          "none": "بدون پیاده‌روی"
-        }
-      },
-      "destination-state": {
-        "title": "توقف در مسیر",
-        "placeholder": "توقف در مسیر را انتخاب کنید",
-        "select": {
-          "oneWay": "یک طرفه: مستقیم به مقصد می‌رویم و آنجا توقف می‌کنیم",
-          "multiple": "چند مقصدی: چندین مقصد و جاذبه را بازدید می‌کنیم و عبور می‌کنیم"
-        }
       },
       "vehicle": {
         "title": "وسیله نقلیه",

@@ -119,12 +119,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "card",
-        "title",
-        "description"
-      ],
+      "list": ["id", "card", "title", "description"],
       "edit": [
         [
           {

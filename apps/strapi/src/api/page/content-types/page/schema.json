@@ -41,9 +41,7 @@
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": [
-        "images"
-      ],
+      "allowedTypes": ["images"],
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -83,6 +81,16 @@
       "relation": "manyToMany",
       "target": "api::category.category",
       "mappedBy": "pages"
+    },
+    "isGood": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "boolean",
+      "default": true,
+      "required": true
     }
   }
 }

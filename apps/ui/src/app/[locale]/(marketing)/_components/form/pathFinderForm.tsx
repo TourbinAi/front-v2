@@ -122,7 +122,7 @@ export const PathFinderForm = () => {
   )
 
   return (
-    <AppForm form={form} onSubmit={onSubmit}>
+    <AppForm form={form} onSubmit={onSubmit} className="w-3/4">
       <div className="flex h-1/2 flex-col flex-wrap text-center">
         {renderAutoComplete("origin")}
       </div>

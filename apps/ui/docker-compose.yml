@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  ui:
+    image: ui:latest
+    environment:
+      NEXT_PUBLIC_STRAPI_URL: http://strapi:1337
+    ports:
+      - "3000:3000"
+    networks:
+      - web_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web_net"
+      - "traefik.http.routers.ui.rule=Host(turbeen.ir)"
+      - "traefik.http.routers.ui.entrypoints=http"
+      - "traefik.http.routers.ui.middlewares=https-redirect"
+      - "traefik.http.routers.ui-secure.entrypoints=https"
+      - "traefik.http.routers.ui-secure.rule=Host(turbeen.ir)"
+      - "traefik.http.routers.ui-secure.tls=true"
+      - "traefik.http.routers.ui-secure.tls.certresolver=mycert"
+      - "traefik.http.services.ui.loadbalancer.server.port=3000"
+
+networks:
+  web_net:
+    external: true

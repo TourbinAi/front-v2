@@ -7,7 +7,7 @@ module.exports = {
     "plugin:jsx-a11y/recommended",
   ],
   parser: "@typescript-eslint/parser",
-  plugins: ["tailwindcss", "jsx-a11y", "cypress"],
+  plugins: ["tailwindcss", "jsx-a11y"],
   settings: {
     tailwindcss: {
       callees: ["cn"],
@@ -58,19 +58,5 @@ module.exports = {
         "no-unused-vars": "off",
       },
     },
-    {
-      files: ["cypress/**/*.{js,jsx,ts,tsx}", "**/*.cy.{js,jsx,ts,tsx}"],
-      extends: ["plugin:cypress/recommended"],
-      rules: {
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-      },
-    },
   ],
-  env: {
-    node: true,
-    browser: true,
-    mocha: true,
-    "cypress/globals": true,
-  },
 }

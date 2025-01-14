@@ -63,12 +63,7 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "title",
-        "subTitle",
-        "image"
-      ],
+      "list": ["id", "title", "subTitle", "image"],
       "edit": [
         [
           {

@@ -36,7 +36,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       >
         <ServerProviders params={params}>
           <ClientProviders>
-            <div className="h-full">{children}</div>
+            {children}
             <TailwindIndicator />
             <Toaster />
           </ClientProviders>
