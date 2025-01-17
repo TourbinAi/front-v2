@@ -1,7 +1,5 @@
 "use client"
 
-import path from "path"
-
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { env } from "@/env.mjs"
@@ -30,13 +28,6 @@ type RouteCardProps = {
   description: string
   cities: City[]
   index: number
-}
-
-type ImageLoadingState = {
-  [key: string]: {
-    loaded: boolean
-    url: string
-  }
 }
 
 export default function RouteCard({ id, name, cities, index }: RouteCardProps) {
@@ -110,12 +101,6 @@ export default function RouteCard({ id, name, cities, index }: RouteCardProps) {
     )
   }
 
-  const getImageUrl = (imageUrl: string | null) => {
-    if (!imageUrl) return ""
-    const cleanPath = imageUrl.replace(/^\/+/, "")
-    return `${env.NEXT_PUBLIC_BACKEND_URL}/${cleanPath}`
-  }
-
   return (
     <Card
       ref={cardRef}
@@ -125,7 +110,7 @@ export default function RouteCard({ id, name, cities, index }: RouteCardProps) {
         <>
           {isCurrentImageLoading && (
             <div className="absolute inset-0 bg-gray-800">
-              <Skeleton className="h-full w-full" />
+              <Skeleton className="size-full" />
             </div>
           )}
           <Image
@@ -155,7 +140,7 @@ export default function RouteCard({ id, name, cities, index }: RouteCardProps) {
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
         <span
           className={cn(
-            "text-md absolute top-2 cursor-default rounded-full bg-black bg-opacity-60 px-4 py-2 backdrop-blur-sm",
+            "text-md absolute top-2 cursor-default rounded-full bg-black/60 px-4 py-2 backdrop-blur-sm",
             locale === "fa" ? "right-0" : "left-0"
           )}
         >
@@ -180,7 +165,7 @@ export default function RouteCard({ id, name, cities, index }: RouteCardProps) {
                 onClick={handleViewDetails}
                 className="bg-white px-2 py-3 text-sm text-black hover:bg-gray-200 lg:text-xl"
               >
-                <ChevronLeft className="h-6 w-6" /> {t("seeMore")}
+                <ChevronLeft className="size-6" /> {t("seeMore")}
               </Button>
             </div>
           </div>

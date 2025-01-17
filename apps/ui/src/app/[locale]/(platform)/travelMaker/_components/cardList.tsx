@@ -172,7 +172,7 @@ const ResultsList = memo(function ResultsList({
 
   return (
     <ScrollArea className="flex-1">
-      <div className="flex flex-col gap-4 px-4 py-4">
+      <div className="flex flex-col gap-4 p-4">
         {filteredResults.map((item, index) => {
           if (item.places.length > 0) {
             return (

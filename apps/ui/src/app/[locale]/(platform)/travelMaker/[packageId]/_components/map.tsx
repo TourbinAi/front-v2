@@ -2,7 +2,7 @@
 
 import path from "path"
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import { env } from "@/env.mjs"
@@ -10,8 +10,6 @@ import polyline from "@mapbox/polyline"
 import * as Sentry from "@sentry/nextjs"
 import axios from "axios"
 import PlaceHolderImage from "public/assets/images/placeholderImages.png"
-
-import { PackagesPlaceRes } from "@/types/api"
 
 import { postData } from "@/lib/api"
 import { Card, CardContent } from "@/components/ui/card"
@@ -55,11 +53,10 @@ if (typeof window !== "undefined") {
 
 interface MapProps {
   packageId: number
-  setPlan: Dispatch<SetStateAction<PackagesPlaceRes | undefined>>
-  dirction_url: string
+  direction_url: string
 }
 
-function Map({ packageId, setPlan, dirction_url }: MapProps) {
+function Map({ packageId, direction_url }: MapProps) {
   const [route, setRoute] = useState<any[]>([])
   const [waypoint, setWaypoint] = useState<any[]>([])
 
@@ -67,7 +64,6 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
     const fetchData = async () => {
       try {
         const responseData = await postData(packageId)
-        setPlan(responseData.data)
         const waypointInfo = responseData.data.places.map((place) => ({
           latitude: Number(place.latitude),
           longitude: Number(place.longitude),
@@ -82,13 +78,13 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
       }
     }
     fetchData()
-  }, [packageId, setPlan])
+  }, [packageId])
 
   useEffect(() => {
     if (!waypoint.length) return
     const fetchRoute = async () => {
       try {
-        const response = await axios.get(`${dirction_url}`, {
+        const response = await axios.get(`${direction_url}`, {
           headers: { "api-key": env.NEXT_PUBLIC_NESHAN_KEY },
         })
         if (response.data?.routes?.[0]) {
@@ -103,11 +99,11 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
       }
     }
     fetchRoute()
-  }, [waypoint, dirction_url])
+  }, [waypoint, direction_url])
 
-  const startIndex = dirction_url.indexOf("origin=") + "origin=".length
-  const endIndex = dirction_url.indexOf("&", startIndex)
-  const origin = dirction_url.substring(startIndex, endIndex)
+  const startIndex = direction_url.indexOf("origin=") + "origin=".length
+  const endIndex = direction_url.indexOf("&", startIndex)
+  const origin = direction_url.substring(startIndex, endIndex)
   const [latitude, longitude] = origin.split(",").map(Number)
 
   let customIcon = null
@@ -141,11 +137,11 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
 
     // Find min/max coordinates
     const lats = points.map((p) => p[0])
-    const lngs = points.map((p) => p[1])
+    const langs = points.map((p) => p[1])
 
     // Calculate the range of coordinates
     const latRange = Math.max(...lats) - Math.min(...lats)
-    const lngRange = Math.max(...lngs) - Math.min(...lngs)
+    const lngRange = Math.max(...langs) - Math.min(...langs)
 
     // Add 20% padding
     const padding = 0.2
@@ -153,8 +149,8 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
     const lngPadding = lngRange * padding
 
     return [
-      [Math.min(...lats) - latPadding, Math.min(...lngs) - lngPadding],
-      [Math.max(...lats) + latPadding, Math.max(...lngs) + lngPadding],
+      [Math.min(...lats) - latPadding, Math.min(...langs) - lngPadding],
+      [Math.max(...lats) + latPadding, Math.max(...langs) + lngPadding],
     ] as [[number, number], [number, number]]
   })()
 
@@ -164,7 +160,7 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
       bounds={bounds}
       center={bounds ? undefined : [35.6892, 51.389]}
       zoom={bounds ? undefined : 6}
-      scrollWheelZoom={true}
+      scrollWheelZoom
       className="size-full"
     >
       <TileLayerWithNoSSR
