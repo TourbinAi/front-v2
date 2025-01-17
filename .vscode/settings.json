@@ -27,6 +27,7 @@
   "prettier.requireConfig": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
+    "acco",
     "andventure",
     "exitment",
     "Hamed",

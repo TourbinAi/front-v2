@@ -3,18 +3,6 @@ import localFont from "next/font/local"
 export const fontSans = localFont({
   src: [
     {
-      path: "./fonts/IRANSansX-Thin.woff",
-      weight: "100",
-    },
-    {
-      path: "./fonts/IRANSansX-UltraLight.woff",
-      weight: "200",
-    },
-    {
-      path: "./fonts/IRANSansX-Light.woff",
-      weight: "300",
-    },
-    {
       path: "./fonts/IRANSansX-Regular.woff",
       weight: "400",
     },
@@ -30,18 +18,8 @@ export const fontSans = localFont({
       path: "./fonts/IRANSansX-Bold.woff",
       weight: "700",
     },
-    {
-      path: "./fonts/IRANSansX-ExtraBold.woff",
-      weight: "800",
-    },
-    {
-      path: "./fonts/IRANSansX-Black.woff",
-      weight: "900",
-    },
-    {
-      path: "./fonts/IRANSansX-ExtraBlack.woff",
-      weight: "1000",
-    },
   ],
+  display: "swap",
   variable: "--font-ir-sans",
+  preload: true,
 })

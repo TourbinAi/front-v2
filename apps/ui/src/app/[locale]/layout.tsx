@@ -1,5 +1,6 @@
 import "@/styles/globals.css"
 
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { LayoutProps } from "@/types/next"
@@ -14,6 +15,35 @@ import { ServerProviders } from "@/components/providers/ServerProviders"
 import { Toaster } from "@/components/ui/sonner"
 
 setupLibraries()
+
+export async function generateMetadata({
+  params,
+}: LayoutProps): Promise<Metadata> {
+  const messages = (await import(`@/../../locales/${params.locale}.json`))
+    .default
+  const metadata = messages.metadata
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    keywords: metadata.keywords,
+    themeColor: metadata.themeColor,
+    icons: {
+      icon: metadata.logo,
+    },
+    openGraph: {
+      title: metadata.title,
+      description: metadata.description,
+      images: [metadata.ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.title,
+      description: metadata.description,
+      images: [metadata.ogImage],
+    },
+  }
+}
 
 export default async function RootLayout({ children, params }: LayoutProps) {
   if (!locales.includes(params.locale)) {

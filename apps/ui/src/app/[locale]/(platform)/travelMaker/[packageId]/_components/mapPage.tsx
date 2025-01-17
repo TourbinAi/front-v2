@@ -2,22 +2,14 @@
 
 import path from "path"
 
-import { useState } from "react"
 import Image from "next/image"
 import { env } from "@/env.mjs"
 import { useQuery } from "@tanstack/react-query"
 import PlaceHolderImage from "public/assets/images/placeholderImages.png"
 
-import { PackagesPlaceRes } from "@/types/api"
-
 import { postData } from "@/lib/api"
 import { Link } from "@/lib/navigation"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import ErrorMessage from "./error"
@@ -30,8 +22,6 @@ interface MapPageProps {
 }
 
 export default function MapPageComponent({ packageId }: MapPageProps) {
-  const [ResponseData, setTravelPlan] = useState<PackagesPlaceRes>()
-
   const { data, error, isLoading } = useQuery({
     queryKey: ["places"],
     queryFn: () => postData(Number(packageId)),
@@ -47,20 +37,20 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
         ) : (
           <>
             <div className="flex basis-2/3 flex-col items-stretch justify-stretch gap-4">
-              <div className="h-full w-full">
+              <div className="size-full">
                 <TextCard
                   title="سفرساز توربین - برنامه هوشمند سفر"
                   text={data?.data.travel_plan || ""}
-                  className="h-full w-full"
+                  className="size-full"
                 />
               </div>
-              <div className="flex h-full flex-col items-stretch justify-stretch gap-4 lg:h-1/2 lg:flex-row">
+              <div className="flex size-full flex-col items-stretch justify-stretch gap-4 lg:h-1/2 lg:flex-row">
                 {/* First Child: TextCard */}
                 <div className="w-full">
                   <TextCard
                     title="خلاصه سفر"
                     text={data?.data.summary_of_travel_plan || ""}
-                    className="h-full w-full lg:max-h-none"
+                    className="size-full lg:max-h-none"
                   />
                 </div>
 
@@ -78,7 +68,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                         href={`blog/${place.name}/?blogtype=1&blogid=${place.id}`}
                       >
                         <Card className="relative size-full cursor-pointer overflow-hidden">
-                          <CardContent className="relative h-full w-full">
+                          <CardContent className="relative size-full">
                             <Image
                               fill
                               src={path.join(
@@ -86,9 +76,9 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                                 place.first_image || PlaceHolderImage.src
                               )}
                               alt={place.name}
-                              className="absolute inset-0 h-full w-full object-cover"
+                              className="absolute inset-0 size-full object-cover"
                             />
-                            <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
+                            <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black/50 py-2 text-center text-white">
                               {place.name || "NAME PLACE"}
                             </span>
                           </CardContent>
@@ -103,8 +93,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
               <div className="aspect-square h-1/3 w-full rounded-lg border-4 border-gray-300 lg:h-2/4">
                 <Map
                   packageId={Number(packageId)}
-                  setPlan={setTravelPlan}
-                  dirction_url={data?.data?.directions_url || ""}
+                  direction_url={data?.data?.directions_url || ""}
                 />
               </div>
               {data?.data?.video_url && data?.data?.video_url !== "" ? (
@@ -117,7 +106,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                   />
                 </div>
               ) : (
-                <div className="border-2 border-gray-300 rounded-md flex aspect-square h-1/3 items-center justify-center lg:h-2/4">
+                <div className="flex aspect-square h-1/3 items-center justify-center rounded-md border-2 border-gray-300 lg:h-2/4">
                   there is no video
                 </div>
               )}
@@ -131,15 +120,14 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
         <div className="aspect-square h-1/3 w-full rounded-lg border-4 border-gray-300 lg:h-2/4">
           <Map
             packageId={Number(packageId)}
-            setPlan={setTravelPlan}
-            dirction_url={data?.data?.directions_url || ""}
+            direction_url={data?.data?.directions_url || ""}
           />
         </div>
-        <div className="h-full w-full">
+        <div className="size-full">
           <TextCard
             title="سفرساز توربین - برنامه هوشمند سفر"
             text={data?.data.travel_plan || ""}
-            className="h-full w-full"
+            className="size-full"
           />
         </div>
         <div className="grid grid-rows-2 gap-2">
@@ -153,7 +141,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
               />
             </div>
           ) : (
-            <div className="border-2 border-gray-300 rounded-md flex h-full items-center justify-center lg:h-2/4">
+            <div className="flex h-full items-center justify-center rounded-md border-2 border-gray-300 lg:h-2/4">
               there is no video
             </div>
           )}
@@ -170,39 +158,32 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
             No places found
           </div>
         ) : (
-          <Carousel className="size-full" dir="ltr">
-            <CarouselContent className="">
-              {data?.data.places.slice(0, 4).map((place) => (
-                <CarouselItem
-                  key={place.id}
-                  className="flex shrink-0 flex-col items-center rounded-2xl border-none bg-none transition-transform md:basis-1/3"
-                >
-                  <Link
-                    className=""
-                    key={place.id}
-                    href={`blog/${place.name}/?blogtype=1&blogid=${place.id}`}
-                  >
-                    <Card className="relative size-[96vw] cursor-pointer overflow-hidden md:size-56">
-                      <CardContent className="flex aspect-square items-center justify-center">
-                        <Image
-                          fill
-                          src={path.join(
-                            env.NEXT_PUBLIC_BACKEND_URL,
-                            place.first_image || PlaceHolderImage.src
-                          )}
-                          alt={place.name}
-                          className="absolute size-full object-cover"
-                        />
-                        <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
-                          {place.name || "NAME PLACE"}
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+          <div className="flex flex-col gap-4">
+            {data?.data.places.map((place) => (
+              <Link
+                className="w-full"
+                key={place.id}
+                href={`/blog/${place.name}`}
+              >
+                <Card className="relative m-10 cursor-pointer overflow-hidden">
+                  <CardContent className="flex aspect-square items-center justify-center">
+                    <Image
+                      fill
+                      src={path.join(
+                        env.NEXT_PUBLIC_BACKEND_URL,
+                        place.first_image || PlaceHolderImage.src
+                      )}
+                      alt={place.name}
+                      className="absolute size-full object-cover"
+                    />
+                    <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black/50 py-2 text-center text-white">
+                      {place.name || "NAME PLACE"}
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </>

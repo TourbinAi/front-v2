@@ -1,13 +1,16 @@
 import { ReactNode } from "react"
+import { Metadata } from "next"
 
-import "@/styles/globals.css"
-
-type Props = {
-  children: ReactNode
+export const metadata: Metadata = {
+  title: "Toorbeen",
+  description: "Toorbeen - Your Travel Companion",
 }
 
-// Since we have a `not-found.tsx` page on the root, a layout file
-// is required, even if it's just passing children through.
-export default function RootLayout({ children }: Props) {
-  return children
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body>{children}</body>
+    </html>
+  )
 }

@@ -36,8 +36,8 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
   const dir = locale === "fa" ? "rtl" : "ltr"
   return (
     <>
-      <div className="flex h-[calc(100vh-2.5rem)] items-stretch justify-stretch gap-5 p-5 overflow-hidden">
-        <Card className="hidden lg:block min-w-[500px] h-full m-0 w-[500px]">
+      <div className="flex h-[calc(100vh-2.5rem)] items-stretch justify-stretch gap-5 overflow-hidden p-5">
+        <Card className="m-0 hidden h-full w-[500px] min-w-[500px] lg:block">
           <ScrollArea className="h-full">
             <CardHeader className="flex w-full flex-col items-center justify-center">
               <CardTitle className="pb-2">{t("title")}</CardTitle>
@@ -61,8 +61,9 @@ const SheetLayout: React.FC<SheetLayoutProps> = ({
             )}
           >
             <Button
+              name="sidebar"
               variant="outline"
-              className="size-14 flex justify-center items-center rounded-full"
+              className="flex size-14 items-center justify-center rounded-full"
             >
               {open ? <PanelRightClose /> : <PanelRightOpen />}
             </Button>
