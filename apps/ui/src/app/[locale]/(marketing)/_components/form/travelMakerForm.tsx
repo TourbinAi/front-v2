@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import moment from "jalali-moment"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,12 +15,6 @@ import { AppCheckbox } from "@/components/forms/AppCheckbox"
 import { AppForm } from "@/components/forms/AppForm"
 import { AppSelect } from "@/components/forms/AppSelect"
 import SubmitButton from "@/components/forms/SubmitButton"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 
 export const TravelMakerForm = () => {
   const t = useTranslations("travelMaker")
@@ -32,7 +25,6 @@ export const TravelMakerForm = () => {
     resolver: zodResolver(SidebarSchema),
     defaultValues: {
       origin: "",
-      direction: "north",
       distance: "3h",
       duration: "1d",
       vehicle: "car",
@@ -98,37 +90,19 @@ export const TravelMakerForm = () => {
         }))}
       />
 
-      <Accordion type="single" collapsible>
-        <AccordionItem value="optional">
-          <AccordionTrigger>{t("form.popover-button")}</AccordionTrigger>
-          <AccordionContent>
-            <AppCheckbox name="oldPerson" label={t("form.oldPerson.title")} />
+      <AppCheckbox name="oldPerson" label={t("form.oldPerson.title")} />
 
-            <AppSelect
-              name="direction"
-              label={t("form.travel-direction.title")}
-              placeholder={t("form.travel-direction.placeholder")}
-              options={tmsv.direction.map((dir) => ({
-                value: dir,
-                label: t(`form.travel-direction.select.${dir}`),
-              }))}
-            />
-
-            {accoFlag && (
-              <AppSelect
-                name="accommodation"
-                label={t("form.accommodation.title")}
-                placeholder={t("form.accommodation.placeholder")}
-                options={tmsv.accommodation.map((acc) => ({
-                  value: acc,
-                  label: t(`form.accommodation.accommodationSelect.${acc}`),
-                }))}
-              />
-            )}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
+      {accoFlag && (
+        <AppSelect
+          name="accommodation"
+          label={t("form.accommodation.title")}
+          placeholder={t("form.accommodation.placeholder")}
+          options={tmsv.accommodation.map((acc) => ({
+            value: acc,
+            label: t(`form.accommodation.accommodationSelect.${acc}`),
+          }))}
+        />
+      )}
       <SubmitButton>{t("form.Button")}</SubmitButton>
     </AppForm>
   )

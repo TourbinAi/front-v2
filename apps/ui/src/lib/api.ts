@@ -1,6 +1,5 @@
 import { env } from "@/env.mjs"
 import axios, { AxiosResponse } from "axios"
-import { string } from "zod"
 
 import type {
   AttractionsCarouselRes,
@@ -41,7 +40,8 @@ export function AttractionsLanding(
 ): Promise<AxiosResponse<AttractionsLandingRes, any>> {
   return api.post("/blog/landing-page-blogs/", { blog_count: blog_count })
 }
-function BlogUniqAPI(
+
+export function BlogUniqAPI(
   blog_type?: number,
   blog_id?: number
 ): Promise<AxiosResponse<any>> {

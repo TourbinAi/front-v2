@@ -17,6 +17,7 @@ import {
   SelectItem,
   SelectSeparator,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select"
 
 /**
@@ -60,9 +61,12 @@ const LocaleSwitcher = ({ className }: { className: ClassValue }) => {
 
   return (
     <Select value={locale} onValueChange={handleLocaleChange}>
-      <SelectTrigger className={cn(className, "w-32 font-bold uppercase")}>
+      <SelectTrigger
+        className={cn(className, "w-32 font-bold uppercase")}
+        name="locale"
+      >
         <Languages size={17} />
-        {locale === "en" ? "en" : "فا"}
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         {locales.map((locale, index) => (

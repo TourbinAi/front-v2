@@ -1,15 +1,20 @@
 "use client"
 
+import path from "path"
+
 import { useEffect, useRef, useState } from "react"
-import Image, { StaticImageData } from "next/image"
-import * as d3 from "d3"
+import Image from "next/image"
+import { env } from "@/env.mjs"
 import { ChevronLeft } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { useRouter } from "@/lib/navigation"
 import { cn } from "@/lib/styles"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+
+import CityGraph from "./cityGraph"
 
 type City = {
   id: number
@@ -24,124 +29,76 @@ type RouteCardProps = {
   name: string
   description: string
   cities: City[]
+  index: number
 }
 
-export default function RouteCard({
-  id,
-  name,
-  cities,
-  longitude,
-  latitude,
-}: RouteCardProps) {
+type ImageLoadingState = {
+  [key: string]: {
+    loaded: boolean
+    url: string
+  }
+}
+
+export default function RouteCard({ id, name, cities, index }: RouteCardProps) {
   const router = useRouter()
-  const [wetherReport, setWetherReport] = useState<string>("")
   const [selectedCity, setSelectedCity] = useState<City>(cities[0] as City)
-  const [images, setImages] = useState<{ [key: string]: StaticImageData }>({})
-  const [loading, setLoading] = useState(true)
-  const svgRef = useRef<SVGSVGElement | null>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
+  const [isCurrentImageLoading, setIsCurrentImageLoading] = useState(true)
+  const cardRef = useRef<HTMLDivElement>(null)
   const t = useTranslations("travelMaker.card")
+  const locale = useLocale()
 
   useEffect(() => {
-    const fetchWeather = async () => {
-      const obj = await fetch(
-        `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`
-      )
-    }
-    fetchWeather()
-  }, [])
+    setIsCurrentImageLoading(!loadedImages.has(selectedCity.name))
+  }, [selectedCity.name, loadedImages])
 
   useEffect(() => {
-    const preloadImages = async () => {
-      const newImages: { [key: string]: StaticImageData } = {}
-      try {
-        await Promise.all(
-          cities.map(async (city) => {
-            const imageUrl = `https://${process.env.NEXT_PUBLIC_BACKEND_URL}${city.image_url}`
-            const response = await fetch(imageUrl)
-            if (!response.ok) {
-              throw new Error(`Failed to fetch image for city: ${city.name}`)
-            }
+    if (!isVisible) return
 
-            const blob = await response.blob()
-            const objectUrl = URL.createObjectURL(blob)
-            newImages[city.name] = {
-              src: objectUrl,
-              height: 300,
-              width: 500,
-              blurDataURL: objectUrl,
-            }
-          })
-        )
-      } catch (error) {
-        console.error("Error preloading images:", error)
-      } finally {
-        setImages(newImages)
-        setLoading(false)
+    const preloadImage = (city: City) => {
+      if (!city.image_url || loadedImages.has(city.name)) return
+
+      const img = new window.Image()
+      img.onload = () => {
+        setLoadedImages((prev) => {
+          const newSet = new Set(prev)
+          newSet.add(city.name)
+          return newSet
+        })
       }
+      img.src = `${env.NEXT_PUBLIC_BACKEND_URL}/${city.image_url.replace(/^\/+/, "")}`
     }
 
-    preloadImages()
+    // Preload all images immediately
+    cities.forEach(preloadImage)
+  }, [isVisible, cities, loadedImages])
+
+  useEffect(() => {
+    const card = cardRef.current
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]) {
+          setIsVisible(entries[0].isIntersecting)
+        }
+      },
+      {
+        root: null,
+        rootMargin: "50px",
+        threshold: 0.1,
+      }
+    )
+
+    if (card) {
+      observer.observe(card)
+    }
 
     return () => {
-      Object.values(images).forEach((image) => {
-        if (image.src) {
-          URL.revokeObjectURL(image.src)
-        }
-      })
+      if (card) {
+        observer.unobserve(card)
+      }
     }
-  }, [cities])
-
-  useEffect(() => {
-    if (!svgRef.current) return
-
-    const svg = d3.select(svgRef.current)
-    const width = 100
-    const height = 200
-    const nodeRadius = 10
-
-    svg.selectAll("*").remove()
-
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, cities.length - 1])
-      .range([height - nodeRadius, nodeRadius])
-
-    // Draw the dashed line
-    svg
-      .append("line")
-      .attr("x1", width / 2)
-      .attr("y1", yScale(0))
-      .attr("x2", width / 2)
-      .attr("y2", yScale(cities.length - 1))
-      .attr("stroke", "white")
-      .attr("stroke-width", 2)
-      .attr("stroke-dasharray", "5,5")
-
-    // Draw nodes
-    cities.forEach((city, i) => {
-      const g = svg
-        .append("g")
-        .attr("transform", `translate(${width / 2}, ${yScale(i)})`)
-        .attr("cursor", "pointer")
-
-      const circle = g
-        .append("circle")
-        .attr(
-          "r",
-          city.name === selectedCity.name ? nodeRadius * 1.2 : nodeRadius
-        )
-        .attr("stroke-width", 2)
-
-      // Apply Tailwind primary color if selected, otherwise white
-      circle
-        .classed("fill-primary", city.name === selectedCity.name)
-        .classed("fill-white", city.name !== selectedCity.name)
-
-      g.append("title").text(city.name)
-
-      g.on("click", () => handleCityClick(city.name))
-    })
-  }, [cities, selectedCity.name])
+  }, [])
 
   const handleViewDetails = () => {
     router.push(`/travelMaker/${id}/map`)
@@ -153,30 +110,69 @@ export default function RouteCard({
     )
   }
 
+  const getImageUrl = (imageUrl: string | null) => {
+    if (!imageUrl) return ""
+    const cleanPath = imageUrl.replace(/^\/+/, "")
+    return `${env.NEXT_PUBLIC_BACKEND_URL}/${cleanPath}`
+  }
+
   return (
-    <Card className="relative h-[250px] w-full max-w-7xl overflow-hidden">
-      {selectedCity.image_url && (
-        <Image
-          fill
-          src={process.env.NEXT_PUBLIC_BACKEND_URL + selectedCity.image_url}
-          alt={selectedCity.name}
-          className="absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full"
-        />
+    <Card
+      ref={cardRef}
+      className="relative h-[250px] w-full max-w-7xl overflow-hidden"
+    >
+      {selectedCity.image_url && isVisible && (
+        <>
+          {isCurrentImageLoading && (
+            <div className="absolute inset-0 bg-gray-800">
+              <Skeleton className="h-full w-full" />
+            </div>
+          )}
+          <Image
+            fill
+            src={`${env.NEXT_PUBLIC_BACKEND_URL}/${selectedCity.image_url.replace(/^\/+/, "")}`}
+            alt={selectedCity.name}
+            className={cn(
+              "absolute inset-0 w-full object-cover lg:h-auto lg:max-h-none lg:w-full",
+              isCurrentImageLoading
+                ? "opacity-0"
+                : "opacity-100 transition-opacity duration-200"
+            )}
+            priority={index < 2 && selectedCity === cities[0]}
+            onLoadingComplete={() => {
+              setLoadedImages((prev) => {
+                const newSet = new Set(prev)
+                newSet.add(selectedCity.name)
+                return newSet
+              })
+              setIsCurrentImageLoading(false)
+            }}
+            onError={() => setIsCurrentImageLoading(false)}
+          />
+        </>
       )}
       <div className="absolute inset-0 bg-gradient-to-l from-black/70 to-transparent" />
       <CardContent className="relative flex h-full flex-col justify-between p-8 text-white">
-        <span className="text-md absolute left-2 top-2 cursor-default rounded-full bg-black bg-opacity-60 px-4 py-2 backdrop-blur-sm">
+        <span
+          className={cn(
+            "text-md absolute top-2 cursor-default rounded-full bg-black bg-opacity-60 px-4 py-2 backdrop-blur-sm",
+            locale === "fa" ? "right-0" : "left-0"
+          )}
+        >
           {selectedCity.name}
         </span>
         <div className="flex size-full items-center justify-between">
-          <svg
-            ref={svgRef}
-            width="100"
-            height="200"
-            className="overflow-visible"
-          />
+          {cities.length > 1 ? (
+            <CityGraph
+              cities={cities}
+              selectedCity={selectedCity}
+              onCityClick={handleCityClick}
+            />
+          ) : (
+            <div className="h-[104px] w-[100px]" />
+          )}
           <div className="flex w-full items-center justify-between lg:w-1/2">
-            <div className="relative flex size-full flex-col items-center justify-center gap-2">
+            <div className="relative flex size-full flex-col items-center justify-center gap-4">
               <h2 className="text-gl text-wrap text-center align-middle font-bold lg:text-xl">
                 {name}
               </h2>
@@ -184,11 +180,8 @@ export default function RouteCard({
                 onClick={handleViewDetails}
                 className="bg-white px-2 py-3 text-sm text-black hover:bg-gray-200 lg:text-xl"
               >
-                {t("seeMore")} <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-6 w-6" /> {t("seeMore")}
               </Button>
-              <div className="absolute bottom-0 left-0 flex flex-col items-center justify-center">
-                <span>{wetherReport}</span>
-              </div>
             </div>
           </div>
         </div>

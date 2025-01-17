@@ -4,8 +4,6 @@ import { useLocale, useTranslations } from "next-intl"
 import { UseFormReturn } from "react-hook-form"
 import { z } from "zod"
 
-import { TravelMakerListRes } from "@/types/api"
-
 import { cn } from "@/lib/styles"
 import {
   SidebarSchema,
@@ -39,7 +37,7 @@ export function TravelMakerForm({
       <AppForm form={form} onSubmit={onSubmit}>
         <div
           className={cn(
-            "w-full flex justify-stretch items-center gap-4",
+            "flex w-full items-center justify-stretch gap-4",
             isSidebar ? "flex-col" : "flex-row"
           )}
         >
@@ -68,7 +66,7 @@ export function TravelMakerForm({
         </div>
         <div
           className={cn(
-            "w-full flex justify-stretch items-center gap-4",
+            "flex w-full items-center justify-stretch gap-4",
             isSidebar ? "flex-col" : "flex-row"
           )}
         >
@@ -95,44 +93,21 @@ export function TravelMakerForm({
             />
           </div>
         </div>
-
-        <p>{t("form.popover-button")}</p>
         <AppCheckbox name="oldPerson" label={t("form.oldPerson.title")} />
-        <div
-          className={cn(
-            "w-full flex justify-stretch items-center gap-4",
-            isSidebar ? "flex-col" : "flex-row"
-          )}
-        >
-          <div className={cn(isSidebar ? "w-full" : "w-1/2")}>
-            <AppSelect
-              name="direction"
-              label={t("form.travel-direction.title")}
-              placeholder={t("form.travel-direction.placeholder")}
-              options={tmsv.direction.map((dir) => ({
-                value: dir,
-                label: t(`form.travel-direction.select.${dir}`),
-              }))}
-            />
-          </div>
-          <div className={cn(isSidebar ? "w-full" : "w-1/2")}>
-            {accoFlag && (
-              <AppSelect
-                name="accommodation"
-                label={t("form.accommodation.title")}
-                placeholder={t("form.accommodation.placeholder")}
-                options={tmsv.accommodation.map((accommodation) => ({
-                  value: accommodation,
-                  label: t(
-                    `form.accommodation.accommodationSelect.${accommodation}`
-                  ),
-                }))}
-              />
-            )}
-          </div>
-        </div>
-
-        <div className="p-4 flex justify-center items-center">
+        {accoFlag && (
+          <AppSelect
+            name="accommodation"
+            label={t("form.accommodation.title")}
+            placeholder={t("form.accommodation.placeholder")}
+            options={tmsv.accommodation.map((accommodation) => ({
+              value: accommodation,
+              label: t(
+                `form.accommodation.accommodationSelect.${accommodation}`
+              ),
+            }))}
+          />
+        )}
+        <div className="flex items-center justify-center p-4">
           <SubmitButton isLoading={isLoading}>{t("form.Button")}</SubmitButton>
         </div>
       </AppForm>

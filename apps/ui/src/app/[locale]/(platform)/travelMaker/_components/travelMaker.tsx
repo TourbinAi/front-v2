@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState, useTransition } from "react"
 import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -33,12 +33,40 @@ const defaultValue = {
   accommodation: undefined,
 } as z.infer<typeof SidebarSchema>
 
+// Create request object outside component to avoid recreation
+const createRequestObject = (
+  values: z.infer<typeof SidebarSchema>,
+  accoFlag: boolean
+): TravelMakerListReq => ({
+  origin_of_trip: values.origin,
+  distance_from_origin:
+    ([3, 5, 7] as const).at(tmsv.distance.indexOf(values.distance)) || 3,
+  time_limit:
+    ([1, 2, 3] as const).at(tmsv.duration.indexOf(values.duration)) || 1,
+  overnight_stay: accoFlag
+    ? ([1, 2, 3] as const).at(
+        tmsv.accommodation.indexOf(
+          values.accommodation as "camp" | "hotel" | "visit"
+        )
+      )
+    : undefined,
+  count_of_elder_people: values.oldPerson ? 1 : 0,
+  means_of_travel:
+    ([1, 2, 3, 4, 5, 6, 7, 8] as const).at(
+      tmsv.vehicle.indexOf(values.vehicle)
+    ) || 1,
+})
+
 export default function TravelMaker() {
   const [loading, setLoading] = useState<boolean>(false)
+  const [initialLoading, setInitialLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
   const [open, setOpen] = useState<boolean>(false)
   const [accoFlag, setAccoFlag] = useState(true)
   const [mounted, setMounted] = useState(false)
   const [list, setList] = useState<TravelMakerListRes>()
+  const [isPending, startTransition] = useTransition()
+
   const isMobile = useIsMobile()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -49,100 +77,97 @@ export default function TravelMaker() {
     defaultValues: defaultValue,
   })
 
-  const onSubmit = async (values: z.infer<typeof SidebarSchema>) => {
-    updateQuery()
-    setLoading(true)
-    try {
-      const requestObject: TravelMakerListReq = {
-        origin_of_trip: values.origin,
-        distance_from_origin:
-          ([3, 5, 7] as const).at(tmsv.distance.indexOf(values.distance)) || 3,
-        time_limit:
-          ([1, 2, 3] as const).at(tmsv.duration.indexOf(values.duration)) || 1,
-        overnight_stay: accoFlag
-          ? ([1, 2, 3] as const).at(
-              tmsv.accommodation.indexOf(
-                values.accommodation as "camp" | "hotel" | "visit"
-              )
-            )
-          : undefined,
-        count_of_elder_people: values.oldPerson ? 1 : 0,
-        means_of_travel:
-          ([1, 2, 3, 4, 5, 6, 7, 8] as const).at(
-            tmsv.vehicle.indexOf(values.vehicle)
-          ) || 1,
-        direction_of_movement: ([1, 2, 3, 4] as const).at(
-          tmsv.direction.indexOf(
-            values.direction as "north" | "south" | "west" | "east"
-          )
-        ),
+  const fetchTravelMakerList = useCallback(
+    async (requestObject: TravelMakerListReq) => {
+      try {
+        const response = await TravelMakerList(requestObject)
+        setList(response.data)
+        setError(null)
+      } catch (error) {
+        console.error("Data fetch failed:", error)
+        setError("Failed to load travel suggestions. Please try again.")
+        setList(undefined)
       }
-      const respond = await TravelMakerList(requestObject)
-      setList(respond.data)
-    } catch (error) {
-      console.error("Form submission failed:", error)
-    } finally {
-      setLoading(false)
-      setOpen(false)
-    }
-  }
+    },
+    []
+  )
+
+  const onSubmit = useCallback(
+    async (values: z.infer<typeof SidebarSchema>) => {
+      setLoading(true)
+      setError(null)
+
+      try {
+        const requestObject = createRequestObject(values, accoFlag)
+        await fetchTravelMakerList(requestObject)
+
+        // Update URL in a non-blocking way
+        startTransition(() => {
+          const queryParams = new URLSearchParams(values as any).toString()
+          router.push(`/travelMaker?${queryParams}`, { scroll: false })
+        })
+      } finally {
+        setLoading(false)
+        setOpen(false)
+      }
+    },
+    [accoFlag, fetchTravelMakerList, router]
+  )
+
+  // Handle initial query params
   useEffect(() => {
-    if (Object.keys(query).length > 0) {
-      const safeQuery = {
-        origin: query.origin
-          ? decodeURIComponent(query.origin)
-          : defaultValue.origin,
-        distance: tmsv.distance.includes(query.distance as any)
-          ? (query.distance as any)
-          : defaultValue.distance,
-        duration: ["1d", "2d", "3d"].includes(query.duration as any)
-          ? (query.duration as any)
-          : defaultValue.duration,
-        vehicle: tmsv.vehicle.includes(query.vehicle as any)
-          ? (query.vehicle as any)
-          : defaultValue.vehicle,
-        direction: tmsv.direction.includes(query.direction as any)
-          ? (query.direction as any)
-          : defaultValue.direction,
-        oldPerson: query.oldPerson
-          ? query.oldPerson === "false"
-            ? false
-            : true
-          : defaultValue.oldPerson,
-        accommodation: accoFlag
-          ? tmsv.accommodation.includes(query.accommodation as any)
-            ? (query.accommodation as any)
-            : defaultValue.accommodation
-          : undefined,
-        // date: parseDate(query.date) || defaultValue.date,
-      }
+    const initializeFromQuery = async () => {
+      if (Object.keys(query).length > 0) {
+        const safeQuery = {
+          origin: query.origin
+            ? decodeURIComponent(query.origin)
+            : defaultValue.origin,
+          distance: tmsv.distance.includes(query.distance as any)
+            ? (query.distance as any)
+            : defaultValue.distance,
+          duration: ["1d", "2d", "3d"].includes(query.duration as any)
+            ? (query.duration as any)
+            : defaultValue.duration,
+          vehicle: tmsv.vehicle.includes(query.vehicle as any)
+            ? (query.vehicle as any)
+            : defaultValue.vehicle,
+          oldPerson: query.oldPerson
+            ? query.oldPerson === "false"
+              ? false
+              : true
+            : defaultValue.oldPerson,
+          accommodation: accoFlag
+            ? tmsv.accommodation.includes(query.accommodation as any)
+              ? (query.accommodation as any)
+              : defaultValue.accommodation
+            : undefined,
+        }
 
-      const result = SidebarSchema.safeParse(safeQuery)
-      if (result.success) {
-        // Reset form with the new default values
-        form.reset(result.data)
-
-        // Immediately submit the form with these values
-        onSubmit(result.data)
-      } else {
-        console.error("Query parsing or schema validation failed", result.error)
+        const result = SidebarSchema.safeParse(safeQuery)
+        if (result.success) {
+          form.reset(result.data)
+          await onSubmit(result.data)
+        } else {
+          console.error("Query validation failed", result.error)
+          setError("Invalid search parameters")
+        }
       }
+      setInitialLoading(false)
+      setMounted(true)
     }
-    setMounted(true)
-  }, [])
 
-  const updateQuery = () => {
-    const queryParams = new URLSearchParams(form.getValues() as any).toString()
-    router.push(`/travelMaker?${queryParams}`)
-  }
+    initializeFromQuery()
+  }, [])
 
   // Watch duration for accommodation visibility
   const duration = form.watch("duration")
-  if (duration === "1d" && accoFlag) {
-    setAccoFlag(false)
-  } else if (duration !== "1d" && !accoFlag) {
-    setAccoFlag(true)
-  }
+  useEffect(() => {
+    if (duration === "1d" && accoFlag) {
+      setAccoFlag(false)
+    } else if (duration !== "1d" && !accoFlag) {
+      setAccoFlag(true)
+    }
+  }, [duration, accoFlag])
 
   if (!mounted) return null
 
@@ -157,11 +182,16 @@ export default function TravelMaker() {
           onSubmit={onSubmit}
           isSidebar={isMobile}
           accoFlag={accoFlag}
-          isLoading={loading}
+          isLoading={loading || isPending}
         />
       }
     >
-      <CardList loading={loading} results={list} setOpen={setOpen} />
+      <CardList
+        loading={loading || initialLoading}
+        error={error}
+        results={list}
+        setOpen={setOpen}
+      />
     </SheetLayout>
   )
 }

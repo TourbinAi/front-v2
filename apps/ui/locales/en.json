@@ -1,4 +1,12 @@
 {
+  "metadata": {
+    "title": "Toorbeen - Your AI-Powered Travel Companion",
+    "description": "Discover the perfect travel experience with Toorbeen. Plan your trips, find routes, explore local foods and celebrations with our AI-powered platform.",
+    "logo": "/logo.png",
+    "keywords": "travel planner, AI travel, route finder, local experiences, Iran tourism, travel maker",
+    "ogImage": "/og-image.png",
+    "themeColor": "#4F46E5"
+  },
   "seo": {
     "metaTitle": "DEV-TEMPLATE-SEO",
     "metaDescription": "DEV-TEMPLATE-SEO",
@@ -398,11 +406,7 @@
           "car": "Normal Car",
           "bicycle": "bicycle",
           "bus": "Van or minibus",
-          "off-road": "off-road vehicle",
-          "Car-offroad": "Normal car - Off-road vehicle",
-          "offroad-bicycle": "Off-road vehicle - Bicycle",
-          "car-bicycle": "Normal car - Bicycle'",
-          "nissan-car": "Nissan - Normal car"
+          "off-road": "off-road vehicle"
         }
       },
       "travel-direction": {
@@ -433,6 +437,7 @@
       "noResults": "No result found",
       "error": "Something went wrong",
       "tryAnother": "Try another combination",
+      "openSidebar": "Open Sidebar",
       "form-header": {
         "title": " travel maker",
         "text": "By answering the following questions, you will help the tourbin to create an excellent travel plan and a pure and memorable experience for you with the help of Turbine artificial intelligence, like an experienced and knowledgeable tour leader.",

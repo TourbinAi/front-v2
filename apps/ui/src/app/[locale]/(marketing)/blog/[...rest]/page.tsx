@@ -1,7 +1,8 @@
-import Image from "next/image"
+import path from "path"
+
 import { notFound } from "next/navigation"
+import { env } from "@/env.mjs"
 import { ChevronLeft } from "lucide-react"
-import { useTranslations } from "next-intl"
 import { serialize } from "next-mdx-remote/serialize"
 
 import { PageProps } from "@/types/next"
@@ -72,7 +73,7 @@ export default async function StrapiPage({ params }: Props) {
             {author.image && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${author.image.url}`}
+                src={path.join(env.NEXT_PUBLIC_STRAPI_URL, author.image.url)}
                 alt={author.name ?? ""}
                 width={42}
                 height={42}
@@ -91,9 +92,9 @@ export default async function StrapiPage({ params }: Props) {
       {page.cover && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${page.cover.url}`}
+          src={path.join(env.NEXT_PUBLIC_STRAPI_URL, page.cover.url)}
           alt={page.title ?? ""}
-          className="my-8 h-auto w-full rounded-md border bg-muted transition-colors object-cover"
+          className="my-8 h-auto w-full rounded-md border bg-muted object-cover transition-colors"
         />
       )}
       <MDXContent mdxSource={mdxSource} />

@@ -1,10 +1,11 @@
+import { env } from "@/env.mjs"
 import axios, { AxiosResponse } from "axios"
 
 import type { NeshanDirectionType, NeshanSearchType } from "@/types/api"
 
 const api = axios.create({
   headers: {
-    "api-key": process.env.NEXT_PUBLIC_NESHAN_KEY,
+    "api-key": env.NEXT_PUBLIC_NESHAN_KEY,
   },
   baseURL: "https://api.neshan.org",
   timeout: 300000,

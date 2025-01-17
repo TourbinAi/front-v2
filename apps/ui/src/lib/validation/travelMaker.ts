@@ -12,17 +12,7 @@ export const TravelMakerSelectValues = {
   distance: ["3h", "5h", "7h"],
   route: ["easy", "hard"],
   disState: ["oneWay", "multiple"],
-  vehicle: [
-    "car",
-    "off-road",
-    "bus",
-    "bicycle",
-    "Car-offroad",
-    "offroad-bicycle",
-    "car-bicycle",
-    "nissan-car",
-  ],
-  direction: ["north", "south", "west", "east"],
+  vehicle: ["car", "off-road", "bus", "bicycle"],
   accommodation: ["camp", "hotel", "visit"],
 } as const
 
@@ -37,7 +27,6 @@ export const SidebarSchema = z.object({
   vehicle: z.enum(TravelMakerSelectValues.vehicle, {
     required_error: " required",
   }),
-  direction: z.enum(TravelMakerSelectValues.direction).optional(),
   oldPerson: z.boolean().optional(),
   accommodation: z.enum(TravelMakerSelectValues.accommodation).optional(),
 })

@@ -1,3 +1,7 @@
+import path from "path"
+
+import { env } from "@/env.mjs"
+
 import { AppLocale } from "@/types/general"
 
 import { Link } from "@/lib/navigation"
@@ -38,9 +42,12 @@ export default async function RootBuilderPage() {
                   {page.cover && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${page.cover.url}`}
+                      src={path.join(
+                        env.NEXT_PUBLIC_STRAPI_URL,
+                        page.cover.url
+                      )}
                       alt={page.title ?? ""}
-                      className="h-48 w-full rounded-md border bg-muted transition-colors object-cover"
+                      className="h-48 w-full rounded-md border bg-muted object-cover transition-colors"
                     />
                   )}
                   <h3 className="text-lg font-bold text-gray-900">

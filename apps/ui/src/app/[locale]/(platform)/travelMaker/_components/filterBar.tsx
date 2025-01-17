@@ -10,12 +10,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const categories = ["All", ...TravelMakerSelectValues.placeNature] as const
+const categories = [...TravelMakerSelectValues.placeNature] as const
 const tripType = ["All", ...TravelMakerSelectValues.disState] as const
 const difficulties = ["All", ...TravelMakerSelectValues.route] as const
 
 export type Filter = {
-  category: (typeof categories)[number]
+  category: (typeof categories)[number][]
   tripType: (typeof tripType)[number]
   difficulty: (typeof difficulties)[number]
 }
@@ -27,33 +27,65 @@ interface FilterBarProps {
 
 export default function FilterBar({ filters, onFilterChange }: FilterBarProps) {
   const handleFilterChange = (filterType: keyof Filter, value: string) => {
-    onFilterChange({ ...filters, [filterType]: value })
+    if (filterType === "category") {
+      const newCategories = filters.category.includes(value as any)
+        ? filters.category.filter((cat) => cat !== value)
+        : [...filters.category, value as any]
+      onFilterChange({ ...filters, category: newCategories })
+    } else {
+      onFilterChange({ ...filters, [filterType]: value })
+    }
   }
 
   const locale = useLocale()
+  const t = useTranslations("travelMaker.filter")
 
   return (
     <>
-      <div className="md:hidden">
+      <div className="flex flex-row gap-2 md:hidden">
         <Select dir={locale === "fa" ? "rtl" : "ltr"}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Filters" />
+          <SelectTrigger className="w-full" name="tags">
+            <SelectValue placeholder={t("tags.title")} />
           </SelectTrigger>
-          <SelectContent className="max-h-[80vh] w-screen sm:w-auto">
-            <div className="space-y-4 p-4">
+          <SelectContent>
+            <div className="p-4">
               <FilterSection
+                isMobile
                 title="tags"
                 options={categories}
                 selected={filters.category}
                 onChange={(value) => handleFilterChange("category", value)}
+                isMulti
               />
+            </div>
+          </SelectContent>
+        </Select>
+
+        <Select dir={locale === "fa" ? "rtl" : "ltr"}>
+          <SelectTrigger className="w-full" name="tripType">
+            <SelectValue placeholder={t("tripType.title")} />
+          </SelectTrigger>
+          <SelectContent>
+            <div className="p-4">
               <FilterSection
+                isMobile
                 title="tripType"
                 options={tripType}
                 selected={filters.tripType || "All"}
                 onChange={(value) => handleFilterChange("tripType", value)}
               />
+            </div>
+          </SelectContent>
+        </Select>
+
+        <Select dir={locale === "fa" ? "rtl" : "ltr"}>
+          <SelectTrigger className="w-full" name="route">
+            <SelectValue placeholder={t("route.title")} />
+          </SelectTrigger>
+          <SelectContent>
+            <div className="p-4">
               <FilterSection
+                isMobile
                 title="route"
                 options={difficulties}
                 selected={filters.difficulty || "All"}
@@ -63,21 +95,22 @@ export default function FilterBar({ filters, onFilterChange }: FilterBarProps) {
           </SelectContent>
         </Select>
       </div>
-      <div className="hidden md:flex no-scrollbar min-h-10 items-center gap-2 overflow-x-auto pb-2">
+      <div className="no-scrollbar hidden min-h-10 items-center gap-2 overflow-x-auto pb-2 md:flex">
         <FilterSection
           title="tags"
           options={categories}
           selected={filters.category}
           onChange={(value) => handleFilterChange("category", value)}
+          isMulti
         />
-        <div className="border border-gray-300 h-[50px] w-0 shrink-0" />
+        <div className="h-[50px] w-0 shrink-0 border border-gray-300" />
         <FilterSection
           title="tripType"
           options={tripType}
           selected={filters.tripType}
           onChange={(value) => handleFilterChange("tripType", value)}
         />
-        <div className="border border-gray-300 h-[50px] w-0 shrink-0" />
+        <div className="h-[50px] w-0 shrink-0 border border-gray-300" />
         <FilterSection
           title="route"
           options={difficulties}
@@ -92,8 +125,10 @@ export default function FilterBar({ filters, onFilterChange }: FilterBarProps) {
 interface FilterSectionProps {
   title: "tags" | "tripType" | "route"
   options: typeof categories | typeof tripType | typeof difficulties
-  selected: string
+  selected: string | string[]
   onChange: (value: string) => void
+  isMobile?: boolean
+  isMulti?: boolean
 }
 
 function FilterSection({
@@ -101,16 +136,19 @@ function FilterSection({
   options,
   selected,
   onChange,
+  isMobile = false,
+  isMulti = false,
 }: FilterSectionProps) {
   const t = useTranslations("travelMaker.filter")
-  const isMobile = useIsMobile()
 
   return (
     <div className="flex flex-col">
-      <span className="font-semibold mb-2">{t(`${title}.title`)}</span>
+      {!isMobile && (
+        <span className="mb-2 font-semibold">{t(`${title}.title`)}</span>
+      )}
       <div
         className={cn(
-          "flex gap-2 flex-wrap max-w-full",
+          "flex max-w-full flex-wrap gap-2",
           !isMobile && "flex-nowrap"
         )}
       >
@@ -120,10 +158,14 @@ function FilterSection({
             key={option}
             onClick={() => onChange(option)}
             className={cn(
-              "px-3 py-1 rounded-md text-sm whitespace-nowrap shrink-0",
-              selected === option
-                ? "bg-secondary text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              "shrink-0 whitespace-nowrap rounded-md px-3 py-1 text-sm",
+              isMulti
+                ? Array.isArray(selected) && selected.includes(option)
+                  ? "bg-secondary text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                : selected === option
+                  ? "bg-secondary text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             )}
           >
             {option === "All"

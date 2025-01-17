@@ -117,7 +117,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
                   />
                 </div>
               ) : (
-                <div className="border-2 border-gray-300 rounded-md flex aspect-square h-1/3 items-center justify-center lg:h-2/4">
+                <div className="flex aspect-square h-1/3 items-center justify-center rounded-md border-2 border-gray-300 lg:h-2/4">
                   there is no video
                 </div>
               )}
@@ -153,7 +153,7 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
               />
             </div>
           ) : (
-            <div className="border-2 border-gray-300 rounded-md flex h-full items-center justify-center lg:h-2/4">
+            <div className="flex h-full items-center justify-center rounded-md border-2 border-gray-300 lg:h-2/4">
               there is no video
             </div>
           )}
@@ -170,39 +170,32 @@ export default function MapPageComponent({ packageId }: MapPageProps) {
             No places found
           </div>
         ) : (
-          <Carousel className="size-full" dir="ltr">
-            <CarouselContent className="">
-              {data?.data.places.slice(0, 4).map((place) => (
-                <CarouselItem
-                  key={place.id}
-                  className="flex shrink-0 flex-col items-center rounded-2xl border-none bg-none transition-transform md:basis-1/3"
-                >
-                  <Link
-                    className=""
-                    key={place.id}
-                    href={`blog/${place.name}/?blogtype=1&blogid=${place.id}`}
-                  >
-                    <Card className="relative size-[96vw] cursor-pointer overflow-hidden md:size-56">
-                      <CardContent className="flex aspect-square items-center justify-center">
-                        <Image
-                          fill
-                          src={path.join(
-                            env.NEXT_PUBLIC_BACKEND_URL,
-                            place.first_image || PlaceHolderImage.src
-                          )}
-                          alt={place.name}
-                          className="absolute size-full object-cover"
-                        />
-                        <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
-                          {place.name || "NAME PLACE"}
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+          <div className="flex flex-col gap-4">
+            {data?.data.places.map((place) => (
+              <Link
+                className="w-full"
+                key={place.id}
+                href={`/blog/${place.name}`}
+              >
+                <Card className="relative m-10 cursor-pointer overflow-hidden">
+                  <CardContent className="flex aspect-square items-center justify-center">
+                    <Image
+                      fill
+                      src={path.join(
+                        env.NEXT_PUBLIC_BACKEND_URL,
+                        place.first_image || PlaceHolderImage.src
+                      )}
+                      alt={place.name}
+                      className="absolute size-full object-cover"
+                    />
+                    <span className="absolute bottom-0 left-0 w-full rounded-b-2xl bg-black bg-opacity-50 py-2 text-center text-white">
+                      {place.name || "NAME PLACE"}
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </>

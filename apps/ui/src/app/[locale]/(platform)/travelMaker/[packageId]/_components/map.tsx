@@ -17,7 +17,8 @@ import { postData } from "@/lib/api"
 import { Card, CardContent } from "@/components/ui/card"
 import StarRating from "@/components/ui/starRating"
 
-// Dynamic import for MapContainer with SSR disabled
+import markerIcon from "./marker.svg"
+
 const MapWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
   {
@@ -28,61 +29,28 @@ const MapWithNoSSR = dynamic(
 
 const TileLayerWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.TileLayer),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 )
 
 const MarkerWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Marker),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 )
 
 const PolylineWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Polyline),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 )
 
 const PopupWithNoSSR = dynamic(
   () => import("react-leaflet").then((mod) => mod.Popup),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 )
 
 let L: any = null
 if (typeof window !== "undefined") {
   L = require("leaflet")
   require("leaflet/dist/leaflet.css")
-}
-
-interface Info {
-  type: string
-  originLat: number
-  originLong: number
-  destinationLat: number
-  destinationLong: number
-  traffic: boolean
-  oddeven: boolean
-  alternative: boolean
-  bearing: number
-}
-
-interface Waypoint {
-  latitude: number
-  longitude: number
-}
-
-interface Leg {
-  steps: Array<{ polyline: string }>
-}
-
-interface FullData {
-  legs: Leg[]
 }
 
 interface MapProps {
@@ -93,19 +61,7 @@ interface MapProps {
 
 function Map({ packageId, setPlan, dirction_url }: MapProps) {
   const [route, setRoute] = useState<any[]>([])
-  const [fulldata, setData] = useState<FullData>({ legs: [] })
   const [waypoint, setWaypoint] = useState<any[]>([])
-  const [info, setinfo] = useState<Info>({
-    type: "car",
-    originLat: 35.695241,
-    originLong: 51.193237,
-    destinationLat: 35.534802,
-    destinationLong: 57.126487,
-    traffic: false,
-    oddeven: false,
-    alternative: false,
-    bearing: 170,
-  })
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,13 +69,12 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
         const responseData = await postData(packageId)
         setPlan(responseData.data)
         const waypointInfo = responseData.data.places.map((place) => ({
-          longitude: Number(place.latitude),
-          latitude: Number(place.longitude),
+          latitude: Number(place.latitude),
+          longitude: Number(place.longitude),
           namePlace: place.name,
           imagePlace: place.first_image,
           rateStar: place.rating,
         }))
-
         setWaypoint(waypointInfo)
       } catch (error) {
         Sentry.captureException(error)
@@ -128,60 +83,88 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
     }
     fetchData()
   }, [packageId, setPlan])
+
   useEffect(() => {
-    async function apiReq() {
-      let waypointparams = waypoint
-        .map((p) => `${p.longitude},${p.latitude}%7C`)
-        .join("")
-      let waypointreq = waypointparams.slice(0, -3) // Remove last "%7C"
+    if (!waypoint.length) return
+    const fetchRoute = async () => {
       try {
         const response = await axios.get(`${dirction_url}`, {
           headers: { "api-key": env.NEXT_PUBLIC_NESHAN_KEY },
         })
-        const data = response.data.routes[0]
-        setData(data)
-        const decodedPolyline = decodeLegsPolylines(data.legs)
-        setRoute(decodedPolyline)
+        if (response.data?.routes?.[0]) {
+          const decodedPolyline = response.data.routes[0].legs.flatMap(
+            (leg: any) =>
+              leg.steps.flatMap((step: any) => polyline.decode(step.polyline))
+          )
+          setRoute(decodedPolyline)
+        }
       } catch (error) {
         console.error("Error fetching directions:", error)
       }
     }
+    fetchRoute()
+  }, [waypoint, dirction_url])
 
-    if (waypoint.length > 0) {
-      apiReq()
-    }
-  }, [waypoint, info])
-
-  const decodeLegsPolylines = (legs: Leg[]) => {
-    return legs.flatMap((leg) =>
-      leg.steps.flatMap((step) => polyline.decode(step.polyline))
-    )
-  }
   const startIndex = dirction_url.indexOf("origin=") + "origin=".length
   const endIndex = dirction_url.indexOf("&", startIndex)
   const origin = dirction_url.substring(startIndex, endIndex)
-  const [latitude, longitude] = origin.split(",").map((num) => Number(num))
-  const center: [number, number] = [latitude || 2, longitude || 2]
+  const [latitude, longitude] = origin.split(",").map(Number)
 
   let customIcon = null
   if (L) {
     customIcon = new L.Icon({
-      iconUrl: "/assets/icons/markerMap.png",
-      iconSize: [15, 30],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-      shadowSize: [41, 41],
+      iconUrl: markerIcon.src,
+      iconSize: [24, 36],
+      iconAnchor: [12, 36],
+      popupAnchor: [0, -36],
     })
-
     L.Marker.prototype.options.icon = customIcon
   }
+
+  // Calculate map bounds
+  const bounds = (() => {
+    if (!waypoint.length) return undefined
+
+    const points = []
+    // Add waypoints
+    for (const point of waypoint) {
+      if (point.latitude && point.longitude) {
+        points.push([point.latitude, point.longitude])
+      }
+    }
+    // Add origin point
+    if (latitude && longitude) {
+      points.push([latitude, longitude])
+    }
+
+    if (points.length < 2) return undefined
+
+    // Find min/max coordinates
+    const lats = points.map((p) => p[0])
+    const lngs = points.map((p) => p[1])
+
+    // Calculate the range of coordinates
+    const latRange = Math.max(...lats) - Math.min(...lats)
+    const lngRange = Math.max(...lngs) - Math.min(...lngs)
+
+    // Add 20% padding
+    const padding = 0.2
+    const latPadding = latRange * padding
+    const lngPadding = lngRange * padding
+
+    return [
+      [Math.min(...lats) - latPadding, Math.min(...lngs) - lngPadding],
+      [Math.max(...lats) + latPadding, Math.max(...lngs) + lngPadding],
+    ] as [[number, number], [number, number]]
+  })()
+
   return (
     <MapWithNoSSR
-      center={center}
-      zoom={8}
-      scrollWheelZoom={false}
+      key={JSON.stringify(bounds)}
+      bounds={bounds}
+      center={bounds ? undefined : [35.6892, 51.389]}
+      zoom={bounds ? undefined : 6}
+      scrollWheelZoom={true}
       className="size-full"
     >
       <TileLayerWithNoSSR
@@ -189,13 +172,13 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         maxZoom={18}
       />
-      {route.length > 0 && (
+      {waypoint && waypoint.length > 0 && (
         <>
           {waypoint.map((position, idx) => (
             <MarkerWithNoSSR
               key={idx}
               position={
-                [position.longitude, position.latitude] as [number, number]
+                [position.latitude, position.longitude] as [number, number]
               }
             >
               <PopupWithNoSSR>
@@ -220,11 +203,13 @@ function Map({ packageId, setPlan, dirction_url }: MapProps) {
             </MarkerWithNoSSR>
           ))}
 
-          <MarkerWithNoSSR position={[latitude || 2, longitude || 2]}>
+          <MarkerWithNoSSR position={[latitude, longitude] as [number, number]}>
             <PopupWithNoSSR>Your starting point</PopupWithNoSSR>
           </MarkerWithNoSSR>
 
-          <PolylineWithNoSSR positions={route} color="red" />
+          {route.length > 0 && (
+            <PolylineWithNoSSR positions={route} color="red" />
+          )}
         </>
       )}
     </MapWithNoSSR>

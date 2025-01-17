@@ -1,4 +1,7 @@
+import path from "path"
+
 import * as React from "react"
+import { env } from "@/env.mjs"
 import { useQuery } from "@tanstack/react-query"
 
 import type { NeshanDataItemType } from "@/types/api"
@@ -75,9 +78,10 @@ export function CarouselSpacing({
                     <CardContent className="relative size-full">
                       <ImageWithFallback
                         fill
-                        src={
-                          process.env.NEXT_PUBLIC_BACKEND_URL + blog.card_image
-                        }
+                        src={path.join(
+                          env.NEXT_PUBLIC_BACKEND_URL,
+                          blog.card_image
+                        )}
                         alt={blog.place_name}
                         className="absolute inset-0 size-full object-cover"
                       />
