@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import * as Sentry from "@sentry/nextjs"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ThemeProvider } from "next-themes"
 import { z } from "zod"
@@ -38,6 +39,10 @@ export function ClientProviders({
         },
       })
   )
+
+  useEffect(() => {
+    Sentry.captureException(new Error("test"))
+  }, [])
 
   return (
     <ThemeProvider
