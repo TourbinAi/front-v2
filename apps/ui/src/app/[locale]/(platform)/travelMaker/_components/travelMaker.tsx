@@ -177,13 +177,15 @@ export default function TravelMaker() {
       setOpen={setOpen}
       button={typeof list === "undefined" ? false : list.length !== 0}
       sideBarComponent={
-        <TravelMakerForm
-          form={form}
-          onSubmit={onSubmit}
-          isSidebar={isMobile}
-          accoFlag={accoFlag}
-          isLoading={loading || isPending}
-        />
+        <div className="size-full border border-red-300">
+          <TravelMakerForm
+            form={form}
+            onSubmit={onSubmit}
+            isSidebar={isMobile}
+            accoFlag={accoFlag}
+            isLoading={loading || isPending}
+          />
+        </div>
       }
     >
       <CardList

@@ -8,7 +8,7 @@ const withNextIntl = plugin("./src/lib/i18n.ts")
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-  output: env.NEXT_OUTPUT,
+  output: env.NEXT_OUTPUT || "standalone",
   reactStrictMode: true,
   experimental: {},
   // Good to know:
@@ -80,10 +80,10 @@ const withConfig = (() => {
       // Hides source maps from generated client bundles
       hideSourceMaps: true,
 
-      // sourcemaps: {
-      //   // To disable sourcemap plugin, set this to true
-      //   disable: true
-      // }
+      sourcemaps: {
+        // Temporarily disable sourcemaps to avoid network issues during build
+        disable: true
+      },
 
       // Automatically tree-shake Sentry logger statements to reduce bundle size
       disableLogger: true,
