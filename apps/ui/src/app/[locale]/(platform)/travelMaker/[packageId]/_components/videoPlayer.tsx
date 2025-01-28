@@ -77,9 +77,11 @@ export default function CustomVideoPlayer({
 
   const handleDOMError = (event: ErrorEvent) => {
     console.error("Video error:", event)
-    toast.error("Failed to load video. Please check your internet connection.")
     setIsEnded(true)
     setHasError(true)
+    throw new Error(
+      "Failed to load video. Please check your internet connection."
+    )
   }
 
   const handleError = (

@@ -1,24 +1,14 @@
-import createMDX from "@next/mdx"
-import withPlaiceholder from "@plaiceholder/next"
 import { withSentryConfig } from "@sentry/nextjs"
 import plugin from "next-intl/plugin"
-import remarkGfm from "remark-gfm"
 
 import { env } from "./src/env.mjs"
 
 const withNextIntl = plugin("./src/lib/i18n.ts")
-const withMDX = createMDX({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [],
-  },
-})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-  output: env.NEXT_OUTPUT,
+  output: env.NEXT_OUTPUT || "standalone",
   reactStrictMode: true,
   experimental: {},
   // Good to know:
@@ -55,7 +45,7 @@ const nextConfig = {
 }
 
 const withConfig = (() => {
-  let config = withMDX(withNextIntl(withPlaiceholder(nextConfig)))
+  let config = withNextIntl(nextConfig)
 
   if (env.SENTRY_AUTH_TOKEN && env.SENTRY_ORG && env.SENTRY_PROJECT) {
     config = withSentryConfig(config, {
@@ -90,10 +80,10 @@ const withConfig = (() => {
       // Hides source maps from generated client bundles
       hideSourceMaps: true,
 
-      // sourcemaps: {
-      //   // To disable sourcemap plugin, set this to true
-      //   disable: true
-      // }
+      sourcemaps: {
+        // Temporarily disable sourcemaps to avoid network issues during build
+        disable: true
+      },
 
       // Automatically tree-shake Sentry logger statements to reduce bundle size
       disableLogger: true,

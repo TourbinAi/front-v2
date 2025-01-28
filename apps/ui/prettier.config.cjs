@@ -5,3 +5,4 @@ module.exports = {
   ...globalConfig,
   plugins: [...globalConfig.plugins, "prettier-plugin-tailwindcss"],
 }
+t

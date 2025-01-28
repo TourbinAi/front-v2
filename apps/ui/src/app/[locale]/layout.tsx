@@ -2,6 +2,7 @@ import "@/styles/globals.css"
 
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
+import posthog from "posthog-js"
 
 import { LayoutProps } from "@/types/next"
 
@@ -10,6 +11,7 @@ import { setupLibraries } from "@/lib/general-helpers"
 import { locales } from "@/lib/i18n"
 import { cn } from "@/lib/styles"
 import { TailwindIndicator } from "@/components/elementary/TailwindIndicator"
+import { AnalyticsProvider } from "@/components/providers/AnalyticsProvider"
 import { ClientProviders } from "@/components/providers/ClientProviders"
 import { ServerProviders } from "@/components/providers/ServerProviders"
 import { Toaster } from "@/components/ui/sonner"
@@ -49,7 +51,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   if (!locales.includes(params.locale)) {
     notFound()
   }
-
+  
   return (
     <html
       lang={params.locale}
@@ -57,21 +59,22 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       dir={params.locale === "fa" ? "rtl" : "ltr"}
       suppressHydrationWarning
     >
-      <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <ServerProviders params={params}>
-          <ClientProviders>
-            {children}
-            <TailwindIndicator />
-            <Toaster />
-          </ClientProviders>
-        </ServerProviders>
-      </body>
+      <AnalyticsProvider>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+          <ServerProviders params={params}>
+            <ClientProviders>
+              {children}
+              <TailwindIndicator />
+              <Toaster />
+            </ClientProviders>
+          </ServerProviders>
+        </body>
+      </AnalyticsProvider>
     </html>
   )
 }

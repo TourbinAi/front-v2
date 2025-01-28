@@ -16,7 +16,7 @@
     "generate": "strapi generate",
     "generate:types": "strapi ts:generate-types",
     "import": "strapi import -f strapi-export.tar.gz",
-    "run:db": "docker compose up -d db",
+    "run:db": "docker compose up -d postgres",
     "start": "strapi start",
     "strapi": "strapi",
     "test": "jest --forceExit --detectOpenHandles",

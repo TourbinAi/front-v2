@@ -18,7 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "@/components/ui/select"
 import { AppFormDescription } from "./AppFormDescription"
 import { AppFormLabel } from "./AppFormLabel"
 
