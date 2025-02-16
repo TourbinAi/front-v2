@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tourist_sites",
+  "info": {
+    "singularName": "tourist-site",
+    "pluralName": "tourist-sites",
+    "displayName": "Tourist_sites",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "default": "name of place"
+    },
+    "longitude": {
+      "type": "decimal"
+    },
+    "latitude": {
+      "type": "decimal"
+    },
+    "key": {
+      "type": "decimal",
+      "required": true
+    },
+    "nature_blogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::page.page",
+      "mappedBy": "tourist_sites"
+    }
+  }
+}

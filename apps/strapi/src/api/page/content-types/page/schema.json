@@ -4,7 +4,7 @@
   "info": {
     "singularName": "page",
     "pluralName": "pages",
-    "displayName": "Page",
+    "displayName": "NatureBlog",
     "description": ""
   },
   "options": {
@@ -41,7 +41,9 @@
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": ["images"],
+      "allowedTypes": [
+        "images"
+      ],
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -76,11 +78,11 @@
       "target": "api::author.author",
       "mappedBy": "pages"
     },
-    "categories": {
+    "tags": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::category.category",
-      "mappedBy": "pages"
+      "target": "api::tag.tag",
+      "inversedBy": "nature_blogs"
     },
     "isGood": {
       "pluginOptions": {
@@ -91,6 +93,12 @@
       "type": "boolean",
       "default": true,
       "required": true
+    },
+    "tourist_sites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tourist-site.tourist-site",
+      "inversedBy": "nature_blogs"
     }
   }
 }

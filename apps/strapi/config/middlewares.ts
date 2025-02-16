@@ -6,7 +6,7 @@ export default [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "connect-src": ["'self'", "https:"],
+          "connect-src": ["'self'","https:"],
           "script-src": ["'self'", "https://maps.googleapis.com"],
           "media-src": [
             "'self'",

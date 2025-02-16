@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "areas",
+  "info": {
+    "singularName": "area",
+    "pluralName": "areas",
+    "displayName": "Area",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "default": "city"
+    },
+    "event_blogs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event-blog.event-blog",
+      "mappedBy": "area"
+    },
+    "souvenirs_and_food_blogs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::souvenirs-and-food-blog.souvenirs-and-food-blog",
+      "mappedBy": "area"
+    }
+  }
+}

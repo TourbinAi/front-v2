@@ -369,6 +369,42 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   }
 }
 
+export interface ApiAreaArea extends Struct.CollectionTypeSchema {
+  collectionName: "areas"
+  info: {
+    description: ""
+    displayName: "Area"
+    pluralName: "areas"
+    singularName: "area"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  attributes: {
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    event_blogs: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::event-blog.event-blog"
+    >
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<"oneToMany", "api::area.area"> &
+      Schema.Attribute.Private
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"city">
+    publishedAt: Schema.Attribute.DateTime
+    souvenirs_and_food_blogs: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::souvenirs-and-food-blog.souvenirs-and-food-blog"
+    >
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
 export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   collectionName: "authors"
   info: {
@@ -461,11 +497,55 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   }
 }
 
+export interface ApiEventBlogEventBlog extends Struct.CollectionTypeSchema {
+  collectionName: "event_blogs"
+  info: {
+    description: ""
+    displayName: "EventBlog"
+    pluralName: "event-blogs"
+    singularName: "event-blog"
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    area: Schema.Attribute.Relation<"manyToOne", "api::area.area">
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultMarkdown"
+        }
+      >
+    cover: Schema.Attribute.Media<"images"> & Schema.Attribute.Required
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    event_name: Schema.Attribute.String & Schema.Attribute.Required
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::event-blog.event-blog"
+    > &
+      Schema.Attribute.Private
+    name_of_city: Schema.Attribute.String
+    publishedAt: Schema.Attribute.DateTime
+    seo: Schema.Attribute.Component<"shared.seo", true>
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"title">
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: "pages"
   info: {
     description: ""
-    displayName: "Page"
+    displayName: "NatureBlog"
     pluralName: "pages"
     singularName: "page"
   }
@@ -538,6 +618,111 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
           localized: true
         }
       }>
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
+export interface ApiSouvenirsAndFoodBlogSouvenirsAndFoodBlog
+  extends Struct.CollectionTypeSchema {
+  collectionName: "souvenirs_and_food_blogs"
+  info: {
+    displayName: "SouvenirsAndFoodBlog"
+    pluralName: "souvenirs-and-food-blogs"
+    singularName: "souvenirs-and-food-blog"
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    area: Schema.Attribute.Relation<"manyToOne", "api::area.area">
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultMarkdown"
+        }
+      >
+    cover: Schema.Attribute.Media<"images"> & Schema.Attribute.Required
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::souvenirs-and-food-blog.souvenirs-and-food-blog"
+    > &
+      Schema.Attribute.Private
+    name_of_city: Schema.Attribute.String & Schema.Attribute.Required
+    name_of_food: Schema.Attribute.String
+    name_of_souvenirs: Schema.Attribute.String
+    publishedAt: Schema.Attribute.DateTime
+    seo: Schema.Attribute.Component<"shared.seo", false>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
+export interface ApiTagTag extends Struct.CollectionTypeSchema {
+  collectionName: "tags"
+  info: {
+    displayName: "Tag"
+    pluralName: "tags"
+    singularName: "tag"
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<"oneToMany", "api::tag.tag"> &
+      Schema.Attribute.Private
+    name: Schema.Attribute.String & Schema.Attribute.Required
+    nature_blogs: Schema.Attribute.Relation<"manyToMany", "api::page.page">
+    publishedAt: Schema.Attribute.DateTime
+    slug: Schema.Attribute.String
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
+export interface ApiTouristSiteTouristSite extends Struct.CollectionTypeSchema {
+  collectionName: "tourist_sites"
+  info: {
+    description: ""
+    displayName: "Tourist_sites"
+    pluralName: "tourist-sites"
+    singularName: "tourist-site"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  attributes: {
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    key: Schema.Attribute.Decimal & Schema.Attribute.Required
+    latitude: Schema.Attribute.Decimal
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::tourist-site.tourist-site"
+    > &
+      Schema.Attribute.Private
+    longitude: Schema.Attribute.Decimal
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"name of place">
+    nature_blogs: Schema.Attribute.Relation<"manyToMany", "api::page.page">
+    publishedAt: Schema.Attribute.DateTime
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
@@ -1053,9 +1238,14 @@ declare module "@strapi/strapi" {
       "admin::transfer-token": AdminTransferToken
       "admin::transfer-token-permission": AdminTransferTokenPermission
       "admin::user": AdminUser
+      "api::area.area": ApiAreaArea
       "api::author.author": ApiAuthorAuthor
       "api::category.category": ApiCategoryCategory
+      "api::event-blog.event-blog": ApiEventBlogEventBlog
       "api::page.page": ApiPagePage
+      "api::souvenirs-and-food-blog.souvenirs-and-food-blog": ApiSouvenirsAndFoodBlogSouvenirsAndFoodBlog
+      "api::tag.tag": ApiTagTag
+      "api::tourist-site.tourist-site": ApiTouristSiteTouristSite
       "plugin::content-releases.release": PluginContentReleasesRelease
       "plugin::content-releases.release-action": PluginContentReleasesReleaseAction
       "plugin::i18n.locale": PluginI18NLocale

@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Tag"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string"
+    },
+    "nature_blogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::page.page",
+      "mappedBy": "tags"
+    },
+    "event_blogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::event-blog.event-blog",
+      "mappedBy": "tags"
+    },
+    "souvenirs-and-food-blogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::souvenirs-and-food-blog.souvenirs-and-food-blog",
+      "mappedBy": "tags"
+    }
+  }
+}
+

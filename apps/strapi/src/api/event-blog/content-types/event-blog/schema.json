@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "event_blogs",
+  "info": {
+    "singularName": "event-blog",
+    "pluralName": "event-blogs",
+    "displayName": "EventBlog",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "title"
+    },
+    "name_of_city": {
+      "type": "string"
+    },
+    "event_name": {
+      "type": "string",
+      "required": true
+    },
+    "area": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::area.area",
+      "inversedBy": "event_blogs"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "event_blogs"
+    },
+    "content": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultMarkdown"
+      },
+      "required": true,
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.seo"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
