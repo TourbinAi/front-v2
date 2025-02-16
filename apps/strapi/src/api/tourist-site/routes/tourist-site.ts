@@ -2,6 +2,6 @@
  * tourist-site router
  */
 
-import { factories } from '@strapi/strapi';
+import { factories } from "@strapi/strapi"
 
-export default factories.createCoreRouter('api::tourist-site.tourist-site');
+export default factories.createCoreRouter("api::tourist-site.tourist-site")

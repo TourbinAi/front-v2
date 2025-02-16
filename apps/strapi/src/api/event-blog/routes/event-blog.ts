@@ -2,6 +2,6 @@
  * event-blog router
  */
 
-import { factories } from '@strapi/strapi';
+import { factories } from "@strapi/strapi"
 
-export default factories.createCoreRouter('api::event-blog.event-blog');
+export default factories.createCoreRouter("api::event-blog.event-blog")
